@@ -1,7 +1,7 @@
 import { DesignPatternData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class DesignPatternServer {
+export class PatternServer {
   private validatePatternData(input: unknown): DesignPatternData {
     const data = input as Record<string, unknown>;
 

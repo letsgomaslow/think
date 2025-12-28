@@ -1,7 +1,7 @@
 import { ScientificInquiryData, HypothesisData, ExperimentData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class ScientificMethodServer {
+export class HypothesisServer {
   private validateInputData(input: unknown): ScientificInquiryData {
     const data = input as ScientificInquiryData;
     if (!data.stage || !data.inquiryId) {

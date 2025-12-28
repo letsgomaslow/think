@@ -1,7 +1,7 @@
 import { VisualOperationData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class VisualReasoningServer {
+export class MapServer {
   private validateInputData(input: unknown): VisualOperationData {
     const data = input as VisualOperationData;
     if (!data.operation || !data.diagramId || !data.diagramType) {

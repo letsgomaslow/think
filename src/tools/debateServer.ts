@@ -1,7 +1,7 @@
 import { ArgumentData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class StructuredArgumentationServer {
+export class DebateServer {
   private validateInputData(input: unknown): ArgumentData {
     const data = input as ArgumentData;
     if (!data.claim || !data.premises || !data.conclusion || !data.argumentType) {

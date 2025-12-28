@@ -1,14 +1,19 @@
 {
-  "name": "clear-thought-mcp-server",
-  "version": "1.1.2",
-  "description": "A Model Context Protocol (MCP) server that provides systematic thinking, mental models, and debugging approaches for enhanced problem-solving capabilities",
+  "name": "think-mcp",
+  "version": "2.0.0",
+  "description": "Structured thinking tools for AI assistants - mental models, debugging, decision-making, and more",
   "type": "module",
   "main": "dist/index.js",
+  "bin": {
+    "think-mcp": "dist/index.js"
+  },
   "scripts": {
     "build": "tsc",
     "start": "node dist/index.js",
-    "dev": "tsc -w & node --watch dist/index.js",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "tsc --watch",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "lint": "tsc --noEmit"
   },
   "keywords": [
     "mcp",
@@ -16,17 +21,22 @@
     "thinking",
     "mental-models",
     "debugging",
-    "problem-solving"
+    "decision-making",
+    "claude"
   ],
   "author": "Chirag Singhal",
   "license": "MIT",
   "dependencies": {
-    "@modelcontextprotocol/sdk": "^0.5.0",
+    "@modelcontextprotocol/sdk": "^1.25.1",
     "chalk": "^5.3.0",
-    "zod": "^3.22.4"
+    "zod": "^3.25.0"
   },
   "devDependencies": {
     "@types/node": "^20.10.5",
-    "typescript": "^5.3.3"
+    "typescript": "^5.3.3",
+    "vitest": "^2.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
   }
 }

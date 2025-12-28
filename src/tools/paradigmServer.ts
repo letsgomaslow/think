@@ -1,7 +1,7 @@
 import { ProgrammingParadigmData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class ProgrammingParadigmServer {
+export class ParadigmServer {
   private validateParadigmData(input: unknown): ProgrammingParadigmData {
     const data = input as Record<string, unknown>;
 

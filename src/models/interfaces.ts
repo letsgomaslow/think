@@ -1,6 +1,7 @@
-// Data Interfaces for Clear Thought MCP Server
+// Data Interfaces for think-mcp Server
+// Tool name mapping: old name -> new name (for reference)
 
-// Sequential Thinking
+// trace tool (was: sequentialthinking)
 export interface ThoughtData {
     thought: string;
     thoughtNumber: number;
@@ -13,7 +14,7 @@ export interface ThoughtData {
     nextThoughtNeeded: boolean;
 }
 
-// Mental Models
+// model tool (was: mentalmodel)
 export interface MentalModelData {
     modelName: string;
     problem: string;
@@ -22,7 +23,7 @@ export interface MentalModelData {
     conclusion: string;
 }
 
-// Design Patterns
+// pattern tool (was: designpattern)
 export interface DesignPatternData {
     patternName: string;
     context: string;
@@ -33,7 +34,7 @@ export interface DesignPatternData {
     languages?: string[];
 }
 
-// Programming Paradigms
+// paradigm tool (was: programmingparadigm)
 export interface ProgrammingParadigmData {
     paradigmName: string;
     problem: string;
@@ -44,7 +45,7 @@ export interface ProgrammingParadigmData {
     languages?: string[];
 }
 
-// Debugging Approaches
+// debug tool (was: debuggingapproach)
 export interface DebuggingApproachData {
     approachName: string;
     issue: string;
@@ -53,7 +54,7 @@ export interface DebuggingApproachData {
     resolution: string;
 }
 
-// Collaborative Reasoning
+// council tool (was: collaborativereasoning)
 export interface PersonaData {
     id: string;
     name: string;
@@ -123,7 +124,7 @@ export interface CollaborativeReasoningData {
     nextContributionNeeded: boolean;
 }
 
-// Decision Framework
+// decide tool (was: decisionframework)
 export interface OptionData {
     id: string;
     name: string;
@@ -175,7 +176,7 @@ export interface DecisionFrameworkData {
     nextStageNeeded: boolean;
 }
 
-// Metacognitive Monitoring
+// reflect tool (was: metacognitivemonitoring)
 export interface KnowledgeAssessment {
     domain: string;
     knowledgeLevel:
@@ -229,7 +230,7 @@ export interface MetacognitiveMonitoringData {
     nextAssessmentNeeded: boolean;
 }
 
-// Scientific Method
+// hypothesis tool (was: scientificmethod)
 export interface Variable {
     name: string;
     type: "independent" | "dependent" | "controlled" | "confounding";
@@ -289,7 +290,7 @@ export interface ScientificInquiryData {
     nextStageNeeded: boolean;
 }
 
-// Structured Argumentation
+// debate tool (was: structuredargumentation)
 export interface ArgumentData {
     claim: string;
     premises: string[];
@@ -317,7 +318,7 @@ export interface ArgumentData {
     )[];
 }
 
-// Visual Reasoning
+// map tool (was: visualreasoning)
 export interface VisualElement {
     id: string;
     type: "node" | "edge" | "container" | "annotation";

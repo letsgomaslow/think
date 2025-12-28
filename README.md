@@ -1,395 +1,218 @@
-# Clear Thought MCP Server
+# think-mcp
 
-[![smithery badge](https://smithery.ai/badge/@chirag127/clear-thought-mcp-server)](https://smithery.ai/server/@chirag127/clear-thought-mcp-server)
+Structured thinking tools for AI assistants. Provides mental models, debugging approaches, decision frameworks, and more via the Model Context Protocol.
 
-A Model Context Protocol (MCP) server that provides systematic thinking, mental models, and debugging approaches for enhanced problem-solving capabilities.
+## Quick Start
 
-## Features
-
-### Mental Models
-
--   First Principles Thinking
--   Opportunity Cost Analysis
--   Error Propagation Understanding
--   Rubber Duck Debugging
--   Pareto Principle
--   Occam's Razor
-
-### Design Patterns
-
--   Modular Architecture
--   API Integration Patterns
--   State Management
--   Asynchronous Processing
--   Scalability Considerations
--   Security Best Practices
--   Agentic Design Patterns
-
-### Programming Paradigms
-
--   Imperative Programming
--   Procedural Programming
--   Object-Oriented Programming
--   Functional Programming
--   Declarative Programming
--   Logic Programming
--   Event-Driven Programming
--   Aspect-Oriented Programming
--   Concurrent Programming
--   Reactive Programming
-
-### Debugging Approaches
-
--   Binary Search
--   Reverse Engineering
--   Divide and Conquer
--   Backtracking
--   Cause Elimination
--   Program Slicing
-
-### Sequential Thinking
-
--   Structured thought process
--   Revision and branching support
--   Progress tracking
--   Context maintenance
-
-### Collaborative Reasoning
-
--   Multi-persona problem-solving
--   Diverse expertise integration
--   Structured debate and consensus building
--   Perspective synthesis
-
-### Decision Framework
-
--   Structured decision analysis
--   Multiple evaluation methodologies
--   Criteria weighting
--   Risk and uncertainty handling
-
-### Metacognitive Monitoring
-
--   Knowledge boundary assessment
--   Claim certainty evaluation
--   Reasoning bias detection
--   Confidence calibration
--   Uncertainty identification
-
-### Scientific Method
-
--   Structured hypothesis testing
--   Variable identification
--   Prediction formulation
--   Experimental design
--   Evidence evaluation
-
-### Structured Argumentation
-
--   Formal dialectical reasoning
--   Thesis-antithesis-synthesis
--   Argument strength analysis
--   Premise evaluation
--   Logical structure mapping
-
-### Visual Reasoning
-
--   Diagrammatic representation
--   Visual problem-solving
--   Spatial relationship analysis
--   Conceptual mapping
--   Visual insight generation
-
-## Prerequisites
-
--   Node.js 18.x or higher
--   npm 9.x or higher
-
-## Installation
-
-### Installing via Smithery
-
-To install clear-thought-mcp-server for Claude Desktop automatically via [Smithery](https://smithery.ai/server/@chirag127/clear-thought-mcp-server):
+### Installation
 
 ```bash
-npx -y @smithery/cli install @chirag127/clear-thought-mcp-server --client claude
+npm install -g think-mcp
 ```
 
-1. Clone the repository:
+### Claude Desktop Configuration
 
-```bash
-git clone https://github.com/chirag127/clear-thought-mcp-server.git
+Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS) or `%APPDATA%\Claude\claude_desktop_config.json` (Windows):
+
+```json
+{
+  "mcpServers": {
+    "think-mcp": {
+      "command": "npx",
+      "args": ["think-mcp"]
+    }
+  }
+}
 ```
 
-Then navigate to the project directory:
+## Tools
 
-```bash
-cd clear-thought-mcp-server
+| Tool | Description | Use When |
+|------|-------------|----------|
+| `trace` | Step-by-step thought tracing | Breaking down complex problems |
+| `model` | Mental models (first principles, pareto, etc.) | Applying structured thinking frameworks |
+| `pattern` | Software design patterns | Architectural decisions |
+| `paradigm` | Programming paradigms | Choosing coding approaches |
+| `debug` | Debugging approaches | Systematic troubleshooting |
+| `council` | Multi-persona deliberation | Getting diverse perspectives |
+| `decide` | Decision analysis frameworks | Making important choices |
+| `reflect` | Metacognitive monitoring | Assessing knowledge boundaries |
+| `hypothesis` | Scientific method | Testing ideas systematically |
+| `debate` | Dialectical reasoning | Exploring arguments |
+| `map` | Visual/spatial reasoning | Diagramming concepts |
+
+## Examples
+
+### Using `trace` for complex problem-solving
+
+```
+"Use the trace tool to think through how to refactor this authentication system"
 ```
 
-2. Install dependencies:
+### Using `model` with first principles
+
+```
+"Apply first_principles thinking using the model tool to analyze why our build is slow"
+```
+
+### Using `council` for multiple perspectives
+
+```
+"Use council to get security expert, performance engineer, and UX designer perspectives on this API design"
+```
+
+### Using `debug` for systematic troubleshooting
+
+```
+"Use the debug tool with binary_search approach to find the source of this memory leak"
+```
+
+### Using `decide` for structured decisions
+
+```
+"Use decide with weighted-criteria analysis to choose between PostgreSQL and MongoDB"
+```
+
+## Tool Details
+
+### trace (Sequential Thinking)
+Dynamic problem-solving through structured thoughts with revision and branching support.
+- Break down complex problems into steps
+- Revise previous thoughts as understanding evolves
+- Branch into alternative approaches
+- Track progress across multiple reasoning steps
+
+### model (Mental Models)
+Apply proven mental models to problems:
+- `first_principles` - Break down to fundamentals
+- `opportunity_cost` - Analyze trade-offs
+- `error_propagation` - Understand error chains
+- `rubber_duck` - Explain to clarify
+- `pareto_principle` - Focus on high-impact factors
+- `occams_razor` - Prefer simpler explanations
+
+### pattern (Design Patterns)
+Software architecture patterns:
+- `modular_architecture` - Component separation
+- `api_integration` - External service patterns
+- `state_management` - State handling approaches
+- `async_processing` - Asynchronous patterns
+- `scalability` - Growth considerations
+- `security` - Security best practices
+- `agentic_design` - AI agent patterns
+
+### paradigm (Programming Paradigms)
+Programming approach selection:
+- `imperative`, `procedural`, `object_oriented`
+- `functional`, `declarative`, `logic`
+- `event_driven`, `aspect_oriented`
+- `concurrent`, `reactive`
+
+### debug (Debugging Approaches)
+Systematic debugging methods:
+- `binary_search` - Divide and narrow
+- `reverse_engineering` - Work backwards
+- `divide_conquer` - Isolate components
+- `backtracking` - Trace execution
+- `cause_elimination` - Rule out causes
+- `program_slicing` - Focus on relevant code
+
+### council (Collaborative Reasoning)
+Multi-persona problem-solving with diverse expertise, structured debate, and consensus building.
+
+### decide (Decision Framework)
+Structured decision analysis:
+- `pros-cons` - Simple comparison
+- `weighted-criteria` - Multi-factor scoring
+- `decision-tree` - Branching outcomes
+- `expected-value` - Probability-weighted
+- `scenario-analysis` - Future scenarios
+
+### reflect (Metacognitive Monitoring)
+Self-awareness about knowledge boundaries, claim certainty, and reasoning biases.
+
+### hypothesis (Scientific Method)
+Formal scientific reasoning with hypothesis testing, variable identification, and evidence evaluation.
+
+### debate (Structured Argumentation)
+Dialectical reasoning with thesis-antithesis-synthesis and argument strength analysis.
+
+### map (Visual Reasoning)
+Visual thinking with diagrams, graphs, flowcharts, concept maps, and state diagrams.
+
+## Migration from clear-thought-mcp-server v1.x
+
+Tool names have been simplified for easier use:
+
+| Old Name | New Name |
+|----------|----------|
+| `sequentialthinking` | `trace` |
+| `mentalmodel` | `model` |
+| `designpattern` | `pattern` |
+| `programmingparadigm` | `paradigm` |
+| `debuggingapproach` | `debug` |
+| `collaborativereasoning` | `council` |
+| `decisionframework` | `decide` |
+| `metacognitivemonitoring` | `reflect` |
+| `scientificmethod` | `hypothesis` |
+| `structuredargumentation` | `debate` |
+| `visualreasoning` | `map` |
+
+Update your MCP config to use `think-mcp` instead of `clear-thought-mcp-server` and update any tool name references in your prompts.
+
+## Development
 
 ```bash
+# Clone the repository
+git clone https://github.com/chirag127/think-mcp.git
+cd think-mcp
+
+# Install dependencies
 npm install
-```
 
-3. Build the project:
-
-```bash
+# Build
 npm run build
-```
 
-## Usage
+# Run tests
+npm test
 
-### Running the Server
-
-Start the server with:
-
-```bash
-npm start
-```
-
-This will start the MCP server using stdio transport, which can be connected to by MCP clients.
-
-### Development Mode
-
-For development with automatic reloading:
-
-```bash
+# Development mode (watch)
 npm run dev
 ```
-
-### Using with MCP Clients
-
-The server can be used with any MCP-compatible client. Here are some examples:
-
-#### Using with the MCP Inspector
-
-1. Install the MCP Inspector:
-
-```bash
-npm install -g @modelcontextprotocol/inspector
-```
-
-2. Run the server:
-
-```bash
-npm start
-```
-
-3. In another terminal, connect the inspector:
-
-```bash
-mcp-inspector --stdio "node dist/index.js"
-```
-
-#### Using with LLM Applications
-
-The server can be integrated with LLM applications that support the Model Context Protocol. Refer to the MCP documentation for specific integration details.
-
-## Tool Selection Guide
-
-Each tool in the Clear Thought MCP Server has specific strengths. Here are some scenarios where each tool might be particularly useful:
-
-### Mental Models
-
-Best suited for:
-
--   Initial problem understanding
--   Breaking down complex systems
--   Analyzing trade-offs
--   Finding root causes
--   Making strategic decisions
-
-Example scenarios:
-
--   Analyzing system architecture choices
--   Evaluating competing solutions
--   Understanding error patterns
-
-### Design Patterns
-
-Best suited for:
-
--   Implementing proven solutions
--   Structuring new features
--   Ensuring maintainable code
--   Scaling applications
--   Managing technical debt
-
-Example scenarios:
-
--   Building new system components
--   Refactoring existing code
--   Implementing cross-cutting concerns
-
-### Programming Paradigms
-
-Best suited for:
-
--   Selecting appropriate coding approaches
--   Understanding language strengths
--   Optimizing for specific problem types
--   Balancing trade-offs in implementation
-
-Example scenarios:
-
--   Choosing between OOP and functional approaches
--   Implementing concurrent systems
--   Designing reactive applications
-
-### Debugging Approaches
-
-Best suited for:
-
--   Troubleshooting issues
--   Performance optimization
--   System analysis
--   Error resolution
--   Quality assurance
-
-Example scenarios:
-
--   Fixing production issues
--   Optimizing slow processes
--   Resolving integration problems
-
-### Sequential Thinking
-
-Best suited for:
-
--   Complex problem-solving
--   Multi-step analysis
--   Decision refinement
--   Process improvement
--   Comprehensive planning
-
-Example scenarios:
-
--   Planning major features
--   Analyzing system-wide changes
--   Making architectural decisions
-
-### Collaborative Reasoning
-
-Best suited for:
-
--   Complex, multi-faceted problems
--   Situations requiring diverse expertise
--   Controversial or high-stakes decisions
--   Innovation and ideation
-
-Example scenarios:
-
--   Architectural design decisions
--   Product strategy development
--   Risk assessment and mitigation
-
-### Decision Framework
-
-Best suited for:
-
--   Structured choice between alternatives
--   Risk-aware decision making
--   Multi-criteria evaluation
--   Stakeholder-sensitive decisions
-
-Example scenarios:
-
--   Technology selection
--   Resource allocation
--   Strategic planning
-
-### Metacognitive Monitoring
-
-Best suited for:
-
--   Assessing knowledge boundaries
--   Evaluating claim certainty
--   Detecting reasoning biases
--   Calibrating confidence
--   Identifying areas of uncertainty
-
-Example scenarios:
-
--   Evaluating expertise in unfamiliar domains
--   Assessing confidence in predictions
--   Identifying potential biases in analysis
--   Determining when to seek additional information
-
-### Scientific Method
-
-Best suited for:
-
--   Systematic hypothesis testing
--   Empirical investigation
--   Causal analysis
--   Evidence-based reasoning
--   Iterative refinement of understanding
-
-Example scenarios:
-
--   Investigating system behavior
--   Testing causal relationships
--   Evaluating competing explanations
--   Designing controlled experiments
-
-### Structured Argumentation
-
-Best suited for:
-
--   Formal dialectical reasoning
--   Analyzing complex debates
--   Evaluating competing positions
--   Synthesizing diverse viewpoints
--   Constructing logical arguments
-
-Example scenarios:
-
--   Evaluating the strength of arguments
--   Identifying logical fallacies
--   Constructing persuasive cases
--   Resolving conflicting perspectives
-
-### Visual Reasoning
-
-Best suited for:
-
--   Spatial problem-solving
--   Conceptual mapping
--   Pattern recognition
--   Relationship visualization
--   Complex system modeling
-
-Example scenarios:
-
--   Diagramming system architecture
--   Visualizing data relationships
--   Mapping conceptual spaces
--   Creating visual explanations
-
-Note: These are suggestions rather than rules. Tools can be used in any order or combination that best serves your needs.
 
 ## Project Structure
 
 ```
-clear-thought-mcp-server/
+think-mcp/
 ├── dist/               # Compiled JavaScript files
-├── src/                # TypeScript source code
+├── src/
 │   ├── models/         # Data interfaces
 │   ├── tools/          # Tool implementations
+│   │   ├── traceServer.ts
+│   │   ├── modelServer.ts
+│   │   ├── patternServer.ts
+│   │   ├── paradigmServer.ts
+│   │   ├── debugServer.ts
+│   │   ├── councilServer.ts
+│   │   ├── decideServer.ts
+│   │   ├── reflectServer.ts
+│   │   ├── hypothesisServer.ts
+│   │   ├── debateServer.ts
+│   │   └── mapServer.ts
+│   ├── toolNames.ts    # Tool name constants
 │   └── index.ts        # Main server entry point
-├── package.json        # Project dependencies and scripts
-├── tsconfig.json       # TypeScript configuration
-└── README.md           # Project documentation
+├── package.json
+├── tsconfig.json
+└── README.md
 ```
 
 ## Tech Stack
 
--   TypeScript
--   Node.js
--   Model Context Protocol SDK
--   Zod (for validation)
+- TypeScript
+- Node.js 18+
+- Model Context Protocol SDK 1.25.1
+- Zod 3.25+ (validation)
+- Vitest (testing)
 
 ## Author
 

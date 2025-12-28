@@ -1,7 +1,7 @@
 import { DebuggingApproachData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class DebuggingApproachServer {
+export class DebugServer {
   private validateApproachData(input: unknown): DebuggingApproachData {
     const data = input as Record<string, unknown>;
 

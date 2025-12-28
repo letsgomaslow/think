@@ -1,7 +1,7 @@
 import { ThoughtData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class SequentialThinkingServer {
+export class TraceServer {
   private thoughtHistory: ThoughtData[] = [];
   private branches: Record<string, ThoughtData[]> = {};
 

@@ -1,7 +1,7 @@
 import { CollaborativeReasoningData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class CollaborativeReasoningServer {
+export class CouncilServer {
   private validateInputData(input: unknown): CollaborativeReasoningData {
     const data = input as CollaborativeReasoningData;
     if (!data.topic || !data.personas || !data.contributions || !data.stage || !data.activePersonaId || !data.sessionId) {

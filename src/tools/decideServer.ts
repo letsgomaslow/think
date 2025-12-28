@@ -1,7 +1,7 @@
 import { DecisionFrameworkData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
-export class DecisionFrameworkServer {
+export class DecideServer {
   private validateInputData(input: unknown): DecisionFrameworkData {
     const data = input as DecisionFrameworkData;
     if (!data.decisionStatement || !data.options || !data.analysisType || !data.stage || !data.decisionId) {

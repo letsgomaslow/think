@@ -1,7 +1,7 @@
 import { MentalModelData } from "../models/interfaces.js";
 import chalk from "chalk";
 
-export class MentalModelServer {
+export class ModelServer {
     private validateModelData(input: unknown): MentalModelData {
         const data = input as Record<string, unknown>;
 

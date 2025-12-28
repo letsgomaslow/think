@@ -12,21 +12,23 @@ import {
 import chalk from "chalk";
 
 // Import server classes
-import { MentalModelServer } from "./tools/mentalModelServer.js";
-import { DesignPatternServer } from "./tools/designPatternServer.js";
-import { ProgrammingParadigmServer } from "./tools/programmingParadigmServer.js";
-import { DebuggingApproachServer } from "./tools/debuggingApproachServer.js";
-import { SequentialThinkingServer } from "./tools/sequentialThinkingServer.js";
-import { CollaborativeReasoningServer } from "./tools/collaborativeReasoningServer.js";
-import { DecisionFrameworkServer } from "./tools/decisionFrameworkServer.js";
-import { MetacognitiveMonitoringServer } from "./tools/metacognitiveMonitoringServer.js";
-import { ScientificMethodServer } from "./tools/scientificMethodServer.js";
-import { StructuredArgumentationServer } from "./tools/structuredArgumentationServer.js";
-import { VisualReasoningServer } from "./tools/visualReasoningServer.js";
+import { TraceServer } from "./tools/traceServer.js";
+import { ModelServer } from "./tools/modelServer.js";
+import { PatternServer } from "./tools/patternServer.js";
+import { ParadigmServer } from "./tools/paradigmServer.js";
+import { DebugServer } from "./tools/debugServer.js";
+import { CouncilServer } from "./tools/councilServer.js";
+import { DecideServer } from "./tools/decideServer.js";
+import { ReflectServer } from "./tools/reflectServer.js";
+import { HypothesisServer } from "./tools/hypothesisServer.js";
+import { DebateServer } from "./tools/debateServer.js";
+import { MapServer } from "./tools/mapServer.js";
+
+import { TOOL_NAMES } from "./toolNames.js";
 
 // Tool Definitions
-const MENTAL_MODEL_TOOL: Tool = {
-    name: "mentalmodel",
+const MODEL_TOOL: Tool = {
+    name: TOOL_NAMES.MODEL,
     description: `A tool for applying structured mental models to problem-solving.
 Supports various mental models including:
 - First Principles Thinking
@@ -63,8 +65,8 @@ Each model provides a systematic approach to breaking down and solving problems.
     },
 };
 
-const DESIGN_PATTERN_TOOL: Tool = {
-    name: "designpattern",
+const PATTERN_TOOL: Tool = {
+    name: TOOL_NAMES.PATTERN,
     description: `A tool for applying design patterns to software architecture and implementation.
 Supports various design patterns including:
 - Modular Architecture
@@ -114,8 +116,8 @@ Each pattern provides a structured approach to solving common design challenges.
     },
 };
 
-const PROGRAMMING_PARADIGM_TOOL: Tool = {
-    name: "programmingparadigm",
+const PARADIGM_TOOL: Tool = {
+    name: TOOL_NAMES.PARADIGM,
     description: `A tool for applying different programming paradigms to solve problems.
 Supports various programming paradigms including:
 - Imperative Programming
@@ -171,8 +173,8 @@ Each paradigm provides a different approach to structuring and executing code.`,
     },
 };
 
-const DEBUGGING_APPROACH_TOOL: Tool = {
-    name: "debuggingapproach",
+const DEBUG_TOOL: Tool = {
+    name: TOOL_NAMES.DEBUG,
     description: `A tool for applying systematic debugging approaches to solve technical issues.
 Supports various debugging methods including:
 - Binary Search
@@ -209,8 +211,8 @@ Each approach provides a structured method for identifying and resolving issues.
     },
 };
 
-const SEQUENTIAL_THINKING_TOOL: Tool = {
-    name: "sequentialthinking",
+const TRACE_TOOL: Tool = {
+    name: TOOL_NAMES.TRACE,
     description: `A detailed tool for dynamic and reflective problem-solving through thoughts.
 This tool helps analyze problems through a flexible thinking process that can adapt and evolve.
 Each thought can build on, question, or revise previous insights as understanding deepens.
@@ -258,8 +260,8 @@ You should:
     },
 };
 
-const COLLABORATIVE_REASONING_TOOL: Tool = {
-    name: "collaborativereasoning",
+const COUNCIL_TOOL: Tool = {
+    name: TOOL_NAMES.COUNCIL,
     description: `A detailed tool for simulating expert collaboration with diverse perspectives.
 This tool helps models tackle complex problems by coordinating multiple viewpoints.
 It provides a framework for structured collaborative reasoning and perspective integration.`,
@@ -414,8 +416,8 @@ It provides a framework for structured collaborative reasoning and perspective i
     },
 };
 
-const DECISION_FRAMEWORK_TOOL: Tool = {
-    name: "decisionframework",
+const DECIDE_TOOL: Tool = {
+    name: TOOL_NAMES.DECIDE,
     description: `A detailed tool for structured decision analysis and rational choice.
 This tool helps models systematically evaluate options, criteria, and outcomes.
 It supports multiple decision frameworks, probability estimates, and value judgments.`,
@@ -529,8 +531,8 @@ It supports multiple decision frameworks, probability estimates, and value judgm
     },
 };
 
-const METACOGNITIVE_MONITORING_TOOL: Tool = {
-    name: "metacognitivemonitoring",
+const REFLECT_TOOL: Tool = {
+    name: TOOL_NAMES.REFLECT,
     description: `A detailed tool for systematic self-monitoring of knowledge and reasoning quality.
 This tool helps models track knowledge boundaries, claim certainty, and reasoning biases.
 It provides a framework for metacognitive assessment across various domains and reasoning tasks.`,
@@ -686,8 +688,8 @@ It provides a framework for metacognitive assessment across various domains and 
     },
 };
 
-const SCIENTIFIC_METHOD_TOOL: Tool = {
-    name: "scientificmethod",
+const HYPOTHESIS_TOOL: Tool = {
+    name: TOOL_NAMES.HYPOTHESIS,
     description: `A detailed tool for applying formal scientific reasoning to questions and problems.
 This tool guides models through the scientific method with structured hypothesis testing.
 It enforces explicit variable identification, prediction making, and evidence evaluation.`,
@@ -822,8 +824,8 @@ It enforces explicit variable identification, prediction making, and evidence ev
     },
 };
 
-const STRUCTURED_ARGUMENTATION_TOOL: Tool = {
-    name: "structuredargumentation",
+const DEBATE_TOOL: Tool = {
+    name: TOOL_NAMES.DEBATE,
     description: `A detailed tool for systematic dialectical reasoning and argument analysis.
 This tool helps analyze complex questions through formal argumentation structures.
 It facilitates the creation, critique, and synthesis of competing arguments.`,
@@ -908,8 +910,8 @@ It facilitates the creation, critique, and synthesis of competing arguments.`,
     },
 };
 
-const VISUAL_REASONING_TOOL: Tool = {
-    name: "visualreasoning",
+const MAP_TOOL: Tool = {
+    name: TOOL_NAMES.MAP,
     description: `A tool for visual thinking, problem-solving, and communication.
 This tool enables models to create, manipulate, and interpret diagrams, graphs, and other visual representations.
 It supports various visual elements and operations to facilitate insight generation and hypothesis testing.`,
@@ -975,38 +977,26 @@ It supports various visual elements and operations to facilitate insight generat
 };
 
 // Server Instances
-const modelServer = new MentalModelServer();
-const designPatternServer = new DesignPatternServer();
-const paradigmServer = new ProgrammingParadigmServer();
-const debuggingServer = new DebuggingApproachServer();
-const thinkingServer = new SequentialThinkingServer();
-const collaborativeReasoningServer = new CollaborativeReasoningServer();
-const decisionFrameworkServer = new DecisionFrameworkServer();
-const metacognitiveMonitoringServer = new MetacognitiveMonitoringServer();
-const scientificMethodServer = new ScientificMethodServer();
-const structuredArgumentationServer = new StructuredArgumentationServer();
-const visualReasoningServer = new VisualReasoningServer();
+const traceServer = new TraceServer();
+const modelServer = new ModelServer();
+const patternServer = new PatternServer();
+const paradigmServer = new ParadigmServer();
+const debugServer = new DebugServer();
+const councilServer = new CouncilServer();
+const decideServer = new DecideServer();
+const reflectServer = new ReflectServer();
+const hypothesisServer = new HypothesisServer();
+const debateServer = new DebateServer();
+const mapServer = new MapServer();
 
 const server = new Server(
     {
-        name: "clear-thought-mcp-server",
-        version: "1.1.2",
+        name: "think-mcp",
+        version: "2.0.0",
     },
     {
         capabilities: {
-            tools: {
-                sequentialthinking: SEQUENTIAL_THINKING_TOOL,
-                mentalmodel: MENTAL_MODEL_TOOL,
-                designpattern: DESIGN_PATTERN_TOOL,
-                programmingparadigm: PROGRAMMING_PARADIGM_TOOL,
-                debuggingapproach: DEBUGGING_APPROACH_TOOL,
-                collaborativereasoning: COLLABORATIVE_REASONING_TOOL,
-                decisionframework: DECISION_FRAMEWORK_TOOL,
-                metacognitivemonitoring: METACOGNITIVE_MONITORING_TOOL,
-                scientificmethod: SCIENTIFIC_METHOD_TOOL,
-                structuredargumentation: STRUCTURED_ARGUMENTATION_TOOL,
-                visualreasoning: VISUAL_REASONING_TOOL,
-            },
+            tools: {},
         },
     }
 );
@@ -1014,170 +1004,55 @@ const server = new Server(
 // Request Handlers
 server.setRequestHandler(ListToolsRequestSchema, async () => ({
     tools: [
-        SEQUENTIAL_THINKING_TOOL,
-        MENTAL_MODEL_TOOL,
-        DESIGN_PATTERN_TOOL,
-        PROGRAMMING_PARADIGM_TOOL,
-        DEBUGGING_APPROACH_TOOL,
-        COLLABORATIVE_REASONING_TOOL,
-        DECISION_FRAMEWORK_TOOL,
-        METACOGNITIVE_MONITORING_TOOL,
-        SCIENTIFIC_METHOD_TOOL,
-        STRUCTURED_ARGUMENTATION_TOOL,
-        VISUAL_REASONING_TOOL,
+        TRACE_TOOL,
+        MODEL_TOOL,
+        PATTERN_TOOL,
+        PARADIGM_TOOL,
+        DEBUG_TOOL,
+        COUNCIL_TOOL,
+        DECIDE_TOOL,
+        REFLECT_TOOL,
+        HYPOTHESIS_TOOL,
+        DEBATE_TOOL,
+        MAP_TOOL,
     ],
 }));
 
 server.setRequestHandler(CallToolRequestSchema, async (request) => {
-    switch (request.params.name) {
-        case "sequentialthinking": {
-            const result = thinkingServer.processThought(
-                request.params.arguments
-            );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "mentalmodel": {
-            const result = modelServer.processModel(request.params.arguments);
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "designpattern": {
-            const result = designPatternServer.processPattern(
-                request.params.arguments
-            );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "programmingparadigm": {
-            const result = paradigmServer.processParadigm(
-                request.params.arguments
-            );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "debuggingapproach": {
-            const result = debuggingServer.processApproach(
-                request.params.arguments
-            );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "collaborativereasoning": {
-            const result =
-                collaborativeReasoningServer.processCollaborativeReasoning(
-                    request.params.arguments
-                );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "decisionframework": {
-            const result = decisionFrameworkServer.processDecisionFramework(
-                request.params.arguments
-            );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "metacognitivemonitoring": {
-            const result =
-                metacognitiveMonitoringServer.processMetacognitiveMonitoring(
-                    request.params.arguments
-                );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "scientificmethod": {
-            const result = scientificMethodServer.processScientificMethod(
-                request.params.arguments
-            );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "structuredargumentation": {
-            const result =
-                structuredArgumentationServer.processStructuredArgumentation(
-                    request.params.arguments
-                );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
-        case "visualreasoning": {
-            const result = visualReasoningServer.processVisualReasoning(
-                request.params.arguments
-            );
-            return {
-                content: [
-                    {
-                        type: "text",
-                        text: JSON.stringify(result, null, 2),
-                    },
-                ],
-            };
-        }
+    const { name } = request.params;
+    const args = request.params.arguments;
+
+    const formatResponse = (result: unknown) => ({
+        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+    });
+
+    switch (name) {
+        case TOOL_NAMES.TRACE:
+            return formatResponse(traceServer.processThought(args));
+        case TOOL_NAMES.MODEL:
+            return formatResponse(modelServer.processModel(args));
+        case TOOL_NAMES.PATTERN:
+            return formatResponse(patternServer.processPattern(args));
+        case TOOL_NAMES.PARADIGM:
+            return formatResponse(paradigmServer.processParadigm(args));
+        case TOOL_NAMES.DEBUG:
+            return formatResponse(debugServer.processApproach(args));
+        case TOOL_NAMES.COUNCIL:
+            return formatResponse(councilServer.processCollaborativeReasoning(args));
+        case TOOL_NAMES.DECIDE:
+            return formatResponse(decideServer.processDecisionFramework(args));
+        case TOOL_NAMES.REFLECT:
+            return formatResponse(reflectServer.processMetacognitiveMonitoring(args));
+        case TOOL_NAMES.HYPOTHESIS:
+            return formatResponse(hypothesisServer.processScientificMethod(args));
+        case TOOL_NAMES.DEBATE:
+            return formatResponse(debateServer.processStructuredArgumentation(args));
+        case TOOL_NAMES.MAP:
+            return formatResponse(mapServer.processVisualReasoning(args));
         default:
             throw new McpError(
                 ErrorCode.MethodNotFound,
-                `Tool '${request.params.name}' not found.`
+                `Tool '${name}' not found. Available: ${Object.values(TOOL_NAMES).join(', ')}`
             );
     }
 });
@@ -1185,10 +1060,11 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
 async function runServer() {
     const transport = new StdioServerTransport();
     await server.connect(transport);
-    console.error("Clear Thought MCP Server running on stdio");
+    console.error(chalk.green("think-mcp v2.0.0 running on stdio"));
+    console.error(chalk.blue(`Tools: ${Object.values(TOOL_NAMES).join(', ')}`));
 }
 
 runServer().catch((error) => {
-    console.error("Fatal error running server:", error);
+    console.error(chalk.red("Fatal error:"), error);
     process.exit(1);
 });
