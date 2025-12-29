@@ -140,25 +140,43 @@ Dialectical reasoning with thesis-antithesis-synthesis and argument strength ana
 ### map (Visual Reasoning)
 Visual thinking with diagrams, graphs, flowcharts, concept maps, and state diagrams.
 
-## Migration from clear-thought-mcp-server v1.x
+## Remote Access (Vercel Deployment)
 
-Tool names have been simplified for easier use:
+Think-MCP can be deployed to Vercel for remote access from Claude Desktop and ChatGPT without local installation.
 
-| Old Name | New Name |
-|----------|----------|
-| `sequentialthinking` | `trace` |
-| `mentalmodel` | `model` |
-| `designpattern` | `pattern` |
-| `programmingparadigm` | `paradigm` |
-| `debuggingapproach` | `debug` |
-| `collaborativereasoning` | `council` |
-| `decisionframework` | `decide` |
-| `metacognitivemonitoring` | `reflect` |
-| `scientificmethod` | `hypothesis` |
-| `structuredargumentation` | `debate` |
-| `visualreasoning` | `map` |
+### Deploy to Vercel
 
-Update your MCP config to use `think-mcp` instead of `clear-thought-mcp-server` and update any tool name references in your prompts.
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https://github.com/chirag127/think-mcp)
+
+Or deploy manually:
+
+```bash
+# Install Vercel CLI
+npm i -g vercel
+
+# Deploy
+vercel
+```
+
+### Connect Claude Desktop (Remote)
+
+Add to your `claude_desktop_config.json`:
+
+```json
+{
+  "mcpServers": {
+    "think-mcp": {
+      "command": "npx",
+      "args": ["mcp-remote", "https://your-deployment.vercel.app/api/mcp"]
+    }
+  }
+}
+```
+
+### Connect ChatGPT
+
+1. Go to Settings → Connectors → Advanced → Developer Mode
+2. Add the URL: `https://your-deployment.vercel.app/api/mcp`
 
 ## Development
 
@@ -178,14 +196,18 @@ npm test
 
 # Development mode (watch)
 npm run dev
+
+# Web development (Vercel)
+cd web && npm install
+npm run dev:web
 ```
 
 ## Project Structure
 
 ```
 think-mcp/
-├── dist/               # Compiled JavaScript files
-├── src/
+├── dist/               # Compiled JavaScript files (npm package)
+├── src/                # STDIO server source (for npx/local usage)
 │   ├── models/         # Data interfaces
 │   ├── tools/          # Tool implementations
 │   │   ├── traceServer.ts
@@ -201,6 +223,17 @@ think-mcp/
 │   │   └── mapServer.ts
 │   ├── toolNames.ts    # Tool name constants
 │   └── index.ts        # Main server entry point
+├── web/                # Next.js app for Vercel deployment
+│   ├── app/
+│   │   ├── layout.tsx
+│   │   ├── page.tsx    # Landing page
+│   │   └── api/
+│   │       └── [transport]/
+│   │           └── route.ts  # MCP endpoint
+│   └── lib/
+│       ├── mcp-tools.ts      # Tool registration
+│       └── tools/            # Tool definitions
+├── vercel.json         # Vercel deployment config
 ├── package.json
 ├── tsconfig.json
 └── README.md
