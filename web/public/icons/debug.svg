@@ -1,0 +1,17 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+  <!-- Bug body -->
+  <path d="M8 10a4 4 0 0 1 8 0v5a4 4 0 0 1-8 0Z"/>
+  <!-- Bug head -->
+  <ellipse cx="12" cy="7" rx="2" ry="1.5"/>
+  <!-- Antennae -->
+  <path d="M10 6l-2-2"/>
+  <path d="M14 6l2-2"/>
+  <!-- Bug legs -->
+  <path d="M8 12H5"/>
+  <path d="M16 12h3"/>
+  <path d="M8 15H5"/>
+  <path d="M16 15h3"/>
+  <!-- Magnifying glass overlay -->
+  <circle cx="18" cy="18" r="3"/>
+  <path d="M21 21l1.5 1.5"/>
+</svg>

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { withStandardResponse, ToolName } from './responses';
 
 // Tool name constants
 export const TOOL_NAMES = {
@@ -14,6 +15,86 @@ export const TOOL_NAMES = {
   DEBATE: 'debate',
   MAP: 'map',
 } as const;
+
+// Tool icon paths (relative to /public)
+export const TOOL_ICONS = {
+  [TOOL_NAMES.TRACE]: '/icons/trace.svg',
+  [TOOL_NAMES.MODEL]: '/icons/model.svg',
+  [TOOL_NAMES.PATTERN]: '/icons/pattern.svg',
+  [TOOL_NAMES.PARADIGM]: '/icons/paradigm.svg',
+  [TOOL_NAMES.DEBUG]: '/icons/debug.svg',
+  [TOOL_NAMES.COUNCIL]: '/icons/council.svg',
+  [TOOL_NAMES.DECIDE]: '/icons/decide.svg',
+  [TOOL_NAMES.REFLECT]: '/icons/reflect.svg',
+  [TOOL_NAMES.HYPOTHESIS]: '/icons/hypothesis.svg',
+  [TOOL_NAMES.DEBATE]: '/icons/debate.svg',
+  [TOOL_NAMES.MAP]: '/icons/map.svg',
+} as const;
+
+// Tool metadata for UI rendering
+export interface ToolMetadata {
+  name: string;
+  icon: string;
+  description: string;
+}
+
+export const TOOL_METADATA: Record<string, ToolMetadata> = {
+  [TOOL_NAMES.TRACE]: {
+    name: 'Sequential Thinking',
+    icon: TOOL_ICONS[TOOL_NAMES.TRACE],
+    description: 'Dynamic and reflective problem-solving through sequential thoughts',
+  },
+  [TOOL_NAMES.MODEL]: {
+    name: 'Mental Models',
+    icon: TOOL_ICONS[TOOL_NAMES.MODEL],
+    description: 'Apply structured mental models like First Principles and Pareto',
+  },
+  [TOOL_NAMES.PATTERN]: {
+    name: 'Design Patterns',
+    icon: TOOL_ICONS[TOOL_NAMES.PATTERN],
+    description: 'Apply software design patterns to architecture problems',
+  },
+  [TOOL_NAMES.PARADIGM]: {
+    name: 'Programming Paradigms',
+    icon: TOOL_ICONS[TOOL_NAMES.PARADIGM],
+    description: 'Apply different programming paradigms to solve problems',
+  },
+  [TOOL_NAMES.DEBUG]: {
+    name: 'Debugging',
+    icon: TOOL_ICONS[TOOL_NAMES.DEBUG],
+    description: 'Systematic debugging approaches to solve technical issues',
+  },
+  [TOOL_NAMES.COUNCIL]: {
+    name: 'Expert Council',
+    icon: TOOL_ICONS[TOOL_NAMES.COUNCIL],
+    description: 'Simulate expert collaboration with diverse perspectives',
+  },
+  [TOOL_NAMES.DECIDE]: {
+    name: 'Decision Analysis',
+    icon: TOOL_ICONS[TOOL_NAMES.DECIDE],
+    description: 'Structured decision analysis and rational choice evaluation',
+  },
+  [TOOL_NAMES.REFLECT]: {
+    name: 'Metacognition',
+    icon: TOOL_ICONS[TOOL_NAMES.REFLECT],
+    description: 'Self-monitoring of knowledge and reasoning quality',
+  },
+  [TOOL_NAMES.HYPOTHESIS]: {
+    name: 'Scientific Method',
+    icon: TOOL_ICONS[TOOL_NAMES.HYPOTHESIS],
+    description: 'Formal scientific reasoning with hypothesis testing',
+  },
+  [TOOL_NAMES.DEBATE]: {
+    name: 'Dialectical Reasoning',
+    icon: TOOL_ICONS[TOOL_NAMES.DEBATE],
+    description: 'Systematic argumentation with thesis and antithesis',
+  },
+  [TOOL_NAMES.MAP]: {
+    name: 'Visual Reasoning',
+    icon: TOOL_ICONS[TOOL_NAMES.MAP],
+    description: 'Create and manipulate diagrams and visual representations',
+  },
+};
 
 // Import tool handlers
 import { traceSchema, handleTrace } from './tools/trace';
@@ -132,91 +213,91 @@ It supports various visual elements and operations to facilitate insight generat
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 export function registerAllTools(server: any) {
-  // Register trace tool
+  // Register trace tool with standard response wrapper
   server.tool(
     TOOL_NAMES.TRACE,
     TOOL_DESCRIPTIONS[TOOL_NAMES.TRACE],
     traceSchema,
-    handleTrace
+    withStandardResponse(TOOL_NAMES.TRACE as ToolName, handleTrace)
   );
 
-  // Register model tool
+  // Register model tool with standard response wrapper
   server.tool(
     TOOL_NAMES.MODEL,
     TOOL_DESCRIPTIONS[TOOL_NAMES.MODEL],
     modelSchema,
-    handleModel
+    withStandardResponse(TOOL_NAMES.MODEL as ToolName, handleModel)
   );
 
-  // Register pattern tool
+  // Register pattern tool with standard response wrapper
   server.tool(
     TOOL_NAMES.PATTERN,
     TOOL_DESCRIPTIONS[TOOL_NAMES.PATTERN],
     patternSchema,
-    handlePattern
+    withStandardResponse(TOOL_NAMES.PATTERN as ToolName, handlePattern)
   );
 
-  // Register paradigm tool
+  // Register paradigm tool with standard response wrapper
   server.tool(
     TOOL_NAMES.PARADIGM,
     TOOL_DESCRIPTIONS[TOOL_NAMES.PARADIGM],
     paradigmSchema,
-    handleParadigm
+    withStandardResponse(TOOL_NAMES.PARADIGM as ToolName, handleParadigm)
   );
 
-  // Register debug tool
+  // Register debug tool with standard response wrapper
   server.tool(
     TOOL_NAMES.DEBUG,
     TOOL_DESCRIPTIONS[TOOL_NAMES.DEBUG],
     debugSchema,
-    handleDebug
+    withStandardResponse(TOOL_NAMES.DEBUG as ToolName, handleDebug)
   );
 
-  // Register council tool
+  // Register council tool with standard response wrapper
   server.tool(
     TOOL_NAMES.COUNCIL,
     TOOL_DESCRIPTIONS[TOOL_NAMES.COUNCIL],
     councilSchema,
-    handleCouncil
+    withStandardResponse(TOOL_NAMES.COUNCIL as ToolName, handleCouncil)
   );
 
-  // Register decide tool
+  // Register decide tool with standard response wrapper
   server.tool(
     TOOL_NAMES.DECIDE,
     TOOL_DESCRIPTIONS[TOOL_NAMES.DECIDE],
     decideSchema,
-    handleDecide
+    withStandardResponse(TOOL_NAMES.DECIDE as ToolName, handleDecide)
   );
 
-  // Register reflect tool
+  // Register reflect tool with standard response wrapper
   server.tool(
     TOOL_NAMES.REFLECT,
     TOOL_DESCRIPTIONS[TOOL_NAMES.REFLECT],
     reflectSchema,
-    handleReflect
+    withStandardResponse(TOOL_NAMES.REFLECT as ToolName, handleReflect)
   );
 
-  // Register hypothesis tool
+  // Register hypothesis tool with standard response wrapper
   server.tool(
     TOOL_NAMES.HYPOTHESIS,
     TOOL_DESCRIPTIONS[TOOL_NAMES.HYPOTHESIS],
     hypothesisSchema,
-    handleHypothesis
+    withStandardResponse(TOOL_NAMES.HYPOTHESIS as ToolName, handleHypothesis)
   );
 
-  // Register debate tool
+  // Register debate tool with standard response wrapper
   server.tool(
     TOOL_NAMES.DEBATE,
     TOOL_DESCRIPTIONS[TOOL_NAMES.DEBATE],
     debateSchema,
-    handleDebate
+    withStandardResponse(TOOL_NAMES.DEBATE as ToolName, handleDebate)
   );
 
-  // Register map tool
+  // Register map tool with standard response wrapper
   server.tool(
     TOOL_NAMES.MAP,
     TOOL_DESCRIPTIONS[TOOL_NAMES.MAP],
     mapSchema,
-    handleMap
+    withStandardResponse(TOOL_NAMES.MAP as ToolName, handleMap)
   );
 }

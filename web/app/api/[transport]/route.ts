@@ -1,6 +1,8 @@
 import { McpServer } from '@modelcontextprotocol/sdk/server/mcp.js';
 import { WebStandardStreamableHTTPServerTransport } from '@modelcontextprotocol/sdk/server/webStandardStreamableHttp.js';
 import { registerAllTools } from '@/lib/mcp-tools';
+import { registerAllResources } from '@/lib/resources';
+import { registerAllPrompts } from '@/lib/prompts';
 
 // Create a stateless transport (no session management)
 // For stateless operation, we can share the transport and server
@@ -15,8 +17,10 @@ const server = new McpServer({
   version: '2.0.0'
 });
 
-// Register all tools
+// Register all tools, resources, and prompts
 registerAllTools(server);
+registerAllResources(server);
+registerAllPrompts(server);
 
 // Connect server to transport (only once)
 let connectionPromise: Promise<void> | null = null;

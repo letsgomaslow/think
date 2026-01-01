@@ -1,3 +1,303 @@
+/* === FONT FACE DECLARATIONS === */
+
+/* Graphik - Body Font (font-body) */
+@font-face {
+  font-family: 'Graphik';
+  src: url('/fonts/Graphik-font/Graphik-Thin.otf') format('opentype');
+  font-weight: 100 300;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: 'Graphik';
+  src: url('/fonts/Graphik-font/Graphik-Bold.otf') format('opentype');
+  font-weight: 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* Nocturno Display - Editorial Font (font-editorial) */
+@font-face {
+  font-family: 'Nocturno Display';
+  src: url('/fonts/Nocturno-font/Nocturno%20Display%20Std%20Bk.otf') format('opentype');
+  font-weight: 400;
+  font-style: normal;
+  font-display: swap;
+}
+
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  :root {
+    /* ============================================
+       DESIGN SYSTEM CSS VARIABLES
+
+       Values sourced from: brand-config.md
+       Token architecture: design-tokens.md
+
+       When copying this skill to a new project:
+       1. Edit brand-config.md with your values
+       2. Update the HSL values below accordingly
+       ============================================ */
+
+    /* === CORE SHADCN VARIABLES === */
+
+    /* Backgrounds - from brand-config surface tokens */
+    --background: 230 25% 95%;          /* surface-background */
+    --foreground: 0 0% 20%;             /* color-foreground */
+
+    /* Card - from brand-config surface tokens */
+    --card: 0 0% 100%;                  /* surface-card */
+    --card-foreground: 0 0% 20%;        /* color-foreground */
+
+    /* Popover - typically same as card */
+    --popover: 0 0% 100%;
+    --popover-foreground: 0 0% 20%;
+
+    /* Primary (Dark CTA) - from brand-config */
+    --primary: 0 0% 20%;                /* color-secondary */
+    --primary-foreground: 0 0% 100%;
+
+    /* Secondary (Accent) - from brand-config */
+    --secondary: 159 43% 60%;           /* color-primary */
+    --secondary-foreground: 0 0% 100%;
+
+    /* Muted - from brand-config */
+    --muted: 220 14% 96%;
+    --muted-foreground: 0 0% 45%;       /* color-muted */
+
+    /* Accent - from brand-config */
+    --accent: 330 72% 70%;              /* color-accent */
+    --accent-foreground: 0 0% 20%;
+
+    /* Destructive - standard red */
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+
+    /* Border & Input - from brand-config */
+    --border: 220 14% 85%;              /* color-border */
+    --input: 220 14% 85%;
+    --ring: 159 43% 60%;                /* color-primary (focus) */
+
+    /* BRAND-CRITICAL: Radius from brand-config */
+    --radius: 0.25rem;                  /* radius-card: 4px, NOT 8px */
+
+    /* Chart Colors (for data viz) */
+    --chart-1: 159 43% 60%;
+    --chart-2: 330 72% 70%;
+    --chart-3: 263 66% 28%;
+    --chart-4: 36 82% 58%;
+    --chart-5: 199 53% 51%;
+
+    /* === EXTENDED BRAND VARIABLES === */
+
+    /* Primary Brand Colors - from brand-config */
+    --brand-primary: 159 43% 60%;       /* color-primary */
+    --brand-accent: 330 72% 70%;        /* color-accent */
+    --brand-accent-alt: 263 66% 28%;    /* color-accent-alt / purple */
+
+    /* Statistics Accents - from brand-config */
+    --stat-1: 161 40% 60%;              /* color-stat-1 */
+    --stat-2: 36 82% 58%;               /* color-stat-2 */
+    --stat-3: 292 24% 55%;              /* color-stat-3 */
+
+    /* CTA Variants - from brand-config */
+    --cta: 330 52% 68%;                 /* color-cta */
+    --cta-submit: 17 67% 68%;           /* color-cta-submit */
+
+    /* Surface Variants */
+    --surface-dark: 220 45% 14%;        /* surface-dark */
+    --surface-dark-card: 220 35% 21%;   /* surface-dark-card */
+    --surface-dark-alt: 220 35% 28%;    /* surface-dark-alt */
+
+    /* Near Black (for accent headlines) */
+    --near-black: 216 22% 12%;          /* color-near-black */
+
+    /* Dividers - from brand-config */
+    --divider: 0 0% 88%;                /* color-divider */
+    --divider-accent: 292 24% 55%;      /* color-divider-accent */
+
+    /* === SHADOW TOKENS (BRAND-CRITICAL) === */
+    --shadow-card: 0 0 4px rgba(0, 0, 0, 0.06);
+    --shadow-card-hover: 0 0 4px rgba(0, 0, 0, 0.19);
+    --shadow-marquee: 0 2px 10px rgba(0, 0, 0, 0.1);
+    --shadow-elevated: 0 8px 24px rgba(0, 0, 0, 0.12);
+    --shadow-mockup: 0 0 20px rgba(0, 0, 0, 0.12);
+
+    /* === RADIUS TOKENS (BRAND-CRITICAL) === */
+    --radius-badge: 2px;                /* radius-badge */
+    --radius-card: 4px;                 /* radius-card */
+    --radius-panel: 34px;               /* radius-panel */
+
+    /* === LETTER SPACING TOKENS === */
+    --ls-tight: -1.4px;                 /* Headlines 60px+ */
+    --ls-headline: -0.89px;             /* Subheadings 38px */
+    --ls-normal: 0;                     /* Body text */
+    --ls-wide: 0.4px;                   /* Labels */
+    --ls-wider: 2px;                    /* Logos, navigation */
+    --ls-widest: 4px;                   /* Meta labels */
+
+    /* === SPACING SCALE === */
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-4: 16px;
+    --space-6: 24px;
+    --space-8: 32px;
+    --space-12: 48px;
+    --space-16: 64px;
+    --space-24: 96px;
+  }
+
+  /* === DARK MODE (Dark Band Sections) === */
+  .dark {
+    --background: 220 45% 14%;          /* surface-dark */
+    --foreground: 0 0% 100%;
+    --card: 220 35% 21%;                /* surface-dark-card */
+    --card-foreground: 0 0% 100%;
+    --popover: 220 35% 21%;
+    --popover-foreground: 0 0% 100%;
+    --primary: 159 43% 60%;             /* Accent pops on dark */
+    --primary-foreground: 0 0% 20%;
+    --secondary: 220 35% 28%;           /* surface-dark-alt */
+    --secondary-foreground: 0 0% 100%;
+    --muted: 220 30% 25%;
+    --muted-foreground: 0 0% 70%;
+    --accent: 330 72% 70%;              /* Accent still works */
+    --accent-foreground: 0 0% 20%;
+    --destructive: 0 72% 51%;
+    --destructive-foreground: 0 0% 100%;
+    --border: 220 30% 32%;
+    --input: 220 30% 32%;
+    --ring: 159 43% 60%;                /* Focus ring */
+    --chart-1: 159 43% 60%;
+    --chart-2: 330 72% 70%;
+    --chart-3: 263 66% 28%;
+    --chart-4: 36 82% 58%;
+    --chart-5: 199 53% 51%;
+  }
+
+  /* === BASE STYLES === */
+  * {
+    @apply border-border;
+  }
+
+  body {
+    @apply bg-background text-foreground;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  /* === FONT STACK REFERENCE ===
+   *
+   * Configured fonts (from brand-config.md):
+   * - font-primary: Manrope (Google Fonts - add to layout.tsx)
+   * - font-body: Graphik (self-hosted via @font-face above)
+   * - font-editorial: Nocturno Display (self-hosted via @font-face above)
+   * - font-code: JetBrains Mono (Google Fonts - add to layout.tsx)
+   *
+   * Usage:
+   *   font-family: 'Manrope', system-ui, sans-serif;      // headings, nav, meta
+   *   font-family: 'Graphik', system-ui, sans-serif;      // body text
+   *   font-family: 'Nocturno Display', Georgia, serif;    // editorial headlines
+   *   font-family: 'JetBrains Mono', monospace;           // code blocks
+   */
+  .theme {
+    --animate-orbit: orbit calc(var(--duration)*1s) linear infinite;
+  }
+}
+
+/* === UTILITY CLASSES FOR BRAND TOKENS === */
+@layer utilities {
+  /* Feature Card with brand shadow */
+  .brand-card {
+    @apply rounded-[4px] bg-card;
+    box-shadow: var(--shadow-card);
+    transition: box-shadow 0.3s ease;
+  }
+  .brand-card:hover {
+    box-shadow: var(--shadow-card-hover);
+  }
+
+  /* Content panel with large radius */
+  .brand-panel {
+    @apply border;
+    background: hsl(var(--muted));
+    border-color: hsl(var(--border));
+    border-radius: var(--radius-panel);
+  }
+
+  /* Status badge */
+  .brand-badge {
+    @apply inline-flex items-center gap-1.5 px-1.5 h-4;
+    background: hsl(var(--background));
+    border-radius: var(--radius-badge);
+    font-size: 7px;
+    font-weight: 500;
+    letter-spacing: var(--ls-wide);
+    text-transform: uppercase;
+    color: hsl(var(--foreground));
+  }
+
+  /* Accent headline utilities */
+  .headline-accent {
+    color: hsl(var(--stat-3));
+  }
+  .headline-dark {
+    color: hsl(var(--near-black));
+  }
+
+  /* Link text (VIEW ALL / READ MORE) */
+  .link-text {
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: var(--ls-wider);
+    line-height: 13px;
+    text-transform: uppercase;
+    text-decoration: none;
+  }
+  .link-text-accent {
+    color: hsl(var(--cta));
+  }
+
+  /* Statistics number colors */
+  .stat-1 { color: hsl(var(--stat-1)); }
+  .stat-2 { color: hsl(var(--stat-2)); }
+  .stat-3 { color: hsl(var(--stat-3)); }
+
+  /* Letter spacing utilities */
+  .tracking-tight { letter-spacing: var(--ls-tight); }
+  .tracking-headline { letter-spacing: var(--ls-headline); }
+  .tracking-wide { letter-spacing: var(--ls-wide); }
+  .tracking-wider { letter-spacing: var(--ls-wider); }
+  .tracking-widest { letter-spacing: var(--ls-widest); }
+}
+
+/* === ACCESSIBILITY: REDUCED MOTION === */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+
+  /* Disable Framer Motion animations */
+  [data-framer-component-type] {
+    transition: none !important;
+  }
+}
+
+@theme inline {
+  @keyframes orbit {
+  0% {
+    transform: rotate(calc(var(--angle) * 1deg)) translateY(calc(var(--radius) * 1px)) rotate(calc(var(--angle) * -1deg));
+    }
+  100% {
+    transform: rotate(calc(var(--angle) * 1deg + 360deg)) translateY(calc(var(--radius) * 1px)) rotate(calc((var(--angle) * -1deg) - 360deg));
+    }
+  }
+}
