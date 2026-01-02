@@ -25,6 +25,13 @@ export const metadata: Metadata = {
     'Claude',
     'ChatGPT',
   ],
+  icons: {
+    icon: [
+      { url: '/logos/favicon.ico', sizes: 'any' },
+      { url: '/logos/maslow_just_logo_color.webp', type: 'image/webp' },
+    ],
+    apple: '/logos/maslow_just_logo_color.webp',
+  },
   openGraph: {
     type: 'website',
     locale: 'en_US',
