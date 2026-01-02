@@ -109,7 +109,7 @@ function ToolNode({ tool, index, isLast, color }: {
       >
         {/* Step number */}
         <div
-          className="w-7 h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
+          className="w-6 h-6 xs:w-6.5 xs:h-6.5 sm:w-7 sm:h-7 rounded-full flex items-center justify-center text-xs font-bold flex-shrink-0"
           style={{
             backgroundColor: `${color.replace(")", " / 0.2)")}`,
             color: color,
@@ -120,7 +120,7 @@ function ToolNode({ tool, index, isLast, color }: {
 
         {/* Tool info */}
         <div className="min-w-0">
-          <div className="text-sm font-semibold text-white group-hover:text-[hsl(var(--brand-primary))] transition-colors flex items-center gap-1">
+          <div className="text-xs xs:text-sm font-semibold text-white group-hover:text-[hsl(var(--brand-primary))] transition-colors flex items-center gap-1">
             {tool.name}
             <ChevronRight className="w-3 h-3 opacity-0 group-hover:opacity-100 transition-opacity" />
           </div>
@@ -200,7 +200,7 @@ export function ToolChains() {
   const currentPattern = chainPatterns.find(p => p.id === activePattern) || chainPatterns[0];
 
   return (
-    <section className="py-24 px-6">
+    <section className="py-16 xs:py-18 sm:py-20 md:py-22 lg:py-24 px-4 xs:px-5 sm:px-6">
       <div className="max-w-5xl mx-auto">
         {/* Section Header */}
         <motion.div
@@ -213,7 +213,7 @@ export function ToolChains() {
             <Sparkles className="w-3.5 h-3.5 text-[hsl(var(--brand-accent))]" />
             <span>Tool Combinations</span>
           </div>
-          <h2 className="text-3xl md:text-4xl font-bold text-white mb-4">
+          <h2 className="heading-lg font-bold text-white mb-4 px-4 sm:px-0 font-[family-name:var(--font-manrope)]">
             Chain tools for <span className="text-[hsl(var(--brand-primary))]">complex workflows</span>
           </h2>
           <p className="text-slate-400 max-w-2xl mx-auto">
@@ -233,7 +233,7 @@ export function ToolChains() {
                 key={pattern.id}
                 onClick={() => setActivePattern(pattern.id)}
                 className={cn(
-                  "flex items-center gap-2 px-4 py-2.5 rounded-xl border transition-all duration-200",
+                  "flex items-center gap-2 px-3 xs:px-3.5 sm:px-4 py-2 xs:py-2.5 rounded-xl border transition-all duration-200 touch-target-min",
                   isActive
                     ? "border-[hsl(var(--brand-primary)/0.5)] bg-[hsl(var(--brand-primary)/0.1)]"
                     : "border-slate-700/50 bg-slate-800/30 hover:bg-slate-800/50 hover:border-slate-600"
@@ -244,7 +244,7 @@ export function ToolChains() {
                   style={{ color: isActive ? pattern.color : "rgb(148 163 184)" }}
                 />
                 <span className={cn(
-                  "text-sm font-medium",
+                  "text-sm font-medium hidden xs:inline",
                   isActive ? "text-white" : "text-slate-400"
                 )}>
                   {pattern.name}
@@ -255,7 +255,7 @@ export function ToolChains() {
         </div>
 
         {/* Chain Visualization */}
-        <div className="p-6 md:p-8 rounded-2xl border border-slate-700/50 bg-slate-900/50 min-h-[300px]">
+        <div className="p-4 xs:p-5 sm:p-6 md:p-7 lg:p-8 rounded-2xl border border-slate-700/50 bg-slate-900/50 min-h-[300px]">
           <AnimatePresence mode="wait">
             <ChainVisualization key={currentPattern.id} pattern={currentPattern} />
           </AnimatePresence>

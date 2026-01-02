@@ -1,0 +1,1124 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trace | Chain-of-Thought Reasoning by Maslow AI</title>
+
+    <!-- Maslow AI Typography: Manrope + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* =====================================================
+           MASLOW AI DESIGN SYSTEM
+           Skills Applied: maslow-brand, accessibility-design, frontend-design
+           ===================================================== */
+
+        :root {
+            /* Maslow Core Palette (constant) */
+            --maslow-teal: #6DC4AD;
+            --maslow-pink: #EE7BB3;
+            --maslow-purple: #401877;
+            --maslow-blue: #469DBB;
+            --maslow-orange: #F3A326;
+            --maslow-purple-light: #A070A6;
+
+            /* Trace Tool Color */
+            --trace: #7BB8C8;
+            --trace-light: #EBF4F7;
+
+            /* Typography - Manrope (maslow-brand) */
+            --font-display: 'Manrope', system-ui, sans-serif;
+            --font-body: 'Manrope', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Spacing Scale (maslow-brand) */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-20: 80px;
+            --space-24: 96px;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+
+            /* Accent Line (maslow-brand signature) */
+            --accent-line: 3px;
+        }
+
+        /* ===== LIGHT MODE (Default) ===== */
+        [data-theme="light"] {
+            --bg: #E6EAF3;
+            --surface: #FFFFFF;
+            --surface-alt: #EEEEEE;
+            --text: #333333;
+            --text-secondary: #666666;
+            --text-muted: #A5A5A5;
+            --border: #D0D5E0;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --code-bg: #F5F7FA;
+            --selection-bg: #EBF7F4;
+        }
+
+        /* ===== DARK MODE ===== */
+        [data-theme="dark"] {
+            --bg: #121D35;
+            --surface: #1A2847;
+            --surface-alt: #243356;
+            --text: #FFFFFF;
+            --text-secondary: #B8C4D9;
+            --text-muted: #7A8BA8;
+            --border: #3A4A6B;
+            --nav-bg: rgba(18, 29, 53, 0.95);
+            --code-bg: #243356;
+            --selection-bg: rgba(109, 196, 173, 0.15);
+        }
+
+        /* ===== RESET ===== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            background: var(--bg);
+            color: var(--text-secondary);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--selection-bg);
+            color: var(--text);
+        }
+
+        /* ===== ACCESSIBILITY (accessibility-design skill) ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--maslow-teal);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            color: var(--text);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* Maslow headline pattern: bold keyword + light supporting */
+        .headline-bold {
+            font-weight: 800;
+            color: var(--text);
+        }
+        .headline-light {
+            font-weight: 300;
+            color: var(--text-muted);
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--maslow-pink), var(--maslow-purple-light), var(--maslow-teal));
+            border-radius: var(--radius-md);
+        }
+
+        .nav-wordmark {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-title {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--text);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-subtitle {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--maslow-teal);
+            color: var(--maslow-teal);
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        [data-theme="dark"] .icon-sun { display: none; }
+        [data-theme="dark"] .icon-moon { display: block; }
+        [data-theme="light"] .icon-sun { display: block; }
+        [data-theme="light"] .icon-moon { display: none; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--maslow-teal);
+            color: #333333;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(109, 196, 173, 0.3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--text-muted);
+            color: var(--text);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: var(--space-24);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-16);
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Accent line (maslow-brand signature) */
+        .accent-line {
+            width: 60px;
+            height: var(--accent-line);
+            background: var(--trace);
+            margin-bottom: var(--space-6);
+            animation: lineGrow 0.6s ease-out;
+        }
+
+        @keyframes lineGrow {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--trace);
+            margin-bottom: var(--space-4);
+            animation: fadeUp 0.6s ease-out 0.1s both;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 72px);
+            margin-bottom: var(--space-6);
+            animation: fadeUp 0.6s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 480px;
+            margin-bottom: var(--space-8);
+            animation: fadeUp 0.6s ease-out 0.3s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            animation: fadeUp 0.6s ease-out 0.4s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            height: 480px;
+            animation: fadeIn 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .thought-card {
+            position: absolute;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            width: 260px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+        }
+
+        .thought-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        /* Maslow interaction state: selected with left border */
+        .thought-card.active {
+            border-left: var(--accent-line) solid var(--trace);
+            background: var(--selection-bg);
+        }
+
+        .thought-card.branch {
+            border-left: var(--accent-line) solid var(--maslow-teal);
+        }
+
+        .thought-number {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 28px;
+            height: 28px;
+            background: var(--trace);
+            color: #333333;
+            font-weight: 700;
+            font-size: 13px;
+            border-radius: 50%;
+            margin-bottom: var(--space-3);
+        }
+
+        .thought-card.branch .thought-number {
+            background: var(--maslow-teal);
+        }
+
+        .thought-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .thought-meta {
+            margin-top: var(--space-3);
+            font-size: 11px;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+        }
+
+        /* Card positions - asymmetric layout */
+        .card-1 { top: 0; left: 10%; animation: cardFloat 0.6s ease-out 0.4s both; }
+        .card-2 { top: 140px; right: 5%; animation: cardFloat 0.6s ease-out 0.5s both; }
+        .card-3 { top: 300px; left: 20%; animation: cardFloat 0.6s ease-out 0.6s both; }
+        .card-4 { top: 380px; right: 15%; animation: cardFloat 0.6s ease-out 0.7s both; }
+
+        @keyframes cardFloat {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Connection lines */
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+
+        .connections svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .connections path {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 2;
+            stroke-dasharray: 8 4;
+        }
+
+        .connections path.active {
+            stroke: var(--trace);
+            stroke-dasharray: none;
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features {
+            padding: var(--space-24) 0;
+            background: var(--surface);
+            transition: background-color 0.4s ease;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-16);
+        }
+
+        .section-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--trace);
+            margin-bottom: var(--space-4);
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: var(--space-4);
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-8);
+        }
+
+        .feature-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-8);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Maslow hover state: left border reveal */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--trace);
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+            transition: width 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            width: var(--accent-line);
+        }
+
+        .feature-card:hover {
+            border-color: var(--trace);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--trace-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-5);
+            color: var(--trace);
+        }
+
+        [data-theme="dark"] .feature-icon {
+            background: rgba(123, 184, 200, 0.15);
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+        }
+
+        .feature-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== DARK BAND SECTION (maslow-brand pattern) ===== */
+        .dark-band {
+            background: #121D35;
+            color: #FFFFFF;
+            padding: var(--space-24) 0;
+        }
+
+        .dark-band .section-eyebrow {
+            color: var(--maslow-teal);
+        }
+
+        .dark-band .section-title {
+            color: #FFFFFF;
+        }
+
+        .dark-band .section-description {
+            color: #B8C4D9;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+            margin-top: var(--space-12);
+        }
+
+        .demo-panel {
+            background: #1A2847;
+            border: 1px solid #3A4A6B;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-5);
+            background: #243356;
+            border-bottom: 1px solid #3A4A6B;
+        }
+
+        .demo-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #7A8BA8;
+        }
+
+        .demo-badge {
+            background: var(--trace);
+            color: #333333;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .demo-content {
+            padding: var(--space-6);
+        }
+
+        .demo-content pre {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.7;
+            color: #B8C4D9;
+            overflow-x: auto;
+        }
+
+        .json-key { color: var(--trace); }
+        .json-string { color: var(--maslow-teal); }
+        .json-number { color: var(--maslow-orange); }
+        .json-boolean { color: var(--maslow-pink); }
+
+        /* ===== API SECTION ===== */
+        .api {
+            padding: var(--space-24) 0;
+            background: var(--bg);
+            transition: background-color 0.4s ease;
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .api-table th {
+            text-align: left;
+            padding: var(--space-4) var(--space-5);
+            background: var(--surface-alt);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table td {
+            padding: var(--space-4) var(--space-5);
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .api-table code {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--trace);
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .badge-type {
+            background: rgba(109, 196, 173, 0.15);
+            color: var(--maslow-teal);
+        }
+
+        .badge-required {
+            background: rgba(243, 163, 38, 0.15);
+            color: var(--maslow-orange);
+        }
+
+        .badge-optional {
+            background: var(--surface-alt);
+            color: var(--text-muted);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: var(--space-12) 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            background: var(--bg);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .footer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--maslow-purple-light);
+            padding: var(--space-2) var(--space-4);
+            background: rgba(64, 24, 119, 0.08);
+            border-radius: 20px;
+        }
+
+        [data-theme="dark"] .footer-badge {
+            background: rgba(160, 112, 166, 0.15);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="container nav-inner">
+            <a href="#" class="nav-brand" aria-label="Maslow AI Home">
+                <div class="nav-logo" aria-hidden="true"></div>
+                <div class="nav-wordmark">
+                    <span class="nav-title">MASLOW | AI</span>
+                    <span class="nav-subtitle">think-mcp</span>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#demo" class="nav-link">Demo</a></li>
+                <li><a href="#api" class="nav-link">API</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <main role="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="accent-line" aria-hidden="true"></div>
+                        <p class="hero-eyebrow">Trace Tool</p>
+                        <h1 id="hero-title">
+                            <span class="headline-bold">Think</span><br>
+                            <span class="headline-light">through problems<br>step by step</span>
+                        </h1>
+                        <p class="hero-description">
+                            Dynamic chain-of-thought reasoning that lets you revise earlier thoughts, branch into alternatives, and never lose a good idea because you went down the wrong path.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#demo" class="btn btn-primary">Try the Demo</a>
+                            <a href="#api" class="btn btn-ghost">View API</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual" aria-hidden="true">
+                        <div class="connections">
+                            <svg viewBox="0 0 400 500">
+                                <path d="M130 60 Q200 120 290 160" class="active"/>
+                                <path d="M290 200 Q220 260 160 320"/>
+                                <path d="M290 200 Q340 280 310 380" class="active"/>
+                            </svg>
+                        </div>
+
+                        <div class="thought-card active card-1">
+                            <span class="thought-number">1</span>
+                            <p class="thought-text">Analyze the problem space and identify key constraints</p>
+                            <p class="thought-meta">Initial analysis</p>
+                        </div>
+
+                        <div class="thought-card active card-2">
+                            <span class="thought-number">2</span>
+                            <p class="thought-text">Deep dive into root cause - the issue is in the authentication layer</p>
+                            <p class="thought-meta">Building on thought 1</p>
+                        </div>
+
+                        <div class="thought-card card-3">
+                            <span class="thought-number">2b</span>
+                            <p class="thought-text">Alternative: Could also be a rate limiting issue</p>
+                            <p class="thought-meta">Branch from 1</p>
+                        </div>
+
+                        <div class="thought-card branch card-4">
+                            <span class="thought-number">3</span>
+                            <p class="thought-text">Solution validated! Token refresh was the culprit</p>
+                            <p class="thought-meta">Conclusion</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features" aria-labelledby="features-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Features</p>
+                    <h2 id="features-title" class="section-title">Why Use Trace?</h2>
+                    <p class="section-description">
+                        Unlike linear thinking, Trace captures the messy, iterative nature of real problem-solving.
+                    </p>
+                </header>
+
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Revise Earlier Thoughts</h3>
+                        <p class="feature-text">
+                            Realize an assumption was wrong? Mark thoughts as revisions to correct your reasoning while keeping the full audit trail.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Branch & Explore</h3>
+                        <p class="feature-text">
+                            Create parallel thought paths for alternative solutions. Compare approaches without losing your original analysis.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Document Everything</h3>
+                        <p class="feature-text">
+                            Every thought, revision, and branch is recorded. Perfect for audits, reviews, and understanding how conclusions evolved.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Section (Dark Band) -->
+        <section id="demo" class="dark-band" aria-labelledby="demo-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Demo</p>
+                    <h2 id="demo-title" class="section-title">See It in Action</h2>
+                    <p class="section-description">
+                        A simple example showing thought progression with branching
+                    </p>
+                </header>
+
+                <div class="demo-grid">
+                    <div class="demo-panel">
+                        <div class="demo-header">
+                            <span class="demo-label">Input</span>
+                            <span class="demo-badge">Branch</span>
+                        </div>
+                        <div class="demo-content">
+                            <pre><code>{
+  <span class="json-key">"thought"</span>: <span class="json-string">"What if we explore a different approach?"</span>,
+  <span class="json-key">"thoughtNumber"</span>: <span class="json-number">2</span>,
+  <span class="json-key">"totalThoughts"</span>: <span class="json-number">4</span>,
+  <span class="json-key">"nextThoughtNeeded"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"branchFromThought"</span>: <span class="json-number">1</span>,
+  <span class="json-key">"branchId"</span>: <span class="json-string">"alt-approach"</span>
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <div class="demo-panel">
+                        <div class="demo-header">
+                            <span class="demo-label">Output</span>
+                        </div>
+                        <div class="demo-content">
+                            <pre><code>{
+  <span class="json-key">"thought"</span>: <span class="json-string">"What if we explore a different approach?"</span>,
+  <span class="json-key">"thoughtNumber"</span>: <span class="json-number">2</span>,
+  <span class="json-key">"totalThoughts"</span>: <span class="json-number">4</span>,
+  <span class="json-key">"nextThoughtNeeded"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"branchFromThought"</span>: <span class="json-number">1</span>,
+  <span class="json-key">"branchId"</span>: <span class="json-string">"alt-approach"</span>
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Section -->
+        <section id="api" class="api" aria-labelledby="api-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Reference</p>
+                    <h2 id="api-title" class="section-title">API Parameters</h2>
+                </header>
+
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Parameter</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Required</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>thought</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>The content of your current thought</td>
+                        </tr>
+                        <tr>
+                            <td><code>thoughtNumber</code></td>
+                            <td><span class="badge badge-type">number</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Current position in the sequence (starts at 1)</td>
+                        </tr>
+                        <tr>
+                            <td><code>totalThoughts</code></td>
+                            <td><span class="badge badge-type">number</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Estimated total thoughts needed</td>
+                        </tr>
+                        <tr>
+                            <td><code>nextThoughtNeeded</code></td>
+                            <td><span class="badge badge-type">boolean</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Continue (true) or conclude (false)</td>
+                        </tr>
+                        <tr>
+                            <td><code>isRevision</code></td>
+                            <td><span class="badge badge-type">boolean</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Marks this as revising earlier thinking</td>
+                        </tr>
+                        <tr>
+                            <td><code>branchFromThought</code></td>
+                            <td><span class="badge badge-type">number</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Create a branch from this thought number</td>
+                        </tr>
+                        <tr>
+                            <td><code>branchId</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Identifier for the branch</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <p class="footer-text">think-mcp Trace Tool &mdash; Dynamic Chain-of-Thought Reasoning</p>
+            <div class="footer-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                Powered by Maslow AI
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        (function() {
+            const html = document.documentElement;
+            const toggle = document.getElementById('themeToggle');
+
+            // Check saved preference or system preference
+            const saved = localStorage.getItem('maslow-theme');
+            if (saved) {
+                html.setAttribute('data-theme', saved);
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            }
+
+            toggle.addEventListener('click', function() {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+
+                html.setAttribute('data-theme', next);
+                localStorage.setItem('maslow-theme', next);
+
+                // Screen reader announcement
+                const announcement = document.createElement('div');
+                announcement.setAttribute('role', 'status');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.className = 'sr-only';
+                announcement.textContent = `Switched to ${next} mode`;
+                document.body.appendChild(announcement);
+                setTimeout(() => announcement.remove(), 1000);
+            });
+        })();
+    </script>
+</body>
+</html>

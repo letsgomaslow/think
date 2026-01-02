@@ -1,0 +1,88 @@
+{
+  "scenario": {
+    "title": "European Market Expansion Decision",
+    "question": "Should we enter the European market this quarter?"
+  },
+
+  "company": {
+    "name": "Bloom & Co.",
+    "industry": "DTC Beauty & Wellness",
+    "founded": "2019",
+    "headquarters": "Austin, TX",
+    "employees": "120-150",
+    "currentMarkets": "US Only",
+    "evaluating": "European expansion"
+  },
+
+  "financials": {
+    "quarterlyData": [
+      { "quarter": "Q1 2023", "gmv_millions": 12.4, "orders_thousands": 89, "customers_thousands": 45, "revenue_millions": 11.8 },
+      { "quarter": "Q2 2023", "gmv_millions": 14.2, "orders_thousands": 102, "customers_thousands": 52, "revenue_millions": 13.5 },
+      { "quarter": "Q3 2023", "gmv_millions": 16.8, "orders_thousands": 121, "customers_thousands": 61, "revenue_millions": 16.0 },
+      { "quarter": "Q4 2023", "gmv_millions": 22.1, "orders_thousands": 159, "customers_thousands": 78, "revenue_millions": 21.0 },
+      { "quarter": "Q1 2024", "gmv_millions": 18.5, "orders_thousands": 133, "customers_thousands": 82, "revenue_millions": 17.6 },
+      { "quarter": "Q2 2024", "gmv_millions": 21.3, "orders_thousands": 153, "customers_thousands": 91, "revenue_millions": 20.2 },
+      { "quarter": "Q3 2024", "gmv_millions": 24.7, "orders_thousands": 178, "customers_thousands": 105, "revenue_millions": 23.5 },
+      { "quarter": "Q4 2024", "gmv_millions": 31.2, "orders_thousands": 225, "customers_thousands": 128, "revenue_millions": 29.6 }
+    ],
+    "metrics": {
+      "yoyRevenueGrowth": "41%",
+      "q4QoQGrowth": "26%",
+      "latestQuarterRevenue": "$29.6M"
+    }
+  },
+
+  "marketContext": {
+    "narrative": "Bloom & Co. is a direct-to-consumer beauty brand that has grown 41% YoY in the US market. With strong Q4 2024 results ($29.6M revenue) and increasing customer retention (128K active customers), leadership is evaluating international expansion. Three major EU competitors have recently raised Series B rounds, creating urgency around the European market opportunity.",
+    "keyFactors": [
+      "EU SaaS/DTC market growing 18% YoY",
+      "UK, Germany, and France represent 65% of addressable EU market",
+      "Category has 3 established EU players but none dominant",
+      "GDPR compliance requires 3-4 months of engineering work",
+      "Two of top 10 US customers already requesting EU data centers",
+      "EU expansion adds estimated $2M to next year's costs"
+    ]
+  },
+
+  "councilPrompt": "Should Bloom & Co. enter the European market this quarter? Context: Bloom & Co. is a DTC beauty brand founded in 2019 (Austin, TX) with 120-150 employees. Currently US-only, they've grown 41% YoY to $29.6M Q4 2024 revenue with 128K active customers. Three EU competitors just raised Series B. Key considerations: EU market growing 18% YoY, GDPR compliance needs 3-4 months, two top customers want EU data centers, expansion costs ~$2M.",
+
+  "suggestedPersonas": [
+    {
+      "role": "Market Analyst",
+      "focus": "market research, competitive analysis, TAM/SAM/SOM"
+    },
+    {
+      "role": "Operations Director",
+      "focus": "GDPR compliance, localization, support operations"
+    },
+    {
+      "role": "Growth Lead",
+      "focus": "go-to-market, channel partnerships, revenue acceleration"
+    },
+    {
+      "role": "Finance Partner",
+      "focus": "unit economics, FX risk, investment timing"
+    }
+  ],
+
+  "expectedOutcomes": {
+    "fieldsToCapture": [
+      "topic",
+      "stage",
+      "personas[] (with all nested fields)",
+      "contributions[] (type, content, personaId, confidence, referenceIds)",
+      "iteration",
+      "sessionId",
+      "activePersonaId",
+      "nextPersonaId",
+      "nextContributionNeeded",
+      "consensusPoints[]",
+      "disagreements[]",
+      "keyInsights[]",
+      "openQuestions[]",
+      "finalRecommendation",
+      "suggestedContributionTypes[]"
+    ],
+    "note": "Run multiple iterations to capture how fields evolve through stages (problem-definition -> ideation -> critique -> integration -> decision)"
+  }
+}

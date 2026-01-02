@@ -1,0 +1,1470 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paradigm Tool - Landing Page Font & Component Test</title>
+
+  <!-- Google Fonts: Manrope + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ============================================
+       DESIGN SYSTEM CSS VARIABLES
+       Testing ALL 4 FONTS:
+       - font-primary: Manrope (Google Fonts)
+       - font-body: Graphik (self-hosted, fallback to Manrope)
+       - font-editorial: Nocturno Display (self-hosted, fallback to Georgia)
+       - font-code: JetBrains Mono (Google Fonts)
+       ============================================ */
+
+    /* === FONT FACE DECLARATIONS (Self-hosted) === */
+    @font-face {
+      font-family: 'Graphik';
+      src: url('/fonts/Graphik-font/Graphik-Thin.otf') format('opentype');
+      font-weight: 100 300;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Graphik';
+      src: url('/fonts/Graphik-font/Graphik-Bold.otf') format('opentype');
+      font-weight: 700;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    @font-face {
+      font-family: 'Nocturno Display';
+      src: url('/fonts/Nocturno-font/Nocturno%20Display%20Std%20Bk.otf') format('opentype');
+      font-weight: 400;
+      font-style: normal;
+      font-display: swap;
+    }
+
+    :root {
+      /* === TYPOGRAPHY - ALL 4 FONTS === */
+      --font-primary: 'Manrope', system-ui, sans-serif;
+      --font-body: 'Graphik', 'Manrope', system-ui, sans-serif;
+      --font-editorial: 'Nocturno Display', Georgia, serif;
+      --font-code: 'JetBrains Mono', monospace;
+
+      /* === CORE BRAND COLORS === */
+      --color-primary: #6DC4AD;
+      --color-secondary: #333333;
+      --color-accent: #EE7BB3;
+      --color-accent-alt: #A070A6;
+      --color-purple: #401877;
+
+      /* === CTA COLORS === */
+      --color-cta: #DA85B2;
+      --color-cta-submit: #E19379;
+
+      /* === STATISTICS ACCENTS === */
+      --color-stat-1: #73C1AE;
+      --color-stat-2: #EBA93D;
+      --color-stat-3: #A070A6;
+
+      /* === NEUTRAL COLORS === */
+      --color-foreground: #333333;
+      --color-muted: #737373;
+      --color-near-black: #1B1F24;
+
+      /* === SURFACE COLORS (LIGHT) === */
+      --surface-background: #E6EAF3;
+      --surface-card: #FFFFFF;
+      --surface-muted: #FAFAFA;
+
+      /* === SURFACE COLORS (DARK) === */
+      --surface-dark: #121D35;
+      --surface-dark-card: #1A2847;
+      --surface-dark-alt: #243356;
+
+      /* === BORDER COLORS === */
+      --color-border: #D0D5E0;
+      --color-border-light: #F1F1F1;
+      --color-divider: #E1E1E1;
+
+      /* === LETTER SPACING === */
+      --ls-tight: -1.4px;
+      --ls-headline: -0.89px;
+      --ls-normal: 0;
+      --ls-wide: 0.4px;
+      --ls-wider: 2px;
+      --ls-widest: 4px;
+
+      /* === BORDER RADIUS (BRAND-CRITICAL) === */
+      --radius-badge: 2px;
+      --radius-card: 4px;      /* NOT 8px! */
+      --radius-panel: 34px;
+
+      /* === SHADOWS === */
+      --shadow-card: 0 0 4px rgba(0,0,0,0.06);
+      --shadow-card-hover: 0 0 4px rgba(0,0,0,0.19);
+      --shadow-marquee: 0 2px 10px rgba(0,0,0,0.1);
+      --shadow-elevated: 0 8px 24px rgba(0,0,0,0.12);
+
+      /* === SPACING === */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-24: 96px;
+    }
+
+    /* === BASE RESET === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--surface-background);
+      color: var(--color-foreground);
+      line-height: 1.6;
+    }
+
+    /* === SECTION BASE === */
+    section {
+      padding: var(--space-24) 200px;
+    }
+
+    @media (max-width: 1200px) {
+      section {
+        padding: var(--space-16) var(--space-8);
+      }
+    }
+
+    /* ============================================
+       SECTION 1: HERO (Editorial Serif Headline)
+       Font Focus: font-editorial + font-primary
+       Pattern: @cult-ui/gradient-heading
+       ============================================ */
+
+    .hero {
+      background: var(--surface-card);
+      box-shadow: var(--shadow-marquee);
+      min-height: 600px;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      align-items: center;
+      gap: var(--space-12);
+    }
+
+    .hero-content {
+      padding-left: var(--space-16);
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-primary);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: var(--ls-widest);
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Editorial Headline - Uses Nocturno Display (Serif) */
+    .hero-editorial {
+      font-family: var(--font-editorial);
+      font-size: 56px;
+      font-weight: 400;
+      letter-spacing: var(--ls-tight);
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+      color: var(--color-foreground);
+    }
+
+    /* Gradient text effect - mimics @cult-ui/gradient-heading */
+    .hero-editorial .gradient {
+      background: linear-gradient(135deg, var(--color-accent-alt), var(--color-accent));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero-subheadline {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--color-muted);
+      margin-bottom: var(--space-8);
+      max-width: 480px;
+      line-height: 1.7;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: var(--space-4);
+    }
+
+    /* Button Base - uses font-primary */
+    .btn {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: var(--radius-card);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--color-secondary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-near-black);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-secondary);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--color-secondary);
+    }
+
+    .btn-accent {
+      background: var(--color-primary);
+      color: var(--color-secondary);
+    }
+
+    .btn-submit {
+      background: var(--color-cta-submit);
+      color: white;
+    }
+
+    /* Texture button pattern - mimics @cult-ui/texture-button */
+    .btn-texture {
+      position: relative;
+      overflow: hidden;
+    }
+
+    .btn-texture::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noiseFilter'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noiseFilter)'/%3E%3C/svg%3E");
+      opacity: 0.03;
+      pointer-events: none;
+    }
+
+    .hero-visual {
+      background: var(--surface-dark);
+      border-radius: var(--radius-card);
+      padding: var(--space-6);
+      margin-right: var(--space-8);
+    }
+
+    .hero-code {
+      font-family: var(--font-code);
+      font-size: 13px;
+      color: #E6EAF3;
+      line-height: 1.8;
+    }
+
+    .hero-code .keyword { color: var(--color-primary); }
+    .hero-code .string { color: var(--color-accent); }
+    .hero-code .comment { color: var(--color-muted); }
+
+    /* ============================================
+       SECTION 2: PROBLEM STATEMENT (Long-form Body)
+       Font Focus: font-body (Graphik)
+       Pattern: Content Panel (34px radius)
+       ============================================ */
+
+    .problem {
+      background: var(--surface-background);
+    }
+
+    .problem-panel {
+      background: var(--surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-panel);
+      padding: var(--space-12);
+      max-width: 900px;
+      margin: 0 auto;
+    }
+
+    .problem-panel::before {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: var(--color-accent-alt);
+      margin-bottom: var(--space-6);
+    }
+
+    .problem-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      color: var(--color-foreground);
+      margin-bottom: var(--space-8);
+    }
+
+    /* Body copy - uses font-body (Graphik) */
+    .body-copy {
+      font-family: var(--font-body);
+      font-size: 17px;
+      line-height: 1.7;
+      color: var(--color-muted);
+    }
+
+    .body-copy p {
+      margin-bottom: var(--space-6);
+    }
+
+    .body-copy p:last-child {
+      margin-bottom: 0;
+    }
+
+    /* ============================================
+       SECTION 3: PARADIGM COMPARISON GRID
+       Font Focus: font-primary (titles) + font-body (descriptions)
+       Pattern: @magicui/bento-grid
+       ============================================ */
+
+    .paradigms {
+      background: var(--surface-background);
+    }
+
+    .paradigms-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .paradigms-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      margin-bottom: var(--space-4);
+    }
+
+    .paradigms-headline .accent {
+      color: var(--color-accent);
+    }
+
+    .paradigms-subheadline {
+      font-family: var(--font-body);
+      font-size: 17px;
+      color: var(--color-muted);
+    }
+
+    /* Bento Grid Layout - mimics @magicui/bento-grid */
+    .bento-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: auto auto auto;
+      gap: var(--space-6);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    /* Featured cards span 2 columns */
+    .bento-card.featured {
+      grid-column: span 2;
+    }
+
+    .bento-card {
+      background: var(--surface-card);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-card);
+      box-shadow: var(--shadow-card);
+      padding: var(--space-6);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .bento-card:hover {
+      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-4px);
+    }
+
+    .bento-card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--surface-background);
+      border-radius: var(--radius-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .bento-card-icon i {
+      width: 24px;
+      height: 24px;
+      color: var(--color-primary);
+    }
+
+    /* Card title - uses font-primary */
+    .bento-card-title {
+      font-family: var(--font-primary);
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--color-foreground);
+      margin-bottom: var(--space-2);
+    }
+
+    /* Card description - uses font-body */
+    .bento-card-description {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--color-muted);
+      line-height: 1.5;
+      margin-bottom: var(--space-4);
+    }
+
+    .bento-card-badge {
+      font-family: var(--font-primary);
+      font-size: 10px;
+      font-weight: 600;
+      letter-spacing: var(--ls-wide);
+      text-transform: uppercase;
+      color: var(--color-accent-alt);
+      background: rgba(160, 112, 166, 0.1);
+      padding: 4px 8px;
+      border-radius: var(--radius-badge);
+      display: inline-block;
+    }
+
+    @media (max-width: 900px) {
+      .bento-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+      .bento-card.featured {
+        grid-column: span 1;
+      }
+    }
+
+    /* ============================================
+       SECTION 4: CODE COMPARISON
+       Font Focus: font-code (JetBrains Mono)
+       Pattern: @magicui/code-comparison
+       ============================================ */
+
+    .code-comparison {
+      background: var(--surface-dark);
+      padding: var(--space-16) 200px;
+    }
+
+    .code-comparison-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .code-comparison-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      color: white;
+      margin-bottom: var(--space-4);
+    }
+
+    .code-comparison-subheadline {
+      font-family: var(--font-body);
+      font-size: 17px;
+      color: rgba(255,255,255,0.7);
+    }
+
+    /* Code Comparison Panel - mimics @magicui/code-comparison */
+    .code-panels {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-6);
+      max-width: 1100px;
+      margin: 0 auto;
+    }
+
+    .code-panel {
+      background: var(--surface-dark-card);
+      border-radius: var(--radius-card);
+      overflow: hidden;
+    }
+
+    .code-panel-header {
+      background: var(--surface-dark-alt);
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+
+    .code-panel-title {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 600;
+      color: white;
+    }
+
+    .code-panel-badge {
+      font-family: var(--font-code);
+      font-size: 10px;
+      padding: 2px 8px;
+      border-radius: var(--radius-badge);
+      background: var(--color-primary);
+      color: var(--color-secondary);
+    }
+
+    /* Code block - uses font-code (JetBrains Mono) */
+    .code-block {
+      font-family: var(--font-code);
+      font-size: 13px;
+      line-height: 1.8;
+      color: #E6EAF3;
+      padding: var(--space-6);
+      overflow-x: auto;
+    }
+
+    .code-block .keyword { color: var(--color-primary); }
+    .code-block .string { color: var(--color-accent); }
+    .code-block .comment { color: rgba(255,255,255,0.4); }
+    .code-block .property { color: var(--color-stat-2); }
+    .code-block .function { color: #82AAFF; }
+
+    @media (max-width: 900px) {
+      .code-panels {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ============================================
+       SECTION 5: TESTIMONIAL / PULL QUOTE
+       Font Focus: font-editorial (Nocturno Display)
+       Pattern: Custom blockquote
+       ============================================ */
+
+    .testimonial {
+      background: var(--surface-card);
+      text-align: center;
+      padding: var(--space-24) 200px;
+    }
+
+    /* Pull quote - uses font-editorial (Nocturno Display) */
+    .pull-quote {
+      font-family: var(--font-editorial);
+      font-size: 32px;
+      font-style: italic;
+      font-weight: 400;
+      line-height: 1.4;
+      color: var(--color-accent-alt);
+      max-width: 800px;
+      margin: 0 auto var(--space-8);
+    }
+
+    .pull-quote::before {
+      content: '"';
+      display: block;
+      font-size: 72px;
+      line-height: 1;
+      color: var(--color-accent);
+      margin-bottom: var(--space-4);
+    }
+
+    .testimonial-author {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 600;
+      color: var(--color-foreground);
+    }
+
+    .testimonial-role {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-muted);
+      margin-top: var(--space-1);
+    }
+
+    /* ============================================
+       SECTION 6: STATS MODULE (Dark Band)
+       Font Focus: font-primary (numbers + labels)
+       Pattern: Stats Module archetype
+       ============================================ */
+
+    .stats {
+      background: var(--surface-dark);
+      padding: 83px 200px;
+    }
+
+    .stats-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-item {
+      flex: 1;
+      text-align: center;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 80px;
+      background: rgba(151, 151, 151, 0.3);
+    }
+
+    .stat-number {
+      font-family: var(--font-primary);
+      font-size: 48px;
+      font-weight: 400;
+      letter-spacing: var(--ls-headline);
+      line-height: 1;
+    }
+
+    .stat-number.stat-1 { color: var(--color-stat-1); }
+    .stat-number.stat-2 { color: var(--color-stat-2); }
+    .stat-number.stat-3 { color: var(--color-stat-3); }
+
+    .stat-description {
+      font-family: var(--font-primary);
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: var(--ls-wide);
+      line-height: 1.4;
+      color: white;
+      margin-top: var(--space-4);
+    }
+
+    /* ============================================
+       SECTION 7: SCENARIO TABS
+       Font Focus: All 4 fonts mixed
+       Pattern: @cult-ui/direction-aware-tabs
+       ============================================ */
+
+    .scenarios {
+      background: var(--surface-background);
+    }
+
+    .scenarios-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .scenarios-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      margin-bottom: var(--space-4);
+    }
+
+    /* Direction-aware tabs - mimics @cult-ui/direction-aware-tabs */
+    .tabs-container {
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    .tabs {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+      background: var(--surface-muted);
+      padding: var(--space-2);
+      border-radius: var(--radius-card);
+      width: fit-content;
+      margin-left: auto;
+      margin-right: auto;
+    }
+
+    /* Tab labels - uses font-primary */
+    .tab {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 10px 20px;
+      background: transparent;
+      border: none;
+      border-radius: var(--radius-card);
+      cursor: pointer;
+      transition: all 0.2s ease;
+      color: var(--color-muted);
+    }
+
+    .tab:hover {
+      color: var(--color-foreground);
+    }
+
+    .tab.active {
+      background: var(--color-primary);
+      color: var(--color-secondary);
+      font-weight: 600;
+    }
+
+    .tab-panel {
+      background: var(--surface-card);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-card);
+      padding: var(--space-8);
+      display: none;
+    }
+
+    .tab-panel.active {
+      display: block;
+    }
+
+    .scenario-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: var(--space-8);
+    }
+
+    .scenario-content {
+      /* Description uses font-body */
+    }
+
+    .scenario-title {
+      font-family: var(--font-primary);
+      font-size: 21px;
+      font-weight: 600;
+      margin-bottom: var(--space-4);
+    }
+
+    /* Scenario description - uses font-body */
+    .scenario-description {
+      font-family: var(--font-body);
+      font-size: 15px;
+      line-height: 1.7;
+      color: var(--color-muted);
+      margin-bottom: var(--space-6);
+    }
+
+    /* Scenario conclusion - uses font-editorial */
+    .scenario-conclusion {
+      font-family: var(--font-editorial);
+      font-size: 18px;
+      font-style: italic;
+      color: var(--color-accent-alt);
+      border-left: 3px solid var(--color-accent);
+      padding-left: var(--space-4);
+    }
+
+    /* Scenario code - uses font-code */
+    .scenario-code {
+      background: var(--surface-dark);
+      border-radius: var(--radius-card);
+      padding: var(--space-6);
+    }
+
+    .scenario-code pre {
+      font-family: var(--font-code);
+      font-size: 12px;
+      line-height: 1.7;
+      color: #E6EAF3;
+      margin: 0;
+    }
+
+    @media (max-width: 800px) {
+      .scenario-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    /* ============================================
+       SECTION 8: PROCESS STEPS
+       Font Focus: font-primary + font-body
+       Pattern: Numbered steps with badges
+       ============================================ */
+
+    .steps {
+      background: var(--surface-card);
+    }
+
+    .steps-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .steps-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-8);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 800px) {
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .step-item {
+      text-align: center;
+    }
+
+    /* Status Badge - 2px radius */
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 48px;
+      height: 48px;
+      background: var(--color-primary);
+      border-radius: var(--radius-badge);
+      font-family: var(--font-primary);
+      font-size: 20px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: var(--space-4);
+    }
+
+    .step-title {
+      font-family: var(--font-primary);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-foreground);
+      margin-bottom: var(--space-2);
+    }
+
+    .step-description {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-muted);
+    }
+
+    /* ============================================
+       SECTION 9: CTA BANNER (Dark)
+       Font Focus: font-primary
+       Pattern: @cult-ui/texture-button
+       ============================================ */
+
+    .cta {
+      background: var(--surface-dark);
+      text-align: center;
+    }
+
+    .cta-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      color: white;
+      margin-bottom: var(--space-4);
+    }
+
+    .cta-subheadline {
+      font-family: var(--font-body);
+      font-size: 17px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: var(--space-8);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+    }
+
+    .cta .btn-submit {
+      padding: 16px 32px;
+      font-size: 16px;
+    }
+
+    .cta .btn-ghost {
+      color: white;
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .cta .btn-ghost:hover {
+      border-color: white;
+    }
+
+    /* ============================================
+       FONT VALIDATION PANEL
+       Shows all 4 fonts in use
+       ============================================ */
+
+    .font-validation {
+      background: var(--surface-muted);
+      padding: var(--space-8) 200px;
+      border-top: 2px solid var(--color-accent-alt);
+    }
+
+    .font-validation h3 {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--color-accent-alt);
+      margin-bottom: var(--space-6);
+    }
+
+    .font-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-8);
+    }
+
+    .font-sample {
+      background: var(--surface-card);
+      padding: var(--space-6);
+      border-radius: var(--radius-card);
+      border: 1px solid var(--color-border-light);
+    }
+
+    .font-sample-label {
+      font-family: var(--font-code);
+      font-size: 10px;
+      color: var(--color-muted);
+      text-transform: uppercase;
+      letter-spacing: 1px;
+      margin-bottom: var(--space-2);
+    }
+
+    .font-sample-name {
+      font-family: var(--font-primary);
+      font-size: 12px;
+      font-weight: 600;
+      color: var(--color-primary);
+      margin-bottom: var(--space-4);
+    }
+
+    .font-sample-text.font-primary {
+      font-family: var(--font-primary);
+      font-size: 24px;
+      font-weight: 700;
+    }
+
+    .font-sample-text.font-body {
+      font-family: var(--font-body);
+      font-size: 16px;
+      line-height: 1.6;
+    }
+
+    .font-sample-text.font-editorial {
+      font-family: var(--font-editorial);
+      font-size: 24px;
+      font-style: italic;
+    }
+
+    .font-sample-text.font-code {
+      font-family: var(--font-code);
+      font-size: 14px;
+      background: var(--surface-dark);
+      color: var(--color-primary);
+      padding: var(--space-2);
+      border-radius: var(--radius-badge);
+    }
+
+    /* Token Validation Grid */
+    .token-validation {
+      margin-top: var(--space-8);
+      padding-top: var(--space-6);
+      border-top: 1px solid var(--color-border);
+    }
+
+    .token-validation h4 {
+      font-family: var(--font-primary);
+      font-size: 12px;
+      font-weight: 700;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--color-foreground);
+      margin-bottom: var(--space-4);
+    }
+
+    .validation-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-4);
+    }
+
+    .validation-item {
+      font-family: var(--font-code);
+      font-size: 11px;
+    }
+
+    .validation-item .label {
+      color: var(--color-muted);
+    }
+
+    .validation-item .value {
+      color: var(--color-foreground);
+      font-weight: 500;
+    }
+
+    .validation-item .pass {
+      color: var(--color-stat-1);
+    }
+
+    @media (max-width: 900px) {
+      .font-grid,
+      .validation-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SECTION 1: HERO (Editorial Serif Headline) -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">THINK-MCP TOOLKIT</p>
+      <h1 class="hero-editorial">
+        Code Like<br>
+        <span class="gradient">You Think</span>
+      </h1>
+      <p class="hero-subheadline">
+        Match the right programming paradigm to your problem. Stop defaulting to what you know - start choosing what works. Paradigm guides you through 10 proven approaches with clear trade-offs.
+      </p>
+      <div class="hero-cta-group">
+        <button class="btn btn-primary btn-texture">Explore Paradigms</button>
+        <button class="btn btn-ghost">View Examples</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <pre class="hero-code"><span class="comment">// Choose the right paradigm</span>
+{
+  <span class="keyword">"paradigmName"</span>: <span class="string">"functional"</span>,
+  <span class="keyword">"problem"</span>: <span class="string">"Process transactions for fraud"</span>,
+  <span class="keyword">"approach"</span>: [
+    <span class="string">"Pure functions for validation"</span>,
+    <span class="string">"Compose detection rules"</span>,
+    <span class="string">"Immutable audit trail"</span>
+  ]
+}</pre>
+    </div>
+  </section>
+
+  <!-- SECTION 2: PROBLEM STATEMENT (Long-form Body) -->
+  <section class="problem">
+    <div class="problem-panel">
+      <h2 class="problem-headline">The Paradigm Problem</h2>
+      <div class="body-copy">
+        <p>
+          Every developer has a comfort zone. Maybe you reach for object-oriented patterns by default, or you've been writing imperative code for so long that functional programming feels foreign. The problem isn't your skills - it's that different problems demand different approaches.
+        </p>
+        <p>
+          When you force a problem into the wrong paradigm, you end up fighting the code. Data pipelines become tangled class hierarchies. Real-time systems get bogged down in polling loops. Rule engines turn into if-else mazes. The code works, but it's harder to maintain, slower to run, and painful to debug.
+        </p>
+        <p>
+          Paradigm helps you step back and ask: "What's the right tool for this job?" It walks you through 10 programming paradigms, each with clear use cases, trade-offs, and implementation guidance. Stop defaulting - start deciding.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 3: PARADIGM COMPARISON GRID -->
+  <section class="paradigms">
+    <div class="paradigms-header">
+      <h2 class="paradigms-headline">
+        <span class="accent">10</span> Programming Paradigms
+      </h2>
+      <p class="paradigms-subheadline">Each paradigm excels at different problem types</p>
+    </div>
+    <div class="bento-grid">
+      <!-- Featured: Functional -->
+      <div class="bento-card featured">
+        <div class="bento-card-icon">
+          <i data-lucide="function-square"></i>
+        </div>
+        <h3 class="bento-card-title">Functional</h3>
+        <p class="bento-card-description">Pure functions, immutability, composition. Transform data without side effects. Perfect for pipelines, parallel processing, and anything where predictability matters.</p>
+        <span class="bento-card-badge">Data Transformation</span>
+      </div>
+
+      <!-- Featured: Event-Driven -->
+      <div class="bento-card featured">
+        <div class="bento-card-icon">
+          <i data-lucide="zap"></i>
+        </div>
+        <h3 class="bento-card-title">Event-Driven</h3>
+        <p class="bento-card-description">React to events instead of polling. Decouple components through messages. Ideal for real-time systems, collaborative apps, and microservices.</p>
+        <span class="bento-card-badge">Real-Time Systems</span>
+      </div>
+
+      <!-- Compact cards -->
+      <div class="bento-card">
+        <div class="bento-card-icon">
+          <i data-lucide="box"></i>
+        </div>
+        <h3 class="bento-card-title">Object-Oriented</h3>
+        <p class="bento-card-description">Encapsulate state and behavior. Model real-world domains.</p>
+        <span class="bento-card-badge">Domain Modeling</span>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-card-icon">
+          <i data-lucide="activity"></i>
+        </div>
+        <h3 class="bento-card-title">Reactive</h3>
+        <p class="bento-card-description">Observable streams with operators. Handle async complexity.</p>
+        <span class="bento-card-badge">Live Data Streams</span>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-card-icon">
+          <i data-lucide="list-ordered"></i>
+        </div>
+        <h3 class="bento-card-title">Imperative</h3>
+        <p class="bento-card-description">Step-by-step instructions. Direct control flow.</p>
+        <span class="bento-card-badge">Simple Scripts</span>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-card-icon">
+          <i data-lucide="file-code"></i>
+        </div>
+        <h3 class="bento-card-title">Declarative</h3>
+        <p class="bento-card-description">Describe what, not how. SQL, HTML, config files.</p>
+        <span class="bento-card-badge">Configuration</span>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-card-icon">
+          <i data-lucide="git-branch"></i>
+        </div>
+        <h3 class="bento-card-title">Concurrent</h3>
+        <p class="bento-card-description">Multiple execution threads. Parallel workloads.</p>
+        <span class="bento-card-badge">Performance</span>
+      </div>
+
+      <div class="bento-card">
+        <div class="bento-card-icon">
+          <i data-lucide="brain"></i>
+        </div>
+        <h3 class="bento-card-title">Logic</h3>
+        <p class="bento-card-description">Facts and inference rules. AI reasoning, rule engines.</p>
+        <span class="bento-card-badge">Rule Engines</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 4: CODE COMPARISON -->
+  <section class="code-comparison">
+    <div class="code-comparison-header">
+      <h2 class="code-comparison-headline">Same Problem, Different Paradigms</h2>
+      <p class="code-comparison-subheadline">See how paradigm choice affects code structure</p>
+    </div>
+    <div class="code-panels">
+      <div class="code-panel">
+        <div class="code-panel-header">
+          <span class="code-panel-title">Functional Approach</span>
+          <span class="code-panel-badge">Recommended</span>
+        </div>
+        <pre class="code-block"><span class="comment">// Fraud detection pipeline</span>
+<span class="keyword">const</span> <span class="function">detectFraud</span> = <span class="function">pipe</span>(
+  <span class="function">validateTransaction</span>,
+  <span class="function">enrichWithHistory</span>,
+  <span class="function">applyRules</span>([
+    <span class="property">velocityCheck</span>,
+    <span class="property">amountThreshold</span>,
+    <span class="property">locationAnomaly</span>
+  ]),
+  <span class="function">calculateRiskScore</span>
+);
+
+<span class="comment">// Pure, testable, parallelizable</span>
+<span class="keyword">const</span> result = <span class="function">detectFraud</span>(transaction);</pre>
+      </div>
+      <div class="code-panel">
+        <div class="code-panel-header">
+          <span class="code-panel-title">Imperative Approach</span>
+          <span class="code-panel-badge">Traditional</span>
+        </div>
+        <pre class="code-block"><span class="comment">// Same logic, different structure</span>
+<span class="keyword">function</span> <span class="function">detectFraud</span>(transaction) {
+  <span class="keyword">let</span> isValid = <span class="function">validate</span>(transaction);
+  <span class="keyword">if</span> (!isValid) <span class="keyword">return</span> { fraud: <span class="keyword">false</span> };
+
+  <span class="keyword">let</span> history = <span class="function">getHistory</span>(transaction.userId);
+  <span class="keyword">let</span> score = 0;
+
+  <span class="keyword">if</span> (<span class="function">checkVelocity</span>(history)) score += 30;
+  <span class="keyword">if</span> (<span class="function">checkAmount</span>(transaction)) score += 25;
+  <span class="keyword">if</span> (<span class="function">checkLocation</span>(transaction)) score += 45;
+
+  <span class="keyword">return</span> { fraud: score > 70, score };
+}</pre>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: TESTIMONIAL -->
+  <section class="testimonial">
+    <blockquote class="pull-quote">
+      Switching from OOP to functional for our data pipeline cut processing time by 60%. Paradigm helped us see the trade-offs we'd been ignoring for years.
+    </blockquote>
+    <p class="testimonial-author">Sarah Chen</p>
+    <p class="testimonial-role">Senior Engineer, FinTech Startup</p>
+  </section>
+
+  <!-- SECTION 6: STATS MODULE (Dark Band) -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <p class="stat-number stat-1">60%</p>
+        <p class="stat-description">Processing Time<br>Reduction</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <p class="stat-number stat-2">40%</p>
+        <p class="stat-description">Less Code<br>Complexity</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <p class="stat-number stat-3">3x</p>
+        <p class="stat-description">Improved<br>Maintainability</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: SCENARIO TABS -->
+  <section class="scenarios">
+    <div class="scenarios-header">
+      <h2 class="scenarios-headline">Real-World Scenarios</h2>
+    </div>
+    <div class="tabs-container">
+      <div class="tabs">
+        <button class="tab active" data-tab="functional">Functional</button>
+        <button class="tab" data-tab="event-driven">Event-Driven</button>
+        <button class="tab" data-tab="reactive">Reactive</button>
+      </div>
+
+      <div class="tab-panel active" id="functional">
+        <div class="scenario-grid">
+          <div class="scenario-content">
+            <h3 class="scenario-title">Fraud Detection Pipeline</h3>
+            <p class="scenario-description">
+              A FinTech company needs to process millions of transactions daily, checking each against dozens of fraud rules. The rules must be independently testable, and the system must scale horizontally.
+            </p>
+            <p class="scenario-conclusion">
+              Functional programming makes each rule a pure function - easy to test, easy to compose, easy to parallelize across clusters.
+            </p>
+          </div>
+          <div class="scenario-code">
+            <pre><span class="comment">// Input</span>
+{
+  "paradigmName": "functional",
+  "problem": "Fraud detection at scale"
+}
+
+<span class="comment">// Approach</span>
+[
+  "Pure functions for each rule",
+  "Compose with pipe/flow",
+  "Immutable transaction state",
+  "Map/reduce for analysis"
+]</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="event-driven">
+        <div class="scenario-grid">
+          <div class="scenario-content">
+            <h3 class="scenario-title">Collaborative Document Editor</h3>
+            <p class="scenario-description">
+              Building a real-time editor like Google Docs where multiple users can edit simultaneously. Changes must sync instantly, conflicts must resolve automatically, and the system must scale to millions of documents.
+            </p>
+            <p class="scenario-conclusion">
+              Event-driven architecture naturally maps to real-time collaboration - every keystroke is an event that propagates to all clients.
+            </p>
+          </div>
+          <div class="scenario-code">
+            <pre><span class="comment">// Input</span>
+{
+  "paradigmName": "event_driven",
+  "problem": "Real-time collaboration"
+}
+
+<span class="comment">// Approach</span>
+[
+  "Emit events for user actions",
+  "Subscribe to relevant streams",
+  "Event sourcing for history",
+  "CRDT for conflict resolution"
+]</pre>
+          </div>
+        </div>
+      </div>
+
+      <div class="tab-panel" id="reactive">
+        <div class="scenario-grid">
+          <div class="scenario-content">
+            <h3 class="scenario-title">Live Metrics Dashboard</h3>
+            <p class="scenario-description">
+              A dashboard that displays real-time metrics from 50 different data sources with automatic updates. Each source has different update frequencies, and the UI must remain responsive.
+            </p>
+            <p class="scenario-conclusion">
+              Reactive programming with Observables lets you declaratively combine, filter, and transform all 50 streams without callback hell.
+            </p>
+          </div>
+          <div class="scenario-code">
+            <pre><span class="comment">// Input</span>
+{
+  "paradigmName": "reactive",
+  "problem": "50-source live dashboard"
+}
+
+<span class="comment">// Approach</span>
+[
+  "Observable for each source",
+  "Combine with mergeLatest",
+  "Apply backpressure",
+  "Subjects for user events"
+]</pre>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 8: PROCESS STEPS -->
+  <section class="steps">
+    <div class="steps-header">
+      <h2 class="steps-headline">How It Works</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-item">
+        <div class="step-badge">1</div>
+        <h3 class="step-title">Choose Paradigm</h3>
+        <p class="step-description">Select from 10 proven approaches</p>
+      </div>
+      <div class="step-item">
+        <div class="step-badge">2</div>
+        <h3 class="step-title">Describe Problem</h3>
+        <p class="step-description">Input your specific challenge</p>
+      </div>
+      <div class="step-item">
+        <div class="step-badge">3</div>
+        <h3 class="step-title">Compare Trade-offs</h3>
+        <p class="step-description">See benefits and limitations</p>
+      </div>
+      <div class="step-item">
+        <div class="step-badge">4</div>
+        <h3 class="step-title">Get Guidance</h3>
+        <p class="step-description">Implementation steps + code examples</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 9: CTA BANNER -->
+  <section class="cta">
+    <h2 class="cta-headline">Ready to Code Smarter?</h2>
+    <p class="cta-subheadline">Stop defaulting to what you know. Start choosing what works.</p>
+    <div class="cta-buttons">
+      <button class="btn btn-submit btn-texture">Explore Paradigms</button>
+      <button class="btn btn-ghost">View Documentation</button>
+    </div>
+  </section>
+
+  <!-- FONT VALIDATION PANEL -->
+  <section class="font-validation">
+    <h3>Font Validation Panel - All 4 Fonts</h3>
+    <div class="font-grid">
+      <div class="font-sample">
+        <p class="font-sample-label">font-primary</p>
+        <p class="font-sample-name">Manrope</p>
+        <p class="font-sample-text font-primary">Headings & UI</p>
+      </div>
+      <div class="font-sample">
+        <p class="font-sample-label">font-body</p>
+        <p class="font-sample-name">Graphik</p>
+        <p class="font-sample-text font-body">Body copy and longer descriptions that need good readability.</p>
+      </div>
+      <div class="font-sample">
+        <p class="font-sample-label">font-editorial</p>
+        <p class="font-sample-name">Nocturno Display</p>
+        <p class="font-sample-text font-editorial">Serif Headlines</p>
+      </div>
+      <div class="font-sample">
+        <p class="font-sample-label">font-code</p>
+        <p class="font-sample-name">JetBrains Mono</p>
+        <p class="font-sample-text font-code">const code = "works";</p>
+      </div>
+    </div>
+
+    <div class="token-validation">
+      <h4>Brand Token Validation</h4>
+      <div class="validation-grid">
+        <div class="validation-item">
+          <span class="label">radius-card:</span>
+          <span class="value pass">4px (NOT 8px)</span>
+        </div>
+        <div class="validation-item">
+          <span class="label">radius-panel:</span>
+          <span class="value pass">34px</span>
+        </div>
+        <div class="validation-item">
+          <span class="label">radius-badge:</span>
+          <span class="value pass">2px</span>
+        </div>
+        <div class="validation-item">
+          <span class="label">shadow-card:</span>
+          <span class="value pass">Intensifies on hover</span>
+        </div>
+        <div class="validation-item">
+          <span class="label">Emoji Icons:</span>
+          <span class="value pass">NONE (using Lucide)</span>
+        </div>
+        <div class="validation-item">
+          <span class="label">Hero Layout:</span>
+          <span class="value pass">2-column asymmetric</span>
+        </div>
+        <div class="validation-item">
+          <span class="label">Purple Gradient:</span>
+          <span class="value pass">NONE (#a855f7 avoided)</span>
+        </div>
+        <div class="validation-item">
+          <span class="label">Glass-morphism:</span>
+          <span class="value pass">NONE</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+
+    // Simple tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        // Remove active from all tabs and panels
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+
+        // Add active to clicked tab and corresponding panel
+        tab.classList.add('active');
+        document.getElementById(tab.dataset.tab).classList.add('active');
+      });
+    });
+  </script>
+
+</body>
+</html>

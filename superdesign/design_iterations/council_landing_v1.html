@@ -1,0 +1,1614 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Council | Multi-Expert Collaboration by Maslow AI</title>
+
+    <!-- Maslow AI Typography: Manrope + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* =====================================================
+           MASLOW AI DESIGN SYSTEM
+           Skills Applied: maslow-brand, accessibility-design, frontend-design
+           ===================================================== */
+
+        :root {
+            /* Maslow Core Palette (constant) */
+            --maslow-teal: #6DC4AD;
+            --maslow-pink: #EE7BB3;
+            --maslow-purple: #401877;
+            --maslow-blue: #469DBB;
+            --maslow-orange: #F3A326;
+            --maslow-purple-light: #A070A6;
+
+            /* Council Tool Color */
+            --council: #EE7BB3;
+            --council-light: #FDF2F7;
+
+            /* Typography - Manrope (maslow-brand) */
+            --font-display: 'Manrope', system-ui, sans-serif;
+            --font-body: 'Manrope', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Spacing Scale (maslow-brand) */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-20: 80px;
+            --space-24: 96px;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+
+            /* Accent Line (maslow-brand signature) */
+            --accent-line: 3px;
+        }
+
+        /* ===== LIGHT MODE (Default) ===== */
+        [data-theme="light"] {
+            --bg: #E6EAF3;
+            --surface: #FFFFFF;
+            --surface-alt: #EEEEEE;
+            --text: #333333;
+            --text-secondary: #666666;
+            --text-muted: #A5A5A5;
+            --border: #D0D5E0;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --code-bg: #F5F7FA;
+            --selection-bg: #FDF2F7;
+        }
+
+        /* ===== DARK MODE ===== */
+        [data-theme="dark"] {
+            --bg: #121D35;
+            --surface: #1A2847;
+            --surface-alt: #243356;
+            --text: #FFFFFF;
+            --text-secondary: #B8C4D9;
+            --text-muted: #7A8BA8;
+            --border: #3A4A6B;
+            --nav-bg: rgba(18, 29, 53, 0.95);
+            --code-bg: #243356;
+            --selection-bg: rgba(238, 123, 179, 0.15);
+        }
+
+        /* ===== RESET ===== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            background: var(--bg);
+            color: var(--text-secondary);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--selection-bg);
+            color: var(--text);
+        }
+
+        /* ===== ACCESSIBILITY (accessibility-design skill) ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--maslow-teal);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            color: var(--text);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* Maslow headline pattern: bold keyword + light supporting */
+        .headline-bold {
+            font-weight: 800;
+            color: var(--text);
+        }
+        .headline-light {
+            font-weight: 300;
+            color: var(--text-muted);
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--maslow-pink), var(--maslow-purple-light), var(--maslow-teal));
+            border-radius: var(--radius-md);
+        }
+
+        .nav-wordmark {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-title {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--text);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-subtitle {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--council);
+            color: var(--council);
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        [data-theme="dark"] .icon-sun { display: none; }
+        [data-theme="dark"] .icon-moon { display: block; }
+        [data-theme="light"] .icon-sun { display: block; }
+        [data-theme="light"] .icon-moon { display: none; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--council);
+            color: #333333;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(238, 123, 179, 0.3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--text-muted);
+            color: var(--text);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: var(--space-24);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-16);
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Accent line (maslow-brand signature) */
+        .accent-line {
+            width: 60px;
+            height: var(--accent-line);
+            background: var(--council);
+            margin-bottom: var(--space-6);
+            animation: lineGrow 0.6s ease-out;
+        }
+
+        @keyframes lineGrow {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--council);
+            margin-bottom: var(--space-4);
+            animation: fadeUp 0.6s ease-out 0.1s both;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 72px);
+            margin-bottom: var(--space-6);
+            animation: fadeUp 0.6s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 480px;
+            margin-bottom: var(--space-8);
+            animation: fadeUp 0.6s ease-out 0.3s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            animation: fadeUp 0.6s ease-out 0.4s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            height: 480px;
+            animation: fadeIn 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        /* Council Diagram */
+        .council-diagram {
+            position: relative;
+            width: 100%;
+            height: 100%;
+        }
+
+        .topic-node {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            width: 100px;
+            height: 100px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-xl);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            z-index: 10;
+        }
+
+        .topic-node svg {
+            width: 28px;
+            height: 28px;
+            color: var(--council);
+            margin-bottom: var(--space-2);
+        }
+
+        .topic-node span {
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-secondary);
+        }
+
+        .persona-card {
+            position: absolute;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            width: 140px;
+            box-shadow: 0 4px 24px rgba(0, 0, 0, 0.08);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .persona-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+        }
+
+        .persona-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+            margin-bottom: var(--space-3);
+        }
+
+        .persona-avatar.blue { background: linear-gradient(135deg, #469DBB, #6DC4AD); }
+        .persona-avatar.green { background: linear-gradient(135deg, #6DC4AD, #2CD552); }
+        .persona-avatar.orange { background: linear-gradient(135deg, #F3A326, #EE7BB3); }
+
+        .persona-name {
+            font-size: 13px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: 2px;
+        }
+
+        .persona-role {
+            font-size: 11px;
+            color: var(--text-muted);
+        }
+
+        .card-1 { top: 20px; left: 15%; animation: cardFloat 0.6s ease-out 0.4s both; }
+        .card-2 { top: 180px; right: 5%; animation: cardFloat 0.6s ease-out 0.5s both; }
+        .card-3 { bottom: 60px; left: 25%; animation: cardFloat 0.6s ease-out 0.6s both; }
+
+        @keyframes cardFloat {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        /* Connection lines */
+        .connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .connections svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .connections path {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 2;
+            stroke-dasharray: 8 4;
+        }
+
+        .connections path.active {
+            stroke: var(--council);
+            stroke-dasharray: none;
+        }
+
+        /* ===== FEATURES SECTION ===== */
+        .features {
+            padding: var(--space-24) 0;
+            background: var(--surface);
+            transition: background-color 0.4s ease;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-16);
+        }
+
+        .section-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--council);
+            margin-bottom: var(--space-4);
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: var(--space-4);
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-8);
+        }
+
+        .feature-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-8);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Maslow hover state: left border reveal */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--council);
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+            transition: width 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            width: var(--accent-line);
+        }
+
+        .feature-card:hover {
+            border-color: var(--council);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--council-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-5);
+            color: var(--council);
+        }
+
+        [data-theme="dark"] .feature-icon {
+            background: rgba(238, 123, 179, 0.15);
+        }
+
+        .feature-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .feature-title {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+        }
+
+        .feature-text {
+            font-size: 15px;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* ===== DARK BAND SECTION (maslow-brand pattern) ===== */
+        .dark-band {
+            background: #121D35;
+            color: #FFFFFF;
+            padding: var(--space-24) 0;
+        }
+
+        .dark-band .section-eyebrow {
+            color: var(--maslow-teal);
+        }
+
+        .dark-band .section-title {
+            color: #FFFFFF;
+        }
+
+        .dark-band .section-description {
+            color: #B8C4D9;
+        }
+
+        /* Demo Toggle */
+        .demo-toggle {
+            display: flex;
+            justify-content: center;
+            margin-bottom: var(--space-12);
+        }
+
+        .toggle-group {
+            display: inline-flex;
+            background: rgba(255,255,255,0.1);
+            border-radius: var(--radius-lg);
+            padding: 4px;
+        }
+
+        .toggle-btn {
+            padding: var(--space-3) var(--space-6);
+            background: transparent;
+            border: none;
+            color: #B8C4D9;
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background: #FFFFFF;
+            color: #121D35;
+        }
+
+        .toggle-btn:not(.active):hover {
+            color: #FFFFFF;
+        }
+
+        /* Demo Grid */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+        }
+
+        .demo-panel {
+            background: #1A2847;
+            border: 1px solid #3A4A6B;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-5);
+            background: #243356;
+            border-bottom: 1px solid #3A4A6B;
+        }
+
+        .demo-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #7A8BA8;
+        }
+
+        .demo-badge {
+            background: var(--council);
+            color: #333333;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .demo-content {
+            padding: var(--space-6);
+        }
+
+        .demo-content pre {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.7;
+            color: #B8C4D9;
+            overflow-x: auto;
+        }
+
+        .json-key { color: var(--council); }
+        .json-string { color: var(--maslow-teal); }
+        .json-number { color: var(--maslow-orange); }
+        .json-boolean { color: var(--maslow-blue); }
+
+        /* Card View Styling */
+        .card-view {
+            display: block;
+        }
+
+        .card-view.hidden {
+            display: none;
+        }
+
+        .json-view {
+            display: none;
+        }
+
+        .json-view.active {
+            display: block;
+        }
+
+        .expert-panel {
+            margin-bottom: var(--space-8);
+        }
+
+        .expert-label {
+            font-size: 11px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: #7A8BA8;
+            margin-bottom: var(--space-4);
+        }
+
+        .experts-row {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-4);
+        }
+
+        .expert-card {
+            background: #1A2847;
+            border: 1px solid #3A4A6B;
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            transition: all 0.3s ease;
+        }
+
+        .expert-card:hover {
+            border-color: rgba(238, 123, 179, 0.3);
+            background: #243356;
+        }
+
+        .expert-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-3);
+        }
+
+        .expert-avatar {
+            width: 44px;
+            height: 44px;
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 14px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .expert-info h4 {
+            font-size: 14px;
+            font-weight: 700;
+            color: #FFFFFF;
+            margin-bottom: 2px;
+        }
+
+        .expert-info span {
+            font-size: 11px;
+            color: #7A8BA8;
+        }
+
+        .expert-perspective {
+            font-size: 13px;
+            color: #B8C4D9;
+            font-style: italic;
+            padding-left: var(--space-3);
+            border-left: 2px solid var(--maslow-teal);
+        }
+
+        /* Contribution Cards */
+        .contributions-section {
+            margin-bottom: var(--space-8);
+        }
+
+        .contribution-card {
+            background: #1A2847;
+            border: 1px solid #3A4A6B;
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            margin-bottom: var(--space-4);
+            border-left: 4px solid #3A4A6B;
+        }
+
+        .contribution-card.observation { border-left-color: #B8C4D9; }
+        .contribution-card.concern { border-left-color: var(--maslow-orange); }
+        .contribution-card.synthesis { border-left-color: var(--maslow-purple-light); }
+
+        .contribution-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-bottom: var(--space-3);
+        }
+
+        .contribution-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: var(--radius-sm);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: 700;
+            color: white;
+        }
+
+        .contribution-type {
+            padding: 4px 10px;
+            font-size: 11px;
+            font-weight: 600;
+            border-radius: 20px;
+        }
+
+        .contribution-type.observation { background: rgba(184, 196, 217, 0.2); color: #B8C4D9; }
+        .contribution-type.concern { background: rgba(243, 163, 38, 0.2); color: var(--maslow-orange); }
+        .contribution-type.synthesis { background: rgba(160, 112, 166, 0.2); color: var(--maslow-purple-light); }
+
+        .contribution-confidence {
+            margin-left: auto;
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 11px;
+            color: #7A8BA8;
+        }
+
+        .confidence-bar {
+            width: 60px;
+            height: 6px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .confidence-fill {
+            height: 100%;
+            border-radius: 3px;
+            background: var(--maslow-teal);
+        }
+
+        .contribution-text {
+            font-size: 14px;
+            color: #E5E7EB;
+            line-height: 1.6;
+        }
+
+        /* Outcome Section */
+        .outcome-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+        }
+
+        .consensus-card {
+            background: rgba(44, 213, 82, 0.1);
+            border: 1px solid rgba(44, 213, 82, 0.2);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+        }
+
+        .consensus-card h4 {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            color: #2CD552;
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+        }
+
+        .consensus-card h4 svg {
+            width: 16px;
+            height: 16px;
+        }
+
+        .consensus-card ul {
+            list-style: none;
+        }
+
+        .consensus-card li {
+            display: flex;
+            align-items: flex-start;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+            font-size: 13px;
+            color: #E5E7EB;
+        }
+
+        .consensus-card li span {
+            color: #2CD552;
+            font-weight: 700;
+        }
+
+        .recommendation-card {
+            background: linear-gradient(135deg, var(--council), var(--maslow-purple-light));
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+        }
+
+        .recommendation-card h4 {
+            font-size: 13px;
+            font-weight: 700;
+            margin-bottom: var(--space-3);
+            color: #FFFFFF;
+        }
+
+        .recommendation-card p {
+            font-size: 14px;
+            color: rgba(255,255,255,0.9);
+            line-height: 1.5;
+        }
+
+        /* ===== API SECTION ===== */
+        .api {
+            padding: var(--space-24) 0;
+            background: var(--bg);
+            transition: background-color 0.4s ease;
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .api-table th {
+            text-align: left;
+            padding: var(--space-4) var(--space-5);
+            background: var(--surface-alt);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table td {
+            padding: var(--space-4) var(--space-5);
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .api-table code {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--council);
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .badge-type {
+            background: rgba(109, 196, 173, 0.15);
+            color: var(--maslow-teal);
+        }
+
+        .badge-required {
+            background: rgba(243, 163, 38, 0.15);
+            color: var(--maslow-orange);
+        }
+
+        .badge-optional {
+            background: var(--surface-alt);
+            color: var(--text-muted);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: var(--space-12) 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            background: var(--bg);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .footer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--maslow-purple-light);
+            padding: var(--space-2) var(--space-4);
+            background: rgba(64, 24, 119, 0.08);
+            border-radius: 20px;
+        }
+
+        [data-theme="dark"] .footer-badge {
+            background: rgba(160, 112, 166, 0.15);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .experts-row {
+                grid-template-columns: 1fr;
+            }
+
+            .outcome-row {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="container nav-inner">
+            <a href="#" class="nav-brand" aria-label="Maslow AI Home">
+                <div class="nav-logo" aria-hidden="true"></div>
+                <div class="nav-wordmark">
+                    <span class="nav-title">MASLOW | AI</span>
+                    <span class="nav-subtitle">think-mcp</span>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#features" class="nav-link">Features</a></li>
+                <li><a href="#demo" class="nav-link">Demo</a></li>
+                <li><a href="#api" class="nav-link">API</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+                <a href="#" class="btn btn-primary">Get Started</a>
+            </div>
+        </div>
+    </nav>
+
+    <main role="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="accent-line" aria-hidden="true"></div>
+                        <p class="hero-eyebrow">Council Tool</p>
+                        <h1 id="hero-title">
+                            <span class="headline-bold">Collaborate</span><br>
+                            <span class="headline-light">with expert<br>perspectives</span>
+                        </h1>
+                        <p class="hero-description">
+                            Simulate a panel of diverse experts discussing your problem. Surface blind spots, challenge assumptions, and build robust solutions through structured dialogue.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#demo" class="btn btn-primary">Try the Demo</a>
+                            <a href="#api" class="btn btn-ghost">View API</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual" aria-hidden="true">
+                        <div class="council-diagram">
+                            <div class="connections">
+                                <svg viewBox="0 0 400 500">
+                                    <path d="M100 100 Q200 200 200 240" class="active"/>
+                                    <path d="M320 200 Q260 220 200 240"/>
+                                    <path d="M150 380 Q180 320 200 240" class="active"/>
+                                </svg>
+                            </div>
+
+                            <div class="topic-node">
+                                <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                </svg>
+                                <span>Topic</span>
+                            </div>
+
+                            <div class="persona-card card-1">
+                                <div class="persona-avatar blue">SC</div>
+                                <p class="persona-name">Sofia Chen</p>
+                                <p class="persona-role">System Architect</p>
+                            </div>
+
+                            <div class="persona-card card-2">
+                                <div class="persona-avatar green">MJ</div>
+                                <p class="persona-name">Marcus Johnson</p>
+                                <p class="persona-role">DevOps Lead</p>
+                            </div>
+
+                            <div class="persona-card card-3">
+                                <div class="persona-avatar orange">PS</div>
+                                <p class="persona-name">Priya Sharma</p>
+                                <p class="persona-role">Product Strategy</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section id="features" class="features" aria-labelledby="features-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Features</p>
+                    <h2 id="features-title" class="section-title">Why Use Council?</h2>
+                    <p class="section-description">
+                        Get diverse expert perspectives on complex decisions without scheduling meetings.
+                    </p>
+                </header>
+
+                <div class="features-grid">
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Diverse Perspectives</h3>
+                        <p class="feature-text">
+                            Define expert personas with different backgrounds, biases, and communication styles.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 12h.01M12 12h.01M16 12h.01M21 12c0 4.418-4.03 8-9 8a9.863 9.863 0 01-4.255-.949L3 20l1.395-3.72C3.512 15.042 3 13.574 3 12c0-4.418 4.03-8 9-8s9 3.582 9 8z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Structured Dialogue</h3>
+                        <p class="feature-text">
+                            Progress through stages from problem definition to decision with tracked contributions.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Surface Blind Spots</h3>
+                        <p class="feature-text">
+                            Devil's advocate perspectives reveal risks you might naturally overlook.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Build Consensus</h3>
+                        <p class="feature-text">
+                            Track agreement points and disagreements to reach well-reasoned conclusions.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Fast Decisions</h3>
+                        <p class="feature-text">
+                            Get expert-level analysis without scheduling real meetings or hiring consultants.
+                        </p>
+                    </article>
+
+                    <article class="feature-card">
+                        <div class="feature-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15"/>
+                            </svg>
+                        </div>
+                        <h3 class="feature-title">Iterate & Refine</h3>
+                        <p class="feature-text">
+                            Multiple rounds of back-and-forth until insights emerge and consensus forms.
+                        </p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Section (Dark Band) -->
+        <section id="demo" class="dark-band" aria-labelledby="demo-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Demo</p>
+                    <h2 id="demo-title" class="section-title">See It in Action</h2>
+                    <p class="section-description">
+                        A microservices migration decision with expert perspectives
+                    </p>
+                </header>
+
+                <div class="demo-toggle">
+                    <div class="toggle-group" role="tablist" aria-label="View toggle">
+                        <button class="toggle-btn active" data-view="cards" role="tab" aria-selected="true">Card View</button>
+                        <button class="toggle-btn" data-view="json" role="tab" aria-selected="false">JSON View</button>
+                    </div>
+                </div>
+
+                <!-- Card View -->
+                <div class="card-view" id="cardView" role="tabpanel">
+                    <!-- Expert Panel -->
+                    <div class="expert-panel">
+                        <p class="expert-label">Expert Panel</p>
+                        <div class="experts-row">
+                            <div class="expert-card">
+                                <div class="expert-header">
+                                    <div class="expert-avatar blue">SC</div>
+                                    <div class="expert-info">
+                                        <h4>Sofia Chen</h4>
+                                        <span>System Architect</span>
+                                    </div>
+                                </div>
+                                <p class="expert-perspective">"Focus on scalability and team autonomy"</p>
+                            </div>
+
+                            <div class="expert-card">
+                                <div class="expert-header">
+                                    <div class="expert-avatar green">MJ</div>
+                                    <div class="expert-info">
+                                        <h4>Marcus Johnson</h4>
+                                        <span>DevOps Lead</span>
+                                    </div>
+                                </div>
+                                <p class="expert-perspective">"Operational complexity and reliability"</p>
+                            </div>
+
+                            <div class="expert-card">
+                                <div class="expert-header">
+                                    <div class="expert-avatar orange">PS</div>
+                                    <div class="expert-info">
+                                        <h4>Priya Sharma</h4>
+                                        <span>Product Strategy</span>
+                                    </div>
+                                </div>
+                                <p class="expert-perspective">"Business value and time-to-market"</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Contributions -->
+                    <div class="contributions-section">
+                        <p class="expert-label">Discussion</p>
+
+                        <div class="contribution-card observation">
+                            <div class="contribution-header">
+                                <div class="contribution-avatar" style="background: linear-gradient(135deg, #469DBB, #6DC4AD);">SC</div>
+                                <span class="contribution-type observation">observation</span>
+                                <div class="contribution-confidence">
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill" style="width: 85%;"></div>
+                                    </div>
+                                    <span>85%</span>
+                                </div>
+                            </div>
+                            <p class="contribution-text">Microservices would allow independent scaling of our payment and inventory services which currently bottleneck the monolith.</p>
+                        </div>
+
+                        <div class="contribution-card concern">
+                            <div class="contribution-header">
+                                <div class="contribution-avatar" style="background: linear-gradient(135deg, #6DC4AD, #2CD552);">MJ</div>
+                                <span class="contribution-type concern">concern</span>
+                                <div class="contribution-confidence">
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill" style="width: 90%;"></div>
+                                    </div>
+                                    <span>90%</span>
+                                </div>
+                            </div>
+                            <p class="contribution-text">Independent scaling sounds great, but we'll need service mesh, distributed tracing, and 10x more deployment pipelines.</p>
+                        </div>
+
+                        <div class="contribution-card synthesis">
+                            <div class="contribution-header">
+                                <div class="contribution-avatar" style="background: linear-gradient(135deg, #F3A326, #EE7BB3);">PS</div>
+                                <span class="contribution-type synthesis">synthesis</span>
+                                <div class="contribution-confidence">
+                                    <div class="confidence-bar">
+                                        <div class="confidence-fill" style="width: 80%;"></div>
+                                    </div>
+                                    <span>80%</span>
+                                </div>
+                            </div>
+                            <p class="contribution-text">What if we use the strangler fig pattern? Extract payment service first, prove the value, then evaluate.</p>
+                        </div>
+                    </div>
+
+                    <!-- Outcome -->
+                    <div class="outcome-row">
+                        <div class="consensus-card">
+                            <h4>
+                                <svg fill="currentColor" viewBox="0 0 24 24"><path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/></svg>
+                                Consensus Points
+                            </h4>
+                            <ul>
+                                <li><span>+</span> Scaling is a real problem that needs addressing</li>
+                                <li><span>+</span> Full microservices migration is too risky</li>
+                                <li><span>+</span> Extracting 2-3 services is a viable middle ground</li>
+                            </ul>
+                        </div>
+
+                        <div class="recommendation-card">
+                            <h4>Final Recommendation</h4>
+                            <p>Adopt a gradual strangler fig approach, extracting the payment service first, with a 6-month evaluation before expanding further.</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- JSON View -->
+                <div class="json-view" id="jsonView" role="tabpanel">
+                    <div class="demo-grid">
+                        <div class="demo-panel">
+                            <div class="demo-header">
+                                <span class="demo-label">Input</span>
+                                <span class="demo-badge">Council</span>
+                            </div>
+                            <div class="demo-content">
+                                <pre><code>{
+  <span class="json-key">"topic"</span>: <span class="json-string">"Should we migrate to microservices?"</span>,
+  <span class="json-key">"personas"</span>: [
+    {
+      <span class="json-key">"id"</span>: <span class="json-string">"arch"</span>,
+      <span class="json-key">"name"</span>: <span class="json-string">"Sofia Chen"</span>,
+      <span class="json-key">"expertise"</span>: [<span class="json-string">"Architecture"</span>]
+    }
+  ],
+  <span class="json-key">"stage"</span>: <span class="json-string">"ideation"</span>,
+  <span class="json-key">"iteration"</span>: <span class="json-number">1</span>,
+  <span class="json-key">"nextContributionNeeded"</span>: <span class="json-boolean">true</span>
+}</code></pre>
+                            </div>
+                        </div>
+
+                        <div class="demo-panel">
+                            <div class="demo-header">
+                                <span class="demo-label">Output</span>
+                            </div>
+                            <div class="demo-content">
+                                <pre><code>{
+  <span class="json-key">"consensusPoints"</span>: [
+    <span class="json-string">"Scaling needs addressing"</span>,
+    <span class="json-string">"Full migration too risky"</span>
+  ],
+  <span class="json-key">"keyInsights"</span>: [
+    <span class="json-string">"Start with payment service"</span>
+  ],
+  <span class="json-key">"finalRecommendation"</span>: <span class="json-string">"Adopt strangler fig pattern"</span>,
+  <span class="json-key">"stage"</span>: <span class="json-string">"decision"</span>,
+  <span class="json-key">"nextContributionNeeded"</span>: <span class="json-boolean">false</span>
+}</code></pre>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Section -->
+        <section id="api" class="api" aria-labelledby="api-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Reference</p>
+                    <h2 id="api-title" class="section-title">API Parameters</h2>
+                </header>
+
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Parameter</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Required</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>topic</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>The question or problem for the council to discuss</td>
+                        </tr>
+                        <tr>
+                            <td><code>personas</code></td>
+                            <td><span class="badge badge-type">array</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Array of expert personas with expertise, background, and biases</td>
+                        </tr>
+                        <tr>
+                            <td><code>contributions</code></td>
+                            <td><span class="badge badge-type">array</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Discussion contributions with type, content, and confidence</td>
+                        </tr>
+                        <tr>
+                            <td><code>stage</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Current stage: problem-definition, ideation, critique, integration, decision, reflection</td>
+                        </tr>
+                        <tr>
+                            <td><code>activePersonaId</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>ID of the currently active expert persona</td>
+                        </tr>
+                        <tr>
+                            <td><code>iteration</code></td>
+                            <td><span class="badge badge-type">number</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Current iteration of the collaboration</td>
+                        </tr>
+                        <tr>
+                            <td><code>nextContributionNeeded</code></td>
+                            <td><span class="badge badge-type">boolean</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Whether another contribution is needed</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <p class="footer-text">think-mcp Council Tool &mdash; Multi-Expert Collaborative Reasoning</p>
+            <div class="footer-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                Powered by Maslow AI
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle Script -->
+    <script>
+        (function() {
+            const html = document.documentElement;
+            const toggle = document.getElementById('themeToggle');
+
+            // Check saved preference or system preference
+            const saved = localStorage.getItem('maslow-theme');
+            if (saved) {
+                html.setAttribute('data-theme', saved);
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            }
+
+            toggle.addEventListener('click', function() {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+
+                html.setAttribute('data-theme', next);
+                localStorage.setItem('maslow-theme', next);
+
+                // Screen reader announcement
+                const announcement = document.createElement('div');
+                announcement.setAttribute('role', 'status');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.className = 'sr-only';
+                announcement.textContent = `Switched to ${next} mode`;
+                document.body.appendChild(announcement);
+                setTimeout(() => announcement.remove(), 1000);
+            });
+
+            // View Toggle
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const cardView = document.getElementById('cardView');
+            const jsonView = document.getElementById('jsonView');
+
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleBtns.forEach(b => {
+                        b.classList.remove('active');
+                        b.setAttribute('aria-selected', 'false');
+                    });
+                    this.classList.add('active');
+                    this.setAttribute('aria-selected', 'true');
+
+                    const view = this.getAttribute('data-view');
+                    if (view === 'json') {
+                        cardView.classList.add('hidden');
+                        jsonView.classList.add('active');
+                    } else {
+                        cardView.classList.remove('hidden');
+                        jsonView.classList.remove('active');
+                    }
+                });
+            });
+        })();
+    </script>
+</body>
+</html>

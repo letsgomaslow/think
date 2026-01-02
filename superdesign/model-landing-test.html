@@ -1,0 +1,985 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Model Tool - Landing Page Skills Test</title>
+
+  <!-- Google Fonts: Manrope + JetBrains Mono -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Lucide Icons CDN -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <style>
+    /* ============================================
+       DESIGN SYSTEM CSS VARIABLES
+       Copied from brand-config.md + globals.css
+       ============================================ */
+
+    :root {
+      /* === CORE BRAND COLORS === */
+      --color-primary: #6DC4AD;           /* Teal - technology */
+      --color-secondary: #333333;         /* Dark - primary CTA */
+      --color-accent: #EE7BB3;            /* Pink - strategy */
+      --color-accent-alt: #A070A6;        /* Purple - design */
+      --color-purple: #401877;            /* Deep purple - premium */
+
+      /* === CTA COLORS === */
+      --color-cta: #DA85B2;               /* Pink links */
+      --color-cta-submit: #E19379;        /* Coral submit */
+
+      /* === STATISTICS ACCENTS === */
+      --color-stat-1: #73C1AE;            /* Teal stat */
+      --color-stat-2: #EBA93D;            /* Orange stat */
+      --color-stat-3: #A070A6;            /* Purple stat */
+
+      /* === NEUTRAL COLORS === */
+      --color-foreground: #333333;
+      --color-muted: #A5A5A5;
+      --color-near-black: #1B1F24;
+
+      /* === SURFACE COLORS (LIGHT) === */
+      --surface-background: #E6EAF3;
+      --surface-card: #FFFFFF;
+      --surface-muted: #FAFAFA;
+
+      /* === SURFACE COLORS (DARK) === */
+      --surface-dark: #121D35;
+      --surface-dark-card: #1A2847;
+      --surface-dark-alt: #243356;
+
+      /* === BORDER COLORS === */
+      --color-border: #D0D5E0;
+      --color-border-light: #F1F1F1;
+      --color-divider: #E1E1E1;
+
+      /* === TYPOGRAPHY === */
+      --font-primary: 'Manrope', system-ui, sans-serif;
+      --font-body: 'Manrope', system-ui, sans-serif; /* Using Manrope as fallback since Graphik needs self-hosting */
+      --font-code: 'JetBrains Mono', monospace;
+
+      /* === LETTER SPACING === */
+      --ls-tight: -1.4px;
+      --ls-headline: -0.89px;
+      --ls-normal: 0;
+      --ls-wide: 0.4px;
+      --ls-wider: 2px;
+      --ls-widest: 4px;
+
+      /* === BORDER RADIUS (BRAND-CRITICAL) === */
+      --radius-badge: 2px;
+      --radius-card: 4px;                 /* NOT 8px! */
+      --radius-panel: 34px;
+
+      /* === SHADOWS === */
+      --shadow-card: 0 0 4px rgba(0,0,0,0.06);
+      --shadow-card-hover: 0 0 4px rgba(0,0,0,0.19);
+      --shadow-marquee: 0 2px 10px rgba(0,0,0,0.1);
+      --shadow-elevated: 0 8px 24px rgba(0,0,0,0.12);
+
+      /* === SPACING === */
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-4: 16px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --space-12: 48px;
+      --space-16: 64px;
+      --space-24: 96px;
+    }
+
+    /* === BASE RESET === */
+    *, *::before, *::after {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font-body);
+      background: var(--surface-background);
+      color: var(--color-foreground);
+      line-height: 1.6;
+    }
+
+    /* === SECTION BASE === */
+    section {
+      padding: var(--space-24) 200px;
+    }
+
+    @media (max-width: 1200px) {
+      section {
+        padding: var(--space-16) var(--space-8);
+      }
+    }
+
+    /* ============================================
+       SECTION 1: HERO (2-Column Asymmetric)
+       Tests: Accent headline, letter-spacing,
+              shadow-marquee, NOT centered
+       ============================================ */
+
+    .hero {
+      background: var(--surface-card);
+      box-shadow: var(--shadow-marquee);
+      min-height: 560px;
+      display: grid;
+      grid-template-columns: 55% 45%;
+      align-items: center;
+      gap: var(--space-12);
+    }
+
+    .hero-content {
+      padding-left: var(--space-16);
+    }
+
+    .hero-eyebrow {
+      font-family: var(--font-primary);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: var(--ls-widest);
+      text-transform: uppercase;
+      color: var(--color-muted);
+      margin-bottom: var(--space-4);
+    }
+
+    .hero-headline {
+      font-family: var(--font-primary);
+      font-size: 48px;
+      font-weight: 800;
+      letter-spacing: var(--ls-tight);
+      line-height: 1.1;
+      margin-bottom: var(--space-6);
+    }
+
+    /* Accent Headline Pattern: First word colored */
+    .hero-headline .accent {
+      color: var(--color-accent-alt);
+    }
+
+    .hero-headline .dark {
+      color: var(--color-foreground);
+    }
+
+    .hero-subheadline {
+      font-family: var(--font-body);
+      font-size: 18px;
+      font-weight: 400;
+      color: var(--color-muted);
+      margin-bottom: var(--space-8);
+      max-width: 480px;
+    }
+
+    .hero-cta-group {
+      display: flex;
+      gap: var(--space-4);
+    }
+
+    /* Button Hierarchy */
+    .btn {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 600;
+      padding: 12px 24px;
+      border-radius: var(--radius-card);
+      border: none;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary {
+      background: var(--color-secondary);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      background: var(--color-near-black);
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--color-secondary);
+      border: 1px solid var(--color-border);
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--color-secondary);
+    }
+
+    .btn-accent {
+      background: var(--color-primary);
+      color: var(--color-secondary);
+    }
+
+    .btn-submit {
+      background: var(--color-cta-submit);
+      color: white;
+    }
+
+    .hero-visual {
+      background: var(--surface-dark);
+      border-radius: var(--radius-card);
+      padding: var(--space-6);
+      margin-right: var(--space-8);
+    }
+
+    .hero-code {
+      font-family: var(--font-code);
+      font-size: 13px;
+      color: #E6EAF3;
+      line-height: 1.8;
+    }
+
+    .hero-code .keyword { color: var(--color-primary); }
+    .hero-code .string { color: var(--color-accent); }
+    .hero-code .comment { color: var(--color-muted); }
+
+    /* ============================================
+       SECTION 2: PROBLEM/STAKES
+       Tests: Content Panel (34px radius)
+       ============================================ */
+
+    .problem {
+      background: var(--surface-background);
+    }
+
+    .problem-panel {
+      background: var(--surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-panel);
+      padding: var(--space-12);
+      max-width: 800px;
+      margin: 0 auto;
+    }
+
+    /* Accent divider line above */
+    .problem-panel::before {
+      content: '';
+      display: block;
+      width: 60px;
+      height: 2px;
+      background: var(--color-accent-alt);
+      margin-bottom: var(--space-6);
+    }
+
+    .problem-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      color: var(--color-foreground);
+      margin-bottom: var(--space-8);
+    }
+
+    .problem-list {
+      list-style: none;
+    }
+
+    .problem-list li {
+      font-family: var(--font-body);
+      font-size: 17px;
+      color: var(--color-muted);
+      padding: var(--space-4) 0;
+      padding-left: var(--space-6);
+      position: relative;
+      display: flex;
+      align-items: center;
+      gap: var(--space-4);
+    }
+
+    .problem-list li i {
+      color: var(--color-stat-1);
+      width: 20px;
+      height: 20px;
+    }
+
+    /* ============================================
+       SECTION 3: MENTAL MODELS GRID
+       Tests: Feature Card (4px radius),
+              shadow-card-hover, NO emoji icons
+       ============================================ */
+
+    .models {
+      background: var(--surface-background);
+    }
+
+    .models-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .models-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      margin-bottom: var(--space-4);
+    }
+
+    .models-headline .accent {
+      color: var(--color-accent);
+    }
+
+    .models-subheadline {
+      font-family: var(--font-body);
+      font-size: 17px;
+      color: var(--color-muted);
+    }
+
+    .models-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-8);
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 900px) {
+      .models-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    /* Feature Card Archetype */
+    .feature-card {
+      background: var(--surface-card);
+      border: 1px solid var(--color-border-light);
+      border-radius: var(--radius-card);  /* 4px NOT 8px */
+      box-shadow: var(--shadow-card);
+      padding: var(--space-6);
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    /* BRAND-CRITICAL: Shadow intensifies on hover */
+    .feature-card:hover {
+      box-shadow: var(--shadow-card-hover);
+      transform: translateY(-4px);
+    }
+
+    .feature-card-icon {
+      width: 48px;
+      height: 48px;
+      background: var(--surface-background);
+      border-radius: var(--radius-card);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: var(--space-4);
+    }
+
+    .feature-card-icon i {
+      width: 24px;
+      height: 24px;
+      color: var(--color-primary);
+    }
+
+    .feature-card-title {
+      font-family: var(--font-primary);
+      font-size: 21px;
+      font-weight: 600;
+      color: var(--color-accent);
+      margin-bottom: var(--space-2);
+    }
+
+    .feature-card-description {
+      font-family: var(--font-body);
+      font-size: 15px;
+      color: var(--color-muted);
+      line-height: 1.5;
+      margin-bottom: var(--space-4);
+    }
+
+    .feature-card-usecase {
+      font-family: var(--font-primary);
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--color-foreground);
+      background: var(--surface-background);
+      padding: 4px 8px;
+      border-radius: var(--radius-badge);
+      display: inline-block;
+    }
+
+    /* Link Text Pattern */
+    .link-text {
+      font-family: var(--font-primary);
+      font-size: 9px;
+      font-weight: 700;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      text-decoration: none;
+      color: var(--color-cta);
+      opacity: 0;
+      transform: translateY(10px);
+      transition: all 0.3s ease;
+    }
+
+    .feature-card:hover .link-text {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ============================================
+       SECTION 4: STATS MODULE (Dark Band)
+       Tests: Dark surfaces, 3 stat colors,
+              letter-spacing
+       ============================================ */
+
+    .stats {
+      background: var(--surface-dark);
+      padding: 83px 200px;
+    }
+
+    .stats-grid {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .stat-item {
+      flex: 1;
+      text-align: center;
+    }
+
+    .stat-divider {
+      width: 1px;
+      height: 80px;
+      background: rgba(151, 151, 151, 0.3);
+    }
+
+    .stat-number {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 400;
+      letter-spacing: var(--ls-headline);
+      line-height: 42px;
+    }
+
+    .stat-number.stat-1 { color: var(--color-stat-1); }
+    .stat-number.stat-2 { color: var(--color-stat-2); }
+    .stat-number.stat-3 { color: var(--color-stat-3); }
+
+    .stat-description {
+      font-family: var(--font-primary);
+      font-size: 17px;
+      font-weight: 400;
+      letter-spacing: var(--ls-wide);
+      line-height: 27px;
+      color: white;
+      margin-top: var(--space-4);
+    }
+
+    /* ============================================
+       SECTION 5: DEMO (Code Preview)
+       Tests: Dark surface cards, font-code,
+              tabs styling
+       ============================================ */
+
+    .demo {
+      background: var(--surface-background);
+    }
+
+    .demo-header {
+      text-align: center;
+      margin-bottom: var(--space-8);
+    }
+
+    .demo-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      margin-bottom: var(--space-4);
+    }
+
+    .demo-tabs {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-2);
+      margin-bottom: var(--space-6);
+    }
+
+    .demo-tab {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 500;
+      padding: 8px 16px;
+      background: var(--surface-muted);
+      border: 1px solid var(--color-border);
+      border-radius: var(--radius-card);
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .demo-tab.active {
+      background: var(--color-primary);
+      color: white;
+      border-color: var(--color-primary);
+    }
+
+    .demo-panel {
+      background: var(--surface-dark);
+      border-radius: var(--radius-card);
+      max-width: 900px;
+      margin: 0 auto;
+      overflow: hidden;
+    }
+
+    .demo-panel-header {
+      background: var(--surface-dark-alt);
+      padding: var(--space-4) var(--space-6);
+      display: flex;
+      align-items: center;
+      gap: var(--space-2);
+    }
+
+    .demo-dot {
+      width: 12px;
+      height: 12px;
+      border-radius: 50%;
+    }
+
+    .demo-dot.red { background: #FF5F56; }
+    .demo-dot.yellow { background: #FFBD2E; }
+    .demo-dot.green { background: #27C93F; }
+
+    .demo-code {
+      padding: var(--space-6);
+      font-family: var(--font-code);
+      font-size: 14px;
+      color: #E6EAF3;
+      line-height: 1.8;
+      overflow-x: auto;
+    }
+
+    .demo-code .keyword { color: var(--color-primary); }
+    .demo-code .string { color: var(--color-accent); }
+    .demo-code .comment { color: var(--color-muted); }
+    .demo-code .property { color: var(--color-stat-2); }
+
+    /* ============================================
+       SECTION 6: STEPS (How It Works)
+       Tests: Badge (2px radius), numbered steps
+       ============================================ */
+
+    .steps {
+      background: var(--surface-card);
+    }
+
+    .steps-header {
+      text-align: center;
+      margin-bottom: var(--space-12);
+    }
+
+    .steps-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+    }
+
+    .steps-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: var(--space-8);
+      max-width: 1000px;
+      margin: 0 auto;
+    }
+
+    @media (max-width: 800px) {
+      .steps-grid {
+        grid-template-columns: repeat(2, 1fr);
+      }
+    }
+
+    .step-item {
+      text-align: center;
+    }
+
+    /* Status Badge Archetype */
+    .step-badge {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 40px;
+      height: 40px;
+      background: var(--color-primary);
+      border-radius: var(--radius-badge);  /* 2px */
+      font-family: var(--font-primary);
+      font-size: 18px;
+      font-weight: 700;
+      color: white;
+      margin-bottom: var(--space-4);
+    }
+
+    .step-title {
+      font-family: var(--font-primary);
+      font-size: 17px;
+      font-weight: 600;
+      color: var(--color-foreground);
+      margin-bottom: var(--space-2);
+    }
+
+    .step-description {
+      font-family: var(--font-body);
+      font-size: 14px;
+      color: var(--color-muted);
+    }
+
+    /* ============================================
+       SECTION 7: CTA BANNER (Dark)
+       Tests: Dark band CTA, button hierarchy,
+              submit color
+       ============================================ */
+
+    .cta {
+      background: var(--surface-dark);
+      text-align: center;
+    }
+
+    .cta-headline {
+      font-family: var(--font-primary);
+      font-size: 38px;
+      font-weight: 700;
+      letter-spacing: var(--ls-headline);
+      color: white;
+      margin-bottom: var(--space-4);
+    }
+
+    .cta-subheadline {
+      font-family: var(--font-body);
+      font-size: 17px;
+      color: rgba(255,255,255,0.7);
+      margin-bottom: var(--space-8);
+    }
+
+    .cta-buttons {
+      display: flex;
+      justify-content: center;
+      gap: var(--space-4);
+    }
+
+    .cta .btn-submit {
+      padding: 16px 32px;
+      font-size: 16px;
+    }
+
+    .cta .btn-ghost {
+      color: white;
+      border-color: rgba(255,255,255,0.3);
+    }
+
+    .cta .btn-ghost:hover {
+      border-color: white;
+    }
+
+    /* ============================================
+       VALIDATION PANEL (for testing)
+       ============================================ */
+
+    .validation {
+      background: var(--surface-muted);
+      padding: var(--space-8);
+      border-top: 2px solid var(--color-accent-alt);
+    }
+
+    .validation h3 {
+      font-family: var(--font-primary);
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: var(--ls-wider);
+      text-transform: uppercase;
+      color: var(--color-accent-alt);
+      margin-bottom: var(--space-4);
+    }
+
+    .validation-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: var(--space-6);
+    }
+
+    .validation-item {
+      font-family: var(--font-code);
+      font-size: 12px;
+    }
+
+    .validation-item .label {
+      color: var(--color-muted);
+    }
+
+    .validation-item .value {
+      color: var(--color-foreground);
+      font-weight: 500;
+    }
+
+    .validation-item .pass {
+      color: var(--color-stat-1);
+    }
+
+    .validation-item .fail {
+      color: #D52C2C;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- SECTION 1: HERO (2-Column Asymmetric) -->
+  <section class="hero">
+    <div class="hero-content">
+      <p class="hero-eyebrow">THINK-MCP TOOLKIT</p>
+      <h1 class="hero-headline">
+        <span class="accent">Mental Models</span><br>
+        <span class="dark">for Structured Thinking</span>
+      </h1>
+      <p class="hero-subheadline">
+        Stop going in circles. Apply battle-tested frameworks used by top engineers, consultants, and decision-makers to reach clarity faster.
+      </p>
+      <div class="hero-cta-group">
+        <button class="btn btn-primary">Explore Models</button>
+        <button class="btn btn-ghost">See Examples</button>
+      </div>
+    </div>
+    <div class="hero-visual">
+      <pre class="hero-code"><span class="comment">// Apply First Principles thinking</span>
+{
+  <span class="keyword">"modelName"</span>: <span class="string">"first_principles"</span>,
+  <span class="keyword">"problem"</span>: <span class="string">"Reduce cloud costs by 50%"</span>,
+  <span class="keyword">"steps"</span>: [
+    <span class="string">"Identify fundamentals"</span>,
+    <span class="string">"Question assumptions"</span>,
+    <span class="string">"Rebuild from ground up"</span>
+  ]
+}</pre>
+    </div>
+  </section>
+
+  <!-- SECTION 2: PROBLEM/STAKES -->
+  <section class="problem">
+    <div class="problem-panel">
+      <h2 class="problem-headline">Sound Familiar?</h2>
+      <ul class="problem-list">
+        <li><i data-lucide="clock"></i> Debugging the same issue for hours without progress</li>
+        <li><i data-lucide="brain"></i> Analysis paralysis when prioritizing tasks</li>
+        <li><i data-lucide="message-circle"></i> Explaining problems repeatedly but never solving them</li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- SECTION 3: MENTAL MODELS GRID -->
+  <section class="models">
+    <div class="models-header">
+      <h2 class="models-headline">
+        <span class="accent">6 Proven</span> Mental Models
+      </h2>
+      <p class="models-subheadline">Choose the right framework for your problem type</p>
+    </div>
+    <div class="models-grid">
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <i data-lucide="layers"></i>
+        </div>
+        <h3 class="feature-card-title">First Principles</h3>
+        <p class="feature-card-description">Break down to fundamentals, rebuild from scratch. Question every assumption.</p>
+        <span class="feature-card-usecase">Cost Optimization</span>
+        <a href="#" class="link-text">Learn More &gt;</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <i data-lucide="pie-chart"></i>
+        </div>
+        <h3 class="feature-card-title">Pareto Principle</h3>
+        <p class="feature-card-description">80% of results come from 20% of causes. Focus on what matters most.</p>
+        <span class="feature-card-usecase">Prioritization</span>
+        <a href="#" class="link-text">Learn More &gt;</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <i data-lucide="message-circle"></i>
+        </div>
+        <h3 class="feature-card-title">Rubber Duck</h3>
+        <p class="feature-card-description">Explain the problem out loud step-by-step to find the answer yourself.</p>
+        <span class="feature-card-usecase">Debugging</span>
+        <a href="#" class="link-text">Learn More &gt;</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <i data-lucide="scale"></i>
+        </div>
+        <h3 class="feature-card-title">Opportunity Cost</h3>
+        <p class="feature-card-description">What are you giving up by choosing this path? Evaluate trade-offs clearly.</p>
+        <span class="feature-card-usecase">Trade-offs</span>
+        <a href="#" class="link-text">Learn More &gt;</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <i data-lucide="alert-triangle"></i>
+        </div>
+        <h3 class="feature-card-title">Error Propagation</h3>
+        <p class="feature-card-description">Understand how errors compound through a system. Prevent cascading failures.</p>
+        <span class="feature-card-usecase">Risk Analysis</span>
+        <a href="#" class="link-text">Learn More &gt;</a>
+      </div>
+
+      <div class="feature-card">
+        <div class="feature-card-icon">
+          <i data-lucide="scissors"></i>
+        </div>
+        <h3 class="feature-card-title">Occam's Razor</h3>
+        <p class="feature-card-description">The simplest explanation is usually correct. Cut through complexity.</p>
+        <span class="feature-card-usecase">Simplification</span>
+        <a href="#" class="link-text">Learn More &gt;</a>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- SECTION 4: STATS MODULE (Dark Band) -->
+  <section class="stats">
+    <div class="stats-grid">
+      <div class="stat-item">
+        <p class="stat-number stat-1">50%+</p>
+        <p class="stat-description">Cost Savings<br>with First Principles</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <p class="stat-number stat-2">70%</p>
+        <p class="stat-description">Ticket Reduction<br>with Pareto Analysis</p>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="stat-item">
+        <p class="stat-number stat-3">10x</p>
+        <p class="stat-description">Faster Debugging<br>with Rubber Duck</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 5: DEMO -->
+  <section class="demo">
+    <div class="demo-header">
+      <h2 class="demo-headline">See It In Action</h2>
+    </div>
+    <div class="demo-tabs">
+      <button class="demo-tab active">First Principles</button>
+      <button class="demo-tab">Rubber Duck</button>
+      <button class="demo-tab">Pareto</button>
+    </div>
+    <div class="demo-panel">
+      <div class="demo-panel-header">
+        <span class="demo-dot red"></span>
+        <span class="demo-dot yellow"></span>
+        <span class="demo-dot green"></span>
+      </div>
+      <pre class="demo-code"><span class="comment">// Cloud Infrastructure Cost Analysis</span>
+{
+  <span class="property">"modelName"</span>: <span class="string">"first_principles"</span>,
+  <span class="property">"problem"</span>: <span class="string">"How can we reduce cloud costs by 50%?"</span>,
+  <span class="property">"steps"</span>: [
+    <span class="string">"Identify fundamentals: compute, storage, network"</span>,
+    <span class="string">"Question assumptions: Do we need 24/7 uptime?"</span>,
+    <span class="string">"Break down costs: 60% compute, 25% storage, 15% network"</span>,
+    <span class="string">"Rebuild: spot instances, auto-scaling, lifecycle policies"</span>
+  ],
+  <span class="property">"conclusion"</span>: <span class="string">"55% savings achievable through spot instances (30%), auto-scaling (15%), tiered storage (10%)"</span>
+}</pre>
+    </div>
+  </section>
+
+  <!-- SECTION 6: STEPS -->
+  <section class="steps">
+    <div class="steps-header">
+      <h2 class="steps-headline">How It Works</h2>
+    </div>
+    <div class="steps-grid">
+      <div class="step-item">
+        <div class="step-badge">1</div>
+        <h3 class="step-title">Choose a Model</h3>
+        <p class="step-description">Pick from 6 proven frameworks</p>
+      </div>
+      <div class="step-item">
+        <div class="step-badge">2</div>
+        <h3 class="step-title">Describe Problem</h3>
+        <p class="step-description">Input your challenge</p>
+      </div>
+      <div class="step-item">
+        <div class="step-badge">3</div>
+        <h3 class="step-title">Follow Framework</h3>
+        <p class="step-description">Structured analysis</p>
+      </div>
+      <div class="step-item">
+        <div class="step-badge">4</div>
+        <h3 class="step-title">Reach Clarity</h3>
+        <p class="step-description">Concrete conclusions</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION 7: CTA BANNER -->
+  <section class="cta">
+    <h2 class="cta-headline">Ready to Think Clearer?</h2>
+    <p class="cta-subheadline">Start using mental models in your workflow today.</p>
+    <div class="cta-buttons">
+      <button class="btn btn-submit">Get Started</button>
+      <button class="btn btn-ghost">View Documentation</button>
+    </div>
+  </section>
+
+  <!-- VALIDATION PANEL -->
+  <section class="validation">
+    <h3>Skills Validation Panel</h3>
+    <div class="validation-grid">
+      <div class="validation-item">
+        <span class="label">radius-card:</span>
+        <span class="value pass">4px (NOT 8px)</span>
+      </div>
+      <div class="validation-item">
+        <span class="label">radius-panel:</span>
+        <span class="value pass">34px</span>
+      </div>
+      <div class="validation-item">
+        <span class="label">radius-badge:</span>
+        <span class="value pass">2px</span>
+      </div>
+      <div class="validation-item">
+        <span class="label">shadow-card:</span>
+        <span class="value pass">0 0 4px rgba(0,0,0,0.06)</span>
+      </div>
+      <div class="validation-item">
+        <span class="label">shadow-card-hover:</span>
+        <span class="value pass">0 0 4px rgba(0,0,0,0.19)</span>
+      </div>
+      <div class="validation-item">
+        <span class="label">Emoji Icons:</span>
+        <span class="value pass">NONE (using Lucide)</span>
+      </div>
+      <div class="validation-item">
+        <span class="label">Hero Layout:</span>
+        <span class="value pass">2-column asymmetric</span>
+      </div>
+      <div class="validation-item">
+        <span class="label">Purple Gradient:</span>
+        <span class="value pass">NONE</span>
+      </div>
+      <div class="validation-item">
+        <span class="label">Glass-morphism:</span>
+        <span class="value pass">NONE</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- Initialize Lucide Icons -->
+  <script>
+    lucide.createIcons();
+  </script>
+
+</body>
+</html>

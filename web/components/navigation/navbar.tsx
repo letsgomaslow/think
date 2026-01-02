@@ -44,14 +44,14 @@ export function Navbar() {
           : "bg-transparent"
       }`}
     >
-      <div className="container mx-auto px-6">
-        <div className="flex items-center justify-between py-4">
+      <div className="container mx-auto px-4 xs:px-5 sm:px-6 md:px-8">
+        <div className="flex items-center justify-between py-3 xs:py-3.5 sm:py-4">
           {/* Logo */}
           <button
             onClick={() => router.push("/")}
-            className="flex items-center gap-2 group"
+            className="flex items-center gap-2 group touch-target-min"
           >
-            <span className="text-3xl font-bold text-white font-[family-name:var(--font-manrope)] transition-colors group-hover:text-[hsl(var(--brand-primary))]">
+            <span className="text-2xl xs:text-2.5xl sm:text-3xl font-bold text-white font-[family-name:var(--font-manrope)] transition-colors group-hover:text-[hsl(var(--brand-primary))]">
               Think
             </span>
             <Image
@@ -59,7 +59,7 @@ export function Navbar() {
               alt="Maslow AI"
               width={24}
               height={24}
-              className="opacity-70 transition-opacity group-hover:opacity-100"
+              className="w-5 h-5 xs:w-6 xs:h-6 sm:w-6 sm:h-6 opacity-70 transition-opacity group-hover:opacity-100"
             />
           </button>
 
@@ -69,7 +69,7 @@ export function Navbar() {
               <button
                 key={item.section}
                 onClick={() => handleNavClick(item.section)}
-                className="text-white hover:text-[hsl(var(--brand-primary))] transition-colors duration-200 font-[family-name:var(--font-graphik)] font-medium"
+                className="text-white hover:text-[hsl(var(--brand-primary))] transition-colors duration-200 font-[family-name:var(--font-graphik)] font-medium text-sm lg:text-base touch-target-min"
               >
                 {item.label}
               </button>
@@ -79,13 +79,13 @@ export function Navbar() {
           {/* Mobile Menu Button */}
           <button
             onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
-            className="md:hidden text-white hover:text-[hsl(var(--brand-primary))] transition-colors"
+            className="md:hidden text-white hover:text-[hsl(var(--brand-primary))] transition-colors touch-target-min"
             aria-label="Toggle menu"
           >
             {isMobileMenuOpen ? (
-              <X className="w-6 h-6" />
+              <X className="w-5 h-5 xs:w-6 xs:h-6" />
             ) : (
-              <Menu className="w-6 h-6" />
+              <Menu className="w-5 h-5 xs:w-6 xs:h-6" />
             )}
           </button>
         </div>
@@ -105,7 +105,7 @@ export function Navbar() {
                   <button
                     key={item.section}
                     onClick={() => handleNavClick(item.section)}
-                    className="block w-full text-left text-white hover:text-[hsl(var(--brand-primary))] transition-colors duration-200 font-[family-name:var(--font-graphik)] font-medium py-2"
+                    className="block w-full text-left text-white hover:text-[hsl(var(--brand-primary))] transition-colors duration-200 font-[family-name:var(--font-graphik)] font-medium text-sm xs:text-base py-2 xs:py-2.5 touch-target-min"
                   >
                     {item.label}
                   </button>

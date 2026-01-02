@@ -1,0 +1,1836 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Decide | Structured Decision Analysis by Maslow AI</title>
+
+    <!-- Maslow AI Typography: Manrope + JetBrains Mono -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* =====================================================
+           MASLOW AI DESIGN SYSTEM - DECIDE TOOL
+           Skills Applied: maslow-brand, accessibility-design, frontend-design
+           ===================================================== */
+
+        :root {
+            /* Maslow Core Palette (constant) */
+            --maslow-teal: #6DC4AD;
+            --maslow-pink: #EE7BB3;
+            --maslow-purple: #401877;
+            --maslow-blue: #469DBB;
+            --maslow-orange: #F3A326;
+            --maslow-purple-light: #A070A6;
+
+            /* Decide Tool Accent Color */
+            --decide: #F3A326;
+            --decide-light: #FEF6E6;
+            --decide-dark: #D18B1F;
+
+            /* Status Colors */
+            --status-success: #2CD552;
+            --status-error: #D52C2C;
+            --status-warning: #F3A326;
+            --status-info: #469DBB;
+
+            /* Typography - Manrope (maslow-brand) */
+            --font-display: 'Manrope', system-ui, sans-serif;
+            --font-body: 'Manrope', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Spacing Scale (maslow-brand) */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-5: 20px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-10: 40px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-20: 80px;
+            --space-24: 96px;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+
+            /* Accent Line (maslow-brand signature) */
+            --accent-line: 3px;
+        }
+
+        /* ===== LIGHT MODE (Default) ===== */
+        [data-theme="light"] {
+            --bg: #E6EAF3;
+            --surface: #FFFFFF;
+            --surface-alt: #EEEEEE;
+            --text: #333333;
+            --text-secondary: #666666;
+            --text-muted: #A5A5A5;
+            --border: #D0D5E0;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+            --code-bg: #F5F7FA;
+            --selection-bg: #FEF6E6;
+        }
+
+        /* ===== DARK MODE ===== */
+        [data-theme="dark"] {
+            --bg: #121D35;
+            --surface: #1A2847;
+            --surface-alt: #243356;
+            --text: #FFFFFF;
+            --text-secondary: #B8C4D9;
+            --text-muted: #7A8BA8;
+            --border: #3A4A6B;
+            --nav-bg: rgba(18, 29, 53, 0.95);
+            --code-bg: #243356;
+            --selection-bg: rgba(243, 163, 38, 0.15);
+        }
+
+        /* ===== RESET ===== */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-body);
+            font-size: 16px;
+            line-height: 1.6;
+            background: var(--bg);
+            color: var(--text-secondary);
+            transition: background-color 0.4s ease, color 0.4s ease;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        ::selection {
+            background: var(--selection-bg);
+            color: var(--text);
+        }
+
+        /* ===== ACCESSIBILITY (accessibility-design skill) ===== */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--decide);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+
+        /* ===== TYPOGRAPHY ===== */
+        h1, h2, h3, h4 {
+            font-family: var(--font-display);
+            color: var(--text);
+            font-weight: 800;
+            line-height: 1.1;
+        }
+
+        /* Maslow headline pattern: bold keyword + light supporting */
+        .headline-bold {
+            font-weight: 800;
+            color: var(--text);
+        }
+        .headline-light {
+            font-weight: 300;
+            color: var(--text-muted);
+        }
+
+        /* ===== LAYOUT ===== */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        /* ===== NAVIGATION ===== */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .nav-inner {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            height: 72px;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            text-decoration: none;
+        }
+
+        .nav-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--maslow-pink), var(--maslow-purple-light), var(--maslow-teal));
+            border-radius: var(--radius-md);
+        }
+
+        .nav-wordmark {
+            display: flex;
+            flex-direction: column;
+            gap: 2px;
+        }
+
+        .nav-title {
+            font-family: var(--font-display);
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--text);
+            letter-spacing: 0.02em;
+        }
+
+        .nav-subtitle {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--space-8);
+            list-style: none;
+        }
+
+        .nav-link {
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--text);
+        }
+
+        .nav-actions {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            width: 40px;
+            height: 40px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--decide);
+            color: var(--decide);
+        }
+
+        .theme-toggle svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        [data-theme="dark"] .icon-sun { display: none; }
+        [data-theme="dark"] .icon-moon { display: block; }
+        [data-theme="light"] .icon-sun { display: block; }
+        [data-theme="light"] .icon-moon { display: none; }
+
+        /* Buttons */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-family: var(--font-body);
+            font-size: 14px;
+            font-weight: 600;
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-md);
+            border: none;
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary {
+            background: var(--decide);
+            color: #333333;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(243, 163, 38, 0.3);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-secondary);
+            border: 1px solid var(--border);
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--text-muted);
+            color: var(--text);
+        }
+
+        /* ===== HERO SECTION ===== */
+        .hero {
+            padding-top: 160px;
+            padding-bottom: var(--space-16);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: var(--space-16);
+            align-items: center;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+        }
+
+        /* Accent line (maslow-brand signature) */
+        .accent-line {
+            width: 60px;
+            height: var(--accent-line);
+            background: var(--decide);
+            margin-bottom: var(--space-6);
+            animation: lineGrow 0.6s ease-out;
+        }
+
+        @keyframes lineGrow {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--decide);
+            margin-bottom: var(--space-4);
+            animation: fadeUp 0.6s ease-out 0.1s both;
+        }
+
+        .hero-title {
+            font-size: clamp(48px, 8vw, 72px);
+            margin-bottom: var(--space-6);
+            animation: fadeUp 0.6s ease-out 0.2s both;
+        }
+
+        .hero-description {
+            font-size: 18px;
+            line-height: 1.7;
+            max-width: 480px;
+            margin-bottom: var(--space-8);
+            animation: fadeUp 0.6s ease-out 0.3s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            animation: fadeUp 0.6s ease-out 0.4s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* ===== DECISION FLOWCHART (Hero Visual) ===== */
+        .hero-visual {
+            position: relative;
+            padding: var(--space-8);
+            animation: fadeIn 0.8s ease-out 0.3s both;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+
+        .flowchart {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: var(--space-2);
+            flex-wrap: wrap;
+        }
+
+        .flow-stage {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: var(--space-2);
+            animation: stageFloat 0.6s ease-out both;
+        }
+
+        .flow-stage:nth-child(1) { animation-delay: 0.3s; }
+        .flow-stage:nth-child(2) { animation-delay: 0.4s; }
+        .flow-stage:nth-child(3) { animation-delay: 0.5s; }
+        .flow-stage:nth-child(4) { animation-delay: 0.6s; }
+        .flow-stage:nth-child(5) { animation-delay: 0.7s; }
+        .flow-stage:nth-child(6) { animation-delay: 0.8s; }
+
+        @keyframes stageFloat {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .flow-node {
+            width: 64px;
+            height: 64px;
+            border-radius: 50%;
+            background: var(--surface);
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--text-muted);
+            transition: all 0.3s ease;
+        }
+
+        .flow-node svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .flow-stage.active .flow-node {
+            background: var(--decide);
+            border-color: var(--decide);
+            color: #333333;
+            box-shadow: 0 4px 16px rgba(243, 163, 38, 0.3);
+        }
+
+        .flow-stage.completed .flow-node {
+            background: var(--decide-light);
+            border-color: var(--decide);
+            color: var(--decide-dark);
+        }
+
+        [data-theme="dark"] .flow-stage.completed .flow-node {
+            background: rgba(243, 163, 38, 0.15);
+        }
+
+        .flow-label {
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-align: center;
+            max-width: 70px;
+        }
+
+        .flow-stage.active .flow-label {
+            color: var(--decide);
+        }
+
+        .flow-connector {
+            width: 32px;
+            height: 2px;
+            background: var(--border);
+            position: relative;
+        }
+
+        .flow-connector.active {
+            background: var(--decide);
+        }
+
+        .flow-connector::after {
+            content: '';
+            position: absolute;
+            right: -4px;
+            top: -3px;
+            border: 4px solid transparent;
+            border-left-color: var(--border);
+        }
+
+        .flow-connector.active::after {
+            border-left-color: var(--decide);
+        }
+
+        /* ===== ANALYSIS TYPES SECTION ===== */
+        .analysis-types {
+            padding: var(--space-24) 0;
+            background: var(--surface);
+            transition: background-color 0.4s ease;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-16);
+        }
+
+        .section-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--decide);
+            margin-bottom: var(--space-4);
+        }
+
+        .section-title {
+            font-size: clamp(32px, 5vw, 48px);
+            margin-bottom: var(--space-4);
+        }
+
+        .section-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 560px;
+            margin: 0 auto;
+        }
+
+        .analysis-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+        }
+
+        .analysis-card {
+            background: var(--bg);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        /* Maslow hover state: left border reveal */
+        .analysis-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--decide);
+            border-radius: var(--radius-lg) 0 0 var(--radius-lg);
+            transition: width 0.3s ease;
+        }
+
+        .analysis-card:hover::before {
+            width: var(--accent-line);
+        }
+
+        .analysis-card:hover {
+            border-color: var(--decide);
+            transform: translateY(-4px);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.06);
+        }
+
+        .analysis-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--decide-light);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-4);
+            color: var(--decide);
+        }
+
+        [data-theme="dark"] .analysis-icon {
+            background: rgba(243, 163, 38, 0.15);
+        }
+
+        .analysis-icon svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        .analysis-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .analysis-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            line-height: 1.5;
+        }
+
+        .analysis-badge {
+            display: inline-block;
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            padding: var(--space-1) var(--space-2);
+            background: var(--decide-light);
+            color: var(--decide-dark);
+            border-radius: var(--radius-sm);
+            margin-top: var(--space-3);
+        }
+
+        [data-theme="dark"] .analysis-badge {
+            background: rgba(243, 163, 38, 0.15);
+            color: var(--decide);
+        }
+
+        /* Row 2: 2 cards centered */
+        .analysis-grid .analysis-card:nth-child(4),
+        .analysis-grid .analysis-card:nth-child(5) {
+            grid-column: span 1;
+        }
+
+        @media (min-width: 769px) {
+            .analysis-grid {
+                grid-template-columns: repeat(6, 1fr);
+            }
+            .analysis-grid .analysis-card:nth-child(1),
+            .analysis-grid .analysis-card:nth-child(2),
+            .analysis-grid .analysis-card:nth-child(3) {
+                grid-column: span 2;
+            }
+            .analysis-grid .analysis-card:nth-child(4) {
+                grid-column: 2 / span 2;
+            }
+            .analysis-grid .analysis-card:nth-child(5) {
+                grid-column: 4 / span 2;
+            }
+        }
+
+        /* ===== DARK BAND DEMO SECTION ===== */
+        .dark-band {
+            background: #121D35;
+            color: #FFFFFF;
+            padding: var(--space-24) 0;
+        }
+
+        .dark-band .section-eyebrow {
+            color: var(--decide);
+        }
+
+        .dark-band .section-title {
+            color: #FFFFFF;
+        }
+
+        .dark-band .section-description {
+            color: #B8C4D9;
+        }
+
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+            margin-top: var(--space-12);
+        }
+
+        .demo-panel {
+            background: #1A2847;
+            border: 1px solid #3A4A6B;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+        }
+
+        .demo-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-5);
+            background: #243356;
+            border-bottom: 1px solid #3A4A6B;
+        }
+
+        .demo-label {
+            font-family: var(--font-mono);
+            font-size: 11px;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: #7A8BA8;
+        }
+
+        .demo-badge {
+            background: var(--decide);
+            color: #333333;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 10px;
+            border-radius: 20px;
+        }
+
+        .demo-content {
+            padding: var(--space-6);
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        .demo-content pre {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            line-height: 1.7;
+            color: #B8C4D9;
+            overflow-x: auto;
+        }
+
+        .json-key { color: var(--decide); }
+        .json-string { color: var(--maslow-teal); }
+        .json-number { color: var(--maslow-pink); }
+        .json-boolean { color: var(--maslow-blue); }
+
+        /* ===== DYNAMIC RESPONSE VISUALIZER ===== */
+        .visualizer {
+            padding: var(--space-24) 0;
+            background: var(--bg);
+            transition: background-color 0.4s ease;
+        }
+
+        .visualizer-toggle {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-8);
+        }
+
+        .toggle-btn {
+            padding: var(--space-2) var(--space-5);
+            font-size: 13px;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            background: transparent;
+            color: var(--text-secondary);
+            border-radius: var(--radius-md);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .toggle-btn.active {
+            background: var(--decide);
+            border-color: var(--decide);
+            color: #333333;
+        }
+
+        .toggle-btn:hover:not(.active) {
+            border-color: var(--decide);
+            color: var(--decide);
+        }
+
+        /* JSON View Panel */
+        .json-view-container {
+            animation: fadeIn 0.3s ease;
+        }
+
+        .json-panel {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .json-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-6);
+            background: var(--surface-alt);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .json-panel-label {
+            font-family: var(--font-mono);
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .copy-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-2) var(--space-3);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--text-secondary);
+            background: transparent;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .copy-btn:hover {
+            border-color: var(--decide);
+            color: var(--decide);
+        }
+
+        .copy-btn.copied {
+            background: var(--decide);
+            border-color: var(--decide);
+            color: #333333;
+        }
+
+        .json-panel-content {
+            padding: var(--space-6);
+            max-height: 500px;
+            overflow-y: auto;
+        }
+
+        .json-panel-content pre {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            line-height: 1.6;
+            color: var(--text-secondary);
+            margin: 0;
+            white-space: pre;
+        }
+
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-6);
+        }
+
+        .response-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-5);
+            transition: all 0.3s ease;
+        }
+
+        .response-card:hover {
+            border-color: var(--decide);
+            transform: translateY(-2px);
+        }
+
+        .card-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: var(--space-4);
+        }
+
+        .card-type {
+            font-size: 10px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-muted);
+        }
+
+        .card-title {
+            font-size: 16px;
+            font-weight: 700;
+            color: var(--text);
+            margin-bottom: var(--space-2);
+        }
+
+        .card-description {
+            font-size: 13px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        /* Weight Progress Bar */
+        .weight-bar {
+            margin-top: var(--space-3);
+        }
+
+        .weight-label {
+            display: flex;
+            justify-content: space-between;
+            font-size: 12px;
+            margin-bottom: var(--space-1);
+        }
+
+        .weight-label span:first-child {
+            color: var(--text-secondary);
+        }
+
+        .weight-label span:last-child {
+            font-weight: 600;
+            color: var(--decide);
+        }
+
+        .weight-track {
+            height: 6px;
+            background: var(--surface-alt);
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .weight-fill {
+            height: 100%;
+            background: var(--decide);
+            border-radius: 3px;
+            transition: width 0.6s ease;
+        }
+
+        /* Probability Indicator */
+        .probability-row {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            margin-top: var(--space-3);
+            padding: var(--space-3);
+            background: var(--surface-alt);
+            border-radius: var(--radius-md);
+        }
+
+        .prob-value {
+            font-family: var(--font-mono);
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--text);
+            min-width: 50px;
+        }
+
+        .prob-bar {
+            flex: 1;
+            height: 8px;
+            background: var(--border);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        .prob-fill {
+            height: 100%;
+            border-radius: 4px;
+            transition: width 0.6s ease;
+        }
+
+        .prob-fill.high { background: var(--status-success); }
+        .prob-fill.medium { background: var(--decide); }
+        .prob-fill.low { background: var(--status-error); }
+
+        /* Confidence Badge */
+        .confidence-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-1);
+            font-size: 11px;
+            font-weight: 600;
+            padding: var(--space-1) var(--space-2);
+            border-radius: var(--radius-sm);
+        }
+
+        .confidence-badge.high {
+            background: rgba(44, 213, 82, 0.15);
+            color: var(--status-success);
+        }
+
+        .confidence-badge.medium {
+            background: rgba(243, 163, 38, 0.15);
+            color: var(--decide);
+        }
+
+        .confidence-badge.low {
+            background: rgba(213, 44, 44, 0.15);
+            color: var(--status-error);
+        }
+
+        /* ===== API SECTION ===== */
+        .api {
+            padding: var(--space-24) 0;
+            background: var(--surface);
+            transition: background-color 0.4s ease;
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+            background: var(--bg);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            border: 1px solid var(--border);
+        }
+
+        .api-table th {
+            text-align: left;
+            padding: var(--space-4) var(--space-5);
+            background: var(--surface-alt);
+            font-size: 13px;
+            font-weight: 600;
+            color: var(--text);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table td {
+            padding: var(--space-4) var(--space-5);
+            font-size: 14px;
+            color: var(--text-secondary);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .api-table code {
+            font-family: var(--font-mono);
+            font-size: 13px;
+            color: var(--decide);
+        }
+
+        .badge {
+            display: inline-block;
+            font-size: 11px;
+            font-weight: 600;
+            padding: 4px 8px;
+            border-radius: var(--radius-sm);
+        }
+
+        .badge-type {
+            background: rgba(243, 163, 38, 0.15);
+            color: var(--decide);
+        }
+
+        .badge-required {
+            background: rgba(238, 123, 179, 0.15);
+            color: var(--maslow-pink);
+        }
+
+        .badge-optional {
+            background: var(--surface-alt);
+            color: var(--text-muted);
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            padding: var(--space-12) 0;
+            border-top: 1px solid var(--border);
+            text-align: center;
+            background: var(--bg);
+            transition: background-color 0.4s ease, border-color 0.4s ease;
+        }
+
+        .footer-text {
+            font-size: 14px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-4);
+        }
+
+        .footer-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            font-size: 12px;
+            font-weight: 500;
+            color: var(--maslow-purple-light);
+            padding: var(--space-2) var(--space-4);
+            background: rgba(64, 24, 119, 0.08);
+            border-radius: 20px;
+        }
+
+        [data-theme="dark"] .footer-badge {
+            background: rgba(160, 112, 166, 0.15);
+        }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+
+            .hero-description {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .hero-actions {
+                justify-content: center;
+            }
+
+            .accent-line {
+                margin-left: auto;
+                margin-right: auto;
+            }
+
+            .flowchart {
+                margin-top: var(--space-8);
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .card-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 40px;
+            }
+
+            .analysis-grid {
+                grid-template-columns: 1fr !important;
+            }
+
+            .analysis-grid .analysis-card {
+                grid-column: span 1 !important;
+            }
+
+            .flow-stage {
+                transform: scale(0.85);
+            }
+
+            .flow-connector {
+                width: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav" role="navigation" aria-label="Main navigation">
+        <div class="container nav-inner">
+            <a href="#" class="nav-brand" aria-label="Maslow AI Home">
+                <div class="nav-logo" aria-hidden="true"></div>
+                <div class="nav-wordmark">
+                    <span class="nav-title">MASLOW | AI</span>
+                    <span class="nav-subtitle">think-mcp</span>
+                </div>
+            </a>
+
+            <ul class="nav-links">
+                <li><a href="#analysis" class="nav-link">Analysis Types</a></li>
+                <li><a href="#demo" class="nav-link">Demo</a></li>
+                <li><a href="#visualizer" class="nav-link">Visualizer</a></li>
+                <li><a href="#api" class="nav-link">API</a></li>
+            </ul>
+
+            <div class="nav-actions">
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                    <svg class="icon-sun" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="icon-moon" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+                <a href="#demo" class="btn btn-primary">Try Demo</a>
+            </div>
+        </div>
+    </nav>
+
+    <main role="main">
+        <!-- Hero Section -->
+        <section class="hero" aria-labelledby="hero-title">
+            <div class="container">
+                <div class="hero-grid">
+                    <div class="hero-content">
+                        <div class="accent-line" aria-hidden="true"></div>
+                        <p class="hero-eyebrow">Decide Tool</p>
+                        <h1 id="hero-title">
+                            <span class="headline-bold">Decide</span><br>
+                            <span class="headline-light">with structured clarity</span>
+                        </h1>
+                        <p class="hero-description">
+                            Transform gut feelings into defensible decisions. From simple pros-cons to sophisticated expected value calculations, Decide creates an audit trail of your reasoning.
+                        </p>
+                        <div class="hero-actions">
+                            <a href="#demo" class="btn btn-primary">Try Demo</a>
+                            <a href="#api" class="btn btn-ghost">View API</a>
+                        </div>
+                    </div>
+
+                    <div class="hero-visual" aria-hidden="true">
+                        <div class="flowchart">
+                            <!-- Stage 1: Problem -->
+                            <div class="flow-stage completed">
+                                <div class="flow-node">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8.228 9c.549-1.165 2.03-2 3.772-2 2.21 0 4 1.343 4 3 0 1.4-1.278 2.575-3.006 2.907-.542.104-.994.54-.994 1.093m0 3h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <span class="flow-label">Problem</span>
+                            </div>
+
+                            <div class="flow-connector active"></div>
+
+                            <!-- Stage 2: Options -->
+                            <div class="flow-stage completed">
+                                <div class="flow-node">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"/>
+                                    </svg>
+                                </div>
+                                <span class="flow-label">Options</span>
+                            </div>
+
+                            <div class="flow-connector active"></div>
+
+                            <!-- Stage 3: Criteria -->
+                            <div class="flow-stage completed">
+                                <div class="flow-node">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                                    </svg>
+                                </div>
+                                <span class="flow-label">Criteria</span>
+                            </div>
+
+                            <div class="flow-connector active"></div>
+
+                            <!-- Stage 4: Evaluation (Active) -->
+                            <div class="flow-stage active">
+                                <div class="flow-node">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                                    </svg>
+                                </div>
+                                <span class="flow-label">Evaluation</span>
+                            </div>
+
+                            <div class="flow-connector"></div>
+
+                            <!-- Stage 5: Sensitivity -->
+                            <div class="flow-stage">
+                                <div class="flow-node">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                                    </svg>
+                                </div>
+                                <span class="flow-label">Sensitivity</span>
+                            </div>
+
+                            <div class="flow-connector"></div>
+
+                            <!-- Stage 6: Decision -->
+                            <div class="flow-stage">
+                                <div class="flow-node">
+                                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                                    </svg>
+                                </div>
+                                <span class="flow-label">Decision</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Analysis Types Section -->
+        <section id="analysis" class="analysis-types" aria-labelledby="analysis-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Analysis Methods</p>
+                    <h2 id="analysis-title" class="section-title">Choose Your Approach</h2>
+                    <p class="section-description">
+                        Select the analysis method that best fits your decision complexity and available information.
+                    </p>
+                </header>
+
+                <div class="analysis-grid">
+                    <article class="analysis-card">
+                        <div class="analysis-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h3 class="analysis-title">Pros-Cons</h3>
+                        <p class="analysis-text">Quick side-by-side comparison of advantages and disadvantages for each option.</p>
+                        <span class="analysis-badge">Quick Decisions</span>
+                    </article>
+
+                    <article class="analysis-card">
+                        <div class="analysis-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 6l3 1m0 0l-3 9a5.002 5.002 0 006.001 0M6 7l3 9M6 7l6-2m6 2l3-1m-3 1l-3 9a5.002 5.002 0 006.001 0M18 7l3 9m-3-9l-6-2m0-2v2m0 16V5m0 16H9m3 0h3"/>
+                            </svg>
+                        </div>
+                        <h3 class="analysis-title">Weighted Criteria</h3>
+                        <p class="analysis-text">Score options against weighted evaluation factors for multi-factor decisions.</p>
+                        <span class="analysis-badge">Multi-Factor</span>
+                    </article>
+
+                    <article class="analysis-card">
+                        <div class="analysis-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"/>
+                            </svg>
+                        </div>
+                        <h3 class="analysis-title">Decision Tree</h3>
+                        <p class="analysis-text">Map sequential decision paths and trace potential outcomes through branches.</p>
+                        <span class="analysis-badge">Sequential</span>
+                    </article>
+
+                    <article class="analysis-card">
+                        <div class="analysis-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M7 12l3-3 3 3 4-4M8 21l4-4 4 4M3 4h18M4 4h16v12a1 1 0 01-1 1H5a1 1 0 01-1-1V4z"/>
+                            </svg>
+                        </div>
+                        <h3 class="analysis-title">Expected Value</h3>
+                        <p class="analysis-text">Probability × Value calculations for decisions with uncertain outcomes.</p>
+                        <span class="analysis-badge">Uncertain Outcomes</span>
+                    </article>
+
+                    <article class="analysis-card">
+                        <div class="analysis-icon">
+                            <svg fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+                            </svg>
+                        </div>
+                        <h3 class="analysis-title">Scenario Analysis</h3>
+                        <p class="analysis-text">Evaluate options under different future scenarios for strategic planning.</p>
+                        <span class="analysis-badge">Strategic</span>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- Demo Section (Dark Band) -->
+        <section id="demo" class="dark-band" aria-labelledby="demo-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Interactive Demo</p>
+                    <h2 id="demo-title" class="section-title">See It in Action</h2>
+                    <p class="section-description">
+                        Two real-world scenarios showing different analysis approaches
+                    </p>
+                </header>
+
+                <div class="demo-grid">
+                    <!-- Cloud Provider Selection -->
+                    <div class="demo-panel">
+                        <div class="demo-header">
+                            <span class="demo-label">Weighted Criteria</span>
+                            <span class="demo-badge">Cloud Selection</span>
+                        </div>
+                        <div class="demo-content">
+                            <pre><code>{
+  <span class="json-key">"decisionStatement"</span>: <span class="json-string">"Which cloud provider for AI/ML platform?"</span>,
+  <span class="json-key">"options"</span>: [
+    { <span class="json-key">"name"</span>: <span class="json-string">"AWS"</span>, <span class="json-key">"description"</span>: <span class="json-string">"SageMaker, Bedrock"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"Google Cloud"</span>, <span class="json-key">"description"</span>: <span class="json-string">"Vertex AI, TPUs"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"Azure"</span>, <span class="json-key">"description"</span>: <span class="json-string">"Azure ML, OpenAI"</span> }
+  ],
+  <span class="json-key">"analysisType"</span>: <span class="json-string">"weighted-criteria"</span>,
+  <span class="json-key">"criteria"</span>: [
+    { <span class="json-key">"name"</span>: <span class="json-string">"ML Capabilities"</span>, <span class="json-key">"weight"</span>: <span class="json-number">0.30</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"Cost Efficiency"</span>, <span class="json-key">"weight"</span>: <span class="json-number">0.25</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"Team Expertise"</span>, <span class="json-key">"weight"</span>: <span class="json-number">0.20</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"Enterprise Support"</span>, <span class="json-key">"weight"</span>: <span class="json-number">0.15</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"Lock-in Risk"</span>, <span class="json-key">"weight"</span>: <span class="json-number">0.10</span> }
+  ],
+  <span class="json-key">"stage"</span>: <span class="json-string">"evaluation"</span>,
+  <span class="json-key">"riskTolerance"</span>: <span class="json-string">"risk-neutral"</span>
+}</code></pre>
+                        </div>
+                    </div>
+
+                    <!-- Investment Decision -->
+                    <div class="demo-panel">
+                        <div class="demo-header">
+                            <span class="demo-label">Expected Value</span>
+                            <span class="demo-badge">Investment Decision</span>
+                        </div>
+                        <div class="demo-content">
+                            <pre><code>{
+  <span class="json-key">"decisionStatement"</span>: <span class="json-string">"Invest $500K in enterprise dashboard?"</span>,
+  <span class="json-key">"options"</span>: [
+    { <span class="json-key">"name"</span>: <span class="json-string">"Build Full"</span>, <span class="json-key">"description"</span>: <span class="json-string">"Complete feature"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"Build MVP"</span>, <span class="json-key">"description"</span>: <span class="json-string">"Test market"</span> },
+    { <span class="json-key">"name"</span>: <span class="json-string">"Don't Build"</span>, <span class="json-key">"description"</span>: <span class="json-string">"Focus elsewhere"</span> }
+  ],
+  <span class="json-key">"analysisType"</span>: <span class="json-string">"expected-value"</span>,
+  <span class="json-key">"possibleOutcomes"</span>: [
+    { <span class="json-key">"optionId"</span>: <span class="json-string">"full"</span>, <span class="json-key">"description"</span>: <span class="json-string">"High adoption"</span>,
+      <span class="json-key">"probability"</span>: <span class="json-number">0.3</span>, <span class="json-key">"value"</span>: <span class="json-number">2000000</span>,
+      <span class="json-key">"confidenceInEstimate"</span>: <span class="json-number">0.6</span> },
+    { <span class="json-key">"optionId"</span>: <span class="json-string">"full"</span>, <span class="json-key">"description"</span>: <span class="json-string">"Medium adoption"</span>,
+      <span class="json-key">"probability"</span>: <span class="json-number">0.5</span>, <span class="json-key">"value"</span>: <span class="json-number">800000</span>,
+      <span class="json-key">"confidenceInEstimate"</span>: <span class="json-number">0.7</span> }
+  ],
+  <span class="json-key">"stage"</span>: <span class="json-string">"evaluation"</span>,
+  <span class="json-key">"riskTolerance"</span>: <span class="json-string">"risk-averse"</span>
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Response Visualizer -->
+        <section id="visualizer" class="visualizer" aria-labelledby="visualizer-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Response Visualizer</p>
+                    <h2 id="visualizer-title" class="section-title">Dynamic Response Cards</h2>
+                    <p class="section-description">
+                        Visualize JSON responses as interactive cards with progress bars and confidence indicators
+                    </p>
+                </header>
+
+                <div class="visualizer-toggle">
+                    <button class="toggle-btn active" data-view="cards">Card View</button>
+                    <button class="toggle-btn" data-view="json">JSON View</button>
+                </div>
+
+                <!-- Card View -->
+                <div class="card-grid" id="cardView">
+                    <!-- Options Card -->
+                    <article class="response-card">
+                        <div class="card-header">
+                            <span class="card-type">Options</span>
+                            <span class="confidence-badge high">3 options</span>
+                        </div>
+                        <h4 class="card-title">AWS</h4>
+                        <p class="card-description">Market leader with SageMaker, Bedrock, and comprehensive ML services</p>
+                        <div class="probability-row">
+                            <span class="prob-value">Score</span>
+                            <div class="prob-bar">
+                                <div class="prob-fill high" style="width: 78%"></div>
+                            </div>
+                            <span class="confidence-badge high">78%</span>
+                        </div>
+                    </article>
+
+                    <!-- Criteria Card -->
+                    <article class="response-card">
+                        <div class="card-header">
+                            <span class="card-type">Criteria</span>
+                            <span class="confidence-badge medium">5 factors</span>
+                        </div>
+                        <h4 class="card-title">ML/AI Capabilities</h4>
+                        <p class="card-description">Breadth and depth of machine learning tools and services</p>
+                        <div class="weight-bar">
+                            <div class="weight-label">
+                                <span>Weight</span>
+                                <span>30%</span>
+                            </div>
+                            <div class="weight-track">
+                                <div class="weight-fill" style="width: 30%"></div>
+                            </div>
+                        </div>
+                    </article>
+
+                    <!-- Outcome Card -->
+                    <article class="response-card">
+                        <div class="card-header">
+                            <span class="card-type">Outcome</span>
+                            <span class="confidence-badge medium">60% conf.</span>
+                        </div>
+                        <h4 class="card-title">High Adoption</h4>
+                        <p class="card-description">Strong market reception with enterprise customers</p>
+                        <div class="probability-row">
+                            <span class="prob-value">30%</span>
+                            <div class="prob-bar">
+                                <div class="prob-fill medium" style="width: 30%"></div>
+                            </div>
+                            <span style="font-family: var(--font-mono); font-size: 13px; color: var(--status-success);">+$2M</span>
+                        </div>
+                    </article>
+
+                    <!-- Stage Card -->
+                    <article class="response-card">
+                        <div class="card-header">
+                            <span class="card-type">Current Stage</span>
+                        </div>
+                        <h4 class="card-title">Evaluation</h4>
+                        <p class="card-description">Scoring options systematically against defined criteria</p>
+                        <div class="probability-row">
+                            <span class="prob-value">4 of 6</span>
+                            <div class="prob-bar">
+                                <div class="prob-fill high" style="width: 66%"></div>
+                            </div>
+                            <span class="confidence-badge high">66%</span>
+                        </div>
+                    </article>
+
+                    <!-- Stakeholders Card -->
+                    <article class="response-card">
+                        <div class="card-header">
+                            <span class="card-type">Stakeholders</span>
+                            <span class="confidence-badge high">4 teams</span>
+                        </div>
+                        <h4 class="card-title">Decision Participants</h4>
+                        <p class="card-description">Engineering, Finance, Security, Product teams involved</p>
+                        <div style="display: flex; flex-wrap: wrap; gap: var(--space-2); margin-top: var(--space-3);">
+                            <span class="analysis-badge">Engineering</span>
+                            <span class="analysis-badge">Finance</span>
+                            <span class="analysis-badge">Security</span>
+                            <span class="analysis-badge">Product</span>
+                        </div>
+                    </article>
+
+                    <!-- Risk Tolerance Card -->
+                    <article class="response-card">
+                        <div class="card-header">
+                            <span class="card-type">Risk Profile</span>
+                        </div>
+                        <h4 class="card-title">Risk Neutral</h4>
+                        <p class="card-description">Balanced approach weighting upside and downside equally</p>
+                        <div class="probability-row">
+                            <span class="prob-value">Tolerance</span>
+                            <div class="prob-bar">
+                                <div class="prob-fill medium" style="width: 50%"></div>
+                            </div>
+                            <span class="confidence-badge medium">Balanced</span>
+                        </div>
+                    </article>
+                </div>
+
+                <!-- JSON View -->
+                <div class="json-view-container" id="jsonView" style="display: none;">
+                    <div class="json-panel">
+                        <div class="json-panel-header">
+                            <span class="json-panel-label">Complete API Response</span>
+                            <button class="copy-btn" id="copyJsonBtn" aria-label="Copy JSON to clipboard">
+                                <svg width="16" height="16" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z"/>
+                                </svg>
+                                <span>Copy</span>
+                            </button>
+                        </div>
+                        <div class="json-panel-content">
+                            <pre><code id="jsonContent">{
+  <span class="json-key">"decisionStatement"</span>: <span class="json-string">"Which cloud provider should we choose for our new AI/ML platform?"</span>,
+  <span class="json-key">"options"</span>: [
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"AWS"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Market leader with SageMaker, Bedrock, and comprehensive ML services"</span>,
+      <span class="json-key">"score"</span>: <span class="json-number">0.78</span>
+    },
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"Google Cloud"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Strong in AI/ML with Vertex AI, TPUs, and TensorFlow integration"</span>,
+      <span class="json-key">"score"</span>: <span class="json-number">0.85</span>
+    },
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"Azure"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Enterprise-friendly with Azure ML, OpenAI partnership, and hybrid capabilities"</span>,
+      <span class="json-key">"score"</span>: <span class="json-number">0.72</span>
+    }
+  ],
+  <span class="json-key">"analysisType"</span>: <span class="json-string">"weighted-criteria"</span>,
+  <span class="json-key">"stage"</span>: <span class="json-string">"evaluation"</span>,
+  <span class="json-key">"decisionId"</span>: <span class="json-string">"cloud-provider-2024"</span>,
+  <span class="json-key">"iteration"</span>: <span class="json-number">3</span>,
+  <span class="json-key">"nextStageNeeded"</span>: <span class="json-boolean">true</span>,
+  <span class="json-key">"criteria"</span>: [
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"ML/AI Capabilities"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Breadth and depth of machine learning tools"</span>,
+      <span class="json-key">"weight"</span>: <span class="json-number">0.30</span>
+    },
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"Cost Efficiency"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Total cost of ownership"</span>,
+      <span class="json-key">"weight"</span>: <span class="json-number">0.25</span>
+    },
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"Team Expertise"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Current team experience and learning curve"</span>,
+      <span class="json-key">"weight"</span>: <span class="json-number">0.20</span>
+    },
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"Enterprise Support"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"SLA, security certifications, support quality"</span>,
+      <span class="json-key">"weight"</span>: <span class="json-number">0.15</span>
+    },
+    {
+      <span class="json-key">"name"</span>: <span class="json-string">"Vendor Lock-in Risk"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Portability and use of open standards"</span>,
+      <span class="json-key">"weight"</span>: <span class="json-number">0.10</span>
+    }
+  ],
+  <span class="json-key">"stakeholders"</span>: [<span class="json-string">"Engineering Team"</span>, <span class="json-string">"Finance"</span>, <span class="json-string">"Security"</span>, <span class="json-string">"Product"</span>],
+  <span class="json-key">"riskTolerance"</span>: <span class="json-string">"risk-neutral"</span>,
+  <span class="json-key">"possibleOutcomes"</span>: [
+    {
+      <span class="json-key">"optionId"</span>: <span class="json-string">"gcp"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"High adoption with strong ML performance"</span>,
+      <span class="json-key">"probability"</span>: <span class="json-number">0.30</span>,
+      <span class="json-key">"value"</span>: <span class="json-number">2000000</span>,
+      <span class="json-key">"confidenceInEstimate"</span>: <span class="json-number">0.60</span>
+    },
+    {
+      <span class="json-key">"optionId"</span>: <span class="json-string">"gcp"</span>,
+      <span class="json-key">"description"</span>: <span class="json-string">"Medium adoption with acceptable performance"</span>,
+      <span class="json-key">"probability"</span>: <span class="json-number">0.50</span>,
+      <span class="json-key">"value"</span>: <span class="json-number">800000</span>,
+      <span class="json-key">"confidenceInEstimate"</span>: <span class="json-number">0.70</span>
+    }
+  ]
+}</code></pre>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- API Section -->
+        <section id="api" class="api" aria-labelledby="api-title">
+            <div class="container">
+                <header class="section-header">
+                    <p class="section-eyebrow">Reference</p>
+                    <h2 id="api-title" class="section-title">API Parameters</h2>
+                </header>
+
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Parameter</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Required</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code>decisionStatement</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>What you're deciding</td>
+                        </tr>
+                        <tr>
+                            <td><code>options</code></td>
+                            <td><span class="badge badge-type">array</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Options with name and description</td>
+                        </tr>
+                        <tr>
+                            <td><code>analysisType</code></td>
+                            <td><span class="badge badge-type">enum</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>pros-cons, weighted-criteria, decision-tree, expected-value, scenario-analysis</td>
+                        </tr>
+                        <tr>
+                            <td><code>stage</code></td>
+                            <td><span class="badge badge-type">enum</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>problem-definition, options-generation, criteria-definition, evaluation, sensitivity-analysis, decision</td>
+                        </tr>
+                        <tr>
+                            <td><code>decisionId</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Unique identifier for this decision</td>
+                        </tr>
+                        <tr>
+                            <td><code>iteration</code></td>
+                            <td><span class="badge badge-type">number</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Current iteration count</td>
+                        </tr>
+                        <tr>
+                            <td><code>nextStageNeeded</code></td>
+                            <td><span class="badge badge-type">boolean</span></td>
+                            <td><span class="badge badge-required">Required</span></td>
+                            <td>Whether to continue analysis</td>
+                        </tr>
+                        <tr>
+                            <td><code>criteria</code></td>
+                            <td><span class="badge badge-type">array</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Criteria with name, description, weight (0-1)</td>
+                        </tr>
+                        <tr>
+                            <td><code>stakeholders</code></td>
+                            <td><span class="badge badge-type">string[]</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Affected parties</td>
+                        </tr>
+                        <tr>
+                            <td><code>riskTolerance</code></td>
+                            <td><span class="badge badge-type">enum</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>risk-averse, risk-neutral, risk-seeking</td>
+                        </tr>
+                        <tr>
+                            <td><code>possibleOutcomes</code></td>
+                            <td><span class="badge badge-type">array</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Outcomes with probability, value, confidence</td>
+                        </tr>
+                        <tr>
+                            <td><code>recommendation</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Final decision</td>
+                        </tr>
+                        <tr>
+                            <td><code>rationale</code></td>
+                            <td><span class="badge badge-type">string</span></td>
+                            <td><span class="badge badge-optional">Optional</span></td>
+                            <td>Justification for the decision</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <div class="container">
+            <p class="footer-text">think-mcp Decide Tool &mdash; Structured Decision Analysis</p>
+            <div class="footer-badge">
+                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5"/>
+                </svg>
+                Powered by Maslow AI
+            </div>
+        </div>
+    </footer>
+
+    <!-- Theme Toggle + View Toggle Script -->
+    <script>
+        (function() {
+            // Theme Toggle
+            const html = document.documentElement;
+            const toggle = document.getElementById('themeToggle');
+
+            const saved = localStorage.getItem('maslow-theme');
+            if (saved) {
+                html.setAttribute('data-theme', saved);
+            } else {
+                const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+                html.setAttribute('data-theme', prefersDark ? 'dark' : 'light');
+            }
+
+            toggle.addEventListener('click', function() {
+                const current = html.getAttribute('data-theme');
+                const next = current === 'dark' ? 'light' : 'dark';
+
+                html.setAttribute('data-theme', next);
+                localStorage.setItem('maslow-theme', next);
+
+                // Screen reader announcement
+                const announcement = document.createElement('div');
+                announcement.setAttribute('role', 'status');
+                announcement.setAttribute('aria-live', 'polite');
+                announcement.className = 'sr-only';
+                announcement.textContent = `Switched to ${next} mode`;
+                document.body.appendChild(announcement);
+                setTimeout(() => announcement.remove(), 1000);
+            });
+
+            // View Toggle for Visualizer
+            const toggleBtns = document.querySelectorAll('.toggle-btn');
+            const cardView = document.getElementById('cardView');
+            const jsonView = document.getElementById('jsonView');
+
+            toggleBtns.forEach(btn => {
+                btn.addEventListener('click', function() {
+                    toggleBtns.forEach(b => b.classList.remove('active'));
+                    this.classList.add('active');
+
+                    const view = this.getAttribute('data-view');
+                    if (view === 'json') {
+                        cardView.style.display = 'none';
+                        jsonView.style.display = 'block';
+                    } else {
+                        cardView.style.display = 'grid';
+                        jsonView.style.display = 'none';
+                    }
+                });
+            });
+
+            // Copy JSON functionality
+            const copyBtn = document.getElementById('copyJsonBtn');
+            const jsonContent = document.getElementById('jsonContent');
+
+            copyBtn.addEventListener('click', async function() {
+                // Get plain text without HTML tags
+                const plainJson = jsonContent.textContent;
+
+                try {
+                    await navigator.clipboard.writeText(plainJson);
+
+                    // Visual feedback
+                    const originalText = this.querySelector('span').textContent;
+                    this.classList.add('copied');
+                    this.querySelector('span').textContent = 'Copied!';
+
+                    setTimeout(() => {
+                        this.classList.remove('copied');
+                        this.querySelector('span').textContent = originalText;
+                    }, 2000);
+
+                    // Screen reader announcement
+                    const announcement = document.createElement('div');
+                    announcement.setAttribute('role', 'status');
+                    announcement.setAttribute('aria-live', 'polite');
+                    announcement.className = 'sr-only';
+                    announcement.textContent = 'JSON copied to clipboard';
+                    document.body.appendChild(announcement);
+                    setTimeout(() => announcement.remove(), 1000);
+                } catch (err) {
+                    console.error('Failed to copy:', err);
+                }
+            });
+        })();
+    </script>
+</body>
+</html>

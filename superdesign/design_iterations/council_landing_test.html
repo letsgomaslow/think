@@ -1,0 +1,1087 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Council - Expert Collaboration Through AI Personas | think-mcp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500&family=Manrope:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* === CSS Custom Properties (Maslow Brand Tokens) === */
+        :root {
+            /* Tool Accent */
+            --council: #A070A6;
+            --council-light: #C49CC9;
+
+            /* Primary Brand Colors */
+            --maslow-teal: #6DC4AD;
+            --maslow-pink: #EE7BB3;
+            --maslow-purple: #401877;
+
+            /* Backgrounds */
+            --bg: #E6EAF3;
+            --surface: #FFFFFF;
+            --surface-alt: #EEEEEE;
+            --dark-blue: #121D35;
+            --dark-surface: #1A2847;
+            --dark-surface-alt: #243356;
+
+            /* Text */
+            --text-primary: #333333;
+            --text-secondary: #A5A5A5;
+            --text-light: #FFFFFF;
+            --text-light-muted: #B8C4D9;
+
+            /* Borders */
+            --border: #D0D5E0;
+            --border-dark: #3A4A6B;
+
+            /* States */
+            --hover-bg: #EBF7F4;
+            --focus-ring: #6DC4AD;
+
+            /* Spacing */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-20: 80px;
+            --space-24: 96px;
+
+            /* Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+
+            /* Typography */
+            --font-display: 'Manrope', system-ui, sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+        }
+
+        /* === Reset & Base === */
+        *, *::before, *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* === Accessibility === */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                transition-duration: 0.01ms !important;
+            }
+        }
+
+        :focus-visible {
+            outline: 2px solid var(--focus-ring);
+            outline-offset: 2px;
+        }
+
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            border: 0;
+        }
+
+        /* === Layout === */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        /* === Navigation === */
+        nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            height: 72px;
+            background: rgba(255, 255, 255, 0.9);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            z-index: 100;
+            display: flex;
+            align-items: center;
+        }
+
+        .nav-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 var(--space-6);
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+        }
+
+        .nav-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--maslow-pink), var(--council), var(--maslow-teal));
+            border-radius: var(--radius-md);
+        }
+
+        .nav-title {
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--text-primary);
+        }
+
+        .nav-subtitle {
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-secondary);
+            padding-left: var(--space-3);
+            border-left: 1px solid var(--border);
+            margin-left: var(--space-3);
+        }
+
+        .nav-cta {
+            background: var(--text-primary);
+            color: var(--text-light);
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 14px;
+            text-decoration: none;
+            transition: transform 0.2s, box-shadow 0.2s;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        /* === Hero Section === */
+        .hero {
+            padding: 160px 0 var(--space-24);
+            background: var(--bg);
+        }
+
+        .hero-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-16);
+            align-items: center;
+        }
+
+        .hero-text {
+            max-width: 560px;
+        }
+
+        .hero-accent-line {
+            width: 60px;
+            height: 3px;
+            background: var(--council);
+            margin-bottom: var(--space-4);
+            animation: growLine 0.6s ease-out;
+        }
+
+        @keyframes growLine {
+            from { width: 0; }
+            to { width: 60px; }
+        }
+
+        .hero-eyebrow {
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: var(--council);
+            margin-bottom: var(--space-4);
+            animation: fadeUp 0.5s ease-out 0.1s both;
+        }
+
+        .hero-title {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--space-6);
+            animation: fadeUp 0.5s ease-out 0.2s both;
+        }
+
+        .hero-title .bold {
+            color: var(--text-primary);
+        }
+
+        .hero-title .light {
+            font-weight: 300;
+            color: var(--text-secondary);
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-8);
+            line-height: 1.7;
+            animation: fadeUp 0.5s ease-out 0.3s both;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            animation: fadeUp 0.5s ease-out 0.4s both;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-primary {
+            background: var(--text-primary);
+            color: var(--text-light);
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn-secondary {
+            background: transparent;
+            color: var(--text-primary);
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            border: 2px solid var(--border);
+            transition: border-color 0.2s, background 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--council);
+            background: var(--hover-bg);
+        }
+
+        /* Hero Visual */
+        .hero-visual {
+            position: relative;
+            height: 400px;
+        }
+
+        .persona-card {
+            position: absolute;
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+            width: 200px;
+            animation: floatIn 0.8s ease-out both;
+        }
+
+        .persona-card:nth-child(1) {
+            top: 20px;
+            left: 0;
+            animation-delay: 0.2s;
+        }
+
+        .persona-card:nth-child(2) {
+            top: 80px;
+            right: 20px;
+            animation-delay: 0.4s;
+        }
+
+        .persona-card:nth-child(3) {
+            bottom: 60px;
+            left: 40px;
+            animation-delay: 0.6s;
+        }
+
+        .persona-card:nth-child(4) {
+            bottom: 20px;
+            right: 0;
+            animation-delay: 0.8s;
+        }
+
+        @keyframes floatIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .persona-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            margin-bottom: var(--space-2);
+        }
+
+        .persona-card:nth-child(1) .persona-avatar { background: var(--maslow-purple); }
+        .persona-card:nth-child(2) .persona-avatar { background: var(--maslow-teal); }
+        .persona-card:nth-child(3) .persona-avatar { background: var(--maslow-pink); }
+        .persona-card:nth-child(4) .persona-avatar { background: var(--council); }
+
+        .persona-name {
+            font-weight: 700;
+            font-size: 14px;
+            margin-bottom: var(--space-1);
+        }
+
+        .persona-role {
+            font-size: 12px;
+            color: var(--text-secondary);
+            margin-bottom: var(--space-3);
+        }
+
+        .persona-quote {
+            font-size: 13px;
+            font-style: italic;
+            color: var(--text-secondary);
+            padding-left: var(--space-3);
+            border-left: 2px solid var(--council);
+        }
+
+        /* === Stakes Section === */
+        .stakes {
+            background: var(--surface);
+            padding: var(--space-24) 0;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+        }
+
+        .section-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+        }
+
+        .section-subtitle {
+            font-size: 18px;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .stakes-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-8);
+        }
+
+        .stake-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            transition: transform 0.2s, border-color 0.2s, box-shadow 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .stake-card:hover {
+            transform: translateY(-4px);
+            border-left-color: var(--council);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+        }
+
+        .stake-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--hover-bg);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-4);
+            font-size: 24px;
+        }
+
+        .stake-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .stake-description {
+            color: var(--text-secondary);
+            font-size: 15px;
+        }
+
+        /* === Features Section === */
+        .features {
+            background: var(--bg);
+            padding: var(--space-24) 0;
+        }
+
+        .features-intro {
+            text-align: center;
+            margin-bottom: var(--space-6);
+            font-size: 18px;
+            color: var(--text-secondary);
+            font-style: italic;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: var(--space-6);
+        }
+
+        .feature-card {
+            background: var(--surface);
+            border-radius: var(--radius-lg);
+            padding: var(--space-6);
+            border: 1px solid var(--border);
+            transition: transform 0.2s, border-left-color 0.2s;
+            border-left: 3px solid transparent;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            border-left-color: var(--council);
+        }
+
+        .feature-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--hover-bg);
+            border-radius: var(--radius-md);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-4);
+            font-size: 24px;
+        }
+
+        .feature-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .feature-description {
+            font-size: 14px;
+            color: var(--text-secondary);
+        }
+
+        /* === Process Section === */
+        .process {
+            background: var(--surface);
+            padding: var(--space-24) 0;
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-8);
+            position: relative;
+        }
+
+        .process-steps::before {
+            content: '';
+            position: absolute;
+            top: 40px;
+            left: 20%;
+            right: 20%;
+            height: 2px;
+            background: var(--border);
+            z-index: 0;
+        }
+
+        .process-step {
+            text-align: center;
+            position: relative;
+            z-index: 1;
+        }
+
+        .step-number {
+            width: 64px;
+            height: 64px;
+            background: var(--surface);
+            border: 3px solid var(--council);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto var(--space-6);
+            font-size: 24px;
+            font-weight: 800;
+            color: var(--council);
+        }
+
+        .step-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .step-description {
+            font-size: 15px;
+            color: var(--text-secondary);
+            max-width: 280px;
+            margin: 0 auto;
+        }
+
+        /* === Demo Section (Dark Band) === */
+        .demo {
+            background: var(--dark-blue);
+            padding: var(--space-24) 0;
+            color: var(--text-light);
+        }
+
+        .demo .section-title {
+            color: var(--text-light);
+        }
+
+        .demo .section-subtitle {
+            color: var(--text-light-muted);
+        }
+
+        .demo-panel {
+            background: var(--dark-surface);
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            margin-top: var(--space-12);
+        }
+
+        .demo-header {
+            background: var(--dark-surface-alt);
+            padding: var(--space-4) var(--space-6);
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+            border-bottom: 1px solid var(--border-dark);
+        }
+
+        .demo-tab {
+            padding: var(--space-2) var(--space-4);
+            border-radius: var(--radius-sm);
+            font-size: 14px;
+            font-weight: 500;
+            color: var(--text-light-muted);
+            cursor: pointer;
+            transition: background 0.2s, color 0.2s;
+            border: none;
+            background: transparent;
+        }
+
+        .demo-tab.active {
+            background: var(--council);
+            color: var(--text-light);
+        }
+
+        .demo-content {
+            padding: var(--space-6);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-6);
+        }
+
+        .demo-personas, .demo-session {
+            background: var(--dark-surface-alt);
+            border-radius: var(--radius-md);
+            padding: var(--space-4);
+        }
+
+        .demo-section-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--text-light-muted);
+            margin-bottom: var(--space-4);
+        }
+
+        .demo-persona-item {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-3);
+            border-radius: var(--radius-sm);
+            margin-bottom: var(--space-2);
+        }
+
+        .demo-persona-item:hover {
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        .demo-persona-avatar {
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+        }
+
+        .demo-persona-item:nth-child(2) .demo-persona-avatar { background: var(--maslow-purple); }
+        .demo-persona-item:nth-child(3) .demo-persona-avatar { background: var(--maslow-teal); }
+        .demo-persona-item:nth-child(4) .demo-persona-avatar { background: var(--maslow-pink); }
+
+        .demo-persona-name {
+            font-weight: 600;
+            font-size: 14px;
+        }
+
+        .demo-contribution {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-sm);
+            padding: var(--space-3);
+            margin-bottom: var(--space-3);
+            border-left: 3px solid var(--council);
+        }
+
+        .demo-contribution-header {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            margin-bottom: var(--space-2);
+        }
+
+        .demo-contribution-name {
+            font-weight: 600;
+            font-size: 13px;
+        }
+
+        .demo-contribution-type {
+            font-size: 11px;
+            padding: 2px 6px;
+            background: var(--council);
+            border-radius: var(--radius-sm);
+        }
+
+        .demo-contribution-text {
+            font-size: 13px;
+            color: var(--text-light-muted);
+        }
+
+        /* === CTA Section === */
+        .cta {
+            background: var(--dark-blue);
+            padding: var(--space-24) 0;
+            text-align: center;
+            color: var(--text-light);
+        }
+
+        .cta-title {
+            font-size: 36px;
+            font-weight: 700;
+            margin-bottom: var(--space-4);
+        }
+
+        .cta-subtitle {
+            font-size: 18px;
+            color: var(--text-light-muted);
+            margin-bottom: var(--space-8);
+        }
+
+        .cta-actions {
+            display: flex;
+            justify-content: center;
+            gap: var(--space-4);
+        }
+
+        .btn-accent {
+            background: var(--maslow-teal);
+            color: var(--text-light);
+            padding: var(--space-3) var(--space-8);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: var(--space-2);
+            transition: transform 0.2s, box-shadow 0.2s;
+            border: none;
+            cursor: pointer;
+        }
+
+        .btn-accent:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(109, 196, 173, 0.4);
+        }
+
+        .btn-ghost {
+            background: transparent;
+            color: var(--text-light);
+            padding: var(--space-3) var(--space-6);
+            border-radius: var(--radius-md);
+            font-weight: 600;
+            font-size: 16px;
+            text-decoration: none;
+            border: 2px solid var(--border-dark);
+            transition: border-color 0.2s, background 0.2s;
+            cursor: pointer;
+        }
+
+        .btn-ghost:hover {
+            border-color: var(--text-light);
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        /* === Footer === */
+        footer {
+            background: var(--dark-blue);
+            padding: var(--space-12) 0;
+            border-top: 1px solid var(--border-dark);
+            color: var(--text-light-muted);
+        }
+
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .footer-brand {
+            font-weight: 600;
+            color: var(--text-light);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: var(--space-6);
+        }
+
+        .footer-link {
+            color: var(--text-light-muted);
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.2s;
+        }
+
+        .footer-link:hover {
+            color: var(--maslow-teal);
+        }
+
+        /* === Responsive === */
+        @media (max-width: 1024px) {
+            .hero-content {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title {
+                font-size: 36px;
+            }
+
+            .stakes-grid,
+            .process-steps {
+                grid-template-columns: 1fr;
+            }
+
+            .process-steps::before {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .demo-content {
+                grid-template-columns: 1fr;
+            }
+
+            .cta-actions {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .footer-content {
+                flex-direction: column;
+                gap: var(--space-6);
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav role="navigation" aria-label="Main navigation">
+        <div class="nav-content">
+            <div class="nav-brand">
+                <div class="nav-logo" aria-hidden="true"></div>
+                <span class="nav-title">Council</span>
+                <span class="nav-subtitle">think-mcp</span>
+            </div>
+            <a href="#try" class="nav-cta">Try Council</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="hero" aria-labelledby="hero-title">
+        <div class="container">
+            <div class="hero-content">
+                <div class="hero-text">
+                    <div class="hero-accent-line" aria-hidden="true"></div>
+                    <p class="hero-eyebrow">Think-MCP Tools</p>
+                    <h1 id="hero-title" class="hero-title">
+                        <span class="bold">Debate ideas</span><br>
+                        <span class="light">with a council of experts</span>
+                    </h1>
+                    <p class="hero-description">
+                        Simulate expert collaboration through diverse AI personas. Get critiques,
+                        synthesis, and consensus on complex problems—all in one structured session.
+                    </p>
+                    <div class="hero-actions">
+                        <a href="#try" class="btn-primary">Try Council</a>
+                        <a href="#demo" class="btn-secondary">See Example</a>
+                    </div>
+                </div>
+                <div class="hero-visual" aria-hidden="true">
+                    <div class="persona-card">
+                        <div class="persona-avatar"></div>
+                        <div class="persona-name">The Architect</div>
+                        <div class="persona-role">Systems Design</div>
+                        <div class="persona-quote">"Consider the long-term scalability..."</div>
+                    </div>
+                    <div class="persona-card">
+                        <div class="persona-avatar"></div>
+                        <div class="persona-name">The Pragmatist</div>
+                        <div class="persona-role">Operations</div>
+                        <div class="persona-quote">"What's the migration path?"</div>
+                    </div>
+                    <div class="persona-card">
+                        <div class="persona-avatar"></div>
+                        <div class="persona-name">The Skeptic</div>
+                        <div class="persona-role">Risk Analysis</div>
+                        <div class="persona-quote">"Have we considered the failure modes?"</div>
+                    </div>
+                    <div class="persona-card">
+                        <div class="persona-avatar"></div>
+                        <div class="persona-name">The Synthesizer</div>
+                        <div class="persona-role">Integration</div>
+                        <div class="persona-quote">"Here's what we all agree on..."</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Stakes Section -->
+    <section class="stakes" aria-labelledby="stakes-title">
+        <div class="container">
+            <div class="section-header">
+                <h2 id="stakes-title" class="section-title">Solo thinking has blind spots</h2>
+                <p class="section-subtitle">Important decisions deserve multiple perspectives</p>
+            </div>
+            <div class="stakes-grid">
+                <div class="stake-card">
+                    <div class="stake-icon">🔍</div>
+                    <h3 class="stake-title">Limited Expertise</h3>
+                    <p class="stake-description">You can't be an expert in everything your decisions require. Complex problems span multiple domains.</p>
+                </div>
+                <div class="stake-card">
+                    <div class="stake-icon">🤔</div>
+                    <h3 class="stake-title">Lingering Uncertainty</h3>
+                    <p class="stake-description">That nagging feeling you've missed something important. Did you really consider all angles?</p>
+                </div>
+                <div class="stake-card">
+                    <div class="stake-icon">⚡</div>
+                    <h3 class="stake-title">Echo Chamber Risk</h3>
+                    <p class="stake-description">Important decisions shouldn't be made in isolation. Diverse perspectives catch what you miss.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="features" aria-labelledby="features-title">
+        <div class="container">
+            <div class="section-header">
+                <h2 id="features-title" class="section-title">Your personal expert council</h2>
+            </div>
+            <p class="features-intro">"We know what it's like to wrestle with complex decisions alone."</p>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">👥</div>
+                    <h3 class="feature-title">Diverse Personas</h3>
+                    <p class="feature-description">Define experts with unique backgrounds, expertise, perspectives, and even biases.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3 class="feature-title">Structured Stages</h3>
+                    <p class="feature-description">Move through problem-definition, ideation, critique, integration, and decision phases.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3 class="feature-title">Synthesis Engine</h3>
+                    <p class="feature-description">Automatically track consensus, disagreements, open questions, and key insights.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3 class="feature-title">Confidence Scoring</h3>
+                    <p class="feature-description">Every contribution comes with explicit confidence levels for weighted consideration.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Process Section -->
+    <section class="process" aria-labelledby="process-title">
+        <div class="container">
+            <div class="section-header">
+                <h2 id="process-title" class="section-title">How Council works</h2>
+            </div>
+            <div class="process-steps">
+                <div class="process-step">
+                    <div class="step-number">1</div>
+                    <h3 class="step-title">Define your problem</h3>
+                    <p class="step-description">State the topic and create your expert personas with their unique perspectives.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">2</div>
+                    <h3 class="step-title">Gather perspectives</h3>
+                    <p class="step-description">Each persona contributes observations, insights, questions, and challenges.</p>
+                </div>
+                <div class="process-step">
+                    <div class="step-number">3</div>
+                    <h3 class="step-title">Reach synthesis</h3>
+                    <p class="step-description">Track consensus, resolve disagreements, and get actionable recommendations.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section -->
+    <section id="demo" class="demo" aria-labelledby="demo-title">
+        <div class="container">
+            <div class="section-header">
+                <h2 id="demo-title" class="section-title">See Council in action</h2>
+                <p class="section-subtitle">A sample session: "Should we migrate to microservices?"</p>
+            </div>
+            <div class="demo-panel">
+                <div class="demo-header">
+                    <button class="demo-tab active">Session View</button>
+                    <button class="demo-tab">JSON Output</button>
+                </div>
+                <div class="demo-content">
+                    <div class="demo-personas">
+                        <div class="demo-section-title">Personas</div>
+                        <div class="demo-persona-item">
+                            <div class="demo-persona-avatar"></div>
+                            <span class="demo-persona-name">Systems Architect</span>
+                        </div>
+                        <div class="demo-persona-item">
+                            <div class="demo-persona-avatar"></div>
+                            <span class="demo-persona-name">Operations Lead</span>
+                        </div>
+                        <div class="demo-persona-item">
+                            <div class="demo-persona-avatar"></div>
+                            <span class="demo-persona-name">Product Manager</span>
+                        </div>
+                    </div>
+                    <div class="demo-session">
+                        <div class="demo-section-title">Contributions</div>
+                        <div class="demo-contribution">
+                            <div class="demo-contribution-header">
+                                <span class="demo-contribution-name">Systems Architect</span>
+                                <span class="demo-contribution-type">insight</span>
+                            </div>
+                            <p class="demo-contribution-text">Microservices would allow independent scaling of our payment and inventory systems, which currently bottleneck during sales events.</p>
+                        </div>
+                        <div class="demo-contribution">
+                            <div class="demo-contribution-header">
+                                <span class="demo-contribution-name">Operations Lead</span>
+                                <span class="demo-contribution-type">concern</span>
+                            </div>
+                            <p class="demo-contribution-text">The operational complexity increase is significant. We'd need to invest in container orchestration and distributed tracing first.</p>
+                        </div>
+                        <div class="demo-contribution">
+                            <div class="demo-contribution-header">
+                                <span class="demo-contribution-name">Product Manager</span>
+                                <span class="demo-contribution-type">question</span>
+                            </div>
+                            <p class="demo-contribution-text">What's the minimum viable migration path? Can we extract one service first as a proof of concept?</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section id="try" class="cta" aria-labelledby="cta-title">
+        <div class="container">
+            <h2 id="cta-title" class="cta-title">Make better decisions together</h2>
+            <p class="cta-subtitle">Start your first Council session</p>
+            <div class="cta-actions">
+                <a href="#" class="btn-accent">Get Started</a>
+                <a href="#" class="btn-ghost">Read Documentation</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer role="contentinfo">
+        <div class="container">
+            <div class="footer-content">
+                <div class="footer-brand">think-mcp</div>
+                <div class="footer-links">
+                    <a href="#" class="footer-link">Documentation</a>
+                    <a href="#" class="footer-link">GitHub</a>
+                    <a href="#" class="footer-link">Other Tools</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>

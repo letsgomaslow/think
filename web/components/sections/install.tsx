@@ -65,20 +65,20 @@ function CopyButton({ text }: { text: string }) {
     <button
       onClick={handleCopy}
       className={cn(
-        "flex items-center gap-2 px-4 py-2 rounded-lg transition-all duration-200",
+        "flex items-center justify-center gap-1.5 xs:gap-2 px-3 xs:px-3.5 sm:px-4 py-2 xs:py-2.5 sm:py-2 touch-target-min rounded-lg text-xs xs:text-sm transition-all duration-200",
         "bg-slate-700/50 hover:bg-slate-600/50 border border-slate-600/50",
         copied && "bg-green-900/30 border-green-500/50"
       )}
     >
       {copied ? (
         <>
-          <Check className="w-4 h-4 text-green-400" />
-          <span className="text-green-400 text-sm font-medium">Copied!</span>
+          <Check className="w-3.5 h-3.5 xs:w-4 xs:h-4 text-green-400" />
+          <span className="text-green-400 font-medium hidden xs:inline">Copied!</span>
         </>
       ) : (
         <>
-          <Copy className="w-4 h-4 text-slate-400" />
-          <span className="text-slate-400 text-sm font-medium">Copy</span>
+          <Copy className="w-3.5 h-3.5 xs:w-4 xs:h-4 text-slate-400" />
+          <span className="text-slate-400 font-medium hidden xs:inline">Copy</span>
         </>
       )}
     </button>
@@ -89,7 +89,7 @@ export function InstallSection() {
   return (
     <section
       id="install"
-      className="relative w-full bg-[hsl(var(--surface-dark))] py-24 px-6 overflow-hidden"
+      className="relative w-full bg-[hsl(var(--surface-dark))] overflow-hidden py-16 xs:py-18 sm:py-20 md:py-22 lg:py-24 px-4 xs:px-5 sm:px-6"
     >
       {/* Background gradient */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[hsl(var(--brand-primary)/0.03)] to-transparent" />
@@ -107,7 +107,7 @@ export function InstallSection() {
           <span className="text-sm uppercase tracking-widest text-[hsl(var(--brand-primary))] mb-4 block">
             Get Started
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 font-[family-name:var(--font-manrope)]">
+          <h2 className="heading-lg text-white mb-4 xs:mb-5 sm:mb-6 px-2 sm:px-0 font-bold font-[family-name:var(--font-manrope)]">
             One URL.{" "}
             <span className="text-[hsl(var(--brand-accent))]">Zero Setup.</span>
           </h2>
@@ -128,13 +128,13 @@ export function InstallSection() {
           <div className="absolute -inset-1 bg-gradient-to-r from-[hsl(var(--brand-primary)/0.3)] via-[hsl(var(--brand-accent)/0.3)] to-[hsl(var(--brand-primary)/0.3)] rounded-2xl blur-xl opacity-50" />
 
           {/* Card */}
-          <div className="relative bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-8 md:p-10">
+          <div className="relative bg-slate-900/80 backdrop-blur-sm border border-slate-700/50 rounded-2xl p-6 xs:p-7 sm:p-8 md:p-9 lg:p-10">
             {/* Terminal header */}
             <div className="flex items-center gap-3 mb-6">
               <div className="flex items-center gap-1.5">
-                <div className="w-3 h-3 rounded-full bg-red-500/80" />
-                <div className="w-3 h-3 rounded-full bg-yellow-500/80" />
-                <div className="w-3 h-3 rounded-full bg-green-500/80" />
+                <div className="w-2.5 h-2.5 xs:w-3 xs:h-3 rounded-full bg-red-500/80" />
+                <div className="w-2.5 h-2.5 xs:w-3 xs:h-3 rounded-full bg-yellow-500/80" />
+                <div className="w-2.5 h-2.5 xs:w-3 xs:h-3 rounded-full bg-green-500/80" />
               </div>
               <div className="flex items-center gap-2 text-slate-500 text-sm">
                 <Terminal className="w-4 h-4" />
@@ -144,8 +144,8 @@ export function InstallSection() {
 
             {/* URL display */}
             <div className="flex flex-col md:flex-row items-stretch md:items-center gap-4 mb-8">
-              <div className="flex-1 bg-slate-950/50 rounded-lg px-5 py-4 border border-slate-700/30 overflow-x-auto">
-                <code className="text-[hsl(var(--brand-primary))] text-sm md:text-base font-mono whitespace-nowrap">
+              <div className="flex-1 bg-slate-950/50 rounded-lg px-3 xs:px-4 sm:px-5 py-3 xs:py-3.5 sm:py-4 border border-slate-700/30 overflow-x-auto scrollbar-thin">
+                <code className="text-[hsl(var(--brand-primary))] text-xs xs:text-sm md:text-base font-mono whitespace-nowrap">
                   {MCP_URL}
                 </code>
               </div>
@@ -188,7 +188,7 @@ export function InstallSection() {
                   className="flex flex-col items-center gap-2 group"
                 >
                   <div
-                    className="w-14 h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
+                    className="w-12 h-12 xs:w-13 xs:h-13 sm:w-14 sm:h-14 rounded-xl flex items-center justify-center transition-all duration-300 group-hover:scale-110"
                     style={{
                       backgroundColor: `${client.color.replace(")", " / 0.1)")}`,
                     }}

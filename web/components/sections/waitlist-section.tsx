@@ -31,13 +31,13 @@ export function WaitlistSection() {
   return (
     <section
       id="waitlist"
-      className="relative py-20 md:py-32 bg-gradient-to-b from-[hsl(var(--surface-dark))] via-[#0a1224] to-[hsl(var(--surface-dark))] overflow-hidden"
+      className="relative bg-gradient-to-b from-[hsl(var(--surface-dark))] via-[#0a1224] to-[hsl(var(--surface-dark))] overflow-hidden py-16 xs:py-18 sm:py-20 md:py-24 lg:py-28 xl:py-32"
     >
       {/* Gradient accents */}
       <div className="absolute top-0 left-1/4 w-96 h-96 bg-[hsl(var(--brand-primary)/0.1)] rounded-full blur-3xl" />
       <div className="absolute bottom-0 right-1/4 w-96 h-96 bg-[hsl(var(--brand-accent)/0.1)] rounded-full blur-3xl" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto relative z-10 px-4 xs:px-5 sm:px-6 md:px-8">
         <div className="max-w-6xl mx-auto">
           {/* Header */}
           <motion.div
@@ -45,24 +45,24 @@ export function WaitlistSection() {
             whileInView={{ opacity: 1, y: 0 }}
             viewport={{ once: true }}
             transition={{ duration: 0.6 }}
-            className="text-center mb-16"
+            className="text-center mb-12 xs:mb-14 sm:mb-16 md:mb-18"
           >
-            <span className="inline-block px-4 py-1.5 mb-6 rounded-full text-sm font-medium bg-[hsl(var(--brand-primary)/0.15)] border border-[hsl(var(--brand-primary)/0.3)] text-[hsl(var(--brand-primary))]">
+            <span className="inline-block px-3 xs:px-3.5 sm:px-4 py-1 xs:py-1.5 mb-6 rounded-full text-xs sm:text-sm font-medium bg-[hsl(var(--brand-primary)/0.15)] border border-[hsl(var(--brand-primary)/0.3)] text-[hsl(var(--brand-primary))]">
               Early Access
             </span>
 
-            <h2 className="text-4xl md:text-5xl lg:text-6xl font-bold mb-6 text-white font-[family-name:var(--font-manrope)]">
+            <h2 className="heading-lg mb-4 xs:mb-5 sm:mb-6 px-4 sm:px-0 font-bold text-white font-[family-name:var(--font-manrope)]">
               Be the first to see{" "}
               <span className="text-[hsl(var(--brand-accent))]">inside</span> AI
             </h2>
 
-            <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto font-[family-name:var(--font-graphik)]">
+            <p className="body-lg text-slate-400 px-4 sm:px-0 max-w-2xl mx-auto font-[family-name:var(--font-graphik)]">
               Join the waitlist for exclusive early access to the visual AI
               reasoning platform. No more black boxes. No more blind trust.
             </p>
           </motion.div>
 
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 xs:gap-10 sm:gap-12 md:gap-14 lg:gap-16 items-start">
             {/* Left: Features */}
             <motion.div
               initial={{ opacity: 0, x: -20 }}
@@ -84,7 +84,7 @@ export function WaitlistSection() {
                   transition={{ duration: 0.6, delay: 0.1 * index }}
                   className="flex gap-4 group"
                 >
-                  <div className="flex-shrink-0 w-12 h-12 rounded-lg bg-[hsl(var(--brand-primary)/0.1)] border border-[hsl(var(--brand-primary)/0.2)] flex items-center justify-center group-hover:bg-[hsl(var(--brand-primary)/0.2)] transition-colors duration-300">
+                  <div className="flex-shrink-0 w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-lg bg-[hsl(var(--brand-primary)/0.1)] border border-[hsl(var(--brand-primary)/0.2)] flex items-center justify-center group-hover:bg-[hsl(var(--brand-primary)/0.2)] transition-colors duration-300">
                     <feature.icon className="w-6 h-6 text-[hsl(var(--brand-primary))]" />
                   </div>
                   <div>
@@ -121,7 +121,7 @@ export function WaitlistSection() {
               transition={{ duration: 0.6, delay: 0.4 }}
               className="lg:sticky lg:top-8"
             >
-              <div className="p-8 md:p-10 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-sm shadow-2xl">
+              <div className="p-6 xs:p-7 sm:p-8 md:p-9 lg:p-10 rounded-2xl bg-gradient-to-br from-white/5 to-white/[0.02] border border-white/10 backdrop-blur-sm shadow-2xl">
                 <WaitlistForm />
               </div>
             </motion.div>

@@ -36,7 +36,7 @@ const storyBeats = [
 
 export function OriginStorySection() {
   return (
-    <section className="relative w-full bg-[hsl(var(--surface-dark))] py-24 px-6 overflow-hidden">
+    <section className="relative w-full bg-[hsl(var(--surface-dark))] py-16 xs:py-18 sm:py-20 md:py-22 lg:py-24 px-4 xs:px-5 sm:px-6 overflow-hidden">
       {/* Subtle gradient background */}
       <div className="absolute inset-0 bg-gradient-to-t from-slate-900/50 to-transparent" />
 
@@ -47,12 +47,12 @@ export function OriginStorySection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.6 }}
           viewport={{ once: true }}
-          className="text-center mb-16"
+          className="text-center mb-12 xs:mb-14 sm:mb-16"
         >
           <span className="text-sm uppercase tracking-widest text-[hsl(var(--brand-primary))] mb-4 block">
             The Story
           </span>
-          <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 font-[family-name:var(--font-manrope)]">
+          <h2 className="heading-lg font-bold text-white mb-4 xs:mb-5 sm:mb-6 px-4 sm:px-0 font-[family-name:var(--font-manrope)]">
             Built by Someone Who Was{" "}
             <span className="text-[hsl(var(--brand-accent))]">Tired of Repeating Themselves</span>
           </h2>
@@ -61,10 +61,10 @@ export function OriginStorySection() {
         {/* Story Timeline */}
         <div className="relative">
           {/* Vertical line - left on mobile, center on desktop */}
-          <div className="absolute left-6 md:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-slate-700 via-slate-600 to-slate-700" />
+          <div className="absolute left-5 xs:left-5.5 sm:left-6 md:left-7 lg:left-8 top-0 bottom-0 w-px bg-gradient-to-b from-slate-700 via-slate-600 to-slate-700" />
 
           {/* Story beats */}
-          <div className="space-y-12 md:space-y-16">
+          <div className="space-y-10 xs:space-y-12 md:space-y-14 lg:space-y-16">
             {storyBeats.map((beat, index) => {
               const Icon = beat.icon;
 
@@ -79,7 +79,7 @@ export function OriginStorySection() {
                 >
                   {/* Icon node - sits on the timeline */}
                   <div
-                    className="relative z-10 flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center border-2 bg-slate-900"
+                    className="relative z-10 flex-shrink-0 w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-full flex items-center justify-center border-2 bg-slate-900"
                     style={{
                       backgroundColor: `${beat.color.replace(")", " / 0.15)")}`,
                       borderColor: beat.color,
@@ -91,12 +91,12 @@ export function OriginStorySection() {
                   {/* Content card */}
                   <div className="flex-1 max-w-2xl">
                     <h3
-                      className="text-lg md:text-xl font-bold mb-2 font-[family-name:var(--font-manrope)]"
+                      className="text-base xs:text-lg md:text-xl font-bold mb-2 font-[family-name:var(--font-manrope)]"
                       style={{ color: beat.color }}
                     >
                       {beat.title}
                     </h3>
-                    <p className="text-slate-400 leading-relaxed text-base md:text-lg">
+                    <p className="text-slate-400 leading-relaxed text-sm xs:text-base md:text-lg">
                       {beat.content}
                     </p>
                   </div>
@@ -112,10 +112,10 @@ export function OriginStorySection() {
           whileInView={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.6, duration: 0.5 }}
           viewport={{ once: true }}
-          className="mt-20 text-center"
+          className="mt-16 xs:mt-18 sm:mt-20 text-center"
         >
-          <div className="inline-block p-8 rounded-2xl bg-slate-800/30 border border-slate-700/50">
-            <p className="text-xl text-slate-300 italic mb-4">
+          <div className="inline-block p-6 xs:p-7 sm:p-8 rounded-2xl bg-slate-800/30 border border-slate-700/50">
+            <p className="text-lg xs:text-xl text-slate-300 italic mb-4">
               &ldquo;The best tools disappear into your workflow. You stop thinking about the tool and start thinking about the problem.&rdquo;
             </p>
             <p className="text-sm text-slate-500">
@@ -130,11 +130,11 @@ export function OriginStorySection() {
           whileInView={{ opacity: 1 }}
           transition={{ delay: 0.8 }}
           viewport={{ once: true }}
-          className="mt-12 text-center"
+          className="mt-10 xs:mt-11 sm:mt-12 text-center"
         >
           <a
             href="#install"
-            className="inline-flex items-center gap-2 px-6 py-3 rounded-lg bg-[hsl(var(--brand-primary))] text-white font-medium hover:bg-[hsl(var(--brand-primary)/0.9)] transition-colors"
+            className="inline-flex items-center justify-center gap-2 px-6 xs:px-7 sm:px-8 py-3 xs:py-3.5 sm:py-4 rounded-lg bg-[hsl(var(--brand-primary))] text-white font-medium hover:bg-[hsl(var(--brand-primary)/0.9)] transition-colors touch-target-min w-full sm:w-auto max-w-xs sm:max-w-none"
           >
             Start thinking better
             <Rocket className="w-4 h-4" />

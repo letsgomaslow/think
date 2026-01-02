@@ -1,0 +1,1315 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Debug - Systematic Debugging Approaches | think-mcp</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+    <style>
+        /* ========================================
+           MASLOW AI DESIGN SYSTEM - Debug Tool
+           Accent: Red #D52C2C
+           Structure: trace_v3 template
+           ======================================== */
+
+        :root {
+            /* Brand Colors */
+            --maslow-teal: #6DC4AD;
+            --maslow-pink: #EE7BB3;
+            --maslow-purple: #401877;
+            --maslow-purple-light: #A070A6;
+            --maslow-orange: #F3A326;
+            --maslow-dark-blue: #121D35;
+
+            /* Tool Accent - Debug Red */
+            --debug: #D52C2C;
+            --debug-light: #FEF2F2;
+
+            /* Maslow Signature */
+            --accent-line: 3px;
+
+            /* Typography */
+            --font-display: 'Manrope', sans-serif;
+            --font-mono: 'JetBrains Mono', monospace;
+
+            /* Spacing Scale */
+            --space-1: 4px;
+            --space-2: 8px;
+            --space-3: 12px;
+            --space-4: 16px;
+            --space-6: 24px;
+            --space-8: 32px;
+            --space-12: 48px;
+            --space-16: 64px;
+            --space-24: 96px;
+
+            /* Border Radius */
+            --radius-sm: 4px;
+            --radius-md: 8px;
+            --radius-lg: 12px;
+            --radius-xl: 16px;
+            --radius-2xl: 24px;
+            --radius-full: 9999px;
+
+            /* Shadows */
+            --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.05);
+            --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
+            --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1);
+            --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Light Theme (Default) */
+        [data-theme="light"] {
+            --bg: #E6EAF3;
+            --bg-alt: #F5F7FA;
+            --surface: #FFFFFF;
+            --surface-hover: #F9FAFB;
+            --text-primary: #333333;
+            --text-secondary: #6B7280;
+            --text-muted: #9CA3AF;
+            --border: #E5E7EB;
+            --border-light: #F3F4F6;
+            --nav-bg: rgba(255, 255, 255, 0.9);
+        }
+
+        /* Dark Theme */
+        [data-theme="dark"] {
+            --bg: #121D35;
+            --bg-alt: #1A2847;
+            --surface: #1A2847;
+            --surface-hover: #243156;
+            --text-primary: #FFFFFF;
+            --text-secondary: #D1D5DB;
+            --text-muted: #9CA3AF;
+            --border: #374151;
+            --border-light: #1F2937;
+            --nav-bg: rgba(18, 29, 53, 0.95);
+            --debug-light: rgba(213, 44, 44, 0.15);
+        }
+
+        /* Base Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: var(--font-display);
+            background: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.6;
+            min-height: 100vh;
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+
+        /* Navigation - 72px fixed height */
+        .nav {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 100;
+            height: 72px;
+            background: var(--nav-bg);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--border);
+            transition: background-color 0.3s ease, border-color 0.3s ease;
+        }
+
+        .nav-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--space-8);
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: var(--space-4);
+        }
+
+        .nav-logo {
+            width: 36px;
+            height: 36px;
+            background: linear-gradient(135deg, var(--maslow-pink), var(--maslow-purple-light), var(--maslow-teal));
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .nav-logo svg {
+            width: 20px;
+            height: 20px;
+            color: white;
+        }
+
+        .nav-wordmark {
+            display: flex;
+            flex-direction: column;
+            line-height: 1.2;
+        }
+
+        .nav-title {
+            font-weight: 800;
+            font-size: 18px;
+            color: var(--text-primary);
+            letter-spacing: -0.02em;
+        }
+
+        .nav-subtitle {
+            font-size: 10px;
+            font-weight: 500;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+        }
+
+        .nav-links {
+            display: flex;
+            align-items: center;
+            gap: var(--space-6);
+        }
+
+        .nav-link {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-secondary);
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .nav-link:hover {
+            color: var(--debug);
+        }
+
+        .nav-link:focus-visible {
+            outline: 2px solid var(--maslow-teal);
+            outline-offset: 2px;
+            border-radius: var(--radius-sm);
+        }
+
+        /* Theme Toggle */
+        .theme-toggle {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: var(--radius-full);
+            padding: var(--space-2);
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s ease;
+        }
+
+        .theme-toggle:hover {
+            border-color: var(--debug);
+        }
+
+        .theme-toggle:focus-visible {
+            outline: 2px solid var(--maslow-teal);
+            outline-offset: 2px;
+        }
+
+        .theme-toggle svg {
+            width: 18px;
+            height: 18px;
+            color: var(--text-secondary);
+        }
+
+        .theme-toggle .sun { display: none; }
+        .theme-toggle .moon { display: block; }
+        [data-theme="dark"] .theme-toggle .sun { display: block; }
+        [data-theme="dark"] .theme-toggle .moon { display: none; }
+
+        .nav-cta {
+            padding: var(--space-2) var(--space-4);
+            background: var(--debug);
+            color: white;
+            font-size: 0.875rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .nav-cta:hover {
+            opacity: 0.9;
+            transform: translateY(-1px);
+        }
+
+        .nav-cta:focus-visible {
+            outline: 2px solid var(--maslow-teal);
+            outline-offset: 2px;
+        }
+
+        /* Hero Section - 2 column grid with animated accent line */
+        .hero {
+            padding-top: calc(72px + var(--space-16));
+            padding-bottom: var(--space-16);
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+
+        .hero-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 var(--space-8);
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: var(--space-16);
+            align-items: center;
+        }
+
+        .hero-content {
+            max-width: 560px;
+        }
+
+        /* Animated 60px accent line */
+        .hero-accent {
+            width: 60px;
+            height: var(--accent-line);
+            background: var(--debug);
+            margin-bottom: var(--space-6);
+            border-radius: var(--radius-full);
+            animation: lineGrow 0.6s ease-out forwards;
+            opacity: 0;
+            animation-delay: 0.1s;
+        }
+
+        @keyframes lineGrow {
+            from {
+                width: 0;
+                opacity: 0;
+            }
+            to {
+                width: 60px;
+                opacity: 1;
+            }
+        }
+
+        .hero-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--debug);
+            margin-bottom: var(--space-3);
+            opacity: 0;
+            animation: fadeUp 0.5s ease-out forwards;
+            animation-delay: 0.1s;
+        }
+
+        .hero-title {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: var(--space-6);
+            opacity: 0;
+            animation: fadeUp 0.5s ease-out forwards;
+            animation-delay: 0.2s;
+        }
+
+        .headline-bold {
+            display: block;
+            color: var(--text-primary);
+        }
+
+        .headline-light {
+            display: block;
+            font-weight: 300;
+            background: linear-gradient(135deg, var(--debug), var(--maslow-orange));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-description {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            line-height: 1.7;
+            margin-bottom: var(--space-8);
+            opacity: 0;
+            animation: fadeUp 0.5s ease-out forwards;
+            animation-delay: 0.3s;
+        }
+
+        .hero-actions {
+            display: flex;
+            gap: var(--space-4);
+            opacity: 0;
+            animation: fadeUp 0.5s ease-out forwards;
+            animation-delay: 0.4s;
+        }
+
+        @keyframes fadeUp {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .btn-primary {
+            padding: var(--space-3) var(--space-6);
+            background: var(--debug);
+            color: white;
+            font-size: 1rem;
+            font-weight: 600;
+            border: none;
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-primary:hover {
+            opacity: 0.9;
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .btn-primary:focus-visible {
+            outline: 2px solid var(--maslow-teal);
+            outline-offset: 2px;
+        }
+
+        .btn-secondary {
+            padding: var(--space-3) var(--space-6);
+            background: transparent;
+            color: var(--text-primary);
+            font-size: 1rem;
+            font-weight: 600;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-lg);
+            cursor: pointer;
+            text-decoration: none;
+            transition: all 0.2s ease;
+        }
+
+        .btn-secondary:hover {
+            border-color: var(--debug);
+            background: var(--debug-light);
+        }
+
+        .btn-secondary:focus-visible {
+            outline: 2px solid var(--maslow-teal);
+            outline-offset: 2px;
+        }
+
+        /* Hero Visual - Floating debug steps */
+        .hero-visual {
+            position: relative;
+            height: 480px;
+        }
+
+        .debug-card {
+            position: absolute;
+            background: var(--surface);
+            border-radius: var(--radius-xl);
+            padding: var(--space-4) var(--space-6);
+            box-shadow: var(--shadow-lg);
+            border: 1px solid var(--border);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .debug-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-xl);
+        }
+
+        .debug-card--issue {
+            top: 20px;
+            left: 0;
+            right: 60px;
+            border-left: var(--accent-line) solid var(--debug);
+            animation: fadeUp 0.5s ease-out forwards;
+            animation-delay: 0.3s;
+            opacity: 0;
+        }
+
+        .debug-card--step1 {
+            top: 120px;
+            left: 40px;
+            right: 20px;
+            border-left: var(--accent-line) solid var(--maslow-orange);
+            animation: fadeUp 0.5s ease-out forwards;
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .debug-card--step2 {
+            top: 220px;
+            left: 20px;
+            right: 40px;
+            border-left: var(--accent-line) solid var(--maslow-purple-light);
+            animation: fadeUp 0.5s ease-out forwards;
+            animation-delay: 0.5s;
+            opacity: 0;
+        }
+
+        .debug-card--resolution {
+            top: 320px;
+            left: 60px;
+            right: 0;
+            border-left: var(--accent-line) solid var(--maslow-teal);
+            background: linear-gradient(135deg, rgba(109, 196, 173, 0.1), var(--surface));
+            animation: fadeUp 0.5s ease-out forwards;
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        .debug-card-label {
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-1);
+        }
+
+        .debug-card--issue .debug-card-label { color: var(--debug); }
+        .debug-card--step1 .debug-card-label { color: var(--maslow-orange); }
+        .debug-card--step2 .debug-card-label { color: var(--maslow-purple-light); }
+        .debug-card--resolution .debug-card-label { color: var(--maslow-teal); }
+
+        .debug-card-text {
+            font-size: 0.875rem;
+            font-weight: 500;
+            color: var(--text-primary);
+        }
+
+        .debug-card-meta {
+            font-size: 0.75rem;
+            color: var(--text-muted);
+            margin-top: var(--space-1);
+        }
+
+        /* Connection lines */
+        .debug-connections {
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            pointer-events: none;
+        }
+
+        .debug-connections svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .debug-connections path {
+            fill: none;
+            stroke: var(--border);
+            stroke-width: 2;
+            stroke-dasharray: 4 4;
+            opacity: 0.5;
+        }
+
+        /* Section Styles */
+        .section {
+            padding: var(--space-24) var(--space-8);
+        }
+
+        .section--surface {
+            background: var(--surface);
+        }
+
+        .section--dark {
+            background: var(--maslow-dark-blue);
+            color: white;
+        }
+
+        .section-inner {
+            max-width: 1280px;
+            margin: 0 auto;
+        }
+
+        .section-header {
+            text-align: center;
+            margin-bottom: var(--space-12);
+        }
+
+        .section-eyebrow {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: var(--debug);
+            margin-bottom: var(--space-3);
+        }
+
+        .section--dark .section-eyebrow {
+            color: var(--maslow-teal);
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 800;
+            margin-bottom: var(--space-4);
+        }
+
+        .section-subtitle {
+            font-size: 1.125rem;
+            color: var(--text-secondary);
+            max-width: 640px;
+            margin: 0 auto;
+        }
+
+        .section--dark .section-subtitle {
+            color: rgba(255, 255, 255, 0.7);
+        }
+
+        /* Feature Cards - 3 column grid with left-border reveal */
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: var(--space-8);
+        }
+
+        .feature-card {
+            position: relative;
+            background: var(--bg);
+            border-radius: var(--radius-xl);
+            padding: var(--space-6);
+            transition: all 0.3s ease;
+            overflow: hidden;
+        }
+
+        [data-theme="dark"] .feature-card {
+            background: var(--surface);
+        }
+
+        /* Left-border reveal on hover (Maslow signature) */
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 0;
+            background: var(--debug);
+            transition: width 0.3s ease;
+        }
+
+        .feature-card:hover::before {
+            width: var(--accent-line);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-lg);
+        }
+
+        .feature-card-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--debug-light);
+            border-radius: var(--radius-lg);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: var(--space-4);
+        }
+
+        .feature-card-icon svg {
+            width: 24px;
+            height: 24px;
+            color: var(--debug);
+        }
+
+        .feature-card-title {
+            font-size: 1rem;
+            font-weight: 700;
+            margin-bottom: var(--space-2);
+        }
+
+        .feature-card-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Dark Band Demo Section */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-8);
+        }
+
+        .demo-panel {
+            background: #1A2847;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+        }
+
+        .demo-panel-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-6);
+            background: #243356;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .demo-panel-dots {
+            display: flex;
+            gap: var(--space-2);
+        }
+
+        .demo-panel-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .demo-panel-dot--red { background: var(--debug); }
+        .demo-panel-dot--yellow { background: var(--maslow-orange); }
+        .demo-panel-dot--green { background: var(--maslow-teal); }
+
+        .demo-panel-title {
+            font-size: 0.75rem;
+            font-weight: 600;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+        }
+
+        .demo-panel-content {
+            padding: var(--space-6);
+        }
+
+        .demo-panel-content pre {
+            font-family: var(--font-mono);
+            font-size: 0.8125rem;
+            line-height: 1.8;
+            color: #E2E8F0;
+        }
+
+        .json-key { color: var(--maslow-teal); }
+        .json-string { color: var(--maslow-orange); }
+        .json-number { color: var(--maslow-pink); }
+
+        /* Output Card */
+        .output-card {
+            background: #1A2847;
+            border-radius: var(--radius-xl);
+            overflow: hidden;
+        }
+
+        .output-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: var(--space-4) var(--space-6);
+            background: #243356;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .output-badge {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-1) var(--space-3);
+            background: rgba(213, 44, 44, 0.2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--debug);
+        }
+
+        .output-status {
+            display: flex;
+            align-items: center;
+            gap: var(--space-2);
+            padding: var(--space-1) var(--space-3);
+            background: rgba(109, 196, 173, 0.2);
+            border-radius: var(--radius-full);
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--maslow-teal);
+        }
+
+        .output-body {
+            padding: var(--space-6);
+        }
+
+        .output-section {
+            margin-bottom: var(--space-6);
+        }
+
+        .output-section:last-child {
+            margin-bottom: 0;
+        }
+
+        .output-section-title {
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            color: rgba(255, 255, 255, 0.5);
+            margin-bottom: var(--space-2);
+        }
+
+        .output-section-text {
+            font-size: 0.875rem;
+            color: white;
+        }
+
+        .output-steps {
+            display: flex;
+            flex-direction: column;
+            gap: var(--space-2);
+        }
+
+        .output-step {
+            display: flex;
+            align-items: center;
+            gap: var(--space-3);
+            padding: var(--space-2) var(--space-3);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+        }
+
+        .output-step-check {
+            width: 18px;
+            height: 18px;
+            background: var(--maslow-teal);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 0;
+        }
+
+        .output-step-check svg {
+            width: 10px;
+            height: 10px;
+            color: white;
+        }
+
+        .output-step-text {
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.9);
+        }
+
+        .output-meta-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: var(--space-4);
+        }
+
+        .output-meta-item {
+            padding: var(--space-3);
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: var(--radius-md);
+        }
+
+        .output-meta-label {
+            font-size: 0.625rem;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: var(--space-1);
+        }
+
+        .output-meta-label--findings { color: var(--maslow-orange); }
+        .output-meta-label--resolution { color: var(--maslow-teal); }
+
+        .output-meta-text {
+            font-size: 0.8125rem;
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        /* API Table */
+        .api-table-wrapper {
+            background: var(--surface);
+            border-radius: var(--radius-2xl);
+            overflow: hidden;
+            box-shadow: var(--shadow-lg);
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .api-table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .api-table th {
+            padding: var(--space-4) var(--space-6);
+            text-align: left;
+            font-size: 0.75rem;
+            font-weight: 600;
+            color: var(--text-muted);
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            border-bottom: 1px solid var(--border);
+            background: var(--bg-alt);
+        }
+
+        .api-table td {
+            padding: var(--space-4) var(--space-6);
+            border-bottom: 1px solid var(--border);
+        }
+
+        .api-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .api-param {
+            font-family: var(--font-mono);
+            font-size: 0.875rem;
+            color: var(--debug);
+        }
+
+        .api-type {
+            display: inline-flex;
+            padding: var(--space-1) var(--space-2);
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: var(--radius-sm);
+        }
+
+        .api-type--enum { background: var(--debug-light); color: var(--debug); }
+        .api-type--string { background: rgba(109, 196, 173, 0.15); color: var(--maslow-teal); }
+        .api-type--array { background: rgba(160, 112, 166, 0.15); color: var(--maslow-purple-light); }
+
+        .api-required {
+            display: inline-flex;
+            padding: var(--space-1) var(--space-2);
+            font-size: 0.75rem;
+            font-weight: 500;
+            border-radius: var(--radius-sm);
+        }
+
+        .api-required--yes { background: var(--debug-light); color: var(--debug); }
+        .api-required--no { background: var(--bg-alt); color: var(--text-muted); }
+
+        .api-desc {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            padding: var(--space-12) var(--space-8);
+            border-top: 1px solid var(--border);
+            text-align: center;
+        }
+
+        .footer-text {
+            font-size: 0.875rem;
+            color: var(--text-muted);
+        }
+
+        /* Reduced Motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+                scroll-behavior: auto !important;
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            .hero-inner {
+                grid-template-columns: 1fr;
+            }
+
+            .hero-visual {
+                display: none;
+            }
+
+            .hero-title {
+                font-size: 2.5rem;
+            }
+
+            .feature-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .demo-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .nav-links {
+                display: none;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .feature-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .output-meta-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Screen Reader Only */
+        .sr-only {
+            position: absolute;
+            width: 1px;
+            height: 1px;
+            padding: 0;
+            margin: -1px;
+            overflow: hidden;
+            clip: rect(0, 0, 0, 0);
+            white-space: nowrap;
+            border: 0;
+        }
+    </style>
+</head>
+<body>
+    <!-- Navigation -->
+    <header class="nav" role="banner">
+        <div class="nav-inner">
+            <div class="nav-brand">
+                <div class="nav-logo" aria-hidden="true">
+                    <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                    </svg>
+                </div>
+                <div class="nav-wordmark">
+                    <span class="nav-title">MASLOW | AI</span>
+                    <span class="nav-subtitle">think-mcp</span>
+                </div>
+            </div>
+            <nav class="nav-links" role="navigation" aria-label="Main">
+                <a href="#approaches" class="nav-link">Approaches</a>
+                <a href="#demo" class="nav-link">Demo</a>
+                <a href="#api" class="nav-link">API</a>
+                <button class="theme-toggle" onclick="toggleTheme()" aria-label="Toggle dark mode">
+                    <svg class="sun" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 3v1m0 16v1m9-9h-1M4 12H3m15.364 6.364l-.707-.707M6.343 6.343l-.707-.707m12.728 0l-.707.707M6.343 17.657l-.707.707M16 12a4 4 0 11-8 0 4 4 0 018 0z"/>
+                    </svg>
+                    <svg class="moon" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20.354 15.354A9 9 0 018.646 3.646 9.003 9.003 0 0012 21a9.003 9.003 0 008.354-5.646z"/>
+                    </svg>
+                </button>
+                <a href="#" class="nav-cta">Get Started</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Hero -->
+    <section class="hero">
+        <div class="hero-inner">
+            <div class="hero-content">
+                <div class="hero-accent" aria-hidden="true"></div>
+                <span class="hero-eyebrow">Systematic Debugging</span>
+                <h1 class="hero-title">
+                    <span class="headline-bold">Debug</span>
+                    <span class="headline-light">Systematically</span>
+                </h1>
+                <p class="hero-description">
+                    Stop guessing. Start systematically. Apply proven debugging techniques to efficiently isolate and fix bugs in any codebase.
+                </p>
+                <div class="hero-actions">
+                    <a href="#demo" class="btn-primary">Try the Demo</a>
+                    <a href="#api" class="btn-secondary">View Documentation</a>
+                </div>
+            </div>
+
+            <div class="hero-visual" role="img" aria-label="Debug process showing issue identification to resolution">
+                <div class="debug-connections">
+                    <svg viewBox="0 0 400 480">
+                        <path d="M 200 70 Q 180 95 200 120" />
+                        <path d="M 200 170 Q 220 195 200 220" />
+                        <path d="M 200 270 Q 180 295 200 320" />
+                    </svg>
+                </div>
+                <div class="debug-card debug-card--issue">
+                    <span class="debug-card-label">Issue</span>
+                    <p class="debug-card-text">Users report intermittent 500 errors on product pages</p>
+                    <span class="debug-card-meta">10,000 products affected</span>
+                </div>
+                <div class="debug-card debug-card--step1">
+                    <span class="debug-card-label">Step 1: Binary Search</span>
+                    <p class="debug-card-text">Split products: IDs 1-5000 and 5001-10000</p>
+                    <span class="debug-card-meta">Errors only in second group</span>
+                </div>
+                <div class="debug-card debug-card--step2">
+                    <span class="debug-card-label">Step 2: Narrow Down</span>
+                    <p class="debug-card-text">Split again: 7501-10000 range isolated</p>
+                    <span class="debug-card-meta">Found special characters in names</span>
+                </div>
+                <div class="debug-card debug-card--resolution">
+                    <span class="debug-card-label">Resolution</span>
+                    <p class="debug-card-text">Added HTML entity encoding for product names</p>
+                    <span class="debug-card-meta">Bug fixed in 3 iterations</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Approaches Section -->
+    <section id="approaches" class="section section--surface">
+        <div class="section-inner">
+            <header class="section-header">
+                <span class="section-eyebrow">Methodologies</span>
+                <h2 class="section-title">Six Debugging Approaches</h2>
+                <p class="section-subtitle">Each methodology is optimized for specific debugging scenarios</p>
+            </header>
+            <div class="feature-grid">
+                <article class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l4-4 4 4m0 6l-4 4-4-4"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-card-title">Binary Search</h3>
+                    <p class="feature-card-desc">Divide data or code in half repeatedly to narrow down the problem logarithmically. Best for large search spaces.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 5a1 1 0 011-1h14a1 1 0 011 1v2a1 1 0 01-1 1H5a1 1 0 01-1-1V5zM4 13a1 1 0 011-1h6a1 1 0 011 1v6a1 1 0 01-1 1H5a1 1 0 01-1-1v-6zM16 13a1 1 0 011-1h2a1 1 0 011 1v6a1 1 0 01-1 1h-2a1 1 0 01-1-1v-6z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-card-title">Divide and Conquer</h3>
+                    <p class="feature-card-desc">Isolate subsystems to find the faulty component by systematically disabling parts. Ideal for complex systems.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-card-title">Cause Elimination</h3>
+                    <p class="feature-card-desc">Systematically rule out each possibility until only the true cause remains. Perfect for multiple potential causes.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 10h10a8 8 0 018 8v2M3 10l6 6m-6-6l6-6"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-card-title">Backtracking</h3>
+                    <p class="feature-card-desc">Trace backward from the failure point to find where things went wrong. Essential for state-related bugs.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-card-title">Reverse Engineering</h3>
+                    <p class="feature-card-desc">Understand behavior by observation when source isn't available or clear. Great for black box systems.</p>
+                </article>
+
+                <article class="feature-card">
+                    <div class="feature-card-icon">
+                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 5l7 7-7 7M5 5l7 7-7 7"/>
+                        </svg>
+                    </div>
+                    <h3 class="feature-card-title">Program Slicing</h3>
+                    <p class="feature-card-desc">Follow variables through the code to trace data transformations. Optimal for data flow bugs.</p>
+                </article>
+            </div>
+        </div>
+    </section>
+
+    <!-- Demo Section - Dark Band -->
+    <section id="demo" class="section section--dark">
+        <div class="section-inner">
+            <header class="section-header">
+                <span class="section-eyebrow">Interactive Example</span>
+                <h2 class="section-title">See Debug in Action</h2>
+                <p class="section-subtitle">How Debug structures your debugging session with systematic approaches</p>
+            </header>
+            <div class="demo-grid">
+                <div class="demo-panel">
+                    <div class="demo-panel-header">
+                        <div class="demo-panel-dots">
+                            <div class="demo-panel-dot demo-panel-dot--red" aria-hidden="true"></div>
+                            <div class="demo-panel-dot demo-panel-dot--yellow" aria-hidden="true"></div>
+                            <div class="demo-panel-dot demo-panel-dot--green" aria-hidden="true"></div>
+                        </div>
+                        <span class="demo-panel-title">Input</span>
+                    </div>
+                    <div class="demo-panel-content">
+                        <pre><code>{
+  <span class="json-key">"approachName"</span>: <span class="json-string">"binary_search"</span>,
+  <span class="json-key">"issue"</span>: <span class="json-string">"Intermittent 500 errors on product pages"</span>,
+  <span class="json-key">"steps"</span>: [
+    <span class="json-string">"Split products: IDs 1-5000 and 5001-10000"</span>,
+    <span class="json-string">"Test both groups - errors only in second"</span>,
+    <span class="json-string">"Split again: 5001-7500 and 7501-10000"</span>,
+    <span class="json-string">"Found: special characters in names"</span>
+  ],
+  <span class="json-key">"findings"</span>: <span class="json-string">"Products with emojis trigger template bug"</span>,
+  <span class="json-key">"resolution"</span>: <span class="json-string">"Added HTML entity encoding"</span>
+}</code></pre>
+                    </div>
+                </div>
+
+                <div class="output-card">
+                    <div class="output-header">
+                        <div class="output-badge">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                            Binary Search
+                        </div>
+                        <div class="output-status">
+                            <svg width="12" height="12" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                            </svg>
+                            Resolved
+                        </div>
+                    </div>
+                    <div class="output-body">
+                        <div class="output-section">
+                            <span class="output-section-title">Issue</span>
+                            <p class="output-section-text">Intermittent 500 errors on product pages</p>
+                        </div>
+                        <div class="output-section">
+                            <span class="output-section-title">Steps Taken</span>
+                            <div class="output-steps">
+                                <div class="output-step">
+                                    <div class="output-step-check">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                    <span class="output-step-text">Split products: IDs 1-5000 and 5001-10000</span>
+                                </div>
+                                <div class="output-step">
+                                    <div class="output-step-check">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                    <span class="output-step-text">Test both groups - errors only in second</span>
+                                </div>
+                                <div class="output-step">
+                                    <div class="output-step-check">
+                                        <svg fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
+                                        </svg>
+                                    </div>
+                                    <span class="output-step-text">Found: special characters in names</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="output-meta-grid">
+                            <div class="output-meta-item">
+                                <span class="output-meta-label output-meta-label--findings">Findings</span>
+                                <p class="output-meta-text">Products with emojis trigger template bug</p>
+                            </div>
+                            <div class="output-meta-item">
+                                <span class="output-meta-label output-meta-label--resolution">Resolution</span>
+                                <p class="output-meta-text">Added HTML entity encoding</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- API Section -->
+    <section id="api" class="section">
+        <div class="section-inner">
+            <header class="section-header">
+                <span class="section-eyebrow">Reference</span>
+                <h2 class="section-title">API Parameters</h2>
+            </header>
+            <div class="api-table-wrapper">
+                <table class="api-table">
+                    <thead>
+                        <tr>
+                            <th scope="col">Parameter</th>
+                            <th scope="col">Type</th>
+                            <th scope="col">Required</th>
+                            <th scope="col">Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><code class="api-param">approachName</code></td>
+                            <td><span class="api-type api-type--enum">enum</span></td>
+                            <td><span class="api-required api-required--yes">Yes</span></td>
+                            <td class="api-desc">binary_search, divide_conquer, cause_elimination, backtracking, reverse_engineering, program_slicing</td>
+                        </tr>
+                        <tr>
+                            <td><code class="api-param">issue</code></td>
+                            <td><span class="api-type api-type--string">string</span></td>
+                            <td><span class="api-required api-required--yes">Yes</span></td>
+                            <td class="api-desc">Description of the bug or problem being debugged</td>
+                        </tr>
+                        <tr>
+                            <td><code class="api-param">steps</code></td>
+                            <td><span class="api-type api-type--array">string[]</span></td>
+                            <td><span class="api-required api-required--no">No</span></td>
+                            <td class="api-desc">Array of debugging steps taken</td>
+                        </tr>
+                        <tr>
+                            <td><code class="api-param">findings</code></td>
+                            <td><span class="api-type api-type--string">string</span></td>
+                            <td><span class="api-required api-required--no">No</span></td>
+                            <td class="api-desc">What you discovered during debugging</td>
+                        </tr>
+                        <tr>
+                            <td><code class="api-param">resolution</code></td>
+                            <td><span class="api-type api-type--string">string</span></td>
+                            <td><span class="api-required api-required--no">No</span></td>
+                            <td class="api-desc">How you fixed the issue</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="footer" role="contentinfo">
+        <p class="footer-text">think-mcp Debug Tool &bull; Systematic Debugging Approaches</p>
+    </footer>
+
+    <script>
+        // Theme Toggle
+        function toggleTheme() {
+            const html = document.documentElement;
+            const currentTheme = html.getAttribute('data-theme');
+            const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+        }
+
+        // Load saved theme
+        (function() {
+            const savedTheme = localStorage.getItem('theme');
+            if (savedTheme) {
+                document.documentElement.setAttribute('data-theme', savedTheme);
+            } else if (window.matchMedia('(prefers-color-scheme: dark)').matches) {
+                document.documentElement.setAttribute('data-theme', 'dark');
+            }
+        })();
+    </script>
+</body>
+</html>

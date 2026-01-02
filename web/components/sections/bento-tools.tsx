@@ -26,7 +26,7 @@ function ToolCard({ tool, index, isLarge = false }: ToolCardProps) {
         "group relative flex flex-col justify-between overflow-hidden rounded-xl",
         "bg-slate-900/50 border border-slate-700/50",
         "hover:border-slate-600/50 hover:scale-[1.02] transition-all duration-300",
-        isLarge && "min-h-[280px]"
+        isLarge && "min-h-[240px] xs:min-h-[260px] sm:min-h-[280px]"
       )}
       style={{
         boxShadow: `0 0 0 1px rgba(0,0,0,.1), 0 0 30px ${tool.color.replace(")", " / 0.05)")}`,
@@ -49,21 +49,21 @@ function ToolCard({ tool, index, isLarge = false }: ToolCardProps) {
       </div>
 
       {/* Content */}
-      <div className="relative p-6">
+      <div className="relative p-4 xs:p-5 sm:p-6">
         {/* Icon */}
         <div
-          className="w-12 h-12 rounded-lg flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
+          className="w-10 h-10 xs:w-11 xs:h-11 sm:w-12 sm:h-12 rounded-lg flex items-center justify-center mb-4 transition-transform duration-300 group-hover:scale-110"
           style={{
             backgroundColor: tool.color.replace(")", " / 0.15)"),
             color: tool.color,
           }}
         >
-          <Icon className="w-6 h-6" />
+          <Icon className="w-5 h-5 xs:w-5.5 xs:h-5.5 sm:w-6 sm:h-6" />
         </div>
 
         {/* Title + Tagline */}
         <div className="mb-3">
-          <h3 className="text-xl font-bold text-white mb-1 font-[family-name:var(--font-manrope)]">
+          <h3 className="text-lg xs:text-xl font-bold text-white mb-1 font-[family-name:var(--font-manrope)]">
             {tool.name}
           </h3>
           <p className="text-sm" style={{ color: tool.color }}>
@@ -140,8 +140,10 @@ function CategorySection({ title, subtitle, tools, categoryIndex }: CategorySect
       {/* Tools Grid */}
       <div
         className={cn(
-          "grid gap-4",
-          tools.length === 2 ? "md:grid-cols-2" : "md:grid-cols-3"
+          "grid gap-3 xs:gap-3.5 sm:gap-4",
+          tools.length === 2
+            ? "grid-cols-1 sm:grid-cols-2"
+            : "grid-cols-1 sm:grid-cols-2 lg:grid-cols-3"
         )}
       >
         {tools.map((tool, index) => (
@@ -174,7 +176,7 @@ export function BentoToolsSection() {
         <span className="text-sm uppercase tracking-widest text-[hsl(var(--brand-primary))] mb-4 block">
           The Toolkit
         </span>
-        <h2 className="text-3xl md:text-5xl font-bold text-white mb-6 font-[family-name:var(--font-manrope)]">
+        <h2 className="heading-lg text-white mb-4 xs:mb-5 sm:mb-6 px-4 sm:px-0 font-bold font-[family-name:var(--font-manrope)]">
           11 Tools for{" "}
           <span className="text-[hsl(var(--brand-accent))]">Every</span>{" "}
           Thinking Challenge
@@ -205,7 +207,7 @@ export function BentoToolsSection() {
         viewport={{ once: true }}
         className="text-center mt-8"
       >
-        <div className="inline-flex items-center gap-4 px-6 py-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
+        <div className="inline-flex flex-col sm:flex-row items-center gap-3 xs:gap-3.5 sm:gap-4 px-4 xs:px-5 sm:px-6 py-3 xs:py-3.5 sm:py-4 rounded-xl bg-slate-800/50 border border-slate-700/50">
           <span className="text-slate-400">Chain tools together:</span>
           <div className="flex items-center gap-2">
             <span className="px-3 py-1 rounded-lg bg-[hsl(var(--brand-accent)/0.15)] text-[hsl(var(--brand-accent))] text-sm font-medium">

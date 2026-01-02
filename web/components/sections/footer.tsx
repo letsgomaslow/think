@@ -81,15 +81,15 @@ export function Footer() {
   return (
     <footer
       ref={ref}
-      className="relative bg-[#121D35] text-white py-16 md:py-24 overflow-hidden"
+      className="relative bg-[#121D35] text-white overflow-hidden py-12 xs:py-14 sm:py-16 md:py-20 lg:py-24"
     >
       {/* Subtle gradient overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-black/20 pointer-events-none" />
 
-      <div className="container mx-auto px-6 relative z-10">
+      <div className="container mx-auto relative z-10 px-4 xs:px-5 sm:px-6 md:px-8">
         {/* Large animated logo */}
         <motion.div
-          className="flex items-center justify-center gap-4 md:gap-6 mb-12 md:mb-16 overflow-hidden"
+          className="flex items-center justify-center overflow-hidden gap-3 xs:gap-4 sm:gap-5 md:gap-6 lg:gap-7 mb-10 xs:mb-12 sm:mb-14 md:mb-16"
           variants={containerVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -100,7 +100,7 @@ export function Footer() {
               <motion.span
                 key={index}
                 variants={letterVariants}
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-extrabold tracking-tight"
+                className="font-extrabold tracking-tight text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
                 style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
               >
                 {letter}
@@ -111,7 +111,7 @@ export function Footer() {
           {/* Separator */}
           <motion.span
             variants={letterVariants}
-            className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-light text-[#6DC4AD]"
+            className="font-light text-[#6DC4AD] text-3xl xs:text-4xl sm:text-5xl md:text-6xl lg:text-7xl xl:text-8xl"
           >
             |
           </motion.span>
@@ -122,7 +122,7 @@ export function Footer() {
               <motion.span
                 key={index}
                 variants={letterVariants}
-                className="text-6xl sm:text-7xl md:text-8xl lg:text-9xl font-light tracking-tight text-white/80"
+                className="font-light tracking-tight text-white/80 text-4xl xs:text-5xl sm:text-6xl md:text-7xl lg:text-8xl xl:text-9xl"
                 style={{ fontFamily: "'Manrope', system-ui, sans-serif" }}
               >
                 {letter}
@@ -133,7 +133,7 @@ export function Footer() {
 
         {/* Accent line */}
         <motion.div
-          className="w-24 h-[3px] bg-[#6DC4AD] mx-auto mb-10"
+          className="h-[3px] bg-[#6DC4AD] mx-auto w-16 xs:w-20 sm:w-24 md:w-28 mb-8 xs:mb-9 sm:mb-10"
           initial={{ scaleX: 0 }}
           animate={isInView ? { scaleX: 1 } : { scaleX: 0 }}
           transition={{ duration: 0.8, delay: 0.5, ease: [0.22, 1, 0.36, 1] }}
@@ -141,7 +141,7 @@ export function Footer() {
 
         {/* Links */}
         <motion.nav
-          className="flex flex-wrap items-center justify-center gap-6 md:gap-10 mb-10"
+          className="flex flex-wrap items-center justify-center gap-4 xs:gap-5 sm:gap-6 md:gap-8 lg:gap-10 mb-8 xs:mb-9 sm:mb-10"
           variants={fadeUpVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}
@@ -153,7 +153,7 @@ export function Footer() {
               href={link.href}
               target={link.external ? "_blank" : undefined}
               rel={link.external ? "noopener noreferrer" : undefined}
-              className="text-[#6DC4AD] hover:text-white text-base md:text-lg font-medium transition-colors duration-200 hover:underline underline-offset-4"
+              className="text-[#6DC4AD] hover:text-white text-sm xs:text-base md:text-lg touch-target-min font-medium transition-colors duration-200 hover:underline underline-offset-4"
             >
               {link.label}
             </a>
@@ -162,7 +162,7 @@ export function Footer() {
 
         {/* Copyright */}
         <motion.p
-          className="text-center text-white/50 text-sm md:text-base"
+          className="text-center text-white/50 text-xs xs:text-sm md:text-base"
           variants={fadeUpVariants}
           initial="hidden"
           animate={isInView ? "visible" : "hidden"}

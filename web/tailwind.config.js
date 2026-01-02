@@ -7,6 +7,29 @@ module.exports = {
   ],
   theme: {
   	extend: {
+  		// Custom breakpoints for better mobile coverage
+  		screens: {
+  			'xs': '320px',   // Small phones (iPhone SE, Galaxy Fold)
+  			'xsm': '375px',  // Standard phones (iPhone 12/13)
+  			'sm': '640px',   // Default Tailwind
+  			'md': '768px',   // Tablets
+  			'lg': '1024px',  // Small laptops
+  			'xl': '1280px',  // Large screens
+  			'2xl': '1536px', // Extra large screens
+  		},
+  		// Responsive spacing scale
+  		spacing: {
+  			'safe-mobile': '1rem',      // 16px - mobile padding
+  			'safe-mobile-sm': '1.5rem', // 24px - small mobile padding
+  			'safe-tablet': '2rem',       // 32px - tablet padding
+  			'safe-desktop': '3rem',      // 48px - desktop padding
+  		},
+  		// Responsive gap utilities
+  		gap: {
+  			'mobile': '0.75rem',  // 12px
+  			'tablet': '1rem',     // 16px
+  			'desktop': '1.5rem',  // 24px
+  		},
   		borderRadius: {
   			lg: 'var(--radius)',
   			md: 'calc(var(--radius) - 2px)',
