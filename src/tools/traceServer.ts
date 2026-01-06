@@ -1,6 +1,58 @@
 import { ThoughtData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
+/**
+ * Configuration options for TraceServer memory management
+ * Controls memory bounds and cleanup behavior for thought history and branches
+ */
+export interface TraceServerConfig {
+  /**
+   * Maximum number of thoughts to retain in the main thought history
+   * When exceeded, oldest thoughts are evicted using FIFO strategy
+   * @default 1000
+   */
+  maxThoughtHistory: number;
+
+  /**
+   * Maximum number of branches to maintain
+   * When exceeded, oldest/least recently used branches are evicted
+   * @default 50
+   */
+  maxBranches: number;
+
+  /**
+   * Maximum number of thoughts to retain per individual branch
+   * When exceeded, oldest thoughts within the branch are evicted
+   * @default 200
+   */
+  maxThoughtsPerBranch: number;
+
+  /**
+   * Whether to automatically clean up completed thought chains
+   * When enabled, cleanup occurs during memory bound enforcement
+   * @default true
+   */
+  enableAutoCleanup: boolean;
+
+  /**
+   * Whether to clean up a thought chain when it completes (nextThoughtNeeded: false)
+   * Only applies when enableAutoCleanup is true
+   * @default true
+   */
+  cleanupOnComplete: boolean;
+}
+
+/**
+ * Default configuration values for TraceServer
+ */
+export const DEFAULT_TRACE_SERVER_CONFIG: Readonly<TraceServerConfig> = {
+  maxThoughtHistory: 1000,
+  maxBranches: 50,
+  maxThoughtsPerBranch: 200,
+  enableAutoCleanup: true,
+  cleanupOnComplete: true
+};
+
 export class TraceServer {
   private thoughtHistory: ThoughtData[] = [];
   private branches: Record<string, ThoughtData[]> = {};
