@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (28/33 subtasks completed - 85%)
+## Current Status: In Progress (29/33 subtasks completed - 88%)
 
 ### Completed Subtasks
 
@@ -161,9 +161,18 @@
   - Status: Committed (commit: c60c67e)
   - Notes: Comprehensive unit tests for all predefined personas with 50+ test cases covering library completeness, structure validation, distinct voice characteristics, expertise validation, category-specific validation, quality metrics, and cross-persona relationships
 
+- [x] 8.4 - Write integration tests for council with predefined personas
+  - File: src/tools/councilServer.test.ts
+  - Status: Committed (commit: 4842578)
+  - Notes: Comprehensive integration tests for CouncilServer with 30+ test cases covering: predefinedPersonas array usage, personaCategory usage (all 4 categories), mixing predefined with custom personas, backward compatibility with legacy usage, and comprehensive error handling
+
+#### Phase 8: Testing ✅ COMPLETE
+
 ### Next Steps
-- [ ] Continue with Phase 8: Testing
-  - 8.4 - Write integration tests for council with predefined personas
+- [ ] Continue with Phase 9: Documentation
+  - 9.1 - Update council tool documentation
+  - 9.2 - Create persona selection guide
+  - 9.3 - Update web demo data with new personas
 
 ### Build Notes
 - Phase 1, 2, 3, 4, 5, & 6 complete! 🎉

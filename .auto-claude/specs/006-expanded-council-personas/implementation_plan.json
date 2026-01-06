@@ -363,8 +363,8 @@
           "files": [
             "src/tools/councilServer.test.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Comprehensive integration tests for CouncilServer implemented in src/tools/councilServer.test.ts. Tests cover: (1) Using predefinedPersonas array - single and multiple personas, metadata preservation, error handling for invalid IDs, (2) Using personaCategory - all four categories (technical, business, creative, general), (3) Mixing predefined with custom personas - combining both, allowing custom overrides of predefined personas, combining category with custom, and full integration with all three inputs, (4) Backward compatibility - legacy custom-only usage, personas without category field, all existing validation rules maintained, (5) Error handling - no personas provided, empty arrays, duplicate prevention. Includes 30+ test cases using vitest framework following existing codebase patterns. All tests organized into logical describe blocks for clarity. Committed in 4842578."
         }
       ]
     },
