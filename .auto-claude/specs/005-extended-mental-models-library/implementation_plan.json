@@ -3,7 +3,7 @@
   "title": "Extended Mental Models Library",
   "description": "Expand the model tool with 7 additional proven mental models: SWOT Analysis, Six Thinking Hats, MECE, Inversion Thinking, Second-Order Effects, Pre-Mortem Analysis, and 5 Whys root cause analysis.",
   "created_at": "2026-01-05",
-  "updated_at": "2026-01-06T13:13:24.127Z",
+  "updated_at": "2026-01-06T14:20:00.000Z",
   "status": "in_progress",
   "phases": [
     {
@@ -260,23 +260,27 @@
           "title": "Add unit tests for all new models",
           "description": "Add test cases in modelServer.test.ts to verify all 7 new models can be processed successfully with example scenarios",
           "file_path": "src/tools/modelServer.test.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Test for each new model with valid input",
             "All tests pass",
             "Example scenarios demonstrate model usage"
-          ]
+          ],
+          "completed_at": "2026-01-06T14:20:00.000Z",
+          "notes": "All 7 new mental models have comprehensive test cases with realistic scenarios (lines 56-201): SWOT Analysis (coffee shop delivery expansion), Six Thinking Hats (AI chatbot with 6 perspectives), MECE (revenue decline structured breakdown), Inversion Thinking (investment portfolio failure avoidance), Second-Order Effects (rent control consequence analysis), Pre-Mortem (mobile app marketplace failure prevention), Five Whys (robot welding root cause). Tests added in commit 7fae96e."
         },
         {
           "subtask_id": "4.2",
           "title": "Update models array test",
           "description": "Update the 'should process all mental model types' test to include all 13 models",
           "file_path": "src/tools/modelServer.test.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Test covers all 13 model names",
             "Test passes successfully"
-          ]
+          ],
+          "completed_at": "2026-01-06T14:20:00.000Z",
+          "notes": "The 'should process all mental model types' test (lines 203-228) includes all 13 models: 6 existing (first_principles, opportunity_cost, error_propagation, rubber_duck, pareto_principle, occams_razor) + 7 new (swot_analysis, six_thinking_hats, mece, inversion_thinking, second_order_effects, pre_mortem, five_whys). Test verifies all models process successfully with valid input."
         }
       ]
     },
