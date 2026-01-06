@@ -4,22 +4,22 @@
   "state": "building",
   "subtasks": {
     "completed": 0,
-    "total": 0,
+    "total": 33,
     "in_progress": 1,
     "failed": 0
   },
   "phase": {
-    "current": "Implement Technical Expert Personas",
+    "current": "Create Persona Library Main Export",
     "id": null,
-    "total": 5
+    "total": 2
   },
   "workers": {
     "active": 0,
     "max": 1
   },
   "session": {
-    "number": 6,
-    "started_at": "2026-01-05T22:41:18.305242"
+    "number": 19,
+    "started_at": "2026-01-06T02:01:06.566893"
   },
-  "last_update": "2026-01-05T22:54:54.440656"
+  "last_update": "2026-01-06T02:48:56.465526"
 }

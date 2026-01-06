@@ -8,6 +8,9 @@ export * from './types.js';
 export { PersonaRegistry, personaRegistry } from './registry.js';
 export { PersonaFactory, personaFactory } from './factory.js';
 
+// Export helpers
+export * from './helpers.js';
+
 // Import and re-export all category modules
 import {
     technicalCategory,
@@ -59,6 +62,12 @@ import {
 } from './types.js';
 import { personaRegistry } from './registry.js';
 import { personaFactory } from './factory.js';
+import {
+    getPersonasByCategory as getPersonasByCategoryHelper,
+    getRecommendedPersonas as getRecommendedPersonasHelper,
+    suggestPersonasForTopic as suggestPersonasForTopicHelper,
+    getComplementaryPersonas as getComplementaryPersonasHelper
+} from './helpers.js';
 
 // Re-export category modules
 export {
@@ -163,7 +172,7 @@ export function getPersonaById(id: string): PredefinedPersona | undefined {
  * @returns Array of personas in the specified category
  */
 export function getPersonasByCategory(categoryId: PersonaCategoryId): PredefinedPersona[] {
-    return personaRegistry.getPersonasByCategory(categoryId);
+    return getPersonasByCategoryHelper(categoryId);
 }
 
 /**
@@ -219,55 +228,7 @@ export function searchPersonas(query: string, limit?: number): PersonaSearchResu
  * @returns Array of recommended personas sorted by relevance
  */
 export function getRecommendedPersonas(topic: string, limit: number = 5): PredefinedPersona[] {
-    const allRecommendations: Array<{ persona: PredefinedPersona; score: number }> = [];
-
-    // Get recommendations from each category
-    const technicalRecs = getRecommendedTechnicalPersonas(topic);
-    const businessRecs = getRecommendedBusinessPersonas(topic);
-    const creativeRecs = getRecommendedCreativePersonas(topic);
-    const generalRecs = getRecommendedGeneralPersonas(topic);
-
-    // Combine all recommendations with scores
-    const topicLower = topic.toLowerCase();
-
-    for (const persona of [...technicalRecs, ...businessRecs, ...creativeRecs, ...generalRecs]) {
-        let score = 0;
-
-        // Check name match
-        if (persona.name.toLowerCase().includes(topicLower)) {
-            score += 5;
-        }
-
-        // Check expertise match
-        if (persona.expertise.some(exp => exp.toLowerCase().includes(topicLower))) {
-            score += 3;
-        }
-
-        // Check tag match
-        if (persona.tags.some(tag => tag.toLowerCase().includes(topicLower))) {
-            score += 2;
-        }
-
-        // Check concerns match
-        if (persona.concerns.some(concern => concern.toLowerCase().includes(topicLower))) {
-            score += 1;
-        }
-
-        if (score > 0) {
-            allRecommendations.push({ persona, score });
-        }
-    }
-
-    // Remove duplicates by ID
-    const uniqueRecommendations = Array.from(
-        new Map(allRecommendations.map(r => [r.persona.id, r])).values()
-    );
-
-    // Sort by score and return top N personas
-    return uniqueRecommendations
-        .sort((a, b) => b.score - a.score)
-        .slice(0, limit)
-        .map(r => r.persona);
+    return getRecommendedPersonasHelper(topic, limit);
 }
 
 /**
@@ -304,85 +265,7 @@ export function getPersonaCountByCategory(categoryId: PersonaCategoryId): number
  * @returns Array of suggested personas with diverse perspectives
  */
 export function suggestPersonasForTopic(topic: string, maxPersonas: number = 5): PredefinedPersona[] {
-    const topicLower = topic.toLowerCase();
-    const suggestions: Array<{ persona: PredefinedPersona; score: number; category: PersonaCategoryId }> = [];
-
-    // Score all personas
-    for (const persona of allPersonas) {
-        let score = 0;
-
-        // Check name match
-        if (persona.name.toLowerCase().includes(topicLower)) {
-            score += 5;
-        }
-
-        // Check expertise match
-        for (const exp of persona.expertise) {
-            if (exp.toLowerCase().includes(topicLower)) {
-                score += 3;
-            }
-        }
-
-        // Check tag match
-        for (const tag of persona.tags) {
-            if (tag.toLowerCase().includes(topicLower)) {
-                score += 2;
-            }
-        }
-
-        // Check concerns match
-        for (const concern of persona.concerns) {
-            if (concern.toLowerCase().includes(topicLower)) {
-                score += 1;
-            }
-        }
-
-        // Check typical questions match
-        for (const question of persona.typicalQuestions) {
-            if (question.toLowerCase().includes(topicLower)) {
-                score += 1;
-            }
-        }
-
-        if (score > 0) {
-            suggestions.push({ persona, score, category: persona.category });
-        }
-    }
-
-    // Sort by score
-    suggestions.sort((a, b) => b.score - a.score);
-
-    // Select personas ensuring diversity across categories
-    const selected: PredefinedPersona[] = [];
-    const categoryCounts = new Map<PersonaCategoryId, number>();
-
-    for (const suggestion of suggestions) {
-        if (selected.length >= maxPersonas) {
-            break;
-        }
-
-        const categoryCount = categoryCounts.get(suggestion.category) || 0;
-
-        // Prefer diversity: limit to 2 personas per category unless we need more
-        if (categoryCount < 2 || selected.length >= maxPersonas - 1) {
-            selected.push(suggestion.persona);
-            categoryCounts.set(suggestion.category, categoryCount + 1);
-        }
-    }
-
-    // If we didn't get enough diverse personas, add more from the top-scored ones
-    if (selected.length < maxPersonas) {
-        for (const suggestion of suggestions) {
-            if (selected.length >= maxPersonas) {
-                break;
-            }
-            if (!selected.find(p => p.id === suggestion.persona.id)) {
-                selected.push(suggestion.persona);
-            }
-        }
-    }
-
-    return selected;
+    return suggestPersonasForTopicHelper(topic, maxPersonas);
 }
 
 /**
@@ -393,47 +276,7 @@ export function suggestPersonasForTopic(topic: string, maxPersonas: number = 5):
  * @returns Array of complementary personas
  */
 export function getComplementaryPersonas(personaId: string, maxResults: number = 3): PredefinedPersona[] {
-    const persona = personaRegistry.getPersonaById(personaId);
-    if (!persona) {
-        return [];
-    }
-
-    const complementary: PredefinedPersona[] = [];
-
-    // First, add explicitly listed complementary personas
-    if (persona.complementaryPersonas) {
-        for (const compId of persona.complementaryPersonas) {
-            const compPersona = personaRegistry.getPersonaById(compId);
-            if (compPersona) {
-                complementary.push(compPersona);
-            }
-        }
-    }
-
-    // If we need more, find personas from different categories with overlapping concerns
-    if (complementary.length < maxResults) {
-        const otherPersonas = allPersonas.filter(
-            p => p.id !== personaId &&
-            p.category !== persona.category &&
-            !complementary.find(comp => comp.id === p.id)
-        );
-
-        const scored = otherPersonas.map(p => ({
-            persona: p,
-            score: p.concerns.filter(c => persona.concerns.includes(c)).length
-        }));
-
-        scored.sort((a, b) => b.score - a.score);
-
-        for (const item of scored) {
-            if (complementary.length >= maxResults) {
-                break;
-            }
-            complementary.push(item.persona);
-        }
-    }
-
-    return complementary.slice(0, maxResults);
+    return getComplementaryPersonasHelper(personaId, maxResults);
 }
 
 /**
