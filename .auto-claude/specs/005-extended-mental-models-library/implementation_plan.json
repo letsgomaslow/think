@@ -3,7 +3,7 @@
   "title": "Extended Mental Models Library",
   "description": "Expand the model tool with 7 additional proven mental models: SWOT Analysis, Six Thinking Hats, MECE, Inversion Thinking, Second-Order Effects, Pre-Mortem Analysis, and 5 Whys root cause analysis.",
   "created_at": "2026-01-05",
-  "updated_at": "2026-01-06T14:20:00.000Z",
+  "updated_at": "2026-01-06T15:07:43.733Z",
   "status": "in_progress",
   "phases": [
     {
@@ -21,9 +21,7 @@
             "MODEL_TOOL enum includes all 7 new model names",
             "Description updated to list new models",
             "TypeScript compiles without errors"
-          ],
-          "completed_at": "2026-01-06T13:15:00.000Z",
-          "notes": "All 7 new mental model names are present in the modelName enum at lines 69-75. Work completed in previous session."
+          ]
         },
         {
           "subtask_id": "1.2",
@@ -34,9 +32,7 @@
           "acceptance_criteria": [
             "Description lists all 13 mental models (6 existing + 7 new)",
             "Clear categorization of model types"
-          ],
-          "completed_at": "2026-01-06T13:15:00.000Z",
-          "notes": "MODEL_TOOL description updated to list all 13 mental models with proper categorization. Work completed in previous session."
+          ]
         }
       ]
     },
@@ -50,98 +46,84 @@
           "title": "Add SWOT Analysis to catalog",
           "description": "Add SWOT Analysis mental model with name, title, description, useCases, and steps to MENTAL_MODELS array",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "SWOT model defined with proper structure",
             "Includes 4+ use cases",
             "Includes 4+ implementation steps"
-          ],
-          "completed_at": "2026-01-06T13:30:00.000Z",
-          "notes": "SWOT Analysis model already present in MENTAL_MODELS array (lines 117-132) with name, title, description, 4 use cases (strategic planning, competitive analysis, project planning, personal development), and 4 steps (identify Strengths, Weaknesses, Opportunities, Threats). All acceptance criteria met."
+          ]
         },
         {
           "subtask_id": "2.2",
           "title": "Add Six Thinking Hats to catalog",
           "description": "Add Six Thinking Hats (De Bono) mental model with all hat colors explained",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Six Hats model defined with proper structure",
             "Description explains all 6 hat colors",
             "Includes creative problem-solving use cases"
-          ],
-          "completed_at": "2026-01-06T13:30:00.000Z",
-          "notes": "Six Thinking Hats model already present in MENTAL_MODELS array (lines 134-151) with all 6 hat colors explained in description and steps (White-facts, Red-emotions, Black-caution, Yellow-optimism, Green-creativity, Blue-process). Includes creative problem-solving use cases."
+          ]
         },
         {
           "subtask_id": "2.3",
           "title": "Add MECE to catalog",
           "description": "Add MECE (Mutually Exclusive Collectively Exhaustive) mental model for comprehensive analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "MECE model defined with proper structure",
             "Clear explanation of ME and CE concepts",
             "Includes analytical use cases"
-          ],
-          "completed_at": "2026-01-06T13:30:00.000Z",
-          "notes": "MECE model already present in MENTAL_MODELS array (lines 153-168) with clear explanation of Mutually Exclusive and Collectively Exhaustive concepts in description and steps. Includes analytical use cases like structuring complex problems and organizing data."
+          ]
         },
         {
           "subtask_id": "2.4",
           "title": "Add Inversion Thinking to catalog",
           "description": "Add Inversion Thinking mental model for reverse problem-solving",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Inversion model defined with proper structure",
             "Explains working backwards from failure",
             "Includes risk identification use cases"
-          ],
-          "completed_at": "2026-01-06T13:30:00.000Z",
-          "notes": "Inversion Thinking model already present in MENTAL_MODELS array (lines 170-185) with explanation of working backwards from failure. Mentions Charlie Munger. Includes risk identification and failure prevention use cases."
+          ]
         },
         {
           "subtask_id": "2.5",
           "title": "Add Second-Order Effects to catalog",
           "description": "Add Second-Order Effects mental model for consequence chain analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Second-Order model defined with proper structure",
             "Explains cascading effects concept",
             "Includes strategic planning use cases"
-          ],
-          "completed_at": "2026-01-06T13:30:00.000Z",
-          "notes": "Second-Order Effects model already present in MENTAL_MODELS array (lines 187-202) with clear explanation of cascading consequences (first, second, third-order effects). Includes strategic planning and systems thinking use cases."
+          ]
         },
         {
           "subtask_id": "2.6",
           "title": "Add Pre-Mortem Analysis to catalog",
           "description": "Add Pre-Mortem Analysis mental model for prospective failure analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Pre-Mortem model defined with proper structure",
             "Explains prospective hindsight concept",
             "Includes project management use cases"
-          ],
-          "completed_at": "2026-01-06T13:30:00.000Z",
-          "notes": "Pre-Mortem model already present in MENTAL_MODELS array (lines 204-219) with explanation of prospective hindsight technique (imagining future failure). Includes project planning and risk identification use cases."
+          ]
         },
         {
           "subtask_id": "2.7",
           "title": "Add Five Whys to catalog",
           "description": "Add Five Whys mental model for root cause analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Five Whys model defined with proper structure",
             "Explains iterative questioning technique",
             "Includes debugging and quality use cases"
-          ],
-          "completed_at": "2026-01-06T13:30:00.000Z",
-          "notes": "Five Whys model already present in MENTAL_MODELS array (lines 221-237) with explanation of iterative questioning technique (asking why 5 times). Mentions Toyota Production System. Includes debugging, quality control, and root cause analysis use cases."
+          ]
         }
       ]
     },
@@ -155,98 +137,84 @@
           "title": "Add SWOT Analysis extended documentation",
           "description": "Add SWOT to EXTENDED_MODELS with whenToUse, detailed steps, example with context and application, relatedModels, and toolParameters",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Complete ExtendedModel structure",
             "Real-world example included",
             "Related models linked"
-          ],
-          "completed_at": "2026-01-06T13:45:00.000Z",
-          "notes": "SWOT Analysis already fully implemented in EXTENDED_MODELS (lines 238-291). Includes complete structure with name, title, description, 5 whenToUse scenarios, 5 detailed steps, real-world coffee shop example with context and application, 3 related models (opportunity_cost, second_order_effects, pre_mortem), and proper toolParameters. All acceptance criteria met."
+          ]
         },
         {
           "subtask_id": "3.2",
           "title": "Add Six Thinking Hats extended documentation",
           "description": "Add Six Thinking Hats to EXTENDED_MODELS with detailed hat-by-hat explanation and group problem-solving example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "All 6 hats explained in steps",
             "Creative problem-solving example",
             "Related models linked"
-          ],
-          "completed_at": "2026-01-06T13:50:00.000Z",
-          "notes": "Six Thinking Hats fully implemented in EXTENDED_MODELS (lines 292-365). All 6 hats explained in detail with White (facts), Red (emotions), Black (risks), Yellow (benefits), Green (creativity), Blue (process). Includes comprehensive creative problem-solving example about AI chatbot decision for SaaS product. Related models linked (swot_analysis, pre_mortem, first_principles). All acceptance criteria met."
+          ]
         },
         {
           "subtask_id": "3.3",
           "title": "Add MECE extended documentation",
           "description": "Add MECE to EXTENDED_MODELS with consulting-style example and clear ME/CE explanation",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "ME and CE concepts clearly explained",
             "Business analysis example",
             "Related models linked"
-          ],
-          "completed_at": "2026-01-06T14:00:00.000Z",
-          "notes": "MECE fully implemented in EXTENDED_MODELS (lines 366-433). ME and CE concepts clearly explained in steps (lines 380-381) and example (lines 417-419). Comprehensive consulting-style example analyzing retail revenue decline with MECE framework (Revenue = Customers × Transaction Value × Frequency). Related models linked: first_principles, swot_analysis, five_whys. All acceptance criteria met."
+          ]
         },
         {
           "subtask_id": "3.4",
           "title": "Add Inversion Thinking extended documentation",
           "description": "Add Inversion Thinking to EXTENDED_MODELS with Charlie Munger-style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Inversion concept clearly explained",
             "Practical avoidance example",
             "Related models linked"
-          ],
-          "completed_at": "2026-01-06T13:55:00.000Z",
-          "notes": "Inversion Thinking fully implemented in EXTENDED_MODELS (lines 434-503). Includes complete structure with name, title, description, 5 whenToUse scenarios, 6 detailed steps, comprehensive Charlie Munger investment example demonstrating 'trying to be consistently not stupid, instead of trying to be very intelligent', application to career with failure avoidance, 3 related models (pre_mortem, second_order_effects, first_principles), and proper toolParameters. All acceptance criteria met. Work completed in previous session (commit 999006e)."
+          ]
         },
         {
           "subtask_id": "3.5",
           "title": "Add Second-Order Effects extended documentation",
           "description": "Add Second-Order Effects to EXTENDED_MODELS with systems thinking example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "First, second, third order effects explained",
             "Unintended consequences example",
             "Related models linked"
-          ],
-          "completed_at": "2026-01-06T14:05:00.000Z",
-          "notes": "Second-Order Effects fully implemented in EXTENDED_MODELS (lines 504-571). Includes complete structure with name, title, description, 5 whenToUse scenarios, 6 detailed steps explaining first/second/third-order effects and feedback loops, comprehensive rent control example demonstrating systems thinking and unintended consequences, real-world evidence from San Francisco/New York/Stockholm, alternative approaches with positive second-order effects, and 3 related models (inversion_thinking, swot_analysis, pre_mortem). All acceptance criteria met."
+          ]
         },
         {
           "subtask_id": "3.6",
           "title": "Add Pre-Mortem extended documentation",
           "description": "Add Pre-Mortem to EXTENDED_MODELS with project planning example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Prospective hindsight concept explained",
             "Project failure prevention example",
             "Related models linked"
-          ],
-          "completed_at": "2026-01-06T14:10:00.000Z",
-          "notes": "Pre-Mortem fully implemented in EXTENDED_MODELS (lines 572-693). Includes complete structure with name, title, description explaining prospective hindsight ('imagine your project has failed spectacularly'), 5 whenToUse scenarios, 7 detailed steps (set scene, write obituary, share failure stories, categorize failures, prioritize, develop mitigations, update plan), comprehensive startup mobile app marketplace example with failure narratives from 5 team members (Sarah, Mike, Lisa, David, Jennifer), detailed analysis of 5 failure mode categories (Marketplace Dynamics, Technical Complexity, Unit Economics, Operational Readiness, Legal/Regulatory), concrete preventive actions for each category, outcome showing value of pre-mortem, and key insight about unlocking hidden concerns. Related models linked: inversion_thinking, second_order_effects, swot_analysis. All acceptance criteria met."
+          ]
         },
         {
           "subtask_id": "3.7",
           "title": "Add Five Whys extended documentation",
           "description": "Add Five Whys to EXTENDED_MODELS with Toyota Production System style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Iterative root cause technique explained",
             "Manufacturing/process example",
             "Related models linked"
-          ],
-          "completed_at": "2026-01-06T14:15:00.000Z",
-          "notes": "Five Whys fully implemented in EXTENDED_MODELS (lines 694-790). Includes complete structure with name, title, description explaining iterative root cause technique developed by Sakichi Toyoda for Toyota Production System. 5 whenToUse scenarios, 6 detailed steps showing how to ask 'Why?' repeatedly to drill from symptoms to root causes. Comprehensive Toyota Production System example: robot welding machine stopped working, traced through 5 whys from 'fuse blew' to root cause 'no oil filter allowing contamination'. Shows corrective actions at multiple levels (immediate fix, systemic fix, process fix, preventive control). Includes bonus software example (slow page loads traced to missing database indexes and inadequate migration process). Key insight: 'Keep asking Why until you find a root cause you can take action on.' Related models linked: first_principles, error_propagation, mece. All acceptance criteria met."
+          ]
         }
       ]
     },
@@ -260,27 +228,23 @@
           "title": "Add unit tests for all new models",
           "description": "Add test cases in modelServer.test.ts to verify all 7 new models can be processed successfully with example scenarios",
           "file_path": "src/tools/modelServer.test.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Test for each new model with valid input",
             "All tests pass",
             "Example scenarios demonstrate model usage"
-          ],
-          "completed_at": "2026-01-06T14:20:00.000Z",
-          "notes": "All 7 new mental models have comprehensive test cases with realistic scenarios (lines 56-201): SWOT Analysis (coffee shop delivery expansion), Six Thinking Hats (AI chatbot with 6 perspectives), MECE (revenue decline structured breakdown), Inversion Thinking (investment portfolio failure avoidance), Second-Order Effects (rent control consequence analysis), Pre-Mortem (mobile app marketplace failure prevention), Five Whys (robot welding root cause). Tests added in commit 7fae96e."
+          ]
         },
         {
           "subtask_id": "4.2",
           "title": "Update models array test",
           "description": "Update the 'should process all mental model types' test to include all 13 models",
           "file_path": "src/tools/modelServer.test.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Test covers all 13 model names",
             "Test passes successfully"
-          ],
-          "completed_at": "2026-01-06T14:20:00.000Z",
-          "notes": "The 'should process all mental model types' test (lines 203-228) includes all 13 models: 6 existing (first_principles, opportunity_cost, error_propagation, rubber_duck, pareto_principle, occams_razor) + 7 new (swot_analysis, six_thinking_hats, mece, inversion_thinking, second_order_effects, pre_mortem, five_whys). Test verifies all models process successfully with valid input."
+          ]
         }
       ]
     },
@@ -294,27 +258,23 @@
           "title": "Run full test suite",
           "description": "Run npm test to verify all existing tests still pass and new tests pass",
           "file_path": null,
-          "status": "blocked",
+          "status": "pending",
           "acceptance_criteria": [
             "All existing tests pass (backward compatibility)",
             "All new tests pass",
             "No TypeScript compilation errors"
-          ],
-          "blocker": "npm commands not allowed in sandbox environment - requires manual verification",
-          "notes": "Code review completed: All test files exist and are properly structured. Test syntax follows Vitest conventions. All 7 new models have comprehensive test cases (lines 56-201 in modelServer.test.ts). All 13 models covered in array test (lines 203-228). Manual verification required: Run 'npm test' outside sandbox to execute tests and verify they pass."
+          ]
         },
         {
           "subtask_id": "5.2",
           "title": "Build verification",
           "description": "Run npm run build to ensure the project compiles successfully",
           "file_path": null,
-          "status": "blocked",
+          "status": "pending",
           "acceptance_criteria": [
             "TypeScript compilation succeeds",
             "No build errors or warnings"
-          ],
-          "blocker": "npm commands not allowed in sandbox environment - requires manual verification",
-          "notes": "Manual verification required: Run 'npm run build' outside sandbox to compile TypeScript and verify no errors or warnings. Check that dist/ directory is generated with compiled JavaScript files."
+          ]
         }
       ]
     }
@@ -328,5 +288,5 @@
   "estimated_complexity": "medium",
   "notes": "This spec extends the existing MODEL_TOOL by adding 7 new mental model types. The existing modelServer.ts doesn't need modification since it handles modelName generically - it just validates and formats the data. The main work is adding the new enum values and comprehensive documentation.",
   "planStatus": "in_progress",
-  "recoveryNote": "Task recovered from stuck state at 2026-01-06T12:31:39.808Z"
+  "recoveryNote": "Task recovered from stuck state at 2026-01-06T15:07:43.634Z"
 }
