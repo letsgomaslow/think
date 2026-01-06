@@ -956,3 +956,679 @@ describe('TraceServer Memory Bounds', () => {
     });
   });
 });
+
+describe('TraceServer Cleanup Methods', () => {
+  // Helper function to create a thought with minimal required fields
+  const createThought = (
+    num: number,
+    total: number,
+    nextNeeded: boolean,
+    thought?: string
+  ) => ({
+    thought: thought ?? `Thought number ${num}`,
+    thoughtNumber: num,
+    totalThoughts: total,
+    nextThoughtNeeded: nextNeeded,
+  });
+
+  // Helper to create a branch thought
+  const createBranchThought = (
+    num: number,
+    total: number,
+    nextNeeded: boolean,
+    branchId: string,
+    branchFromThought: number = 1,
+    thought?: string
+  ) => ({
+    ...createThought(num, total, nextNeeded, thought),
+    branchId,
+    branchFromThought,
+  });
+
+  describe('clearHistory()', () => {
+    it('should remove all thoughts from main history', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Add some thoughts to history
+      server.processThought(createThought(1, 3, true, 'First'));
+      server.processThought(createThought(2, 3, true, 'Second'));
+      server.processThought(createThought(3, 3, false, 'Third'));
+
+      expect(server.getThoughtCount()).toBe(3);
+
+      server.clearHistory();
+
+      expect(server.getThoughtCount()).toBe(0);
+      expect(server.getThoughtHistory()).toEqual([]);
+    });
+
+    it('should not affect branches when clearing history', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Add thoughts to main history
+      server.processThought(createThought(1, 2, true, 'Main1'));
+      server.processThought(createThought(2, 2, false, 'Main2'));
+
+      // Add thoughts to a branch
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'Branch1'));
+      server.processThought(createBranchThought(2, 2, false, 'branch-A', 1, 'Branch2'));
+
+      server.clearHistory();
+
+      expect(server.getThoughtCount()).toBe(0);
+      expect(server.getBranchCount()).toBe(1);
+      expect(server.getBranch('branch-A')!.length).toBe(2);
+    });
+
+    it('should not affect chain summaries when clearing history', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      // Add and manually cleanup a chain to create a summary
+      server.processThought(createThought(1, 2, true, 'First'));
+      server.processThought(createThought(2, 2, false, 'Second'));
+      server.clearCompletedChains();
+
+      const summariesBefore = server.getChainSummaries().length;
+      expect(summariesBefore).toBe(1);
+
+      server.clearHistory();
+
+      expect(server.getChainSummaries().length).toBe(summariesBefore);
+    });
+
+    it('should handle clearing empty history', () => {
+      const server = new TraceServer();
+
+      expect(server.getThoughtCount()).toBe(0);
+      server.clearHistory();
+      expect(server.getThoughtCount()).toBe(0);
+    });
+
+    it('should allow adding new thoughts after clearing', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createThought(1, 2, true, 'Original'));
+      server.clearHistory();
+      server.processThought(createThought(1, 2, true, 'New'));
+
+      expect(server.getThoughtCount()).toBe(1);
+      expect(server.getThoughtHistory()[0].thought).toBe('New');
+    });
+  });
+
+  describe('clearBranch()', () => {
+    it('should remove a specific branch by ID', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Create two branches
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'A1'));
+      server.processThought(createBranchThought(1, 2, true, 'branch-B', 1, 'B1'));
+
+      expect(server.getBranchCount()).toBe(2);
+
+      const result = server.clearBranch('branch-A');
+
+      expect(result).toBe(true);
+      expect(server.getBranchCount()).toBe(1);
+      expect(server.getBranch('branch-A')).toBeUndefined();
+      expect(server.getBranch('branch-B')).toBeDefined();
+    });
+
+    it('should return false for non-existent branch', () => {
+      const server = new TraceServer();
+
+      const result = server.clearBranch('non-existent-branch');
+
+      expect(result).toBe(false);
+    });
+
+    it('should remove branch metadata along with branch data', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createBranchThought(1, 3, true, 'branch-A', 1, 'A1'));
+      server.processThought(createBranchThought(2, 3, true, 'branch-A', 1, 'A2'));
+
+      // Branch should exist with thoughts
+      expect(server.getBranch('branch-A')!.length).toBe(2);
+
+      server.clearBranch('branch-A');
+
+      // Branch should be completely gone
+      expect(server.getBranch('branch-A')).toBeUndefined();
+
+      // Create a new branch with the same ID - it should work fresh
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'NewA1'));
+      expect(server.getBranch('branch-A')!.length).toBe(1);
+    });
+
+    it('should not affect main history when clearing a branch', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createThought(1, 2, true, 'Main1'));
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'A1'));
+
+      server.clearBranch('branch-A');
+
+      expect(server.getThoughtCount()).toBe(1);
+      expect(server.getThoughtHistory()[0].thought).toBe('Main1');
+    });
+
+    it('should not affect other branches when clearing one branch', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'A1'));
+      server.processThought(createBranchThought(1, 2, true, 'branch-B', 1, 'B1'));
+      server.processThought(createBranchThought(1, 2, true, 'branch-C', 1, 'C1'));
+
+      server.clearBranch('branch-B');
+
+      expect(server.getBranchCount()).toBe(2);
+      expect(server.getBranch('branch-A')).toBeDefined();
+      expect(server.getBranch('branch-C')).toBeDefined();
+    });
+  });
+
+  describe('clearAllBranches()', () => {
+    it('should remove all branches', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Create multiple branches
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'A1'));
+      server.processThought(createBranchThought(1, 2, true, 'branch-B', 1, 'B1'));
+      server.processThought(createBranchThought(1, 2, true, 'branch-C', 1, 'C1'));
+
+      expect(server.getBranchCount()).toBe(3);
+
+      server.clearAllBranches();
+
+      expect(server.getBranchCount()).toBe(0);
+      expect(server.getBranches()).toEqual({});
+    });
+
+    it('should not affect main history when clearing all branches', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createThought(1, 3, true, 'Main1'));
+      server.processThought(createThought(2, 3, true, 'Main2'));
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'A1'));
+
+      server.clearAllBranches();
+
+      expect(server.getThoughtCount()).toBe(2);
+      expect(server.getThoughtHistory()[0].thought).toBe('Main1');
+      expect(server.getThoughtHistory()[1].thought).toBe('Main2');
+    });
+
+    it('should handle clearing when no branches exist', () => {
+      const server = new TraceServer();
+
+      expect(server.getBranchCount()).toBe(0);
+      server.clearAllBranches();
+      expect(server.getBranchCount()).toBe(0);
+    });
+
+    it('should allow creating new branches after clearing all', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createBranchThought(1, 2, true, 'old-branch', 1, 'Old1'));
+      server.clearAllBranches();
+
+      server.processThought(createBranchThought(1, 2, true, 'new-branch', 1, 'New1'));
+
+      expect(server.getBranchCount()).toBe(1);
+      expect(server.getBranch('new-branch')!.length).toBe(1);
+    });
+
+    it('should not affect chain summaries when clearing all branches', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'A1'));
+      server.processThought(createBranchThought(2, 2, false, 'branch-A', 1, 'A2'));
+      server.clearCompletedChains();
+
+      const summariesBefore = server.getChainSummaries().length;
+      expect(summariesBefore).toBe(1);
+
+      server.clearAllBranches();
+
+      expect(server.getChainSummaries().length).toBe(summariesBefore);
+    });
+  });
+
+  describe('clearCompletedChains()', () => {
+    it('should remove only completed chains from main history', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Add a completed chain (2 thoughts)
+      server.processThought(createThought(1, 2, true, 'Chain1-T1'));
+      server.processThought(createThought(2, 2, false, 'Chain1-T2'));
+
+      // Add an incomplete chain (still in progress)
+      server.processThought(createThought(1, 3, true, 'Chain2-T1'));
+      server.processThought(createThought(2, 3, true, 'Chain2-T2'));
+
+      expect(server.getThoughtCount()).toBe(4);
+
+      const result = server.clearCompletedChains();
+
+      expect(result.historyChains).toBe(1);
+      expect(server.getThoughtCount()).toBe(2);
+
+      // Verify incomplete chain is preserved
+      const history = server.getThoughtHistory();
+      expect(history[0].thought).toBe('Chain2-T1');
+      expect(history[1].thought).toBe('Chain2-T2');
+    });
+
+    it('should remove only completed chains from branches', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Add a completed chain in branch-A
+      server.processThought(createBranchThought(1, 2, true, 'branch-A', 1, 'A1'));
+      server.processThought(createBranchThought(2, 2, false, 'branch-A', 1, 'A2'));
+
+      // Add an incomplete chain in branch-B
+      server.processThought(createBranchThought(1, 3, true, 'branch-B', 1, 'B1'));
+      server.processThought(createBranchThought(2, 3, true, 'branch-B', 1, 'B2'));
+
+      const result = server.clearCompletedChains();
+
+      expect(result.branchChains).toBe(1);
+
+      // Branch A should have its completed chain removed
+      expect(server.getBranch('branch-A')!.length).toBe(0);
+
+      // Branch B should still have its incomplete chain
+      expect(server.getBranch('branch-B')!.length).toBe(2);
+    });
+
+    it('should return correct counts for both history and branch chains', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Add 2 completed chains in main history
+      server.processThought(createThought(1, 1, false, 'HistChain1'));
+      server.processThought(createThought(1, 2, true, 'HistChain2-T1'));
+      server.processThought(createThought(2, 2, false, 'HistChain2-T2'));
+
+      // Add 3 completed chains across branches
+      server.processThought(createBranchThought(1, 1, false, 'branch-A', 1, 'A-complete'));
+      server.processThought(createBranchThought(1, 1, false, 'branch-B', 1, 'B-complete'));
+      server.processThought(createBranchThought(1, 1, false, 'branch-C', 1, 'C-complete'));
+
+      const result = server.clearCompletedChains();
+
+      expect(result.historyChains).toBe(2);
+      expect(result.branchChains).toBe(3);
+    });
+
+    it('should archive chains when retainChainSummaries is enabled', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      // Add a completed chain
+      server.processThought(createThought(1, 2, true, 'First thought'));
+      server.processThought(createThought(2, 2, false, 'Final thought'));
+
+      expect(server.getChainSummaries().length).toBe(0);
+
+      server.clearCompletedChains();
+
+      const summaries = server.getChainSummaries();
+      expect(summaries.length).toBe(1);
+      expect(summaries[0].thoughtCount).toBe(2);
+      expect(summaries[0].firstThoughtPreview).toContain('First thought');
+      expect(summaries[0].finalThoughtPreview).toContain('Final thought');
+    });
+
+    it('should not archive chains when retainChainSummaries is disabled', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: false,
+      });
+
+      server.processThought(createThought(1, 1, false, 'Complete'));
+      server.clearCompletedChains();
+
+      expect(server.getChainSummaries().length).toBe(0);
+    });
+
+    it('should handle multiple completed chains in history', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Add 3 completed chains interleaved in history
+      server.processThought(createThought(1, 2, true, 'Chain1-T1'));
+      server.processThought(createThought(2, 2, false, 'Chain1-T2'));
+      server.processThought(createThought(1, 1, false, 'Chain2-T1'));
+      server.processThought(createThought(1, 3, true, 'Chain3-T1'));
+      server.processThought(createThought(2, 3, true, 'Chain3-T2'));
+      server.processThought(createThought(3, 3, false, 'Chain3-T3'));
+
+      expect(server.getThoughtCount()).toBe(6);
+
+      const result = server.clearCompletedChains();
+
+      expect(result.historyChains).toBe(3);
+      expect(server.getThoughtCount()).toBe(0);
+    });
+
+    it('should return zero counts when no completed chains exist', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Add only incomplete chains
+      server.processThought(createThought(1, 3, true, 'Incomplete1'));
+      server.processThought(createThought(2, 3, true, 'Incomplete2'));
+      server.processThought(createBranchThought(1, 3, true, 'branch-A', 1, 'IncompleteA'));
+
+      const result = server.clearCompletedChains();
+
+      expect(result.historyChains).toBe(0);
+      expect(result.branchChains).toBe(0);
+      expect(server.getThoughtCount()).toBe(2);
+      expect(server.getBranch('branch-A')!.length).toBe(1);
+    });
+
+    it('should handle empty history and branches', () => {
+      const server = new TraceServer();
+
+      const result = server.clearCompletedChains();
+
+      expect(result.historyChains).toBe(0);
+      expect(result.branchChains).toBe(0);
+    });
+
+    it('should preserve active (incomplete) chains while clearing completed ones', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      // Active chain in progress
+      server.processThought(createThought(1, 5, true, 'Active-T1'));
+      server.processThought(createThought(2, 5, true, 'Active-T2'));
+
+      // Completed chain interleaved
+      server.processThought(createThought(1, 1, false, 'Completed'));
+
+      // Continue active chain
+      server.processThought(createThought(1, 5, true, 'Active-T3'));
+
+      server.clearCompletedChains();
+
+      // Should have the 3 active thoughts remaining
+      expect(server.getThoughtCount()).toBe(3);
+      const history = server.getThoughtHistory();
+      expect(history[0].thought).toBe('Active-T1');
+      expect(history[1].thought).toBe('Active-T2');
+      expect(history[2].thought).toBe('Active-T3');
+    });
+
+    it('should properly archive branch chains with branch ID', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      server.processThought(createBranchThought(1, 1, false, 'my-branch', 1, 'Branch complete'));
+      server.clearCompletedChains();
+
+      const summaries = server.getChainSummaries();
+      expect(summaries.length).toBe(1);
+      expect(summaries[0].branchId).toBe('my-branch');
+    });
+  });
+
+  describe('clearChainSummaries()', () => {
+    it('should remove all chain summaries', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      // Create some summaries by completing and clearing chains
+      server.processThought(createThought(1, 1, false, 'Chain1'));
+      server.processThought(createThought(1, 1, false, 'Chain2'));
+      server.clearCompletedChains();
+
+      expect(server.getChainSummaries().length).toBe(2);
+
+      server.clearChainSummaries();
+
+      expect(server.getChainSummaries().length).toBe(0);
+    });
+
+    it('should not affect main history when clearing summaries', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      server.processThought(createThought(1, 2, true, 'Active1'));
+      server.processThought(createThought(1, 1, false, 'Complete'));
+      server.clearCompletedChains();
+
+      server.clearChainSummaries();
+
+      expect(server.getThoughtCount()).toBe(1);
+      expect(server.getThoughtHistory()[0].thought).toBe('Active1');
+    });
+
+    it('should not affect branches when clearing summaries', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      server.processThought(createBranchThought(1, 1, false, 'branch-A', 1, 'Complete'));
+      server.processThought(createBranchThought(1, 2, true, 'branch-B', 1, 'Active'));
+      server.clearCompletedChains();
+
+      server.clearChainSummaries();
+
+      expect(server.getBranchCount()).toBe(2);
+      expect(server.getBranch('branch-B')!.length).toBe(1);
+    });
+
+    it('should handle clearing empty summaries', () => {
+      const server = new TraceServer();
+
+      expect(server.getChainSummaries().length).toBe(0);
+      server.clearChainSummaries();
+      expect(server.getChainSummaries().length).toBe(0);
+    });
+  });
+
+  describe('Cleanup Edge Cases', () => {
+    it('should handle clearing history with only one thought', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createThought(1, 1, true, 'Single'));
+      server.clearHistory();
+
+      expect(server.getThoughtCount()).toBe(0);
+    });
+
+    it('should handle clearing branch with only one thought', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createBranchThought(1, 1, true, 'branch', 1, 'Single'));
+      const result = server.clearBranch('branch');
+
+      expect(result).toBe(true);
+      expect(server.getBranch('branch')).toBeUndefined();
+    });
+
+    it('should handle repeated clear operations', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+      });
+
+      server.processThought(createThought(1, 1, true, 'Test'));
+      server.clearHistory();
+      server.clearHistory();
+      server.clearHistory();
+
+      expect(server.getThoughtCount()).toBe(0);
+    });
+
+    it('should handle clearing non-existent branch multiple times', () => {
+      const server = new TraceServer();
+
+      expect(server.clearBranch('fake')).toBe(false);
+      expect(server.clearBranch('fake')).toBe(false);
+    });
+
+    it('should handle mixed cleanup operations in sequence', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      // Add data
+      server.processThought(createThought(1, 1, false, 'Main'));
+      server.processThought(createBranchThought(1, 1, false, 'branch-A', 1, 'BranchA'));
+      server.processThought(createBranchThought(1, 1, false, 'branch-B', 1, 'BranchB'));
+
+      // Clear completed chains first
+      server.clearCompletedChains();
+      expect(server.getChainSummaries().length).toBe(3);
+
+      // Clear one branch
+      server.clearBranch('branch-A');
+
+      // Clear history
+      server.clearHistory();
+
+      // Clear summaries
+      server.clearChainSummaries();
+
+      // Clear all branches
+      server.clearAllBranches();
+
+      expect(server.getThoughtCount()).toBe(0);
+      expect(server.getBranchCount()).toBe(0);
+      expect(server.getChainSummaries().length).toBe(0);
+    });
+
+    it('should handle clearing when auto cleanup already removed chains', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+      });
+
+      // Auto cleanup should archive completed chain
+      server.processThought(createThought(1, 2, true, 'First'));
+      server.processThought(createThought(2, 2, false, 'Second'));
+
+      // History should be empty (auto-cleaned) but summaries should exist
+      expect(server.getThoughtCount()).toBe(0);
+      expect(server.getChainSummaries().length).toBe(1);
+
+      // Manual clear should work on empty history
+      const result = server.clearCompletedChains();
+      expect(result.historyChains).toBe(0);
+    });
+
+    it('should verify memory stats after cleanup operations', () => {
+      const server = new TraceServer({
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+      });
+
+      // Add various thoughts
+      server.processThought(createThought(1, 2, true, 'Main1'));
+      server.processThought(createThought(2, 2, false, 'Main2'));
+      server.processThought(createBranchThought(1, 1, false, 'branch-A', 1, 'A'));
+
+      let stats = server.getMemoryStats();
+      expect(stats.thoughtHistoryCount).toBe(2);
+      expect(stats.branchCount).toBe(1);
+      expect(stats.totalBranchThoughts).toBe(1);
+
+      server.clearCompletedChains();
+      stats = server.getMemoryStats();
+      expect(stats.thoughtHistoryCount).toBe(0);
+      expect(stats.chainSummaryCount).toBe(2);
+      expect(stats.completedChainsInHistory).toBe(0);
+
+      server.clearAllBranches();
+      stats = server.getMemoryStats();
+      expect(stats.branchCount).toBe(0);
+      expect(stats.totalBranchThoughts).toBe(0);
+
+      server.clearChainSummaries();
+      stats = server.getMemoryStats();
+      expect(stats.chainSummaryCount).toBe(0);
+    });
+  });
+});
