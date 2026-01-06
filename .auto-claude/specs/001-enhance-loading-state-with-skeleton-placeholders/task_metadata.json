@@ -1,0 +1,12 @@
+{
+  "sourceType": "ideation",
+  "ideationType": "ui_ux_improvements",
+  "ideaId": "uiux-003",
+  "rationale": "The current loading.tsx shows only a centered spinner with 'Loading...' text. Skeleton screens provide visual continuity, reduce perceived wait time, and give users a preview of the incoming content structure.",
+  "category": "ui_ux",
+  "uiuxCategory": "performance",
+  "affectedFiles": [
+    "web/app/loading.tsx"
+  ],
+  "problemSolved": "Loading component shows a Loader2 spinner centered on screen with 'Loading...' text. No content structure preview."
+}
