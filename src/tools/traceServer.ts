@@ -53,9 +53,20 @@ export const DEFAULT_TRACE_SERVER_CONFIG: Readonly<TraceServerConfig> = {
   cleanupOnComplete: true
 };
 
+/**
+ * Metadata for tracking branch usage for LRU eviction
+ */
+interface BranchMetadata {
+  /** Timestamp when the branch was created */
+  createdAt: number;
+  /** Timestamp when the branch was last accessed (read or write) */
+  lastAccessedAt: number;
+}
+
 export class TraceServer {
   private thoughtHistory: ThoughtData[] = [];
   private branches: Record<string, ThoughtData[]> = {};
+  private branchMetadata: Record<string, BranchMetadata> = {};
   private readonly config: Readonly<TraceServerConfig>;
 
   /**
@@ -217,13 +228,74 @@ export class TraceServer {
     }
   }
 
+  /**
+   * Finds the least recently used branch ID
+   * @returns The branch ID with the oldest lastAccessedAt timestamp, or undefined if no branches exist
+   */
+  private findLruBranchId(): string | undefined {
+    let lruBranchId: string | undefined;
+    let oldestAccessTime = Infinity;
+
+    for (const branchId of Object.keys(this.branchMetadata)) {
+      const metadata = this.branchMetadata[branchId];
+      if (metadata.lastAccessedAt < oldestAccessTime) {
+        oldestAccessTime = metadata.lastAccessedAt;
+        lruBranchId = branchId;
+      }
+    }
+
+    return lruBranchId;
+  }
+
+  /**
+   * Enforces the maxBranches limit by evicting least recently used branches
+   * Should be called before creating a new branch to ensure space is available
+   */
+  private enforceBranchLimit(): void {
+    while (Object.keys(this.branches).length >= this.config.maxBranches) {
+      const lruBranchId = this.findLruBranchId();
+
+      if (lruBranchId) {
+        // Remove the branch data and its metadata
+        delete this.branches[lruBranchId];
+        delete this.branchMetadata[lruBranchId];
+      } else {
+        // Fallback: remove the first branch if no metadata exists
+        const branchIds = Object.keys(this.branches);
+        if (branchIds.length > 0) {
+          const firstBranchId = branchIds[0];
+          delete this.branches[firstBranchId];
+          delete this.branchMetadata[firstBranchId];
+        } else {
+          // No branches to evict
+          break;
+        }
+      }
+    }
+  }
+
   private storeThought(thought: ThoughtData): void {
     // If this is a branch, store in the appropriate branch collection
     if (thought.branchId) {
-      if (!this.branches[thought.branchId]) {
-        this.branches[thought.branchId] = [];
+      const branchId = thought.branchId;
+      const now = Date.now();
+
+      if (!this.branches[branchId]) {
+        // Creating a new branch - enforce limit first
+        this.enforceBranchLimit();
+
+        // Initialize branch data and metadata
+        this.branches[branchId] = [];
+        this.branchMetadata[branchId] = {
+          createdAt: now,
+          lastAccessedAt: now
+        };
+      } else {
+        // Update last access time for existing branch
+        this.branchMetadata[branchId].lastAccessedAt = now;
       }
-      this.branches[thought.branchId].push(thought);
+
+      this.branches[branchId].push(thought);
     } else {
       // Otherwise store in main thought history
       this.thoughtHistory.push(thought);
