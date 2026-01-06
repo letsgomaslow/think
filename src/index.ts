@@ -717,6 +717,50 @@ It supports multiple decision frameworks, probability estimates, and value judgm
                     required: ["optionId", "reversibilityScore", "undoCost", "timeToReverse", "doorType"],
                 },
             },
+            regretMinimizationAnalysis: {
+                type: "array",
+                description: "Regret minimization analysis using the 10/10/10 Framework - evaluates decisions from future self perspective across multiple time horizons",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        futureSelfPerspective: {
+                            type: "string",
+                            description: "Analysis from the perspective of your future self looking back at this decision"
+                        },
+                        potentialRegrets: {
+                            type: "object",
+                            description: "Potential regrets at different time horizons (10 minutes, 10 months, 10 years)",
+                            properties: {
+                                tenMinutes: {
+                                    type: "string",
+                                    description: "How will you feel about this decision in 10 minutes?"
+                                },
+                                tenMonths: {
+                                    type: "string",
+                                    description: "How will you feel about this decision in 10 months?"
+                                },
+                                tenYears: {
+                                    type: "string",
+                                    description: "How will you feel about this decision in 10 years?"
+                                },
+                            },
+                            required: ["tenMinutes", "tenMonths", "tenYears"],
+                        },
+                        regretScore: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 10,
+                            description: "Optional overall regret score from 0 (no regret) to 10 (maximum regret)"
+                        },
+                        timeHorizonAnalysis: {
+                            type: "string",
+                            description: "Optional analysis of how the decision looks across different time horizons"
+                        },
+                    },
+                    required: ["optionId", "futureSelfPerspective", "potentialRegrets"],
+                },
+            },
         },
         required: [
             "decisionStatement",
