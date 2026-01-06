@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (20/33 subtasks completed - 61%)
+## Current Status: In Progress (21/33 subtasks completed - 64%)
 
 ### Completed Subtasks
 
@@ -116,14 +116,20 @@
   - Status: Committed (commit: b0c27b7)
   - Notes: Category index with both general personas, utility functions, and auto-registration
 
+#### Phase 6: Create Persona Library Main Export (In Progress)
+- [x] 6.1 - Create main persona library index
+  - File: src/personas/index.ts
+  - Status: Committed (commit: 0bc02aa)
+  - Notes: Main persona library index with comprehensive high-level API including library export, persona retrieval, query/search, recommendations, smart suggestions with diversity, complementary persona finder, and utility functions. Includes 15+ API functions with full JSDoc documentation.
+
 ### Next Steps
 - [ ] Continue with Phase 6: Create Persona Library Main Export
-  - 6.1 - Create main persona library index
   - 6.2 - Create persona selection helpers
 
 ### Build Notes
 - Phase 1, 2, 3, 4, & 5 complete! 🎉
-- Phase 6 next - Create Persona Library Main Export
+- Phase 6 in progress - Create Persona Library Main Export
+- Main persona library index complete - provides unified high-level API for accessing all 14 personas across 4 categories
 - Persona library architecture fully implemented with registry and factory patterns
 - 4 technical expert personas implemented with distinct voices and expertise
 - Product Manager persona complete - strategic focus on roadmapping, prioritization, and stakeholder alignment
