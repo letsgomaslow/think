@@ -1,0 +1,10 @@
+{
+  "discovered_files": {
+    "src/tools/councilServer.ts": {
+      "description": "Council tool uses PersonaData interface from src/models/interfaces.ts. Personas require: id, name, expertise[], background, perspective, biases[], communication{style, tone}. Custom personas are passed directly in the tool call. The existing implementation validates and formats the council session.",
+      "category": "architecture",
+      "discovered_at": "2026-01-06T03:43:48.555940+00:00"
+    }
+  },
+  "last_updated": "2026-01-06T03:43:48.555954+00:00"
+}
