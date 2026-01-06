@@ -378,9 +378,32 @@ Phase 6: Documentation
   - Added: 311 lines
   - Status: COMPLETED
 
-Phase 6 Status: 7 of 8 subtasks completed (87.5%)
-- Remaining: 6.8 (Update README.md with visualization section)
+✓ Subtask 6.8: Update README.md with visualization section
+  - Updated docs/tools/README.md with comprehensive documentation highlighting the 5 new diagram types
+  - Added "New Diagram Types" section featuring:
+    * Sequence Diagram: Component interactions (API flows, protocol exchanges)
+    * State Machine: System behavior (lifecycles with complex transitions)
+    * ER Diagram: Data models (database schemas with entities/attributes)
+    * Mind Map: Brainstorming (organizing ideas hierarchically)
+    * Context Diagram: System architecture C4 (high-level boundaries with external actors)
+  - Extended "I need to..." selection guide with 5 specific visualization tasks:
+    * Map API interactions → Sequence Diagram
+    * Model state transitions → State Machine
+    * Design database schema → ER Diagram
+    * Brainstorm features → Mind Map
+    * Document system context → Context Diagram
+  - Created comprehensive "Diagram Type Selection Guide" table covering all 9 major diagram types
+  - Includes clear guidance on when to use each diagram type with goals and key features
+  - Changes follow existing documentation patterns
+  - File: docs/tools/README.md
+  - Commit: 6da506e
+  - Added: 34 lines
+  - Status: COMPLETED
+
+Phase 6 Status: COMPLETED ✓
+- All 8 documentation subtasks completed
+- Comprehensive documentation for all 11 diagram types
+- Examples, rendering guide, and selection guidance complete
 
 Next Steps:
-- Phase 6: Documentation (1 remaining subtask: 6.8)
 - Phase 7: Final Validation & Build (3 subtasks)

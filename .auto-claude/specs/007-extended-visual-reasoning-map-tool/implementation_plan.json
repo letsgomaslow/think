@@ -312,8 +312,8 @@
           "file_paths": [
             "docs/tools/README.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Updated docs/tools/README.md with comprehensive documentation highlighting the 5 new diagram types. Added 'New Diagram Types' section featuring Sequence, State Machine, ER, Mind Map, and Context diagrams with clear use case guidance. Extended 'I need to...' selection guide with 5 specific visualization tasks. Created comprehensive 'Diagram Type Selection Guide' table covering all 9 major diagram types with their goals, names, and key features. Changes follow existing documentation patterns and provide clear guidance for users to choose the right diagram type. Committed in 6da506e."
         }
       ]
     },
