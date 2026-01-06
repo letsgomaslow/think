@@ -118,9 +118,43 @@ Verified implementation of:
 
 ---
 
+### Subtask 3.4: Add Inversion Thinking extended documentation - COMPLETED ✓
+
+**Finding:** Inversion Thinking extended documentation was already fully implemented in web/lib/resources/extended/models.ts (lines 434-503)
+
+**Verification:**
+- ✅ Inversion concept clearly explained in description: "Approach problems by inverting them - instead of asking how to succeed, ask how to fail, then avoid those things."
+- ✅ steps: 6 detailed implementation steps including:
+  - State your goal clearly
+  - Invert the problem: "What would guarantee failure?"
+  - List all ways to fail comprehensively
+  - Identify root causes of each failure mode
+  - Create avoidance strategies
+  - Focus on NOT doing stupid things vs. trying to be brilliant
+- ✅ example: Charlie Munger-style investment portfolio scenario
+  - Context: "Charlie Munger on building a successful investment portfolio"
+  - Application: Traditional approach inverted ("How do I guarantee I'll lose money?")
+  - 8 ways to guarantee investment failure with avoidance strategies:
+    1. Chase hot tips → Avoid: Never invest without understanding
+    2. Use leverage → Avoid: Don't use margin for speculation
+    3. Panic sell → Avoid: Have emotional discipline
+    4. Pay high fees → Avoid: Minimize fees, use index funds
+    5. Fail to diversify → Avoid: Spread risk
+    6. Trade frequently → Avoid: Buy and hold quality
+    7. Ignore valuation → Avoid: Wait for margin of safety
+    8. Follow the crowd → Avoid: Be contrarian
+  - Includes Munger's famous quote: "It is remarkable how much long-term advantage people like us have gotten by trying to be consistently not stupid, instead of trying to be very intelligent."
+  - Additional practical application to career success
+- ✅ relatedModels: Linked to pre_mortem, second_order_effects, and first_principles
+- ✅ toolParameters: Properly structured with modelName, problem, and steps summary
+
+**Action Taken:** Updated implementation_plan.json to mark subtask 3.4 as completed.
+
+---
+
 ## Next Steps
 
-Phase 3 subtasks 3.1, 3.2, and 3.3 are complete. Ready to proceed with:
-- Phase 3 remaining: Extended Model Documentation (subtasks 3.4-3.7)
+Phase 3 subtasks 3.1, 3.2, 3.3, and 3.4 are complete. Ready to proceed with:
+- Phase 3 remaining: Extended Model Documentation (subtasks 3.5-3.7)
 - Phase 4: Unit Tests (subtasks 4.1-4.2)
 - Phase 5: Verification and Integration (subtasks 5.1-5.2)

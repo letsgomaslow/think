@@ -173,7 +173,7 @@
           "title": "Add Inversion Thinking extended documentation",
           "description": "Add Inversion Thinking to EXTENDED_MODELS with Charlie Munger-style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Inversion concept clearly explained",
             "Practical avoidance example",
