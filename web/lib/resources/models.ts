@@ -1,7 +1,7 @@
 /**
  * Mental Models Resource Catalog
  *
- * Exposes the 7 mental models available in think-mcp
+ * Exposes the 12 mental models available in think-mcp
  * as a browsable MCP resource.
  */
 
@@ -198,6 +198,23 @@ const MENTAL_MODELS: ResourceCatalogItem[] = [
       'Analyze second-order effects: what happens as a result of first-order effects',
       'Consider third-order and beyond: trace the ripple effects through the system',
       'Evaluate both positive and negative cascading consequences',
+    ],
+  },
+  {
+    name: 'pre_mortem',
+    title: 'Pre-Mortem Analysis',
+    description: 'Imagine your project has failed in the future and work backwards to identify potential causes. This prospective hindsight technique helps uncover risks and failure modes before they occur.',
+    useCases: [
+      'Project planning and risk identification',
+      'Team alignment on potential obstacles',
+      'Proactive failure prevention and mitigation',
+      'Strategic initiative evaluation and preparation',
+    ],
+    steps: [
+      'Imagine the project has completely failed at a future point',
+      'Generate reasons explaining why the failure occurred',
+      'Identify the most likely and impactful failure causes',
+      'Develop preventive measures and contingency plans for each risk',
     ],
   },
 ];
