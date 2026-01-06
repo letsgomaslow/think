@@ -122,14 +122,16 @@
           "id": "3.1",
           "title": "Review and update debug prompts",
           "description": "Review web/lib/prompts/debug-issue.ts and update if needed to reference new debugging methodologies in the prompt guidance.",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "web/lib/prompts/debug-issue.ts"
           ],
           "acceptance_criteria": [
             "New methodologies referenced in debug prompt if applicable",
             "Guidance explains when each new method is most effective"
-          ]
+          ],
+          "notes": "Successfully updated web/lib/prompts/debug-issue.ts to reference all 5 new debugging methodologies (wolf_fence, rubber_duck, delta_debugging, fault_tree, time_travel). Added them to the recommendation table with clear use cases (Bug location unknown, Stuck with no clear steps, Complex bug report/input, Multi-factor system failure, State corruption/race condition). Updated toolGuidance to mention 11 total methodologies and fixed incorrect reference to rubber_duck (was model, now debug). All new approaches are properly integrated into the debugging workflow guidance.",
+          "updated_at": "2026-01-06T03:52:28.492728+00:00"
         },
         {
           "id": "3.2",
@@ -158,5 +160,5 @@
     "tests_passed": "",
     "issues": ""
   },
-  "last_updated": "2026-01-06T03:50:33.637817+00:00"
+  "last_updated": "2026-01-06T03:52:28.492740+00:00"
 }
