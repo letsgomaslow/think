@@ -40,6 +40,20 @@ export interface TraceServerConfig {
    * @default true
    */
   cleanupOnComplete: boolean;
+
+  /**
+   * Whether to retain summary/metadata when a chain is cleaned up
+   * Stores basic info about cleaned chains for later reference
+   * @default true
+   */
+  retainChainSummaries: boolean;
+
+  /**
+   * Maximum number of chain summaries to retain
+   * When exceeded, oldest summaries are evicted
+   * @default 100
+   */
+  maxChainSummaries: number;
 }
 
 /**
@@ -50,7 +64,9 @@ export const DEFAULT_TRACE_SERVER_CONFIG: Readonly<TraceServerConfig> = {
   maxBranches: 50,
   maxThoughtsPerBranch: 200,
   enableAutoCleanup: true,
-  cleanupOnComplete: true
+  cleanupOnComplete: true,
+  retainChainSummaries: true,
+  maxChainSummaries: 100
 };
 
 /**
@@ -61,6 +77,27 @@ interface BranchMetadata {
   createdAt: number;
   /** Timestamp when the branch was last accessed (read or write) */
   lastAccessedAt: number;
+}
+
+/**
+ * Summary of a cleaned up thought chain
+ * Retains basic metadata when a chain is removed from history
+ */
+export interface ChainSummary {
+  /** Unique identifier for this chain summary */
+  id: string;
+  /** Timestamp when the chain was completed and archived */
+  completedAt: number;
+  /** Number of thoughts in the chain */
+  thoughtCount: number;
+  /** Summary of the first thought (truncated to first 100 chars) */
+  firstThoughtPreview: string;
+  /** Summary of the final thought (truncated to first 100 chars) */
+  finalThoughtPreview: string;
+  /** Branch ID if this chain was in a branch, undefined for main history */
+  branchId?: string;
+  /** Total thoughts estimate from the chain */
+  totalThoughtsEstimate: number;
 }
 
 /**
@@ -79,6 +116,7 @@ export class TraceServer {
   private thoughtHistory: ThoughtData[] = [];
   private branches: Record<string, ThoughtData[]> = {};
   private branchMetadata: Record<string, BranchMetadata> = {};
+  private chainSummaries: ChainSummary[] = [];
   private readonly config: Readonly<TraceServerConfig>;
 
   /**
@@ -222,6 +260,154 @@ export class TraceServer {
       return [];
     }
     return this.findChainBoundaries(branch);
+  }
+
+  /**
+   * Gets all retained chain summaries
+   * @returns Copy of the chain summaries array
+   */
+  public getChainSummaries(): ChainSummary[] {
+    return [...this.chainSummaries];
+  }
+
+  /**
+   * Truncates a string to a maximum length, adding ellipsis if truncated
+   * @param text - The text to truncate
+   * @param maxLength - Maximum length (default: 100)
+   * @returns Truncated string
+   */
+  private truncateText(text: string, maxLength: number = 100): string {
+    if (text.length <= maxLength) {
+      return text;
+    }
+    return text.slice(0, maxLength - 3) + '...';
+  }
+
+  /**
+   * Generates a unique ID for a chain summary
+   * @returns Unique ID string
+   */
+  private generateChainId(): string {
+    return `chain_${Date.now()}_${Math.random().toString(36).slice(2, 9)}`;
+  }
+
+  /**
+   * Creates a chain summary from an array of thoughts
+   * @param thoughts - The thoughts that form the chain
+   * @param branchId - Optional branch ID if the chain is from a branch
+   * @returns ChainSummary object
+   */
+  private createChainSummary(thoughts: ThoughtData[], branchId?: string): ChainSummary {
+    const firstThought = thoughts[0];
+    const lastThought = thoughts[thoughts.length - 1];
+
+    return {
+      id: this.generateChainId(),
+      completedAt: Date.now(),
+      thoughtCount: thoughts.length,
+      firstThoughtPreview: this.truncateText(firstThought.thought),
+      finalThoughtPreview: this.truncateText(lastThought.thought),
+      branchId,
+      totalThoughtsEstimate: lastThought.totalThoughts
+    };
+  }
+
+  /**
+   * Enforces the maxChainSummaries limit using FIFO eviction
+   */
+  private enforceChainSummaryLimit(): void {
+    while (this.chainSummaries.length > this.config.maxChainSummaries) {
+      this.chainSummaries.shift();
+    }
+  }
+
+  /**
+   * Archives a chain by creating a summary and optionally storing it
+   * @param thoughts - The thoughts that form the chain
+   * @param branchId - Optional branch ID if the chain is from a branch
+   */
+  private archiveChain(thoughts: ThoughtData[], branchId?: string): void {
+    if (!this.config.retainChainSummaries || thoughts.length === 0) {
+      return;
+    }
+
+    const summary = this.createChainSummary(thoughts, branchId);
+    this.chainSummaries.push(summary);
+    this.enforceChainSummaryLimit();
+  }
+
+  /**
+   * Performs automatic cleanup when a chain completes in the main history
+   * Called after a thought with nextThoughtNeeded: false is stored
+   * @param endIndex - Index of the final thought in the chain
+   */
+  private cleanupCompletedChainInHistory(endIndex: number): void {
+    if (!this.config.enableAutoCleanup || !this.config.cleanupOnComplete) {
+      return;
+    }
+
+    // Find all thoughts in the completed chain
+    const chainIndices = this.findCompletedChainIndices(endIndex);
+    if (chainIndices.length === 0) {
+      return;
+    }
+
+    // Extract the chain thoughts before removing
+    const chainThoughts = chainIndices.map(i => this.thoughtHistory[i]);
+
+    // Archive the chain (create summary if configured)
+    this.archiveChain(chainThoughts);
+
+    // Remove the chain from history (from end to start to preserve indices)
+    for (let i = chainIndices.length - 1; i >= 0; i--) {
+      this.thoughtHistory.splice(chainIndices[i], 1);
+    }
+  }
+
+  /**
+   * Performs automatic cleanup when a chain completes in a branch
+   * Called after a thought with nextThoughtNeeded: false is stored in a branch
+   * @param branchId - The branch ID where the chain completed
+   */
+  private cleanupCompletedChainInBranch(branchId: string): void {
+    if (!this.config.enableAutoCleanup || !this.config.cleanupOnComplete) {
+      return;
+    }
+
+    const branch = this.branches[branchId];
+    if (!branch || branch.length === 0) {
+      return;
+    }
+
+    // Check if the last thought ends a chain
+    const lastThought = branch[branch.length - 1];
+    if (lastThought.nextThoughtNeeded !== false) {
+      return;
+    }
+
+    // Find the start of the completed chain (walk backwards)
+    let chainStartIndex = branch.length - 1;
+    for (let i = branch.length - 2; i >= 0; i--) {
+      const thought = branch[i];
+      if (thought.nextThoughtNeeded === false) {
+        // Previous chain ended here, our chain starts at i + 1
+        chainStartIndex = i + 1;
+        break;
+      }
+      chainStartIndex = i;
+    }
+
+    // Extract the chain thoughts
+    const chainThoughts = branch.slice(chainStartIndex);
+
+    // Archive the chain (create summary if configured)
+    this.archiveChain(chainThoughts, branchId);
+
+    // Remove the chain from the branch
+    branch.splice(chainStartIndex);
+
+    // If the branch is now empty, we can optionally remove it
+    // For now, keep empty branches - they'll be cleaned up by LRU eviction
   }
 
   private validateThoughtData(input: unknown): ThoughtData {
@@ -460,11 +646,23 @@ export class TraceServer {
 
       // Enforce per-branch memory bounds
       this.enforceBranchThoughtLimit(branchId);
+
+      // Trigger cleanup if this thought completes a chain
+      if (thought.nextThoughtNeeded === false) {
+        this.cleanupCompletedChainInBranch(branchId);
+      }
     } else {
       // Otherwise store in main thought history
       this.thoughtHistory.push(thought);
 
-      // Enforce memory bounds
+      // Trigger cleanup if this thought completes a chain
+      // This must happen before enforcing limits to maintain correct indices
+      if (thought.nextThoughtNeeded === false) {
+        // The chain ends at the last index (just added)
+        this.cleanupCompletedChainInHistory(this.thoughtHistory.length - 1);
+      }
+
+      // Enforce memory bounds (after cleanup to avoid double-eviction)
       this.enforceThoughtHistoryLimit();
     }
   }
