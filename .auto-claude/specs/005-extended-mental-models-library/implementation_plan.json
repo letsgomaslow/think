@@ -137,7 +137,7 @@
           "title": "Add SWOT Analysis extended documentation",
           "description": "Add SWOT to EXTENDED_MODELS with whenToUse, detailed steps, example with context and application, relatedModels, and toolParameters",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Complete ExtendedModel structure",
             "Real-world example included",
@@ -149,7 +149,7 @@
           "title": "Add Six Thinking Hats extended documentation",
           "description": "Add Six Thinking Hats to EXTENDED_MODELS with detailed hat-by-hat explanation and group problem-solving example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "All 6 hats explained in steps",
             "Creative problem-solving example",

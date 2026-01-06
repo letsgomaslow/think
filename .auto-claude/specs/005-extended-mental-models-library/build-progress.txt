@@ -30,9 +30,9 @@ Adding 7 new mental models to the existing MODEL_TOOL:
 - [x] 2.6: Add Pre-Mortem Analysis to catalog
 - [x] 2.7: Add Five Whys to catalog
 
-### Phase 3: Extended Model Documentation (0/7 subtasks)
-- [ ] 3.1: Add SWOT Analysis extended documentation
-- [ ] 3.2: Add Six Thinking Hats extended documentation
+### Phase 3: Extended Model Documentation (2/7 subtasks)
+- [x] 3.1: Add SWOT Analysis extended documentation
+- [x] 3.2: Add Six Thinking Hats extended documentation
 - [ ] 3.3: Add MECE extended documentation
 - [ ] 3.4: Add Inversion Thinking extended documentation
 - [ ] 3.5: Add Second-Order Effects extended documentation
@@ -116,3 +116,18 @@ Adding 7 new mental models to the existing MODEL_TOOL:
              - Updated file comment from 12 to 13 mental models
              - Committed: 83063db
              - Phase 2 (Resource Catalog Updates) now COMPLETE!
+[2026-01-05] ✅ Completed subtask 3.2: Added Six Thinking Hats extended documentation to web/lib/resources/extended/models.ts
+             - Added six_thinking_hats to EXTENDED_MODELS with complete ExtendedModel structure
+             - All 6 hats explained in detail in steps section:
+               * White Hat (Facts & Information)
+               * Red Hat (Emotions & Intuition)
+               * Black Hat (Caution & Risks)
+               * Yellow Hat (Optimism & Benefits)
+               * Green Hat (Creativity & Alternatives)
+               * Blue Hat (Process Control & Summary)
+             - Created comprehensive group problem-solving example: product team debating AI chatbot implementation
+             - Example demonstrates all 6 hats in action with realistic team dialogue and decision-making
+             - Added 5 whenToUse scenarios focusing on group facilitation and multi-perspective thinking
+             - Linked to related models: swot_analysis, pre_mortem, first_principles
+             - Included toolParameters for MCP integration
+             - Committed: 4802e41
