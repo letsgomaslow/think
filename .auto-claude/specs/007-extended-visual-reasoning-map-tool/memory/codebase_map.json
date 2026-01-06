@@ -1,0 +1,10 @@
+{
+  "discovered_files": {
+    "docs/tools/map.md": {
+      "description": "C4 Context diagram documentation pattern established in Scenario 8. Uses Person (external actors), System (internal), and System_Ext (external dependencies) node types. Rel() relationships include technology parameter. Documentation includes comprehensive analysis sections: Dependency Analysis, Architecture Decisions, Scaling Considerations, and Next Steps with C4 model.",
+      "category": "documentation",
+      "discovered_at": "2026-01-06T13:57:10.631179+00:00"
+    }
+  },
+  "last_updated": "2026-01-06T13:57:10.631196+00:00"
+}
