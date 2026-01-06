@@ -306,8 +306,8 @@
           "files": [
             "src/tools/councilServer.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "CouncilServer successfully updated to resolve predefined persona references and enrich custom personas. Implementation includes: (1) resolvePersonas() method that handles predefinedPersonas array, personaCategory selection, and custom personas, (2) Predefined personas are resolved using personaFactory.createFromPredefined() and converted to base PersonaData format, (3) Category personas are resolved using personaFactory.createFromCategory(), (4) Custom personas can override predefined ones with matching IDs, (5) Proper error handling with descriptive messages, (6) Backward compatible - existing custom-only persona usage still works. Committed in 69a67ff."
         },
         {
           "subtask_id": "7.3",

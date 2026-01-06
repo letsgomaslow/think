@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (23/33 subtasks completed - 70%)
+## Current Status: In Progress (24/33 subtasks completed - 73%)
 
 ### Completed Subtasks
 
@@ -133,9 +133,14 @@
   - Status: Committed (commit: 91b16f1)
   - Notes: Extended council tool schema with optional personaCategory and predefinedPersonas fields
 
+- [x] 7.2 - Update councilServer to use persona library
+  - File: src/tools/councilServer.ts
+  - Status: Committed (commit: 69a67ff)
+  - Notes: CouncilServer successfully updated to resolve predefined persona references. Implements resolvePersonas() method that handles predefinedPersonas array, personaCategory selection, and custom personas. Custom personas can override predefined ones. Fully backward compatible.
+
 ### Next Steps
 - [ ] Continue with Phase 7: Update Council Tool Integration
-  - 7.2 - Update councilServer to use persona library
+  - 7.3 - Update interfaces for enhanced persona support
 
 ### Build Notes
 - Phase 1, 2, 3, 4, 5, & 6 complete! 🎉
