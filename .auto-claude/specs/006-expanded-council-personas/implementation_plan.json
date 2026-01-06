@@ -400,8 +400,8 @@
           "files": [
             "web/components/council/council-demo-data.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Council demo successfully updated to showcase predefined personas from all four categories (Technical, Business, Creative, General). New demo features Security Specialist, Product Manager, Design Thinker, and Devil's Advocate discussing 'Should we build an AI-powered content generation feature?'. Demonstrates each persona's unique voice, expertise, communication style, and how diverse perspectives lead to comprehensive decision-making. Includes realistic disagreements, concerns, and synthesis. Committed in a1190c6."
         }
       ]
     }
