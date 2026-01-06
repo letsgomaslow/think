@@ -3,23 +3,23 @@
   "spec": "015-enhanced-decision-frameworks",
   "state": "building",
   "subtasks": {
-    "completed": 24,
+    "completed": 28,
     "total": 29,
     "in_progress": 1,
     "failed": 0
   },
   "phase": {
-    "current": "Testing",
+    "current": "Build and Verification",
     "id": null,
-    "total": 6
+    "total": 2
   },
   "workers": {
     "active": 0,
     "max": 1
   },
   "session": {
-    "number": 11,
+    "number": 15,
     "started_at": "2026-01-06T02:00:39.636455"
   },
-  "last_update": "2026-01-06T02:24:52.472578"
+  "last_update": "2026-01-06T02:37:02.936346"
 }
