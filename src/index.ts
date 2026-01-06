@@ -264,11 +264,24 @@ const COUNCIL_TOOL: Tool = {
     name: TOOL_NAMES.COUNCIL,
     description: `A detailed tool for simulating expert collaboration with diverse perspectives.
 This tool helps models tackle complex problems by coordinating multiple viewpoints.
-It provides a framework for structured collaborative reasoning and perspective integration.`,
+It provides a framework for structured collaborative reasoning and perspective integration.
+
+The council tool supports both custom personas and predefined personas from the persona library.
+You can use 'predefinedPersonas' to easily select expert personas by ID, or 'personaCategory' to get personas from a specific domain.`,
     inputSchema: {
         type: "object",
         properties: {
             topic: { type: "string" },
+            personaCategory: {
+                type: "string",
+                enum: ["technical", "business", "creative", "general"],
+                description: "Optional: Select personas from a specific category (technical, business, creative, general)",
+            },
+            predefinedPersonas: {
+                type: "array",
+                items: { type: "string" },
+                description: "Optional: Array of predefined persona IDs to use (e.g., ['security-specialist', 'performance-engineer'])",
+            },
             personas: {
                 type: "array",
                 items: {
