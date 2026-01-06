@@ -14,13 +14,13 @@
 - [x] 1.3 Update web tool schemas
 
 ### Phase 2: Mermaid Generation Engine
-- [ ] 2.1 Create MermaidGenerator utility class
-- [ ] 2.2 Implement Sequence Diagram generation
-- [ ] 2.3 Implement State Machine Diagram generation
-- [ ] 2.4 Implement Entity-Relationship Diagram generation
-- [ ] 2.5 Implement Mind Map generation
-- [ ] 2.6 Implement System Context Diagram generation
-- [ ] 2.7 Add Mermaid generation for existing diagram types
+- [x] 2.1 Create MermaidGenerator utility class
+- [x] 2.2 Implement Sequence Diagram generation
+- [x] 2.3 Implement State Machine Diagram generation
+- [x] 2.4 Implement Entity-Relationship Diagram generation
+- [x] 2.5 Implement Mind Map generation
+- [x] 2.6 Implement System Context Diagram generation
+- [x] 2.7 Add Mermaid generation for existing diagram types
 
 ### Phase 3: MapServer Integration
 - [ ] 3.1 Update MapServer to use MermaidGenerator
