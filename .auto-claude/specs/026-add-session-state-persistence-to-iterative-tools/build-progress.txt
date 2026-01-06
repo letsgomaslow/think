@@ -67,5 +67,48 @@
 ## Phase 1 Status: COMPLETED ✅
 All subtasks for CouncilServer state persistence have been completed successfully.
 
+---
+
+## Phase 2: Add State Persistence to DecideServer
+
+### ✅ Subtask 2.1: Add decision state storage to DecideServer (COMPLETED)
+- Added private decisions: Record<string, DecisionFrameworkData[]> storage
+- Implemented storeDecisionIteration() method that stores data by decisionId
+- Integrated storeDecisionIteration() call in processDecisionFramework()
+- Followed the exact pattern from traceServer and councilServer
+- Commit: 09dd7ca
+
+**Pattern Applied:**
+- Private storage field initialized as empty object
+- Private store method checks if decisionId exists, creates array if not, then pushes data
+- Public process method calls store after validation, before output formatting
+
+**Files Modified:**
+- src/tools/decideServer.ts
+
+---
+
+### ✅ Subtask 2.2: Add history retrieval methods to DecideServer (COMPLETED)
+- Added public getDecisionHistory(decisionId) method
+  - Returns all DecisionFrameworkData entries for a decision
+  - Returns empty array if decision doesn't exist
+- Added public getDecisionSummary(decisionId) method
+  - Returns summary with: totalIterations, stages, currentStage, currentAnalysisType, lastIteration, nextStageNeeded
+  - Handles non-existent decisions gracefully with null values
+- Commit: 2deedbc
+
+**Implementation Details:**
+- getDecisionHistory: Simple retrieval with fallback to empty array
+- getDecisionSummary: Aggregates statistics from decision history
+  - Counts total iterations (length of history array)
+  - Tracks unique stages that have been completed
+  - Returns current state (stage, analysis type, iteration)
+  - Includes nextStageNeeded flag for workflow tracking
+
+**Files Modified:**
+- src/tools/decideServer.ts
+
+---
+
 ## Next Steps
-- Phase 2: Add State Persistence to DecideServer
+- Subtask 2.3: Add tests for DecideServer state persistence
