@@ -639,6 +639,46 @@ It supports multiple decision frameworks, probability estimates, and value judgm
                     required: ["optionId", "costs", "benefits", "netValue"],
                 },
             },
+            riskAssessment: {
+                type: "array",
+                description: "Risk assessment data with probability, impact, and mitigation strategies for each risk",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        description: {
+                            type: "string",
+                            description: "Description of the risk"
+                        },
+                        probability: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 1,
+                            description: "Probability of the risk occurring (0.0 to 1.0)"
+                        },
+                        impact: {
+                            type: "number",
+                            minimum: 1,
+                            maximum: 10,
+                            description: "Impact severity if risk occurs (1 to 10 scale)"
+                        },
+                        riskScore: {
+                            type: "number",
+                            description: "Risk score calculated as probability × impact"
+                        },
+                        category: {
+                            type: "string",
+                            description: "Optional category for grouping risks (e.g., 'financial', 'operational', 'technical')"
+                        },
+                        mitigation: {
+                            type: "array",
+                            description: "Optional array of mitigation strategies",
+                            items: { type: "string" }
+                        },
+                    },
+                    required: ["optionId", "description", "probability", "impact", "riskScore"],
+                },
+            },
         },
         required: [
             "decisionStatement",
