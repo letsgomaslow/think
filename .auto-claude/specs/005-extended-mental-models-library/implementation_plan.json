@@ -225,12 +225,14 @@
           "title": "Add Pre-Mortem extended documentation",
           "description": "Add Pre-Mortem to EXTENDED_MODELS with project planning example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Prospective hindsight concept explained",
             "Project failure prevention example",
             "Related models linked"
-          ]
+          ],
+          "completed_at": "2026-01-06T19:00:00.000Z",
+          "notes": "Pre-Mortem Analysis fully implemented in EXTENDED_MODELS with complete structure including whenToUse (5 cases), detailed steps (7 steps explaining prospective hindsight approach), comprehensive project planning example (startup mobile app marketplace with 5 stakeholder failure narratives, categorized failure modes, and concrete preventive actions), relatedModels linked (inversion_thinking, second_order_effects, swot_analysis), and toolParameters. Implementation verified in web/lib/resources/extended/models.ts lines 572-693."
         },
         {
           "subtask_id": "3.7",
