@@ -3,7 +3,7 @@
   "title": "Extended Mental Models Library",
   "description": "Expand the model tool with 7 additional proven mental models: SWOT Analysis, Six Thinking Hats, MECE, Inversion Thinking, Second-Order Effects, Pre-Mortem Analysis, and 5 Whys root cause analysis.",
   "created_at": "2026-01-05",
-  "updated_at": "2026-01-06T12:19:28.698Z",
+  "updated_at": "2026-01-06T12:31:39.874Z",
   "status": "in_progress",
   "phases": [
     {
@@ -22,8 +22,8 @@
             "Description updated to list new models",
             "TypeScript compiles without errors"
           ],
-          "completed_at": "2026-01-06T12:20:00.000Z",
-          "notes": "Verified all 7 new mental model names present in modelName enum (lines 69-75). Code was already implemented in previous session (commit 5a8ecb0)."
+          "completed_at": "2026-01-06T12:31:39.874Z",
+          "notes": "All 7 new mental model names added to MODEL_TOOL enum in src/index.ts. Verified in git commit 740b0c8."
         },
         {
           "subtask_id": "1.2",
@@ -35,8 +35,8 @@
             "Description lists all 13 mental models (6 existing + 7 new)",
             "Clear categorization of model types"
           ],
-          "completed_at": "2026-01-06T12:20:30.000Z",
-          "notes": "Verified MODEL_TOOL description already includes all 13 mental models (6 existing + 7 new) organized into 4 clear categories: Analytical Models (First Principles, MECE, Five Whys, Occam's Razor), Strategic Models (SWOT, Second-Order Effects, Opportunity Cost, Pre-Mortem), Creative & Problem-Solving Models (Six Thinking Hats, Inversion Thinking, Rubber Duck), and Decision & Prioritization Models (Pareto Principle, Error Propagation). All 7 new models are properly listed. Code was already implemented in previous session."
+          "completed_at": "2026-01-06T12:31:39.874Z",
+          "notes": "MODEL_TOOL description updated to include all 13 mental models organized by category (Analytical, Strategic, Creative & Problem-Solving, Decision & Prioritization). Verified in git commit 78353d2."
         }
       ]
     },
@@ -50,28 +50,24 @@
           "title": "Add SWOT Analysis to catalog",
           "description": "Add SWOT Analysis mental model with name, title, description, useCases, and steps to MENTAL_MODELS array",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "SWOT model defined with proper structure",
             "Includes 4+ use cases",
             "Includes 4+ implementation steps"
-          ],
-          "completed_at": "2026-01-06T12:30:00.000Z",
-          "notes": "Verified SWOT Analysis mental model is properly implemented in web/lib/resources/models.ts (lines 117-132). All acceptance criteria met: proper structure with name, title, description, 4 use cases covering strategic planning/competitive analysis/project planning/personal development, and 4 implementation steps covering Strengths/Weaknesses/Opportunities/Threats. Code was implemented in previous session (commit 8988367)."
+          ]
         },
         {
           "subtask_id": "2.2",
           "title": "Add Six Thinking Hats to catalog",
           "description": "Add Six Thinking Hats (De Bono) mental model with all hat colors explained",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Six Hats model defined with proper structure",
             "Description explains all 6 hat colors",
             "Includes creative problem-solving use cases"
-          ],
-          "completed_at": "2026-01-06T12:35:00.000Z",
-          "notes": "Verified Six Thinking Hats mental model implementation in web/lib/resources/models.ts (lines 133-151). All acceptance criteria met: proper structure with name, title, description, 4 use cases covering group problem-solving/decision-making/creative brainstorming/conflict resolution, and 6 implementation steps (one for each hat: White-facts, Red-emotions, Black-caution, Yellow-optimism, Green-creativity, Blue-process control). Code was implemented in previous session (commit 9099f5c)."
+          ]
         },
         {
           "subtask_id": "2.3",
@@ -296,5 +292,5 @@
   "estimated_complexity": "medium",
   "notes": "This spec extends the existing MODEL_TOOL by adding 7 new mental model types. The existing modelServer.ts doesn't need modification since it handles modelName generically - it just validates and formats the data. The main work is adding the new enum values and comprehensive documentation.",
   "planStatus": "in_progress",
-  "recoveryNote": "Task recovered from stuck state at 2026-01-06T12:19:28.587Z"
+  "recoveryNote": "Task recovered from stuck state at 2026-01-06T12:31:39.808Z"
 }
