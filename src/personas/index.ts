@@ -190,7 +190,7 @@ export function getCategoryById(categoryId: PersonaCategoryId): PersonaCategory 
  * @returns Array of personas matching the expertise
  */
 export function getPersonasByExpertise(expertise: string): PredefinedPersona[] {
-    return personaRegistry.getPersonasByExpertise(expertise);
+    return personaRegistry.getPersonasByExpertise([expertise]);
 }
 
 /**
@@ -199,7 +199,7 @@ export function getPersonasByExpertise(expertise: string): PredefinedPersona[] {
  * @returns Array of personas matching the tag
  */
 export function getPersonasByTag(tag: string): PredefinedPersona[] {
-    return personaRegistry.getPersonasByTag(tag);
+    return personaRegistry.getPersonasByTags([tag]);
 }
 
 /**
@@ -208,7 +208,7 @@ export function getPersonasByTag(tag: string): PredefinedPersona[] {
  * @returns Array of personas matching the query
  */
 export function queryPersonas(options: PersonaQueryOptions): PredefinedPersona[] {
-    return personaRegistry.query(options);
+    return personaRegistry.queryPersonas(options);
 }
 
 /**
@@ -218,7 +218,7 @@ export function queryPersonas(options: PersonaQueryOptions): PredefinedPersona[]
  * @returns Array of search results with relevance scores
  */
 export function searchPersonas(query: string, limit?: number): PersonaSearchResult[] {
-    return personaRegistry.search(query, limit);
+    return personaRegistry.searchPersonas({ keywords: [query], limit });
 }
 
 /**
@@ -237,7 +237,7 @@ export function getRecommendedPersonas(topic: string, limit: number = 5): Predef
  * @returns True if the persona exists, false otherwise
  */
 export function personaExists(id: string): boolean {
-    return personaRegistry.exists(id);
+    return personaRegistry.hasPersona(id);
 }
 
 /**
@@ -254,7 +254,7 @@ export function getPersonaCount(): number {
  * @returns Number of personas in the category
  */
 export function getPersonaCountByCategory(categoryId: PersonaCategoryId): number {
-    return personaRegistry.getPersonaCountByCategory(categoryId);
+    return personaRegistry.getPersonasByCategory(categoryId).length;
 }
 
 /**
