@@ -1,4 +1,6 @@
 import { CollaborativeReasoningData, PersonaData } from '../models/interfaces.js';
+import { collaborativeReasoningDataSchema } from '../schemas/council.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 import { personaFactory } from '../personas/factory.js';
 import { PersonaCategoryId } from '../personas/types.js';
@@ -80,15 +82,6 @@ export class CouncilServer {
 
   private validateInputData(input: unknown): CollaborativeReasoningData {
     const data = input as CouncilInput;
-    if (!data.topic || !data.contributions || !data.stage || !data.activePersonaId || !data.sessionId) {
-      throw new Error("Invalid input for CollaborativeReasoning: Missing required fields.");
-    }
-    if (typeof data.iteration !== 'number' || data.iteration < 0) {
-        throw new Error("Invalid iteration value for CollaborativeReasoningData.");
-    }
-    if (typeof data.nextContributionNeeded !== 'boolean') {
-        throw new Error("Invalid nextContributionNeeded value for CollaborativeReasoningData.");
-    }
 
     // Resolve personas from predefined IDs, category, or custom definitions
     const resolvedPersonas = this.resolvePersonas(data);
@@ -97,8 +90,8 @@ export class CouncilServer {
       throw new Error("No personas provided. Please specify predefinedPersonas, personaCategory, or custom personas.");
     }
 
-    // Return CollaborativeReasoningData with resolved personas
-    return {
+    // Build CollaborativeReasoningData with resolved personas
+    const collaborativeReasoningData = {
       topic: data.topic,
       personas: resolvedPersonas,
       contributions: data.contributions,
@@ -114,7 +107,18 @@ export class CouncilServer {
       iteration: data.iteration,
       suggestedContributionTypes: data.suggestedContributionTypes,
       nextContributionNeeded: data.nextContributionNeeded
-    } as CollaborativeReasoningData;
+    };
+
+    // Validate with Zod schema
+    try {
+      return collaborativeReasoningDataSchema.parse(collaborativeReasoningData);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid collaborative reasoning data: ${errorMessages}`);
+      }
+      throw error;
+    }
   }
 
   private formatOutput(data: CollaborativeReasoningData): string {
