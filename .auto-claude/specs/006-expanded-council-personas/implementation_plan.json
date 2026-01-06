@@ -204,8 +204,8 @@
           "files": [
             "src/personas/creative/innovation-catalyst.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Innovation Catalyst persona fully implemented in src/personas/creative/innovation-catalyst.ts. Includes comprehensive expertise in disruptive innovation theory, blue ocean strategy, emerging trends, Jobs-to-be-Done framework, business model innovation, and creative problem-solving. Features visionary communication style focused on challenging assumptions and breakthrough thinking. Covers 15 areas of expertise, extensive concerns about incremental thinking and missed disruption opportunities, typical questions about industry assumptions and blue ocean opportunities, and use cases spanning disruption strategy to transformation initiatives. Committed in 82262f3."
         },
         {
           "subtask_id": "4.5",
@@ -214,8 +214,8 @@
           "files": [
             "src/personas/creative/index.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Creative Experts category index fully implemented in src/personas/creative/index.ts. Exports all 4 creative personas (design thinker, storyteller, brand strategist, innovation catalyst) with category metadata, utility functions for retrieval by ID/expertise/tag, recommendation system, and auto-registration with global persona registry. Follows the same pattern as technical and business category indexes. Committed in f35efa7."
         }
       ]
     },
