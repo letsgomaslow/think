@@ -251,8 +251,8 @@
           "files": [
             "src/personas/general/index.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "General Experts category index fully implemented in src/personas/general/index.ts. Exports both general personas (Devil's Advocate, Systems Thinker) with category metadata, utility functions for retrieval by ID/expertise/tag, recommendation system, and auto-registration with global persona registry. Follows the same pattern as technical, business, and creative category indexes. Committed in b0c27b7."
         }
       ]
     },

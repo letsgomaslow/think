@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (19/33 subtasks completed - 58%)
+## Current Status: In Progress (20/33 subtasks completed - 61%)
 
 ### Completed Subtasks
 
@@ -100,7 +100,7 @@
 
 #### Phase 4: Implement Creative Expert Personas ✅ COMPLETE
 
-#### Phase 5: Implement General Expert Personas (In Progress)
+#### Phase 5: Implement General Expert Personas ✅ COMPLETE
 - [x] 5.1 - Devil's Advocate persona
   - File: src/personas/general/devils-advocate.ts
   - Status: Committed (commit: d46dce3)
@@ -111,13 +111,19 @@
   - Status: Committed (commit: 771bbd1)
   - Notes: Systems thinking expert with expertise in feedback loops, interconnections, unintended consequences, and holistic analysis
 
+- [x] 5.3 - General Experts category index
+  - File: src/personas/general/index.ts
+  - Status: Committed (commit: b0c27b7)
+  - Notes: Category index with both general personas, utility functions, and auto-registration
+
 ### Next Steps
-- [ ] Continue with Phase 5: General Expert Personas
-  - 5.3 - General Experts category index
+- [ ] Continue with Phase 6: Create Persona Library Main Export
+  - 6.1 - Create main persona library index
+  - 6.2 - Create persona selection helpers
 
 ### Build Notes
-- Phase 1, 2, 3, & 4 complete! 🎉
-- Phase 5 next - General Expert Personas (Devil's Advocate, Systems Thinker)
+- Phase 1, 2, 3, 4, & 5 complete! 🎉
+- Phase 6 next - Create Persona Library Main Export
 - Persona library architecture fully implemented with registry and factory patterns
 - 4 technical expert personas implemented with distinct voices and expertise
 - Product Manager persona complete - strategic focus on roadmapping, prioritization, and stakeholder alignment
@@ -134,3 +140,4 @@
 - Creative Experts category index complete - exports all 4 creative personas with comprehensive utility functions and auto-registration
 - Devil's Advocate persona complete - analytical focus on critical thinking, assumption challenging, risk analysis, stress-testing, and constructive dissent with pre-mortem and scenario analysis expertise
 - Systems Thinker persona complete - holistic focus on systems dynamics, feedback loops, interconnections, leverage points, unintended consequences, and systemic change with expertise in causal loop diagrams and system archetypes
+- General Experts category index complete - exports both general personas with comprehensive utility functions and auto-registration. All 4 domain categories (Technical, Business, Creative, General) now fully implemented with 14 total predefined personas!
