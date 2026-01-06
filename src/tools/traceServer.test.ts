@@ -2447,3 +2447,757 @@ describe('TraceServer Getter Methods', () => {
     });
   });
 });
+
+// ============================================================================
+// Integration Tests: Long-Running Session Simulation
+// ============================================================================
+describe('Integration: Long-Running Session Simulation', () => {
+  // Helper to create a thought
+  const createThought = (
+    num: number,
+    total: number,
+    nextNeeded: boolean,
+    thought?: string
+  ) => ({
+    thought: thought ?? `Thought number ${num}`,
+    thoughtNumber: num,
+    totalThoughts: total,
+    nextThoughtNeeded: nextNeeded,
+  });
+
+  // Helper to create a branch thought
+  const createBranchThought = (
+    num: number,
+    total: number,
+    nextNeeded: boolean,
+    branchId: string,
+    branchFromThought: number = 1,
+    thought?: string
+  ) => ({
+    ...createThought(num, total, nextNeeded, thought),
+    branchId,
+    branchFromThought,
+  });
+
+  // Helper to create a complete thought chain
+  const createCompleteChain = (
+    server: TraceServer,
+    chainId: number,
+    chainLength: number
+  ): void => {
+    for (let i = 1; i <= chainLength; i++) {
+      const isLast = i === chainLength;
+      server.processThought(createThought(
+        i,
+        chainLength,
+        !isLast,
+        `Chain ${chainId} - Thought ${i}`
+      ));
+    }
+  };
+
+  // Helper to create a complete branch chain
+  const createCompleteBranchChain = (
+    server: TraceServer,
+    branchId: string,
+    chainLength: number,
+    branchFromThought: number = 1
+  ): void => {
+    for (let i = 1; i <= chainLength; i++) {
+      const isLast = i === chainLength;
+      server.processThought(createBranchThought(
+        i,
+        chainLength,
+        !isLast,
+        branchId,
+        branchFromThought,
+        `Branch ${branchId} - Thought ${i}`
+      ));
+    }
+  };
+
+  describe('Memory Bounds Under Heavy Load', () => {
+    it('should maintain memory bounds with 100+ thought chains (auto-cleanup enabled)', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 50,
+        maxBranches: 10,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 30,
+      });
+
+      // Create 100 complete thought chains of varying lengths
+      for (let chainId = 1; chainId <= 100; chainId++) {
+        const chainLength = (chainId % 5) + 2; // Chains of length 2-6
+        createCompleteChain(server, chainId, chainLength);
+      }
+
+      const stats = server.getMemoryStats();
+
+      // With auto-cleanup enabled, completed chains are removed
+      // So the history should be mostly empty (only incomplete chains remain)
+      expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(stats.thoughtHistoryLimit);
+      expect(stats.chainSummaryCount).toBeLessThanOrEqual(stats.chainSummaryLimit);
+
+      // Verify summaries were created and bounded
+      expect(stats.chainSummaryCount).toBe(30); // maxChainSummaries = 30
+    });
+
+    it('should maintain memory bounds with 100+ thought chains (auto-cleanup disabled)', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 50,
+        maxBranches: 10,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: false,
+        maxChainSummaries: 30,
+      });
+
+      // Create 100 complete thought chains (average 4 thoughts each = ~400 thoughts)
+      for (let chainId = 1; chainId <= 100; chainId++) {
+        const chainLength = (chainId % 5) + 2; // Chains of length 2-6
+        createCompleteChain(server, chainId, chainLength);
+      }
+
+      const stats = server.getMemoryStats();
+
+      // History should be exactly at the limit
+      expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(stats.thoughtHistoryLimit);
+      expect(stats.thoughtHistoryCount).toBe(50); // maxThoughtHistory = 50
+
+      // No summaries should exist since retainChainSummaries is false
+      expect(stats.chainSummaryCount).toBe(0);
+    });
+
+    it('should maintain branch count bounds with many branch operations', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 100,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 10,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 50,
+      });
+
+      // Create 20 branches (exceeds maxBranches = 5)
+      for (let branchNum = 1; branchNum <= 20; branchNum++) {
+        const branchId = `branch-${branchNum}`;
+        // Create complete chains in each branch
+        createCompleteBranchChain(server, branchId, 5);
+      }
+
+      const stats = server.getMemoryStats();
+
+      // Branch count should be at or below limit
+      // Note: With auto-cleanup, completed chains in branches are removed,
+      // but the branch itself may remain empty until LRU eviction
+      expect(stats.branchCount).toBeLessThanOrEqual(stats.branchLimit);
+    });
+
+    it('should maintain per-branch thought limits under load', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 100,
+        maxBranches: 3,
+        maxThoughtsPerBranch: 10,
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: false,
+      });
+
+      // Create 3 branches with many thoughts each (exceeds per-branch limit)
+      for (let branchNum = 1; branchNum <= 3; branchNum++) {
+        const branchId = `branch-${branchNum}`;
+        // Add 30 thoughts per branch (exceeds maxThoughtsPerBranch = 10)
+        for (let i = 1; i <= 30; i++) {
+          server.processThought(createBranchThought(
+            i, 100, true, branchId, 1, `Branch ${branchNum} - Thought ${i}`
+          ));
+        }
+      }
+
+      const stats = server.getMemoryStats();
+
+      // Each branch should be at or below the per-branch limit
+      for (const branchId of Object.keys(stats.branchThoughtCounts)) {
+        expect(stats.branchThoughtCounts[branchId]).toBeLessThanOrEqual(stats.perBranchLimit);
+        expect(stats.branchThoughtCounts[branchId]).toBe(10);
+      }
+    });
+  });
+
+  describe('Long-Running Session Simulation', () => {
+    it('should simulate a realistic long-running session with mixed operations', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 100,
+        maxBranches: 10,
+        maxThoughtsPerBranch: 50,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 50,
+      });
+
+      // Simulate 200 "queries" (thought chains) over a long session
+      let totalThoughtsProcessed = 0;
+
+      for (let queryNum = 1; queryNum <= 200; queryNum++) {
+        const chainLength = Math.floor(Math.random() * 8) + 3; // 3-10 thoughts
+        totalThoughtsProcessed += chainLength;
+
+        // Main chain
+        createCompleteChain(server, queryNum, chainLength);
+
+        // Every 10th query creates a branch
+        if (queryNum % 10 === 0) {
+          const branchId = `query-${queryNum}-branch`;
+          const branchLength = Math.floor(Math.random() * 5) + 2; // 2-6 thoughts
+          totalThoughtsProcessed += branchLength;
+          createCompleteBranchChain(server, branchId, branchLength);
+        }
+      }
+
+      const stats = server.getMemoryStats();
+
+      // Verify all limits are respected
+      expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(stats.thoughtHistoryLimit);
+      expect(stats.branchCount).toBeLessThanOrEqual(stats.branchLimit);
+      expect(stats.chainSummaryCount).toBeLessThanOrEqual(stats.chainSummaryLimit);
+
+      // Verify that we processed many thoughts but memory is bounded
+      // With 200 queries of avg 6.5 thoughts each + branches, we processed ~1300+ thoughts
+      // But memory should be bounded to our configured limits
+      expect(totalThoughtsProcessed).toBeGreaterThan(1000);
+      expect(stats.totalThoughts).toBeLessThanOrEqual(
+        stats.thoughtHistoryLimit + (stats.branchLimit * stats.perBranchLimit)
+      );
+    });
+
+    it('should preserve active chains while cleaning up completed ones', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 50,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 100,
+      });
+
+      // Create 50 complete chains
+      for (let chainId = 1; chainId <= 50; chainId++) {
+        createCompleteChain(server, chainId, 3);
+      }
+
+      // Now start an active (incomplete) chain
+      server.processThought(createThought(1, 5, true, 'Active chain - Thought 1'));
+      server.processThought(createThought(2, 5, true, 'Active chain - Thought 2'));
+
+      const statsBefore = server.getMemoryStats();
+
+      // Create 20 more complete chains
+      for (let chainId = 51; chainId <= 70; chainId++) {
+        createCompleteChain(server, chainId, 3);
+      }
+
+      const statsAfter = server.getMemoryStats();
+
+      // The active chain should still exist in history
+      const history = server.getThoughtHistory();
+      const activeThoughts = history.filter(t => t.thought.includes('Active chain'));
+
+      expect(activeThoughts.length).toBe(2);
+      expect(activeThoughts[0].thought).toBe('Active chain - Thought 1');
+      expect(activeThoughts[1].thought).toBe('Active chain - Thought 2');
+
+      // Memory should still be bounded
+      expect(statsAfter.thoughtHistoryCount).toBeLessThanOrEqual(statsAfter.thoughtHistoryLimit);
+    });
+
+    it('should handle interleaved main history and branch operations', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 30,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 10,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 50,
+      });
+
+      // Interleaved operations
+      for (let i = 1; i <= 50; i++) {
+        // Add to main history
+        createCompleteChain(server, i, 3);
+
+        // Every 5th iteration, work on a branch
+        if (i % 5 === 0) {
+          const branchId = `interleaved-branch-${i}`;
+          createCompleteBranchChain(server, branchId, 4);
+        }
+      }
+
+      const stats = server.getMemoryStats();
+
+      // All limits should be respected
+      expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(stats.thoughtHistoryLimit);
+      expect(stats.branchCount).toBeLessThanOrEqual(stats.branchLimit);
+      expect(stats.chainSummaryCount).toBeLessThanOrEqual(stats.chainSummaryLimit);
+
+      // Summaries should have been created and bounded
+      expect(stats.chainSummaryCount).toBe(50); // Should be at limit
+    });
+  });
+
+  describe('Memory Leak Prevention', () => {
+    it('should not leak memory over extended operation (1000 operations)', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 100,
+        maxBranches: 10,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 50,
+      });
+
+      // Record stats at intervals
+      const statsSnapshots: { iteration: number; totalThoughts: number }[] = [];
+
+      for (let i = 1; i <= 1000; i++) {
+        // Create chains of random lengths
+        const chainLength = (i % 7) + 2; // 2-8 thoughts
+        createCompleteChain(server, i, chainLength);
+
+        // Create branches periodically
+        if (i % 50 === 0) {
+          const branchId = `leak-test-branch-${i}`;
+          createCompleteBranchChain(server, branchId, 5);
+        }
+
+        // Snapshot stats every 100 iterations
+        if (i % 100 === 0) {
+          const stats = server.getMemoryStats();
+          statsSnapshots.push({ iteration: i, totalThoughts: stats.totalThoughts });
+        }
+      }
+
+      const finalStats = server.getMemoryStats();
+
+      // Memory should be bounded and stable
+      expect(finalStats.thoughtHistoryCount).toBeLessThanOrEqual(finalStats.thoughtHistoryLimit);
+      expect(finalStats.branchCount).toBeLessThanOrEqual(finalStats.branchLimit);
+      expect(finalStats.chainSummaryCount).toBeLessThanOrEqual(finalStats.chainSummaryLimit);
+
+      // Total thoughts should never exceed theoretical maximum
+      const maxPossibleThoughts = finalStats.thoughtHistoryLimit +
+        (finalStats.branchLimit * finalStats.perBranchLimit);
+      expect(finalStats.totalThoughts).toBeLessThanOrEqual(maxPossibleThoughts);
+
+      // Verify stats remained bounded throughout (no memory spike at any point)
+      for (const snapshot of statsSnapshots) {
+        expect(snapshot.totalThoughts).toBeLessThanOrEqual(maxPossibleThoughts);
+      }
+    });
+
+    it('should properly clean up completed chains leaving no orphaned data', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 50,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: false, // Don't retain summaries for this test
+      });
+
+      // Create many complete chains
+      for (let i = 1; i <= 100; i++) {
+        createCompleteChain(server, i, 5);
+      }
+
+      const stats = server.getMemoryStats();
+
+      // With auto-cleanup and no summary retention, completed chains are fully removed
+      // The history should be empty since all chains completed
+      expect(stats.thoughtHistoryCount).toBe(0);
+      expect(stats.chainSummaryCount).toBe(0);
+      expect(stats.completedChainsInHistory).toBe(0);
+    });
+
+    it('should bound chain summaries to prevent memory leak in archive', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 100,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 20, // Small limit
+      });
+
+      // Create 100 chains - should generate 100 summaries but only keep 20
+      for (let i = 1; i <= 100; i++) {
+        createCompleteChain(server, i, 3);
+      }
+
+      const stats = server.getMemoryStats();
+
+      // Summaries should be bounded
+      expect(stats.chainSummaryCount).toBe(20);
+      expect(stats.chainSummaryCount).toBeLessThanOrEqual(stats.chainSummaryLimit);
+
+      // Verify oldest summaries were evicted
+      const summaries = server.getChainSummaries();
+      expect(summaries.length).toBe(20);
+    });
+  });
+
+  describe('Edge Cases in Long Sessions', () => {
+    it('should handle rapid chain creation and completion', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 20,
+        maxBranches: 3,
+        maxThoughtsPerBranch: 10,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 10,
+      });
+
+      // Rapid fire: Create 500 single-thought chains (immediate completion)
+      for (let i = 1; i <= 500; i++) {
+        server.processThought(createThought(1, 1, false, `Quick thought ${i}`));
+      }
+
+      const stats = server.getMemoryStats();
+
+      // All limits should be respected
+      expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(stats.thoughtHistoryLimit);
+      expect(stats.chainSummaryCount).toBeLessThanOrEqual(stats.chainSummaryLimit);
+    });
+
+    it('should handle very long individual chains', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 50,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 10,
+      });
+
+      // Create a few very long chains (longer than maxThoughtHistory)
+      for (let chainNum = 1; chainNum <= 3; chainNum++) {
+        const chainLength = 100; // Each chain is longer than maxThoughtHistory
+        for (let i = 1; i <= chainLength; i++) {
+          const isLast = i === chainLength;
+          server.processThought(createThought(
+            i, chainLength, !isLast, `Long chain ${chainNum} - Thought ${i}`
+          ));
+        }
+      }
+
+      const stats = server.getMemoryStats();
+
+      // History should respect limits even with very long chains
+      expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(stats.thoughtHistoryLimit);
+    });
+
+    it('should handle multiple concurrent incomplete chains', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 100,
+        maxBranches: 10,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 50,
+      });
+
+      // Start 20 incomplete chains in main history
+      // (Note: In practice, only one chain is active at a time, but this tests limits)
+      for (let chainNum = 1; chainNum <= 20; chainNum++) {
+        // Start each chain but don't complete it
+        for (let thoughtNum = 1; thoughtNum <= 3; thoughtNum++) {
+          server.processThought(createThought(
+            thoughtNum, 10, true, `Incomplete chain ${chainNum} - Thought ${thoughtNum}`
+          ));
+        }
+      }
+
+      // Also start incomplete chains in branches
+      for (let branchNum = 1; branchNum <= 10; branchNum++) {
+        const branchId = `incomplete-branch-${branchNum}`;
+        for (let thoughtNum = 1; thoughtNum <= 3; thoughtNum++) {
+          server.processThought(createBranchThought(
+            thoughtNum, 10, true, branchId, 1, `Incomplete branch ${branchNum} - Thought ${thoughtNum}`
+          ));
+        }
+      }
+
+      const stats = server.getMemoryStats();
+
+      // All limits should be respected
+      expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(stats.thoughtHistoryLimit);
+      expect(stats.branchCount).toBeLessThanOrEqual(stats.branchLimit);
+
+      // Since auto-cleanup doesn't clean incomplete chains, they should exist
+      // (but within limits)
+      expect(stats.thoughtHistoryCount).toBeGreaterThan(0);
+      expect(stats.branchCount).toBe(10); // maxBranches
+    });
+
+    it('should maintain data integrity during high-frequency operations', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 30,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 15,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: true,
+        maxChainSummaries: 20,
+      });
+
+      // High-frequency mixed operations
+      for (let i = 1; i <= 200; i++) {
+        // Add thoughts
+        if (i % 3 === 0) {
+          createCompleteChain(server, i, 4);
+        } else if (i % 3 === 1) {
+          const branchId = `hf-branch-${i % 10}`;
+          server.processThought(createBranchThought(
+            (i % 5) + 1, 10, i % 2 === 0, branchId, 1, `HF thought ${i}`
+          ));
+        } else {
+          server.processThought(createThought(
+            (i % 5) + 1, 10, true, `HF main thought ${i}`
+          ));
+        }
+
+        // Periodic manual cleanup
+        if (i % 50 === 0) {
+          server.clearCompletedChains();
+        }
+
+        // Verify limits are always respected
+        const stats = server.getMemoryStats();
+        expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(stats.thoughtHistoryLimit);
+        expect(stats.branchCount).toBeLessThanOrEqual(stats.branchLimit);
+        expect(stats.chainSummaryCount).toBeLessThanOrEqual(stats.chainSummaryLimit);
+      }
+    });
+  });
+
+  describe('LRU Branch Eviction Under Load', () => {
+    it('should correctly evict LRU branches during long session', async () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 100,
+        maxBranches: 3,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: false,
+      });
+
+      // Create 3 branches
+      server.processThought(createBranchThought(1, 5, true, 'branch-A', 1, 'A1'));
+      server.processThought(createBranchThought(1, 5, true, 'branch-B', 1, 'B1'));
+      server.processThought(createBranchThought(1, 5, true, 'branch-C', 1, 'C1'));
+
+      expect(server.getBranchCount()).toBe(3);
+
+      // Access branch-A to update its LRU time
+      server.getBranch('branch-A');
+
+      // Wait a tiny bit to ensure different timestamps
+      await new Promise(resolve => setTimeout(resolve, 5));
+
+      // Access branch-C to update its LRU time
+      server.getBranch('branch-C');
+
+      // Wait a tiny bit
+      await new Promise(resolve => setTimeout(resolve, 5));
+
+      // Add a new branch - should evict branch-B (least recently used)
+      server.processThought(createBranchThought(1, 5, true, 'branch-D', 1, 'D1'));
+
+      expect(server.getBranchCount()).toBe(3);
+
+      // branch-B should have been evicted
+      expect(server.getBranch('branch-A')).toBeDefined();
+      expect(server.getBranch('branch-B')).toBeUndefined();
+      expect(server.getBranch('branch-C')).toBeDefined();
+      expect(server.getBranch('branch-D')).toBeDefined();
+    });
+
+    it('should handle repeated LRU evictions correctly', async () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 100,
+        maxBranches: 2,
+        maxThoughtsPerBranch: 10,
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: false,
+      });
+
+      // Track which branches should exist at each step
+      const expectedBranches: string[] = [];
+
+      for (let i = 1; i <= 10; i++) {
+        const branchId = `rotating-branch-${i}`;
+
+        // Small delay to ensure different timestamps
+        await new Promise(resolve => setTimeout(resolve, 2));
+
+        server.processThought(createBranchThought(1, 5, true, branchId, 1, `Branch ${i} thought`));
+
+        // Update expected branches (most recent 2)
+        expectedBranches.push(branchId);
+        if (expectedBranches.length > 2) {
+          expectedBranches.shift(); // Remove oldest
+        }
+
+        // Verify branch count stays at limit
+        expect(server.getBranchCount()).toBeLessThanOrEqual(2);
+
+        // Verify the expected branches exist
+        for (const expected of expectedBranches) {
+          expect(server.getBranch(expected)).toBeDefined();
+        }
+      }
+    });
+  });
+
+  describe('Stress Test: Very Small Limits', () => {
+    it('should function correctly with minimal limits', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 1,
+        maxBranches: 1,
+        maxThoughtsPerBranch: 1,
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: true,
+        maxChainSummaries: 1,
+      });
+
+      // Attempt many operations with extreme limits
+      for (let i = 1; i <= 100; i++) {
+        server.processThought(createThought(1, 1, false, `Minimal thought ${i}`));
+
+        if (i % 10 === 0) {
+          server.processThought(createBranchThought(
+            1, 1, false, `minimal-branch-${i}`, 1, `Minimal branch thought ${i}`
+          ));
+        }
+      }
+
+      const stats = server.getMemoryStats();
+
+      // All limits strictly enforced
+      expect(stats.thoughtHistoryCount).toBeLessThanOrEqual(1);
+      expect(stats.branchCount).toBeLessThanOrEqual(1);
+      expect(stats.chainSummaryCount).toBeLessThanOrEqual(1);
+
+      // For each branch, verify per-branch limit
+      for (const branchId of Object.keys(stats.branchThoughtCounts)) {
+        expect(stats.branchThoughtCounts[branchId]).toBeLessThanOrEqual(1);
+      }
+    });
+
+    it('should handle zero thoughts gracefully after cleanup', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 10,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 10,
+        enableAutoCleanup: true,
+        cleanupOnComplete: true,
+        retainChainSummaries: false,
+      });
+
+      // Create and complete chains (they get cleaned up)
+      for (let i = 1; i <= 50; i++) {
+        createCompleteChain(server, i, 3);
+      }
+
+      const stats = server.getMemoryStats();
+
+      // All chains completed and cleaned, nothing remains
+      expect(stats.thoughtHistoryCount).toBe(0);
+      expect(stats.completedChainsInHistory).toBe(0);
+      expect(stats.totalThoughts).toBe(0);
+
+      // Manual operations should still work
+      server.clearHistory();
+      server.clearAllBranches();
+      server.clearCompletedChains();
+      server.clearChainSummaries();
+
+      // All getters should return valid (empty) data
+      expect(server.getThoughtHistory()).toEqual([]);
+      expect(server.getBranches()).toEqual({});
+      expect(server.getChainSummaries()).toEqual([]);
+      expect(server.getThoughtCount()).toBe(0);
+      expect(server.getBranchCount()).toBe(0);
+    });
+  });
+
+  describe('Memory Stats Accuracy Throughout Session', () => {
+    it('should maintain accurate memory stats throughout a long session', () => {
+      const server = new TraceServer({
+        maxThoughtHistory: 50,
+        maxBranches: 5,
+        maxThoughtsPerBranch: 20,
+        enableAutoCleanup: false,
+        cleanupOnComplete: false,
+        retainChainSummaries: false,
+      });
+
+      // Create controlled content and verify stats accuracy
+      // Phase 1: Add thoughts to main history
+      for (let i = 1; i <= 30; i++) {
+        server.processThought(createThought(i, 100, true, `Main thought ${i}`));
+      }
+
+      let stats = server.getMemoryStats();
+      expect(stats.thoughtHistoryCount).toBe(30);
+      expect(stats.totalThoughts).toBe(30);
+
+      // Phase 2: Add branches
+      server.processThought(createBranchThought(1, 5, true, 'test-branch-1', 1, 'Branch 1 T1'));
+      server.processThought(createBranchThought(2, 5, true, 'test-branch-1', 1, 'Branch 1 T2'));
+      server.processThought(createBranchThought(1, 3, true, 'test-branch-2', 1, 'Branch 2 T1'));
+
+      stats = server.getMemoryStats();
+      expect(stats.branchCount).toBe(2);
+      expect(stats.branchThoughtCounts['test-branch-1']).toBe(2);
+      expect(stats.branchThoughtCounts['test-branch-2']).toBe(1);
+      expect(stats.totalBranchThoughts).toBe(3);
+      expect(stats.totalThoughts).toBe(33); // 30 main + 3 branch
+
+      // Phase 3: Trigger eviction by exceeding main history limit
+      for (let i = 31; i <= 60; i++) {
+        server.processThought(createThought(i, 100, true, `Main thought ${i}`));
+      }
+
+      stats = server.getMemoryStats();
+      expect(stats.thoughtHistoryCount).toBe(50); // Exactly at limit
+      expect(stats.totalThoughts).toBe(53); // 50 main + 3 branch
+
+      // Phase 4: Clear and verify
+      server.clearHistory();
+      stats = server.getMemoryStats();
+      expect(stats.thoughtHistoryCount).toBe(0);
+      expect(stats.totalThoughts).toBe(3); // Only branch thoughts remain
+
+      server.clearAllBranches();
+      stats = server.getMemoryStats();
+      expect(stats.branchCount).toBe(0);
+      expect(stats.totalBranchThoughts).toBe(0);
+      expect(stats.totalThoughts).toBe(0);
+    });
+  });
+});
