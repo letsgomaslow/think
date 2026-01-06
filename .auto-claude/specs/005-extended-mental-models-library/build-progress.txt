@@ -327,5 +327,55 @@ Acceptance criteria met:
 ✓ Unintended consequences example (Rent control policy demonstrating cascading system effects)
 ✓ Related models linked
 
+**Subtask 3.6: Add Pre-Mortem Analysis extended documentation**
+**Status: COMPLETE**
+**Commit: a82f7a4**
+
+Successfully added Pre-Mortem Analysis to EXTENDED_MODELS in web/lib/resources/extended/models.ts (lines 572-693):
+
+✓ Complete ExtendedModel structure with all required fields:
+  - name: 'pre_mortem'
+  - title: 'Pre-Mortem Analysis'
+  - description: Imagine your project has failed spectacularly, then work backwards to identify what went wrong. Use prospective hindsight to prevent failures before they happen.
+
+✓ whenToUse: 5 scenarios including:
+  - Before launching major projects or initiatives
+  - When planning complex endeavors with many moving parts
+  - When stakeholder buy-in and risk mitigation are critical
+  - When you want to surface concerns people are hesitant to voice
+  - When past projects have failed due to overlooked risks
+
+✓ steps: 7 detailed steps explaining prospective hindsight technique:
+  - Set the scene: Imagine 6-12 months in future, project failed catastrophically
+  - Write the obituary: List all reasons why project failed (5-10 minutes)
+  - Share failure stories: If in group, each person shares failure narrative
+  - Categorize failure modes: Group failures into categories (technical, organizational, market, resources)
+  - Prioritize high-probability, high-impact failures
+  - Develop mitigations: Create preventive actions, early warning indicators, contingency plans
+  - Update project plan: Incorporate mitigations into timeline, budget, risk management
+
+✓ Project planning example (startup app marketplace):
+  - Context: Startup planning to launch mobile app marketplace in 6 months
+  - Application: Team imagines complete disaster scenario ($2M burned, half team laid off, product shut down after 3 months)
+  - Pre-Mortem Failure Narratives from 5 team members:
+    * Sarah (Product): Vendor recruitment issues, chicken-and-egg problem
+    * Mike (Engineering): Payment processing complexity underestimated by 10x
+    * Lisa (Marketing): Unit economics broken (CAC $45 > LTV $12)
+    * David (Operations): Customer support nightmare, 2.1-star rating
+    * Jennifer (Legal): Money transmitter license compliance failure
+  - Analysis: 5 categorized failure modes with probability and impact assessment
+  - Preventive Actions: Concrete mitigations for each failure category
+  - Outcome: Revised project plan addresses hidden risks
+  - Key Insight: "Pre-mortem works because it gives permission to be pessimistic" - surfaces concerns people are hesitant to voice
+
+✓ relatedModels: ['inversion_thinking', 'second_order_effects', 'swot_analysis']
+
+✓ toolParameters: Proper structure following established pattern
+
+Acceptance criteria met:
+✓ Prospective hindsight concept explained (Description and throughout example)
+✓ Project failure prevention example (Startup app marketplace with 5 team member narratives)
+✓ Related models linked
+
 **Next Steps:**
-- Continue with Subtask 3.6: Add Pre-Mortem Analysis extended documentation
+- Continue with Subtask 3.7: Add Five Whys extended documentation

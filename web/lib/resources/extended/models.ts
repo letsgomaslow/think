@@ -691,6 +691,103 @@ The exercise transforms vague worries into concrete, addressable risks. It's eas
       steps: ['Imagine future failure', 'Write failure narratives', 'Categorize failure modes', 'Develop preventive actions'],
     },
   },
+  five_whys: {
+    name: 'five_whys',
+    title: 'Five Whys',
+    description: 'Ask "Why?" repeatedly (typically five times) to drill down from symptoms to root causes. Developed by Sakichi Toyoda for the Toyota Production System.',
+    whenToUse: [
+      'When troubleshooting process failures or quality issues',
+      'When symptoms are clear but root causes are hidden',
+      'When you need to move beyond quick fixes to prevent recurrence',
+      'When debugging production systems or manufacturing defects',
+      'When investigating incidents or operational problems',
+    ],
+    steps: [
+      'Start with the problem statement - describe the specific issue or symptom you\'re observing',
+      'Ask "Why did this happen?" and answer based on facts, not assumptions. This is Why #1.',
+      'Take that answer and ask "Why?" again. What caused the cause? This is Why #2.',
+      'Continue asking "Why?" for each subsequent answer. Typically 5 iterations reveal the root cause, but stop when you reach something actionable.',
+      'Verify the root cause: If you fix this, will it prevent the problem from recurring? If yes, you\'ve found it.',
+      'Implement corrective actions at the root cause level, not just treating symptoms',
+    ],
+    example: {
+      context: 'Toyota Production System - Machine stopped on the factory floor',
+      application: `Problem: A robot welding machine stopped working on the assembly line, halting production.
+
+Why #1: Why did the machine stop?
+→ The circuit overloaded and the fuse blew.
+
+Why #2: Why did the circuit overload?
+→ The bearings were not sufficiently lubricated, causing excessive friction and heat.
+
+Why #3: Why were the bearings not sufficiently lubricated?
+→ The lubrication pump was not circulating enough oil.
+
+Why #4: Why was the pump not circulating enough oil?
+→ The pump intake was clogged with metal shavings.
+
+Why #5: Why was the intake clogged with metal shavings?
+→ There is no filter on the pump, and metal shavings from the machining process contaminate the oil system.
+
+Root Cause Identified: Lack of oil filter allows contaminants into the lubrication system.
+
+Corrective Actions Taken:
+1. Install a filter on the lubrication pump intake (prevents contamination)
+2. Implement regular oil system inspection checklist (early detection)
+3. Add "check filter" to preventive maintenance schedule (ongoing prevention)
+4. Conduct oil contamination training for operators (knowledge sharing)
+
+Contrast with symptom-focused approach:
+❌ Superficial fix: "Replace the fuse" → Machine stops again next week
+❌ Slightly deeper: "Lubricate the bearings" → Helps temporarily but doesn't address contamination
+✓ Root cause fix: "Install filter and create maintenance system" → Problem solved permanently
+
+Why This Works (The Meta-Level):
+Five Whys transforms reactive firefighting into proactive problem prevention. Each "Why?" peels back a layer, moving from symptoms (fuse blew) to mechanisms (friction, lack of lubrication) to systemic root causes (no filter, no maintenance protocol).
+
+The technique is deceptively simple but powerful because:
+- It forces you past the first obvious answer
+- It reveals organizational and process issues, not just technical failures
+- It creates a clear chain of causation that's easy to communicate
+- It identifies leverage points where small fixes prevent big problems
+
+Real-World Application - Software Example:
+Problem: Users complaining about slow page loads
+
+Why #1: Why are page loads slow?
+→ Database queries are taking 3-5 seconds to return results
+
+Why #2: Why are database queries so slow?
+→ The queries are doing full table scans on a table with 50 million rows
+
+Why #3: Why are we doing full table scans?
+→ There's no index on the "user_id" column that we're filtering by
+
+Why #4: Why is there no index on user_id?
+→ The index was never created when we migrated this table from the old system
+
+Why #5: Why didn't the migration process include indexes?
+→ Our migration checklist doesn't include verifying indexes, and code review doesn't check query performance
+
+Root Cause: No quality assurance process for database schema migrations
+
+Corrective Actions:
+1. Add index on user_id (immediate fix)
+2. Audit all tables for missing indexes (systemic fix)
+3. Update migration checklist to include index verification (process fix)
+4. Add automated query performance tests to CI/CD pipeline (preventive control)
+5. Train team on database performance best practices (capability building)
+
+Key Principle:
+Keep asking "Why?" until you find a root cause you can take action on. If you can't fix it or it leads to "because that's how it's always been," you haven't gone deep enough or you need to reframe the question.`,
+    },
+    relatedModels: ['first_principles', 'error_propagation', 'mece'],
+    toolParameters: {
+      modelName: 'five_whys',
+      problem: 'Your problem or issue requiring root cause analysis',
+      steps: ['Problem statement', 'Why #1', 'Why #2', 'Why #3', 'Why #4', 'Why #5 (or until root cause found)', 'Corrective actions'],
+    },
+  },
 };
 
 /**

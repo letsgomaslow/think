@@ -197,7 +197,7 @@
           "title": "Add Pre-Mortem extended documentation",
           "description": "Add Pre-Mortem to EXTENDED_MODELS with project planning example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Prospective hindsight concept explained",
             "Project failure prevention example",
