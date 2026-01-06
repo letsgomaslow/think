@@ -70,9 +70,34 @@ Verified implementation of:
 
 ---
 
+### Subtask 3.2: Add Six Thinking Hats extended documentation - COMPLETED ✓
+
+**Finding:** Six Thinking Hats extended documentation was already fully implemented in web/lib/resources/extended/models.ts (lines 292-365)
+
+**Verification:**
+- ✅ All 6 hats explained in detail in steps:
+  - White Hat (Facts & Information): Objective data and facts
+  - Red Hat (Emotions & Intuition): Feelings and gut reactions
+  - Black Hat (Caution & Risks): Problems, risks, and weaknesses
+  - Yellow Hat (Optimism & Benefits): Positive aspects and opportunities
+  - Green Hat (Creativity & Alternatives): New ideas and creative solutions
+  - Blue Hat (Process Control & Summary): Process management and decision facilitation
+- ✅ example: Comprehensive group problem-solving scenario
+  - Context: Product team debating AI-powered chatbot support for SaaS application
+  - Application: All 6 hats systematically applied with team member perspectives
+  - Shows Blue Hat managing the process, facts (White), emotions (Red), risks (Black), benefits (Yellow), creative solutions (Green), and final decision
+- ✅ relatedModels: Linked to swot_analysis, pre_mortem, and first_principles
+- ✅ toolParameters: Properly structured with modelName, problem, and steps summary
+
+**Commit:** f4ff3f4 - "auto-claude: 3.2 - Add Six Thinking Hats to EXTENDED_MODELS with detailed hat-by-hat explanation"
+
+**Action Taken:** Updated implementation_plan.json to mark subtask 3.2 as completed.
+
+---
+
 ## Next Steps
 
-Phase 3 subtask 3.1 is complete. Ready to proceed with:
-- Phase 3 remaining: Extended Model Documentation (subtasks 3.2-3.7)
+Phase 3 subtasks 3.1 and 3.2 are complete. Ready to proceed with:
+- Phase 3 remaining: Extended Model Documentation (subtasks 3.3-3.7)
 - Phase 4: Unit Tests (subtasks 4.1-4.2)
 - Phase 5: Verification and Integration (subtasks 5.1-5.2)
