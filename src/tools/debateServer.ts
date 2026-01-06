@@ -105,6 +105,111 @@ export class DebateServer {
     }
   }
 
+  /**
+   * Get the full history of arguments in a debate chain
+   * @param rootArgumentId - The unique identifier for the root argument of the debate chain
+   * @returns Array of all ArgumentData entries for this debate chain
+   */
+  public getDebateHistory(rootArgumentId: string): ArgumentData[] {
+    return this.argumentChains[rootArgumentId] || [];
+  }
+
+  /**
+   * Get the tree structure of arguments and their responses
+   * @param rootArgumentId - The unique identifier for the root argument of the debate chain
+   * @returns Tree structure showing argument relationships
+   */
+  public getArgumentTree(rootArgumentId: string): {
+    rootArgumentId: string;
+    totalArguments: number;
+    argumentTypes: string[];
+    tree: Array<{
+      argumentId: string;
+      argumentType: string;
+      claim: string;
+      confidence: number;
+      respondsTo: string | null;
+      supports: string[];
+      contradicts: string[];
+      children: Array<{
+        argumentId: string;
+        argumentType: string;
+        claim: string;
+        relationshipType: 'response' | 'support' | 'contradiction';
+      }>;
+    }>;
+  } {
+    const history = this.argumentChains[rootArgumentId] || [];
+
+    if (history.length === 0) {
+      return {
+        rootArgumentId,
+        totalArguments: 0,
+        argumentTypes: [],
+        tree: []
+      };
+    }
+
+    // Extract unique argument types
+    const typesSet = new Set<string>();
+    history.forEach(arg => typesSet.add(arg.argumentType));
+    const argumentTypes = Array.from(typesSet);
+
+    // Build tree structure
+    const tree = history.map(arg => {
+      // Find all arguments that respond to this one
+      const responses = history.filter(a => a.respondsTo === arg.argumentId);
+
+      // Find all arguments that this one supports or contradicts
+      const supportedBy = history.filter(a =>
+        arg.supports && arg.supports.includes(a.argumentId || '')
+      );
+      const contradictedBy = history.filter(a =>
+        arg.contradicts && arg.contradicts.includes(a.argumentId || '')
+      );
+
+      // Combine children
+      const children = [
+        ...responses.map(a => ({
+          argumentId: a.argumentId || '',
+          argumentType: a.argumentType,
+          claim: a.claim,
+          relationshipType: 'response' as const
+        })),
+        ...supportedBy.map(a => ({
+          argumentId: a.argumentId || '',
+          argumentType: a.argumentType,
+          claim: a.claim,
+          relationshipType: 'support' as const
+        })),
+        ...contradictedBy.map(a => ({
+          argumentId: a.argumentId || '',
+          argumentType: a.argumentType,
+          claim: a.claim,
+          relationshipType: 'contradiction' as const
+        }))
+      ];
+
+      return {
+        argumentId: arg.argumentId || '',
+        argumentType: arg.argumentType,
+        claim: arg.claim,
+        confidence: arg.confidence,
+        respondsTo: arg.respondsTo || null,
+        supports: arg.supports || [],
+        contradicts: arg.contradicts || [],
+        children
+      };
+    });
+
+    return {
+      rootArgumentId,
+      totalArguments: history.length,
+      argumentTypes,
+      tree
+    };
+  }
+
   public processStructuredArgumentation(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
     try {
       const validatedData = this.validateInputData(input);
