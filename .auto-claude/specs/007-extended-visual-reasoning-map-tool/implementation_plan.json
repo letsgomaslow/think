@@ -129,8 +129,8 @@
           "title": "Update formatOutput for new diagram types",
           "description": "Extend formatOutput to display Mermaid preview in console output. Add visual indicators for new diagram types.",
           "file_paths": ["src/tools/mapServer.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Successfully extended formatOutput() to display Mermaid preview in console output. Added visual emoji indicators for all 11 diagram types (5 new + 6 existing). Mermaid preview displays in a formatted box with separators and includes a helpful tip for rendering at mermaid.live. Changes committed."
         }
       ]
     },

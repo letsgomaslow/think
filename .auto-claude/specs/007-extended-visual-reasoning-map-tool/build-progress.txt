@@ -22,9 +22,9 @@
 - [x] 2.6 Implement System Context Diagram generation
 - [x] 2.7 Add Mermaid generation for existing diagram types
 
-### Phase 3: MapServer Integration
+### Phase 3: MapServer Integration ✓ COMPLETE
 - [x] 3.1 Update MapServer to use MermaidGenerator
-- [ ] 3.2 Update formatOutput for new diagram types
+- [x] 3.2 Update formatOutput for new diagram types
 
 ### Phase 4: Comprehensive Testing
 - [ ] 4.1 Create MermaidGenerator tests
