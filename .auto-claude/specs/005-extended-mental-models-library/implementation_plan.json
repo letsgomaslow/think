@@ -50,12 +50,14 @@
           "title": "Add SWOT Analysis to catalog",
           "description": "Add SWOT Analysis mental model with name, title, description, useCases, and steps to MENTAL_MODELS array",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "SWOT model defined with proper structure",
             "Includes 4+ use cases",
             "Includes 4+ implementation steps"
-          ]
+          ],
+          "completed_at": "2026-01-06T12:30:00.000Z",
+          "notes": "Verified SWOT Analysis mental model is properly implemented in web/lib/resources/models.ts (lines 117-132). All acceptance criteria met: proper structure with name, title, description, 4 use cases covering strategic planning/competitive analysis/project planning/personal development, and 4 implementation steps covering Strengths/Weaknesses/Opportunities/Threats. Code was implemented in previous session (commit 8988367)."
         },
         {
           "subtask_id": "2.2",
