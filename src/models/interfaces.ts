@@ -180,6 +180,7 @@ export interface DecisionFrameworkData {
     nextStageNeeded: boolean;
     eisenhowerClassification?: EisenhowerClassification[];
     costBenefitAnalysis?: CostBenefitAnalysis[];
+    riskAssessment?: RiskItem[];
 }
 
 // Eisenhower Matrix types

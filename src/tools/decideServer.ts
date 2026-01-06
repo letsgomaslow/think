@@ -1,4 +1,4 @@
-import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis } from '../models/interfaces.js';
+import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis, RiskItem } from '../models/interfaces.js';
 import chalk from 'chalk';
 
 export class DecideServer {
@@ -183,6 +183,100 @@ export class DecideServer {
     return output;
   }
 
+  private formatRiskAssessment(data: DecisionFrameworkData): string {
+    if (!data.riskAssessment || data.riskAssessment.length === 0) {
+      return '';
+    }
+
+    const risks = data.riskAssessment;
+    const options = data.options;
+
+    let output = `\n${chalk.bold.blue('Risk Assessment Matrix')}\n`;
+    output += `${chalk.dim('━'.repeat(60))}\n`;
+
+    // Helper function to determine risk level and color
+    const getRiskLevel = (riskScore: number): { level: string; color: any; emoji: string } => {
+      // Risk score = probability (0-1) × impact (1-10) = max 10
+      if (riskScore >= 7) {
+        return { level: 'CRITICAL', color: chalk.red.bold, emoji: '🔴' };
+      } else if (riskScore >= 4) {
+        return { level: 'HIGH', color: chalk.red, emoji: '🟠' };
+      } else if (riskScore >= 2) {
+        return { level: 'MEDIUM', color: chalk.yellow, emoji: '🟡' };
+      } else {
+        return { level: 'LOW', color: chalk.green, emoji: '🟢' };
+      }
+    };
+
+    // Group risks by option
+    const risksByOption = new Map<string, RiskItem[]>();
+    risks.forEach(risk => {
+      if (!risksByOption.has(risk.optionId)) {
+        risksByOption.set(risk.optionId, []);
+      }
+      risksByOption.get(risk.optionId)!.push(risk);
+    });
+
+    // Display risks for each option
+    risksByOption.forEach((optionRisks, optionId) => {
+      const option = options.find(opt => opt.id === optionId);
+      if (!option) return;
+
+      output += `\n${chalk.bold.cyan(`Option: ${option.name}`)}\n`;
+      output += `${chalk.dim(option.description)}\n`;
+
+      // Sort risks by risk score (highest first)
+      const sortedRisks = [...optionRisks].sort((a, b) => b.riskScore - a.riskScore);
+
+      output += `\n${chalk.bold('Risk Items:')}\n`;
+      sortedRisks.forEach(risk => {
+        const { level, color, emoji } = getRiskLevel(risk.riskScore);
+
+        output += `\n  ${emoji} ${color(level)} ${chalk.bold('Risk:')}\n`;
+        output += `     ${risk.description}\n`;
+
+        const categoryLabel = risk.category ? ` [${risk.category}]` : '';
+        output += `     ${chalk.yellow('Probability:')} ${(risk.probability * 100).toFixed(0)}%  `;
+        output += `${chalk.magenta('Impact:')} ${risk.impact.toFixed(1)}/10${categoryLabel}\n`;
+        output += `     ${chalk.cyan('Risk Score:')} ${color(risk.riskScore.toFixed(2))}\n`;
+
+        if (risk.mitigation && risk.mitigation.length > 0) {
+          output += `     ${chalk.green('Mitigation Strategies:')}\n`;
+          risk.mitigation.forEach(strategy => {
+            output += `       • ${strategy}\n`;
+          });
+        }
+      });
+
+      // Risk summary for this option
+      const avgRiskScore = optionRisks.reduce((sum, r) => sum + r.riskScore, 0) / optionRisks.length;
+      const maxRiskScore = Math.max(...optionRisks.map(r => r.riskScore));
+      const criticalRisks = optionRisks.filter(r => r.riskScore >= 7).length;
+      const highRisks = optionRisks.filter(r => r.riskScore >= 4 && r.riskScore < 7).length;
+
+      output += `\n  ${chalk.bold.yellow('Risk Summary:')}\n`;
+      output += `     Total Risks: ${optionRisks.length}  `;
+      output += `Critical: ${criticalRisks}  High: ${highRisks}\n`;
+      output += `     Average Risk Score: ${avgRiskScore.toFixed(2)}  `;
+      output += `Maximum Risk Score: ${maxRiskScore.toFixed(2)}\n`;
+
+      output += `\n${chalk.dim('─'.repeat(60))}\n`;
+    });
+
+    // Overall risk matrix visualization
+    output += `\n${chalk.bold.blue('Risk Matrix Visualization')}\n`;
+    output += `${chalk.dim('Probability vs Impact')}\n\n`;
+    output += `  ${chalk.bold('Impact →')}\n`;
+    output += `  Probability ↓     Low(1-3)  Medium(4-6)  High(7-10)\n`;
+    output += `  ────────────────────────────────────────────────────\n`;
+    output += `  High (70-100%)    ${chalk.yellow('MEDIUM')}    ${chalk.red('HIGH')}      ${chalk.red.bold('CRITICAL')}\n`;
+    output += `  Medium (30-70%)   ${chalk.green('LOW')}       ${chalk.yellow('MEDIUM')}    ${chalk.red('HIGH')}\n`;
+    output += `  Low (0-30%)       ${chalk.green('LOW')}       ${chalk.green('LOW')}       ${chalk.yellow('MEDIUM')}\n`;
+    output += `\n`;
+
+    return output;
+  }
+
   private formatOutput(data: DecisionFrameworkData): string {
     const { decisionStatement, options, analysisType, stage, iteration } = data;
 
@@ -196,6 +290,8 @@ export class DecideServer {
       output += this.formatEisenhowerMatrix(data);
     } else if (analysisType === 'cost-benefit') {
       output += this.formatCostBenefitAnalysis(data);
+    } else if (analysisType === 'risk-assessment') {
+      output += this.formatRiskAssessment(data);
     } else {
       // Options
       if (options.length > 0) {

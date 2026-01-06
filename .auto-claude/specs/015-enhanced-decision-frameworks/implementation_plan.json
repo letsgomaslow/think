@@ -106,11 +106,13 @@
           "id": "2.2",
           "title": "Implement Cost-Benefit Analysis formatting",
           "description": "Add formatCostBenefitAnalysis method with quantified costs, benefits, NPV calculations, ROI display, and benefit-cost ratio",
-          "status": "pending",
+          "status": "completed",
           "estimatedMinutes": 25,
           "files": [
             "src/tools/decideServer.ts"
-          ]
+          ],
+          "notes": "Successfully implemented formatCostBenefitAnalysis method in DecideServer:\n- Added costBenefitAnalysis field to DecisionFrameworkData interface for storing cost-benefit data\n- Created formatCostBenefitAnalysis method that displays costs and benefits with detailed breakdowns\n- Updated formatOutput to route cost-benefit analysis type to the new formatter\n- Implemented color-coded display with emojis (\ud83d\udcb5 for monetary, \u2696\ufe0f for non-monetary)\n- Shows costs section with individual items, categories, timeframes, and totals\n- Shows benefits section with individual items, categories, timeframes, and totals\n- Displays summary metrics: Net Value, Benefit-Cost Ratio, ROI, and NPV (with discount rate and time period)\n- Color coding: green for positive values, red for negative values\n- Follows existing DecideServer patterns with chalk-based formatting",
+          "updated_at": "2026-01-06T03:52:49.911427+00:00"
         },
         {
           "id": "2.3",
@@ -361,5 +363,5 @@
     "issues": "",
     "testsPassed": ""
   },
-  "last_updated": "2026-01-06T03:51:03.506929+00:00"
+  "last_updated": "2026-01-06T03:52:49.911439+00:00"
 }
