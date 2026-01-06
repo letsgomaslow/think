@@ -679,6 +679,44 @@ It supports multiple decision frameworks, probability estimates, and value judgm
                     required: ["optionId", "description", "probability", "impact", "riskScore"],
                 },
             },
+            reversibilityAnalysis: {
+                type: "array",
+                description: "Reversibility analysis for Bezos's Two-Way Door Framework - evaluates how easily a decision can be reversed",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        reversibilityScore: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 1,
+                            description: "Reversibility score from 0.0 (irreversible) to 1.0 (easily reversible)"
+                        },
+                        undoCost: {
+                            type: "number",
+                            description: "Estimated cost to reverse the decision (in monetary units)"
+                        },
+                        timeToReverse: {
+                            type: "number",
+                            description: "Estimated time to reverse the decision (in days)"
+                        },
+                        doorType: {
+                            type: "string",
+                            enum: ["one-way", "two-way"],
+                            description: "Type of door: 'one-way' for irreversible/hard-to-reverse decisions, 'two-way' for easily reversible decisions"
+                        },
+                        undoComplexity: {
+                            type: "string",
+                            description: "Optional description of the complexity involved in reversing the decision"
+                        },
+                        reversibilityNotes: {
+                            type: "string",
+                            description: "Optional notes about reversibility considerations"
+                        },
+                    },
+                    required: ["optionId", "reversibilityScore", "undoCost", "timeToReverse", "doorType"],
+                },
+            },
         },
         required: [
             "decisionStatement",
