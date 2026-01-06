@@ -155,12 +155,14 @@
           "title": "Add SWOT Analysis extended documentation",
           "description": "Add SWOT to EXTENDED_MODELS with whenToUse, detailed steps, example with context and application, relatedModels, and toolParameters",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Complete ExtendedModel structure",
             "Real-world example included",
             "Related models linked"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:45:00.000Z",
+          "notes": "SWOT Analysis already fully implemented in EXTENDED_MODELS (lines 238-291). Includes complete structure with name, title, description, 5 whenToUse scenarios, 5 detailed steps, real-world coffee shop example with context and application, 3 related models (opportunity_cost, second_order_effects, pre_mortem), and proper toolParameters. All acceptance criteria met."
         },
         {
           "subtask_id": "3.2",
