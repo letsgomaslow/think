@@ -110,3 +110,90 @@ All acceptance criteria met for each subtask:
 
 **Next Steps:**
 - Continue with Phase 3: Extended Model Documentation
+
+---
+
+### 2026-01-06 - Phase 3: Extended Model Documentation
+
+**Subtask 3.1: Add SWOT Analysis extended documentation**
+**Status: COMPLETE**
+**Commit: 6c09853**
+
+Successfully added SWOT Analysis to EXTENDED_MODELS in web/lib/resources/extended/models.ts (lines 238-291):
+
+✓ Complete ExtendedModel structure with all required fields:
+  - name: 'swot_analysis'
+  - title: 'SWOT Analysis'
+  - description: Clear explanation of evaluating Strengths, Weaknesses, Opportunities, and Threats
+
+✓ whenToUse: 5 scenarios including:
+  - Evaluating business strategy or market position
+  - Making major strategic decisions or pivots
+  - Assessing competitive advantages and vulnerabilities
+  - Planning product launches or entering new markets
+  - Conducting annual strategic planning or reviews
+
+✓ steps: 5 detailed steps:
+  - Identify Strengths (internal positive attributes)
+  - Identify Weaknesses (internal limitations)
+  - Identify Opportunities (external favorable conditions)
+  - Identify Threats (external risks)
+  - Analyze intersections (matching strategies)
+
+✓ Real-world example:
+  - Context: Independent coffee shop evaluating delivery service expansion
+  - Application: Comprehensive SWOT matrix with specific details for each quadrant
+  - Strategic insight: Premium subscription delivery service leveraging strengths while avoiding high-fee competition
+
+✓ relatedModels: ['opportunity_cost', 'second_order_effects', 'pre_mortem']
+
+✓ toolParameters: Proper structure following established pattern
+
+Acceptance criteria met:
+✓ Complete ExtendedModel structure
+✓ Real-world example included
+✓ Related models linked
+
+**Subtask 3.2: Add Six Thinking Hats extended documentation**
+**Status: COMPLETE**
+**Commit: 4802e41**
+
+Successfully added Six Thinking Hats (De Bono) to EXTENDED_MODELS in web/lib/resources/extended/models.ts (lines 292-365):
+
+✓ Complete ExtendedModel structure with all required fields:
+  - name: 'six_thinking_hats'
+  - title: 'Six Thinking Hats (De Bono)'
+  - description: Explore different perspectives systematically using six metaphorical "hats"
+
+✓ whenToUse: 5 scenarios including:
+  - When group discussions become argumentative or stuck in one perspective
+  - When you need creative solutions and diverse viewpoints
+  - When making complex decisions that benefit from multiple angles
+  - When facilitating productive meetings with conflicting stakeholders
+  - When you want to separate emotion from logic in problem-solving
+
+✓ steps: 6 detailed steps explaining all hat colors:
+  - White Hat (Facts & Information): Focus on data, facts, and objective information
+  - Red Hat (Emotions & Intuition): Express feelings, hunches, and gut reactions
+  - Black Hat (Caution & Risks): Identify potential problems, risks, and weaknesses
+  - Yellow Hat (Optimism & Benefits): Explore positive aspects, benefits, and opportunities
+  - Green Hat (Creativity & Alternatives): Generate new ideas, possibilities, and creative solutions
+  - Blue Hat (Process Control & Summary): Manage the thinking process, summarize, and facilitate
+
+✓ Real-world example:
+  - Context: Product team debating AI-powered chatbot support implementation
+  - Application: Comprehensive group problem-solving session using all 6 hats
+  - Shows Blue Hat managing process, each hat contributing unique perspective
+  - Demonstrates decision-making: 3-month hybrid pilot with clear success metrics
+
+✓ relatedModels: ['swot_analysis', 'pre_mortem', 'first_principles']
+
+✓ toolParameters: Proper structure following established pattern
+
+Acceptance criteria met:
+✓ All 6 hats explained in steps
+✓ Creative problem-solving example (chatbot implementation decision)
+✓ Related models linked
+
+**Next Steps:**
+- Continue with Subtask 3.3: Add MECE extended documentation
