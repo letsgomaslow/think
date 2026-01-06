@@ -300,6 +300,70 @@ export class TraceServer {
   }
 
   // ============================================================================
+  // State Inspection Methods
+  // ============================================================================
+
+  /**
+   * Gets a copy of the main thought history
+   * Returns a shallow copy to prevent external modification of internal state
+   * @returns Copy of the thought history array
+   */
+  public getThoughtHistory(): ThoughtData[] {
+    return [...this.thoughtHistory];
+  }
+
+  /**
+   * Gets a copy of all branches
+   * Returns a deep copy of the branches object with shallow copies of each branch array
+   * @returns Copy of the branches object with branch IDs as keys and thought arrays as values
+   */
+  public getBranches(): Record<string, ThoughtData[]> {
+    const branchesCopy: Record<string, ThoughtData[]> = {};
+    for (const branchId of Object.keys(this.branches)) {
+      branchesCopy[branchId] = [...this.branches[branchId]];
+    }
+    return branchesCopy;
+  }
+
+  /**
+   * Gets a copy of a specific branch by its ID
+   * Returns a shallow copy to prevent external modification of internal state
+   * @param branchId - The ID of the branch to retrieve
+   * @returns Copy of the branch array, or undefined if the branch doesn't exist
+   */
+  public getBranch(branchId: string): ThoughtData[] | undefined {
+    const branch = this.branches[branchId];
+    if (!branch) {
+      return undefined;
+    }
+    // Update last accessed time for LRU tracking
+    if (this.branchMetadata[branchId]) {
+      this.branchMetadata[branchId].lastAccessedAt = Date.now();
+    }
+    return [...branch];
+  }
+
+  /**
+   * Gets the total number of thoughts in the main history
+   * @returns Number of thoughts in the main thought history
+   */
+  public getThoughtCount(): number {
+    return this.thoughtHistory.length;
+  }
+
+  /**
+   * Gets the number of branches currently maintained
+   * @returns Number of branches
+   */
+  public getBranchCount(): number {
+    return Object.keys(this.branches).length;
+  }
+
+  // ============================================================================
+  // End of State Inspection Methods
+  // ============================================================================
+
+  // ============================================================================
   // Manual Cleanup Methods
   // ============================================================================
 
