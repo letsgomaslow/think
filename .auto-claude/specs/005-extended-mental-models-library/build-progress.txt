@@ -21,14 +21,14 @@ Adding 7 new mental models to the existing MODEL_TOOL:
 - [x] 1.1: Add new model names to MODEL_TOOL enum
 - [x] 1.2: Update MODEL_TOOL description
 
-### Phase 2: Resource Catalog Updates (6/7 subtasks)
+### Phase 2: Resource Catalog Updates (7/7 subtasks) ✅ COMPLETE
 - [x] 2.1: Add SWOT Analysis to catalog
 - [x] 2.2: Add Six Thinking Hats to catalog
 - [x] 2.3: Add MECE to catalog
 - [x] 2.4: Add Inversion Thinking to catalog
 - [x] 2.5: Add Second-Order Effects to catalog
 - [x] 2.6: Add Pre-Mortem Analysis to catalog
-- [ ] 2.7: Add Five Whys to catalog
+- [x] 2.7: Add Five Whys to catalog
 
 ### Phase 3: Extended Model Documentation (0/7 subtasks)
 - [ ] 3.1: Add SWOT Analysis extended documentation
@@ -107,3 +107,12 @@ Adding 7 new mental models to the existing MODEL_TOOL:
              - Added 4 implementation steps: imagine complete failure, generate failure reasons, identify likely/impactful causes, develop preventive measures
              - Updated file comment from 7 to 12 mental models (accounting for all models added so far)
              - Committed: a58061d
+[2026-01-05] ✅ Completed subtask 2.7: Added Five Whys mental model to web/lib/resources/models.ts
+             - Added name: five_whys
+             - Added title: Five Whys
+             - Description explains iterative "why" questioning technique from Toyota Production System for drilling down to root causes
+             - Added 4 use cases: root cause analysis for bugs/failures, quality control and defect investigation, process improvement, manufacturing operations
+             - Added 5 implementation steps: state problem clearly, ask "why" and document answer, iterate asking "why" 5 times, reach fundamental root cause, implement solutions addressing root not symptoms
+             - Updated file comment from 12 to 13 mental models
+             - Committed: 83063db
+             - Phase 2 (Resource Catalog Updates) now COMPLETE!
