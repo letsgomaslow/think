@@ -222,9 +222,51 @@ Verified implementation of:
 
 ---
 
+### Subtask 3.7: Add Five Whys extended documentation - COMPLETED ✓
+
+**Finding:** Five Whys extended documentation was already fully implemented in web/lib/resources/extended/models.ts (lines 694-790)
+
+**Verification:**
+- ✅ Iterative root cause technique clearly explained in description: "Ask 'Why?' repeatedly (typically five times) to drill down from symptoms to root causes. Developed by Sakichi Toyoda for the Toyota Production System."
+- ✅ steps: 6 detailed implementation steps including:
+  - Start with the problem statement - describe the specific issue or symptom
+  - Ask "Why did this happen?" and answer based on facts (Why #1)
+  - Take that answer and ask "Why?" again (Why #2)
+  - Continue asking "Why?" for each subsequent answer (typically 5 iterations)
+  - Verify the root cause: If you fix this, will it prevent recurrence?
+  - Implement corrective actions at the root cause level, not just treating symptoms
+- ✅ example: Comprehensive Toyota Production System manufacturing scenario
+  - Context: "Toyota Production System - Machine stopped on the factory floor"
+  - Problem: Robot welding machine stopped working, halting production
+  - Application: Full Five Whys analysis:
+    * Why #1: Circuit overloaded, fuse blew
+    * Why #2: Bearings not sufficiently lubricated, causing friction and heat
+    * Why #3: Lubrication pump not circulating enough oil
+    * Why #4: Pump intake clogged with metal shavings
+    * Why #5: No filter on pump, metal shavings contaminate oil system
+  - Root Cause Identified: Lack of oil filter allows contaminants into lubrication system
+  - Corrective Actions: 4 concrete actions (install filter, inspection checklist, maintenance schedule, operator training)
+  - Contrast with symptom-focused approaches (replace fuse, lubricate bearings) vs root cause fix
+  - Meta-level explanation of why the technique works
+  - Additional software debugging example: Slow page loads → database queries → full table scans → missing index → migration checklist gap
+- ✅ relatedModels: Linked to first_principles, error_propagation, and mece
+- ✅ toolParameters: Properly structured with modelName, problem, and comprehensive steps array
+- ✅ whenToUse: 5 scenarios including troubleshooting process failures, quality issues, moving beyond quick fixes, debugging production systems, investigating incidents
+
+**Commit:** 7964e66 - "auto-claude: 3.7 - Add Five Whys to EXTENDED_MODELS with Toyota Production System example"
+
+**Action Taken:** Updated implementation_plan.json to mark subtask 3.7 as completed.
+
+---
+
+## Phase 3: Extended Model Documentation - COMPLETED ✓
+
+All 7 extended model documentation subtasks (3.1-3.7) are now complete.
+
+---
+
 ## Next Steps
 
-Phase 3 subtasks 3.1, 3.2, 3.3, 3.4, 3.5, and 3.6 are complete. Ready to proceed with:
-- Phase 3 remaining: Extended Model Documentation (subtask 3.7)
+Phase 3 is complete. Ready to proceed with:
 - Phase 4: Unit Tests (subtasks 4.1-4.2)
 - Phase 5: Verification and Integration (subtasks 5.1-5.2)
