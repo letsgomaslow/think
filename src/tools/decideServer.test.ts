@@ -701,4 +701,435 @@ describe('DecideServer', () => {
       expect(output).toContain('Cost-Benefit Analysis');
     });
   });
+
+  describe('Risk Assessment Matrix', () => {
+    it('should calculate probability × impact scoring and categorize all risk levels correctly', () => {
+      const riskInput = {
+        decisionStatement: 'Should we launch the new product now?',
+        options: [
+          { id: 'launch', name: 'Launch Now', description: 'Launch product immediately' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'product-launch-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          { optionId: 'launch', description: 'Major security vulnerability discovered', probability: 0.9, impact: 9, riskScore: 8.1, category: 'Security' },
+          { optionId: 'launch', description: 'Competitor might release similar product', probability: 0.6, impact: 7, riskScore: 4.2, category: 'Market' },
+          { optionId: 'launch', description: 'Minor UI bugs in edge cases', probability: 0.8, impact: 3, riskScore: 2.4, category: 'Quality' },
+          { optionId: 'launch', description: 'Documentation not fully complete', probability: 0.3, impact: 2, riskScore: 0.6, category: 'Documentation' },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      // Verify analysis type
+      expect(result.analysisType).toBe('risk-assessment');
+      expect(result.riskAssessment).toHaveLength(4);
+
+      // Verify risk scores are calculated correctly (probability × impact)
+      expect(result.riskAssessment![0].riskScore).toBe(8.1); // 0.9 × 9 = 8.1
+      expect(result.riskAssessment![1].riskScore).toBe(4.2); // 0.6 × 7 = 4.2
+      expect(result.riskAssessment![2].riskScore).toBe(2.4); // 0.8 × 3 = 2.4
+      expect(result.riskAssessment![3].riskScore).toBe(0.6); // 0.3 × 2 = 0.6
+
+      // Verify output contains risk assessment headers
+      expect(output).toContain('Risk Assessment Matrix');
+      expect(output).toContain('Launch Now');
+
+      // Verify all risk levels are displayed
+      expect(output).toContain('CRITICAL'); // Risk score >= 7
+      expect(output).toContain('HIGH');     // Risk score >= 4 and < 7
+      expect(output).toContain('MEDIUM');   // Risk score >= 2 and < 4
+      expect(output).toContain('LOW');      // Risk score < 2
+
+      // Verify risk descriptions
+      expect(output).toContain('Major security vulnerability discovered');
+      expect(output).toContain('Competitor might release similar product');
+      expect(output).toContain('Minor UI bugs in edge cases');
+      expect(output).toContain('Documentation not fully complete');
+
+      // Verify categories are displayed
+      expect(output).toContain('Security');
+      expect(output).toContain('Market');
+      expect(output).toContain('Quality');
+      expect(output).toContain('Documentation');
+
+      // Verify probability and impact are displayed
+      expect(output).toContain('90%');  // 0.9 as percentage
+      expect(output).toContain('60%');  // 0.6 as percentage
+      expect(output).toContain('9.0/10');  // impact
+      expect(output).toContain('7.0/10');  // impact
+    });
+
+    it('should display mitigation strategies when provided', () => {
+      const riskInput = {
+        decisionStatement: 'Should we migrate to microservices architecture?',
+        options: [
+          { id: 'microservices', name: 'Migrate to Microservices', description: 'Redesign system as microservices' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'architecture-migration-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          {
+            optionId: 'microservices',
+            description: 'Service complexity and operational overhead',
+            probability: 0.7,
+            impact: 8,
+            riskScore: 5.6,
+            category: 'Architecture',
+            mitigation: [
+              'Start with pilot service to gain experience',
+              'Invest in comprehensive monitoring and logging',
+              'Establish clear service boundaries and contracts',
+              'Create detailed runbooks and documentation',
+            ],
+          },
+          {
+            optionId: 'microservices',
+            description: 'Data consistency challenges across services',
+            probability: 0.8,
+            impact: 7,
+            riskScore: 5.6,
+            category: 'Data',
+            mitigation: [
+              'Implement saga pattern for distributed transactions',
+              'Use event sourcing for audit trails',
+              'Define clear data ownership per service',
+            ],
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      expect(output).toContain('Mitigation Strategies');
+      expect(output).toContain('Start with pilot service to gain experience');
+      expect(output).toContain('Invest in comprehensive monitoring and logging');
+      expect(output).toContain('Establish clear service boundaries and contracts');
+      expect(output).toContain('Create detailed runbooks and documentation');
+      expect(output).toContain('Implement saga pattern for distributed transactions');
+      expect(output).toContain('Use event sourcing for audit trails');
+      expect(output).toContain('Define clear data ownership per service');
+    });
+
+    it('should calculate and display risk summary metrics correctly', () => {
+      const riskInput = {
+        decisionStatement: 'Should we expand to international markets?',
+        options: [
+          { id: 'expand', name: 'International Expansion', description: 'Launch in EU and Asia markets' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'intl-expansion-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          { optionId: 'expand', description: 'Regulatory compliance issues', probability: 0.8, impact: 9, riskScore: 7.2, category: 'Legal' },
+          { optionId: 'expand', description: 'Currency exchange volatility', probability: 0.9, impact: 8, riskScore: 7.2, category: 'Financial' },
+          { optionId: 'expand', description: 'Cultural misunderstandings', probability: 0.5, impact: 6, riskScore: 3.0, category: 'Cultural' },
+          { optionId: 'expand', description: 'Supply chain complexity', probability: 0.6, impact: 5, riskScore: 3.0, category: 'Operations' },
+          { optionId: 'expand', description: 'Language barriers', probability: 0.4, impact: 4, riskScore: 1.6, category: 'Communication' },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      // Total risks: 5
+      expect(output).toContain('Total Risks: 5');
+
+      // Critical risks (score >= 7): 2 (regulatory and currency)
+      expect(output).toContain('Critical: 2');
+
+      // High risks (score >= 4 and < 7): 0
+      expect(output).toContain('High: 0');
+
+      // Average risk score: (7.2 + 7.2 + 3.0 + 3.0 + 1.6) / 5 = 4.4
+      expect(output).toContain('Average Risk Score: 4.40');
+
+      // Maximum risk score: 7.2
+      expect(output).toContain('Maximum Risk Score: 7.20');
+
+      // Verify risk summary section exists
+      expect(output).toContain('Risk Summary');
+    });
+
+    it('should display risk matrix visualization', () => {
+      const riskInput = {
+        decisionStatement: 'Should we adopt new technology stack?',
+        options: [
+          { id: 'adopt', name: 'Adopt New Stack', description: 'Switch to modern technology stack' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'tech-stack-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          { optionId: 'adopt', description: 'Team learning curve', probability: 0.9, impact: 5, riskScore: 4.5 },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      expect(output).toContain('Risk Matrix Visualization');
+      expect(output).toContain('Probability vs Impact');
+      expect(output).toContain('High (70-100%)');
+      expect(output).toContain('Medium (30-70%)');
+      expect(output).toContain('Low (0-30%)');
+      expect(output).toContain('Low(1-3)');
+      expect(output).toContain('Medium(4-6)');
+      expect(output).toContain('High(7-10)');
+    });
+
+    it('should handle multiple options with different risk profiles', () => {
+      const riskInput = {
+        decisionStatement: 'Which deployment strategy should we use?',
+        options: [
+          { id: 'big-bang', name: 'Big Bang Deployment', description: 'Deploy all changes at once' },
+          { id: 'phased', name: 'Phased Rollout', description: 'Gradual deployment over time' },
+          { id: 'canary', name: 'Canary Deployment', description: 'Test with small user subset first' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'deployment-strategy-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          // Big Bang - High risk
+          { optionId: 'big-bang', description: 'Complete system failure', probability: 0.4, impact: 10, riskScore: 4.0, category: 'System' },
+          { optionId: 'big-bang', description: 'User experience disruption', probability: 0.7, impact: 8, riskScore: 5.6, category: 'UX' },
+          { optionId: 'big-bang', description: 'No rollback option', probability: 0.9, impact: 9, riskScore: 8.1, category: 'Operations' },
+          // Phased - Medium risk
+          { optionId: 'phased', description: 'Version compatibility issues', probability: 0.5, impact: 6, riskScore: 3.0, category: 'Technical' },
+          { optionId: 'phased', description: 'Extended deployment time', probability: 0.6, impact: 4, riskScore: 2.4, category: 'Timeline' },
+          // Canary - Low risk
+          { optionId: 'canary', description: 'Infrastructure complexity', probability: 0.3, impact: 5, riskScore: 1.5, category: 'Technical' },
+          { optionId: 'canary', description: 'Monitoring overhead', probability: 0.4, impact: 3, riskScore: 1.2, category: 'Operations' },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      expect(result.riskAssessment).toHaveLength(7);
+
+      // Verify all three options appear in output
+      expect(output).toContain('Big Bang Deployment');
+      expect(output).toContain('Phased Rollout');
+      expect(output).toContain('Canary Deployment');
+
+      // Verify different risk descriptions
+      expect(output).toContain('Complete system failure');
+      expect(output).toContain('Version compatibility issues');
+      expect(output).toContain('Infrastructure complexity');
+
+      // Verify risk summary appears for each option
+      const summaryMatches = output.match(/Risk Summary:/g);
+      expect(summaryMatches).toHaveLength(3);
+    });
+
+    it('should handle risks sorted by risk score (highest first)', () => {
+      const riskInput = {
+        decisionStatement: 'Should we acquire the competitor company?',
+        options: [
+          { id: 'acquire', name: 'Acquire Competitor', description: 'Purchase competitor for $50M' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'acquisition-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          // Added in non-sorted order
+          { optionId: 'acquire', description: 'Minor brand confusion', probability: 0.3, impact: 3, riskScore: 0.9 },
+          { optionId: 'acquire', description: 'Key talent departure', probability: 0.7, impact: 8, riskScore: 5.6 },
+          { optionId: 'acquire', description: 'Cultural integration failure', probability: 0.8, impact: 9, riskScore: 7.2 },
+          { optionId: 'acquire', description: 'Technology debt inherited', probability: 0.6, impact: 5, riskScore: 3.0 },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      // Extract positions of risk descriptions in output
+      const culturalIndex = output.indexOf('Cultural integration failure');
+      const talentIndex = output.indexOf('Key talent departure');
+      const techDebtIndex = output.indexOf('Technology debt inherited');
+      const brandIndex = output.indexOf('Minor brand confusion');
+
+      // Verify they appear in descending risk score order
+      expect(culturalIndex).toBeLessThan(talentIndex); // 7.2 before 5.6
+      expect(talentIndex).toBeLessThan(techDebtIndex); // 5.6 before 3.0
+      expect(techDebtIndex).toBeLessThan(brandIndex);  // 3.0 before 0.9
+    });
+
+    it('should handle edge case with empty risk assessment', () => {
+      const riskInput = {
+        decisionStatement: 'No risk scenario',
+        options: [
+          { id: 'safe', name: 'Safe Option', description: 'No risks identified' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'no-risk-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      expect(result.riskAssessment).toHaveLength(0);
+      expect(output).toBe('');
+    });
+
+    it('should handle critical risks (score >= 7) with appropriate emphasis', () => {
+      const riskInput = {
+        decisionStatement: 'Should we proceed with emergency system upgrade?',
+        options: [
+          { id: 'upgrade', name: 'Emergency Upgrade', description: 'Immediate system upgrade required' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'emergency-upgrade-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          {
+            optionId: 'upgrade',
+            description: 'Complete data loss during migration',
+            probability: 0.8,
+            impact: 10,
+            riskScore: 8.0,
+            category: 'Data',
+            mitigation: [
+              'Create multiple backups before upgrade',
+              'Test migration in staging environment',
+              'Have rollback plan ready',
+            ],
+          },
+          {
+            optionId: 'upgrade',
+            description: 'Extended downtime affecting customers',
+            probability: 0.9,
+            impact: 9,
+            riskScore: 8.1,
+            category: 'Service',
+            mitigation: [
+              'Schedule during lowest traffic period',
+              'Notify customers in advance',
+              'Have support team on standby',
+            ],
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      // Verify critical risk label appears
+      expect(output).toContain('CRITICAL');
+
+      // Verify critical count in summary
+      expect(output).toContain('Critical: 2');
+
+      // Both risks should be above 7.0 threshold
+      expect(result.riskAssessment![0].riskScore).toBeGreaterThanOrEqual(7);
+      expect(result.riskAssessment![1].riskScore).toBeGreaterThanOrEqual(7);
+    });
+
+    it('should handle risks without categories or mitigation strategies', () => {
+      const riskInput = {
+        decisionStatement: 'Should we launch beta version?',
+        options: [
+          { id: 'beta', name: 'Beta Launch', description: 'Release beta to public' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'beta-launch-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          { optionId: 'beta', description: 'Negative user feedback', probability: 0.5, impact: 6, riskScore: 3.0 },
+          { optionId: 'beta', description: 'Performance issues under load', probability: 0.6, impact: 7, riskScore: 4.2 },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      expect(result.riskAssessment).toHaveLength(2);
+      expect(output).toContain('Negative user feedback');
+      expect(output).toContain('Performance issues under load');
+
+      // No mitigation strategies should appear
+      const mitigationMatches = output.match(/Mitigation Strategies:/g);
+      expect(mitigationMatches).toBeNull();
+    });
+
+    it('should verify probability × impact calculation for boundary values', () => {
+      const riskInput = {
+        decisionStatement: 'Test boundary risk calculations',
+        options: [
+          { id: 'test', name: 'Test Option', description: 'Testing risk score boundaries' },
+        ],
+        analysisType: 'risk-assessment' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'boundary-test-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        riskAssessment: [
+          // Maximum risk: 1.0 × 10 = 10.0 (CRITICAL)
+          { optionId: 'test', description: 'Maximum risk scenario', probability: 1.0, impact: 10, riskScore: 10.0 },
+          // Exact CRITICAL boundary: score = 7.0
+          { optionId: 'test', description: 'Critical boundary', probability: 0.7, impact: 10, riskScore: 7.0 },
+          // Just below CRITICAL: score = 6.9 (HIGH)
+          { optionId: 'test', description: 'High risk boundary', probability: 0.69, impact: 10, riskScore: 6.9 },
+          // Exact HIGH boundary: score = 4.0
+          { optionId: 'test', description: 'High boundary', probability: 0.4, impact: 10, riskScore: 4.0 },
+          // Just below HIGH: score = 3.9 (MEDIUM)
+          { optionId: 'test', description: 'Medium risk boundary', probability: 0.39, impact: 10, riskScore: 3.9 },
+          // Exact MEDIUM boundary: score = 2.0
+          { optionId: 'test', description: 'Medium boundary', probability: 0.2, impact: 10, riskScore: 2.0 },
+          // Just below MEDIUM: score = 1.9 (LOW)
+          { optionId: 'test', description: 'Low risk boundary', probability: 0.19, impact: 10, riskScore: 1.9 },
+          // Minimum risk: 0.0 × 1 = 0.0 (LOW)
+          { optionId: 'test', description: 'Minimum risk scenario', probability: 0.0, impact: 1, riskScore: 0.0 },
+        ],
+      };
+
+      const result = server.processDecisionFramework(riskInput);
+      const output = server.formatOutput(result);
+
+      // Verify risk scores
+      expect(result.riskAssessment![0].riskScore).toBe(10.0);
+      expect(result.riskAssessment![1].riskScore).toBe(7.0);
+      expect(result.riskAssessment![2].riskScore).toBe(6.9);
+      expect(result.riskAssessment![3].riskScore).toBe(4.0);
+      expect(result.riskAssessment![4].riskScore).toBe(3.9);
+      expect(result.riskAssessment![5].riskScore).toBe(2.0);
+      expect(result.riskAssessment![6].riskScore).toBe(1.9);
+      expect(result.riskAssessment![7].riskScore).toBe(0.0);
+
+      // Verify risk level categorization in output
+      expect(output).toContain('CRITICAL');
+      expect(output).toContain('HIGH');
+      expect(output).toContain('MEDIUM');
+      expect(output).toContain('LOW');
+
+      // Verify summary: Critical = 2 (10.0, 7.0), High = 2 (6.9, 4.0)
+      expect(output).toContain('Critical: 2');
+      expect(output).toContain('High: 2');
+    });
+  });
 });
