@@ -1,4 +1,4 @@
-import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis, RiskItem } from '../models/interfaces.js';
+import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis, RiskItem, ReversibilityData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
 export class DecideServer {
@@ -277,6 +277,98 @@ export class DecideServer {
     return output;
   }
 
+  private formatReversibilityAnalysis(data: DecisionFrameworkData): string {
+    if (!data.reversibilityAnalysis || data.reversibilityAnalysis.length === 0) {
+      return '';
+    }
+
+    const analyses = data.reversibilityAnalysis;
+    const options = data.options;
+
+    let output = `\n${chalk.bold.blue('Reversibility Analysis')}\n`;
+    output += `${chalk.dim('━'.repeat(60))}\n`;
+    output += `${chalk.dim('Analyzing decision reversibility: one-way vs two-way doors')}\n`;
+
+    analyses.forEach(analysis => {
+      const option = options.find(opt => opt.id === analysis.optionId);
+      if (!option) return;
+
+      output += `\n${chalk.bold.cyan(`Option: ${option.name}`)}\n`;
+      output += `${chalk.dim(option.description)}\n\n`;
+
+      // Door type classification with color coding and emoji
+      const isDoorTwoWay = analysis.doorType === 'two-way';
+      const doorColor = isDoorTwoWay ? chalk.green.bold : chalk.red.bold;
+      const doorEmoji = isDoorTwoWay ? '🚪↔️' : '🚪→';
+      const doorLabel = isDoorTwoWay ? 'TWO-WAY DOOR' : 'ONE-WAY DOOR';
+
+      output += `  ${doorEmoji} ${doorColor(doorLabel)}\n`;
+
+      if (isDoorTwoWay) {
+        output += `  ${chalk.green('This decision can be easily reversed if needed.')}\n`;
+      } else {
+        output += `  ${chalk.red('This decision is difficult or costly to reverse.')}\n`;
+      }
+
+      // Reversibility metrics
+      output += `\n  ${chalk.bold('Reversibility Metrics:')}\n`;
+
+      // Reversibility Score
+      const scoreColor = analysis.reversibilityScore >= 0.7 ? chalk.green :
+                         analysis.reversibilityScore >= 0.4 ? chalk.yellow : chalk.red;
+      const scorePercentage = (analysis.reversibilityScore * 100).toFixed(0);
+      output += `     ${chalk.bold('Reversibility Score:')} ${scoreColor(`${scorePercentage}%`)}\n`;
+
+      // Undo Cost
+      const costColor = analysis.undoCost < 1000 ? chalk.green :
+                        analysis.undoCost < 10000 ? chalk.yellow : chalk.red;
+      output += `     ${chalk.bold('Undo Cost:')} ${costColor(`$${analysis.undoCost.toLocaleString()}`)}\n`;
+
+      // Time to Reverse
+      const timeColor = analysis.timeToReverse < 7 ? chalk.green :
+                        analysis.timeToReverse < 30 ? chalk.yellow : chalk.red;
+      const timeUnit = analysis.timeToReverse === 1 ? 'day' : 'days';
+      output += `     ${chalk.bold('Time to Reverse:')} ${timeColor(`${analysis.timeToReverse} ${timeUnit}`)}\n`;
+
+      // Optional: Undo Complexity
+      if (analysis.undoComplexity) {
+        output += `     ${chalk.bold('Complexity:')} ${analysis.undoComplexity}\n`;
+      }
+
+      // Decision Speed Recommendation
+      output += `\n  ${chalk.bold.yellow('Decision Speed Recommendation:')}\n`;
+      if (isDoorTwoWay && analysis.reversibilityScore >= 0.7) {
+        output += `     ${chalk.green('⚡ MOVE FAST')} - Low risk, easily reversible\n`;
+        output += `     ${chalk.dim('You can make this decision quickly and adjust later if needed.')}\n`;
+      } else if (isDoorTwoWay) {
+        output += `     ${chalk.yellow('⚖️  MODERATE PACE')} - Reversible but with some cost\n`;
+        output += `     ${chalk.dim('Take reasonable time, but don\'t over-analyze.')}\n`;
+      } else if (!isDoorTwoWay && analysis.reversibilityScore < 0.3) {
+        output += `     ${chalk.red('🐌 MOVE SLOW')} - High stakes, difficult to reverse\n`;
+        output += `     ${chalk.dim('This is a one-way door. Invest significant time in this decision.')}\n`;
+      } else {
+        output += `     ${chalk.yellow('🤔 PROCEED WITH CAUTION')} - One-way door with moderate reversibility\n`;
+        output += `     ${chalk.dim('Careful consideration needed, but avoid analysis paralysis.')}\n`;
+      }
+
+      // Optional: Reversibility Notes
+      if (analysis.reversibilityNotes) {
+        output += `\n  ${chalk.bold.cyan('Notes:')}\n`;
+        output += `     ${analysis.reversibilityNotes}\n`;
+      }
+
+      output += `\n${chalk.dim('─'.repeat(60))}\n`;
+    });
+
+    // Summary guidance
+    output += `\n${chalk.bold.blue('Bezos\'s Two-Way Door Framework:')}\n`;
+    output += `${chalk.dim('One-way doors:')} Irreversible decisions requiring careful deliberation\n`;
+    output += `${chalk.dim('Two-way doors:')} Reversible decisions where speed matters more than perfection\n`;
+    output += `\n`;
+
+    return output;
+  }
+
   private formatOutput(data: DecisionFrameworkData): string {
     const { decisionStatement, options, analysisType, stage, iteration } = data;
 
@@ -292,6 +384,8 @@ export class DecideServer {
       output += this.formatCostBenefitAnalysis(data);
     } else if (analysisType === 'risk-assessment') {
       output += this.formatRiskAssessment(data);
+    } else if (analysisType === 'reversibility') {
+      output += this.formatReversibilityAnalysis(data);
     } else {
       // Options
       if (options.length > 0) {
