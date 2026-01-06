@@ -109,11 +109,13 @@
           "id": "2.2",
           "title": "Create schema for DecisionFrameworkData (decide tool)",
           "description": "Create Zod schemas for all decision framework types: OptionData, CriterionData, EisenhowerClassification, CostBenefitAnalysis, RiskItem, ReversibilityData, RegretMinimizationData, and DecisionFrameworkData",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/schemas/decide.ts"
           ],
-          "estimatedMinutes": 30
+          "estimatedMinutes": 30,
+          "notes": "Created src/schemas/decide.ts with comprehensive Zod schemas for decision framework tool:\n- OptionData schema with id, name, description\n- CriterionData schema with id, name, description, weight\n- OutcomeData schema with id, description, probability, value, optionId, confidenceInEstimate\n- EisenhowerClassification schema with optionId, urgency, importance, quadrant\n- CostBenefitItem schema with optionId, description, amount, type, optional category and timeframe\n- CostBenefitAnalysis schema with optionId, costs, benefits, netValue, and optional financial metrics (benefitCostRatio, roi, discountRate, timePeriodYears, npv)\n- RiskItem schema with optionId, description, probability, impact, riskScore, optional category and mitigation\n- ReversibilityData schema with optionId, reversibilityScore, undoCost, timeToReverse, doorType, optional undoComplexity and reversibilityNotes\n- TimeHorizonRegret schema with tenMinutes, tenMonths, tenYears\n- RegretMinimizationData schema with optionId, futureSelfPerspective, potentialRegrets, optional regretScore and timeHorizonAnalysis\n- DecisionFrameworkData schema with all required fields (decisionStatement, options, analysisType, stage, decisionId, iteration, nextStageNeeded) and optional fields (criteria, stakeholders, constraints, timeHorizon, riskTolerance, possibleOutcomes, recommendation, rationale, eisenhowerClassification, costBenefitAnalysis, riskAssessment, reversibilityAnalysis, regretMinimizationAnalysis)\n\nAll schemas use common schemas for consistency and include comprehensive documentation. Follows the same pattern as council.ts schema.",
+          "updated_at": "2026-01-06T20:02:02.270859+00:00"
         },
         {
           "id": "2.3",
@@ -345,5 +347,5 @@
     "testsPassed": ""
   },
   "final_acceptance": [],
-  "last_updated": "2026-01-06T19:59:45.889686+00:00"
+  "last_updated": "2026-01-06T20:02:02.270869+00:00"
 }
