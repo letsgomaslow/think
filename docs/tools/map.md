@@ -181,6 +181,78 @@ Map supports 11 diagram types, each optimized for different visualization needs.
 
 **What This Means**: By regrouping elements into containers ("Critical Path" vs "Optional/Degradable"), a new insight emerges: if the cache is truly optional, there should be fallback logic. This architectural insight came from visual reorganization.
 
+---
+
+### Scenario 4: API Authentication Flow (Sequence Diagram)
+
+**Context**: Documenting how components interact during user authentication to identify potential bottlenecks and security checkpoints.
+
+**Input**:
+```json
+{
+  "operation": "create",
+  "diagramId": "api-auth-flow",
+  "diagramType": "sequenceDiagram",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elements": [
+    {"id": "client", "type": "node", "label": "Client App", "properties": {}},
+    {"id": "api", "type": "node", "label": "API Gateway", "properties": {}},
+    {"id": "auth", "type": "node", "label": "Auth Service", "properties": {}},
+    {"id": "db", "type": "node", "label": "Database", "properties": {}},
+    {"id": "msg-1", "type": "edge", "source": "client", "target": "api", "label": "POST /login", "properties": {"arrowType": "->>"}},
+    {"id": "msg-2", "type": "edge", "source": "api", "target": "auth", "label": "Validate credentials", "properties": {"arrowType": "->>"}},
+    {"id": "msg-3", "type": "edge", "source": "auth", "target": "db", "label": "Query user", "properties": {"arrowType": "->>"}},
+    {"id": "msg-4", "type": "edge", "source": "db", "target": "auth", "label": "User data", "properties": {"arrowType": "-->>"}},
+    {"id": "msg-5", "type": "edge", "source": "auth", "target": "api", "label": "JWT token", "properties": {"arrowType": "-->>"}},
+    {"id": "msg-6", "type": "edge", "source": "api", "target": "client", "label": "200 OK + token", "properties": {"arrowType": "-->>"}},
+    {"id": "msg-7", "type": "edge", "source": "client", "target": "client", "label": "Store token", "properties": {"arrowType": "->>"}}
+  ],
+  "observation": "The authentication flow involves 4 components with 3 network hops before responding to the client"
+}
+```
+
+**Output**:
+```json
+{
+  "operation": "create",
+  "diagramId": "api-auth-flow",
+  "diagramType": "sequenceDiagram",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elementCount": 11,
+  "status": "success",
+  "mermaidOutput": "sequenceDiagram\n    participant client as Client App\n    participant api as API Gateway\n    participant auth as Auth Service\n    participant db as Database\n    client->>api: POST /login\n    api->>auth: Validate credentials\n    auth->>db: Query user\n    db-->>auth: User data\n    auth-->>api: JWT token\n    api-->>client: 200 OK + token\n    client->>client: Store token"
+}
+```
+
+**Mermaid Diagram**:
+```mermaid
+sequenceDiagram
+    participant client as Client App
+    participant api as API Gateway
+    participant auth as Auth Service
+    participant db as Database
+    client->>api: POST /login
+    api->>auth: Validate credentials
+    auth->>db: Query user
+    db-->>auth: User data
+    auth-->>api: JWT token
+    api-->>client: 200 OK + token
+    client->>client: Store token
+```
+
+**What This Means**:
+- **Participants**: Nodes become participants in the sequence (Client App, API Gateway, Auth Service, Database)
+- **Message Flow**: Edges represent messages exchanged over time, top to bottom
+- **Arrow Types**:
+  - `->>` for synchronous requests (solid arrow)
+  - `-->>` for asynchronous responses (dashed arrow)
+- **Insight**: The visual reveals 3 network hops (Client → API → Auth → DB) before the user gets a response, which could impact latency
+- **Self-messages**: The "Store token" message shows client-to-client interaction
+
+---
+
 ## User Experience
 
 Map produces visual structure records:
