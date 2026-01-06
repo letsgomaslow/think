@@ -1,7 +1,7 @@
 /**
  * Mental Models Resource Catalog
  *
- * Exposes the 12 mental models available in think-mcp
+ * Exposes the 13 mental models available in think-mcp
  * as a browsable MCP resource.
  */
 
@@ -215,6 +215,24 @@ const MENTAL_MODELS: ResourceCatalogItem[] = [
       'Generate reasons explaining why the failure occurred',
       'Identify the most likely and impactful failure causes',
       'Develop preventive measures and contingency plans for each risk',
+    ],
+  },
+  {
+    name: 'five_whys',
+    title: 'Five Whys',
+    description: 'Iteratively ask "why" (typically five times) to drill down from symptoms to the root cause. Developed as part of the Toyota Production System, this technique helps uncover underlying issues rather than treating surface-level symptoms.',
+    useCases: [
+      'Root cause analysis for bugs and system failures',
+      'Quality control and defect investigation',
+      'Process improvement and efficiency optimization',
+      'Problem-solving in manufacturing and operations',
+    ],
+    steps: [
+      'State the problem clearly and specifically',
+      'Ask "Why did this happen?" and document the answer',
+      'Ask "Why?" again for each subsequent answer (typically 5 iterations)',
+      'Continue until you reach the fundamental root cause',
+      'Implement solutions that address the root cause, not just symptoms',
     ],
   },
 ];
