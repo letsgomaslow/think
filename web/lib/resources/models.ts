@@ -166,6 +166,23 @@ const MENTAL_MODELS: ResourceCatalogItem[] = [
       'Validate completeness and test for gaps or duplications',
     ],
   },
+  {
+    name: 'inversion_thinking',
+    title: 'Inversion Thinking',
+    description: 'Work backwards from failure to identify what to avoid, rather than only focusing on success. Popularized by Charlie Munger.',
+    useCases: [
+      'Risk identification and mitigation planning',
+      'Avoiding common pitfalls in projects and decisions',
+      'Pre-emptive problem-solving and failure prevention',
+      'Strategic planning by identifying what not to do',
+    ],
+    steps: [
+      'Define your goal or desired outcome',
+      'Invert the problem: imagine complete failure or disaster',
+      'List all the ways things could go wrong',
+      'Work backwards to identify what to avoid and prevent',
+    ],
+  },
 ];
 
 /**
