@@ -1,6 +1,6 @@
 # Build Progress: Extended Mental Models Library
 
-## Status: Phase 3 In Progress (4/7 subtasks completed)
+## Status: Phase 3 In Progress (5/7 subtasks completed)
 
 ### Phase 1: Core Tool Schema Updates ✅
 - **Subtask 1.1**: Add new model names to MODEL_TOOL enum - COMPLETED
@@ -66,7 +66,16 @@
   - Famous quote: "trying to be consistently not stupid, instead of trying to be very intelligent"
   - Application to career success using inversion technique
   - Related models linked: pre_mortem, second_order_effects, first_principles
-- **Subtask 3.5**: Add Second-Order Effects extended documentation - PENDING
+
+- **Subtask 3.5**: Add Second-Order Effects extended documentation - COMPLETED
+  - Fully implemented in EXTENDED_MODELS (lines 504-571)
+  - First, second, and third-order effects clearly explained in steps
+  - Comprehensive rent control example demonstrating systems thinking
+  - Shows unintended consequences: how well-intentioned policy creates worse problems
+  - Real-world evidence: San Francisco, New York, Stockholm
+  - Key lesson: "Always ask 'And then what happens?'"
+  - Related models linked: inversion_thinking, swot_analysis, pre_mortem
+
 - **Subtask 3.6**: Add Pre-Mortem extended documentation - PENDING
 - **Subtask 3.7**: Add Five Whys extended documentation - PENDING
 

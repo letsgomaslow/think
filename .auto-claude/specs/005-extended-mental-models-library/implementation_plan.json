@@ -211,12 +211,14 @@
           "title": "Add Second-Order Effects extended documentation",
           "description": "Add Second-Order Effects to EXTENDED_MODELS with systems thinking example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "First, second, third order effects explained",
             "Unintended consequences example",
             "Related models linked"
-          ]
+          ],
+          "completed_at": "2026-01-06T14:05:00.000Z",
+          "notes": "Second-Order Effects fully implemented in EXTENDED_MODELS (lines 504-571). Includes complete structure with name, title, description, 5 whenToUse scenarios, 6 detailed steps explaining first/second/third-order effects and feedback loops, comprehensive rent control example demonstrating systems thinking and unintended consequences, real-world evidence from San Francisco/New York/Stockholm, alternative approaches with positive second-order effects, and 3 related models (inversion_thinking, swot_analysis, pre_mortem). All acceptance criteria met."
         },
         {
           "subtask_id": "3.6",
