@@ -35,14 +35,21 @@ Create → Add Elements → Connect → Transform → Observe Insights
 
 ### Diagram Types
 
-| Type | Best For |
-|------|----------|
-| `flowchart` | Processes, algorithms, decision paths |
-| `stateDiagram` | System states and transitions |
-| `conceptMap` | Relationships between ideas |
-| `treeDiagram` | Hierarchies and decomposition |
-| `graph` | Networks and connections |
-| `custom` | Anything else |
+Map supports 11 diagram types, each optimized for different visualization needs. All diagrams output as **Mermaid syntax** for easy rendering.
+
+| Type | Best For | When to Use |
+|------|----------|-------------|
+| `flowchart` | Processes, algorithms, decision paths | When mapping step-by-step procedures or control flow |
+| `stateDiagram` | System states and transitions | When modeling simple state machines or workflows |
+| `conceptMap` | Relationships between ideas | When exploring connections between concepts or components |
+| `treeDiagram` | Hierarchies and decomposition | When showing parent-child relationships or organizational structure |
+| `graph` | Networks and connections | When visualizing general networks or interconnected systems |
+| `sequenceDiagram` | **Component interactions** | When showing message exchanges between actors/systems over time (API calls, protocol flows) |
+| `stateMachine` | **System behavior** | When modeling complex state transitions with start/end states (order lifecycle, authentication flow) |
+| `erDiagram` | **Data models** | When designing database schemas with entities, attributes, and relationships |
+| `mindMap` | **Brainstorming and ideation** | When organizing ideas hierarchically around a central concept (feature planning, problem decomposition) |
+| `contextDiagram` | **System context (C4 model)** | When showing high-level system boundaries with external actors and systems |
+| `custom` | Anything else | When none of the specialized types fit your needs |
 
 ### Element Types
 
@@ -212,7 +219,7 @@ Create → Add nodes/edges → Transform (regroup, recolor) → Observe insights
 |-----------|------|----------|-------------|
 | `operation` | enum | Yes | create, update, delete, transform, observe |
 | `diagramId` | string | Yes | Unique identifier |
-| `diagramType` | enum | Yes | flowchart, stateDiagram, conceptMap, treeDiagram, graph, custom |
+| `diagramType` | enum | Yes | flowchart, stateDiagram, conceptMap, treeDiagram, graph, sequenceDiagram, stateMachine, erDiagram, mindMap, contextDiagram, custom |
 | `iteration` | number | Yes | Current iteration count |
 | `nextOperationNeeded` | boolean | Yes | Whether to continue |
 | `elements` | array | No | Nodes, edges, containers with id, type, label, properties |
@@ -220,3 +227,4 @@ Create → Add nodes/edges → Transform (regroup, recolor) → Observe insights
 | `observation` | string | No | What you notice |
 | `insight` | string | No | New understanding |
 | `hypothesis` | string | No | Testable idea |
+| `mermaidOutput` | string | No | Generated Mermaid diagram syntax (automatically included) |
