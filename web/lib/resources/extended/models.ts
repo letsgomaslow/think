@@ -363,6 +363,74 @@ Decision: Proceed with 3-month hybrid pilot. Success metrics: response time, cus
       steps: ['White (facts), Red (feelings), Black (risks), Yellow (benefits), Green (ideas), Blue (process)'],
     },
   },
+  mece: {
+    name: 'mece',
+    title: 'MECE (Mutually Exclusive, Collectively Exhaustive)',
+    description: 'Structure problems into categories that don\'t overlap (mutually exclusive) while covering all possibilities (collectively exhaustive).',
+    whenToUse: [
+      'When breaking down complex problems that need comprehensive analysis',
+      'When creating frameworks, segmentations, or categorizations',
+      'When you need to ensure nothing is missed and nothing is double-counted',
+      'When presenting to executives or clients who need clear, complete structures',
+      'When organizing data, issues, or options into logical groupings',
+    ],
+    steps: [
+      'Define the problem or universe you\'re analyzing clearly',
+      'Identify the most logical dimension or criterion to segment by (e.g., customer type, time period, geography, process step)',
+      'Create categories that are Mutually Exclusive (ME): No overlap - each item fits into only one category. No double-counting or ambiguity.',
+      'Ensure categories are Collectively Exhaustive (CE): Complete coverage - every possible item has a category. Nothing falls through the cracks.',
+      'Test your structure: Can you place every element into exactly one bucket? Does every element have a home?',
+      'Refine if needed: If items overlap or don\'t fit, adjust your categories or segmentation criterion',
+    ],
+    example: {
+      context: 'A consulting firm analyzing why a retail company\'s revenue declined 15% year-over-year',
+      application: `Initial attempt (NOT MECE):
+"Revenue declined because of: poor marketing, losing customers, bad products, competition"
+
+Problems:
+- "Losing customers" and "poor marketing" overlap (not mutually exclusive)
+- Doesn't cover all possibilities like pricing or distribution (not collectively exhaustive)
+
+MECE Framework:
+Revenue = Number of Customers × Average Transaction Value × Purchase Frequency
+
+Therefore, revenue decline must come from changes in one or more of these three factors:
+
+1. Customer Acquisition & Retention (Number of Customers)
+   - New customers acquired: Down 20% (marketing effectiveness declined)
+   - Customer churn rate: Up from 15% to 22% (retention issues)
+
+2. Transaction Value (Average Purchase Amount)
+   - Average basket size: Down 8% (customers buying fewer items per visit)
+   - Product mix shift: Shift from high-margin to low-margin items
+
+3. Purchase Frequency (How Often Customers Buy)
+   - Visit frequency: Flat (no change)
+   - Seasonal patterns: Normal (no change)
+
+Analysis reveals:
+- Customer count dropped 12% (factor 1)
+- Transaction value dropped 8% (factor 2)
+- Frequency unchanged (factor 3)
+- Combined effect: ~15% revenue decline ✓
+
+This is MECE because:
+✓ Mutually Exclusive: A dollar of lost revenue comes from EITHER fewer customers, OR smaller baskets, OR less frequent purchases. These don't overlap.
+✓ Collectively Exhaustive: Revenue MUST equal customers × transaction × frequency. There's no fourth factor. Everything is covered.
+
+Outcome:
+With this structure, the team identified that customer acquisition dropped due to reduced digital ad spending (60% budget cut), and retention suffered from out-of-stock issues in key categories. These insights led to targeted fixes rather than broad, unfocused initiatives.
+
+Contrast with non-MECE approach:
+"We have marketing problems, product problems, and competitive problems" leads to scattered efforts because these categories overlap and don't cleanly separate root causes.`,
+    },
+    relatedModels: ['first_principles', 'swot_analysis', 'five_whys'],
+    toolParameters: {
+      modelName: 'mece',
+      problem: 'Your problem requiring structured breakdown',
+      steps: ['Define universe', 'Choose segmentation criterion', 'Create non-overlapping categories', 'Ensure complete coverage'],
+    },
+  },
 };
 
 /**
