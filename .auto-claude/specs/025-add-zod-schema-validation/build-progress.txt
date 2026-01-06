@@ -1,0 +1,61 @@
+# Build Progress: Add Zod Schema Validation
+
+## Status: Planning Complete
+
+## Summary
+Replace manual validation in all 11 tool servers with Zod schemas. Zod (v3.25+) is already a dependency but unused.
+
+## Phases Overview
+
+### Phase 1: Create Zod Schema Foundation (6 subtasks)
+- Create common schemas for reusable types
+- Create schemas for simple data types: ThoughtData, MentalModelData, DebuggingApproachData, DesignPatternData, ProgrammingParadigmData
+
+### Phase 2: Create Complex Zod Schemas (7 subtasks)  
+- Create schemas for complex types with nested objects
+- CollaborativeReasoningData, DecisionFrameworkData (most complex), ArgumentData, MetacognitiveMonitoringData, ScientificInquiryData, VisualOperationData
+- Create index.ts to export all schemas
+
+### Phase 3: Integrate Zod Schemas into Servers (11 subtasks)
+- Update all 11 server files to use Zod schema.parse()
+- Replace validateXData() methods with Zod validation
+- Preserve existing error handling patterns
+
+### Phase 4: Testing and Verification (3 subtasks)
+- Create schema unit tests
+- Run existing tests to verify no regressions
+- Build verification
+
+## Key Files to Create
+- src/schemas/common.ts
+- src/schemas/trace.ts
+- src/schemas/model.ts
+- src/schemas/debug.ts
+- src/schemas/pattern.ts
+- src/schemas/paradigm.ts
+- src/schemas/council.ts
+- src/schemas/decide.ts
+- src/schemas/debate.ts
+- src/schemas/reflect.ts
+- src/schemas/hypothesis.ts
+- src/schemas/map.ts
+- src/schemas/index.ts
+- src/schemas/schemas.test.ts
+
+## Key Files to Modify
+- src/tools/traceServer.ts
+- src/tools/modelServer.ts
+- src/tools/debugServer.ts
+- src/tools/patternServer.ts
+- src/tools/paradigmServer.ts
+- src/tools/councilServer.ts
+- src/tools/decideServer.ts
+- src/tools/debateServer.ts
+- src/tools/reflectServer.ts
+- src/tools/hypothesisServer.ts
+- src/tools/mapServer.ts
+
+## Estimated Time: ~365 minutes (6 hours)
+
+## Progress Log
+- [2026-01-06] Implementation plan created with 4 phases, 24 subtasks

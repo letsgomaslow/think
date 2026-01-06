@@ -1,0 +1,15 @@
+{
+  "discovered_files": {
+    "src/tools/": {
+      "description": "All 11 server files (modelServer.ts, debugServer.ts, decideServer.ts, councilServer.ts, debateServer.ts, traceServer.ts, reflectServer.ts, hypothesisServer.ts, mapServer.ts, patternServer.ts, paradigmServer.ts) use manual validateXData() methods with if-statements for type checking. These should be replaced with Zod schemas.",
+      "category": "validation-patterns",
+      "discovered_at": "2026-01-06T19:47:32.261133+00:00"
+    },
+    "src/models/interfaces.ts": {
+      "description": "Contains all TypeScript interfaces that Zod schemas must match: ThoughtData, MentalModelData, DesignPatternData, ProgrammingParadigmData, DebuggingApproachData, PersonaData, ContributionData, DisagreementData, CollaborativeReasoningData, OptionData, CriterionData, OutcomeData, DecisionFrameworkData, EisenhowerClassification, CostBenefitAnalysis, RiskItem, ReversibilityData, RegretMinimizationData, KnowledgeAssessment, ClaimAssessment, ReasoningAssessment, MetacognitiveMonitoringData, Variable, HypothesisData, Prediction, ExperimentData, ScientificInquiryData, ArgumentData, VisualElement, VisualOperationData.",
+      "category": "interfaces",
+      "discovered_at": "2026-01-06T19:47:32.290139+00:00"
+    }
+  },
+  "last_updated": "2026-01-06T19:47:32.290158+00:00"
+}

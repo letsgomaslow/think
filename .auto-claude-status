@@ -1,25 +1,25 @@
 {
   "active": true,
-  "spec": "006-expanded-council-personas",
-  "state": "complete",
+  "spec": "025-add-zod-schema-validation",
+  "state": "building",
   "subtasks": {
-    "completed": 0,
-    "total": 33,
+    "completed": 6,
+    "total": 27,
     "in_progress": 1,
     "failed": 0
   },
   "phase": {
-    "current": "Documentation",
+    "current": "Create Complex Zod Schemas",
     "id": null,
-    "total": 3
+    "total": 7
   },
   "workers": {
     "active": 0,
     "max": 1
   },
   "session": {
-    "number": 29,
-    "started_at": "2026-01-06T02:01:06.566893"
+    "number": 8,
+    "started_at": "2026-01-06T14:44:48.794443"
   },
-  "last_update": "2026-01-06T03:36:38.266449"
+  "last_update": "2026-01-06T14:58:15.382353"
 }
