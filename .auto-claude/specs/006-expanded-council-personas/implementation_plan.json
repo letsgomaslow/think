@@ -343,8 +343,8 @@
           "files": [
             "src/personas/factory.test.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Comprehensive unit tests for PersonaFactory class implemented in src/personas/factory.test.ts. Tests cover all public methods including createFromPredefined (with merge/replace strategies), createFromOptions, createCustom (with validation), toBasePersonaData, createMultipleFromPredefined, createFromCategory, clonePersona, and helper methods. Includes 60+ test cases covering functionality, error handling, deep copying, and edge cases. Follows existing vitest patterns from registry.test.ts. Committed in 723115f."
         },
         {
           "subtask_id": "8.3",
