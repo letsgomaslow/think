@@ -143,8 +143,8 @@
           "file_paths": [
             "src/tools/mapServer.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Imported MermaidGenerator on line 3 of mapServer.ts. In processVisualReasoning method (lines 125-131), instantiate MermaidGenerator and call generate() when elements are provided. Include mermaidOutput in JSON response on line 146. Committed in a64cd03."
         },
         {
           "subtask_id": "3.2",
@@ -153,8 +153,8 @@
           "file_paths": [
             "src/tools/mapServer.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Extended formatOutput method to display Mermaid preview in console (lines 77-85). Added visual indicators (emojis) for all 11 diagram types including the 5 new types: sequenceDiagram (🔄), stateMachine (⚙️), erDiagram (🗃️), mindMap (🧠), contextDiagram (🏛️). Includes helpful tip to render at mermaid.live. Committed in 56f0338."
         }
       ]
     },
