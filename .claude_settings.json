@@ -1,0 +1,34 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Read(./**)",
+      "Write(./**)",
+      "Edit(./**)",
+      "Glob(./**)",
+      "Grep(./**)",
+      "Read(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/015-enhanced-decision-frameworks/**)",
+      "Write(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/015-enhanced-decision-frameworks/**)",
+      "Edit(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/015-enhanced-decision-frameworks/**)",
+      "Glob(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/015-enhanced-decision-frameworks/**)",
+      "Grep(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/015-enhanced-decision-frameworks/**)",
+      "Read(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/015-enhanced-decision-frameworks/.auto-claude/specs/015-enhanced-decision-frameworks/**)",
+      "Write(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/015-enhanced-decision-frameworks/.auto-claude/specs/015-enhanced-decision-frameworks/**)",
+      "Edit(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/015-enhanced-decision-frameworks/.auto-claude/specs/015-enhanced-decision-frameworks/**)",
+      "Bash(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "mcp__context7__resolve-library-id(*)",
+      "mcp__context7__get-library-docs(*)",
+      "mcp__graphiti-memory__search_nodes(*)",
+      "mcp__graphiti-memory__search_facts(*)",
+      "mcp__graphiti-memory__add_episode(*)",
+      "mcp__graphiti-memory__get_episodes(*)",
+      "mcp__graphiti-memory__get_entity_edge(*)"
+    ]
+  }
+}

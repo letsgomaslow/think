@@ -180,6 +180,20 @@ export interface DecisionFrameworkData {
     nextStageNeeded: boolean;
 }
 
+// Eisenhower Matrix types
+export type EisenhowerQuadrant =
+    | "do-first"
+    | "schedule"
+    | "delegate"
+    | "eliminate";
+
+export interface EisenhowerClassification {
+    optionId: string;
+    urgency: number;
+    importance: number;
+    quadrant: EisenhowerQuadrant;
+}
+
 // reflect tool
 export interface KnowledgeAssessment {
     domain: string;

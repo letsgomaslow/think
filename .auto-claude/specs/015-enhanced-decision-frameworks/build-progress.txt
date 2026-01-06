@@ -1,0 +1,67 @@
+# Enhanced Decision Frameworks - Build Progress
+
+## Feature Overview
+Expand the decide tool with 5 additional decision frameworks:
+1. Eisenhower Matrix (urgency/importance prioritization)
+2. Cost-Benefit Analysis (quantified financial analysis)
+3. Risk Assessment Matrix (probability x impact)
+4. Reversibility Analysis (one-way/two-way door decisions)
+5. Regret Minimization Framework (future perspective analysis)
+
+## Current Status: Planning Complete
+
+### Phase 1: Core Data Model Extensions (6 subtasks)
+- [ ] 1.1 Add new analysis types to interfaces
+- [ ] 1.2 Create Eisenhower Matrix data structures
+- [ ] 1.3 Create Cost-Benefit Analysis data structures
+- [ ] 1.4 Create Risk Assessment Matrix data structures
+- [ ] 1.5 Create Reversibility Analysis data structures
+- [ ] 1.6 Create Regret Minimization data structures
+
+### Phase 2: DecideServer Implementation (6 subtasks)
+- [ ] 2.1 Implement Eisenhower Matrix formatting
+- [ ] 2.2 Implement Cost-Benefit Analysis formatting
+- [ ] 2.3 Implement Risk Assessment Matrix formatting
+- [ ] 2.4 Implement Reversibility Analysis formatting
+- [ ] 2.5 Implement Regret Minimization formatting
+- [ ] 2.6 Update formatOutput routing
+
+### Phase 3: Tool Schema Updates (7 subtasks)
+- [ ] 3.1 Update DECIDE_TOOL analysisType enum
+- [ ] 3.2 Add Eisenhower Matrix input properties
+- [ ] 3.3 Add Cost-Benefit input properties
+- [ ] 3.4 Add Risk Assessment input properties
+- [ ] 3.5 Add Reversibility input properties
+- [ ] 3.6 Add Regret Minimization input properties
+- [ ] 3.7 Update tool description with guidance
+
+### Phase 4: Testing (6 subtasks)
+- [ ] 4.1 Test Eisenhower Matrix framework
+- [ ] 4.2 Test Cost-Benefit Analysis framework
+- [ ] 4.3 Test Risk Assessment Matrix framework
+- [ ] 4.4 Test Reversibility Analysis framework
+- [ ] 4.5 Test Regret Minimization framework
+- [ ] 4.6 Run full test suite
+
+### Phase 5: Web Library Updates (2 subtasks)
+- [ ] 5.1 Update web decide schema
+- [ ] 5.2 Update demo data types
+
+### Phase 6: Build and Verification (2 subtasks)
+- [ ] 6.1 Build project
+- [ ] 6.2 Verify MCP tool availability
+
+## Key Files to Modify
+- src/models/interfaces.ts - Data structures
+- src/tools/decideServer.ts - Framework formatters
+- src/tools/decideServer.test.ts - Tests
+- src/index.ts - MCP tool schema
+- web/lib/tools/decide.ts - Web schemas
+- web/components/demos/decide-demo-data.ts - Demo types
+
+## Estimated Time: ~8 hours (480 minutes)
+
+## Notes
+- Current decide tool has 5 analysis types
+- Target is 10 total analysis types (5 existing + 5 new)
+- Each new framework needs: data structures, formatter, schema, tests

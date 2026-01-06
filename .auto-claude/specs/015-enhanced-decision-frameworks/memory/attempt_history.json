@@ -1,0 +1,21 @@
+{
+  "subtasks": {
+    "1.1": {
+      "attempts": [
+        {
+          "session": 2,
+          "timestamp": "2026-01-05T22:42:04.419296",
+          "approach": "Implemented: Extend the analysisType enum in src/models/interfaces.ts to include: 'eisenhower-matrix', 'cost-bene",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    }
+  },
+  "stuck_subtasks": [],
+  "metadata": {
+    "created_at": "2026-01-05T22:38:22.452619",
+    "last_updated": "2026-01-05T22:42:04.419319"
+  }
+}
