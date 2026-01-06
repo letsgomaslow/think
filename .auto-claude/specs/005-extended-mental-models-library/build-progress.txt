@@ -15,8 +15,8 @@
 - ✅ 2.6: Add Pre-Mortem Analysis to catalog (completed 2026-01-06)
 - ✅ 2.7: Add Five Whys to catalog (completed 2026-01-06)
 
-### Phase 3: Extended Model Documentation (0/7 complete)
-- ⏳ 3.1: Add SWOT Analysis extended documentation (pending)
+### Phase 3: Extended Model Documentation (1/7 complete)
+- ✅ 3.1: Add SWOT Analysis extended documentation (completed 2026-01-06)
 - ⏳ 3.2: Add Six Thinking Hats extended documentation (pending)
 - ⏳ 3.3: Add MECE extended documentation (pending)
 - ⏳ 3.4: Add Inversion Thinking extended documentation (pending)
@@ -33,6 +33,19 @@
 - ⏳ 5.2: Build verification (pending)
 
 ## Recent Updates
+
+### 2026-01-06 15:00 - Subtask 3.1 Completed
+- Verified SWOT Analysis extended documentation in web/lib/resources/extended/models.ts (lines 238-291)
+- All acceptance criteria met:
+  - Complete ExtendedModel structure with all required fields (name, title, description, whenToUse, steps, example, relatedModels, toolParameters)
+  - 5 whenToUse scenarios covering strategic planning, market evaluation, competitive analysis, product launches, and annual strategic reviews
+  - 5 detailed steps including identification of all SWOT quadrants plus intersection analysis for growth/defensive strategies
+  - Comprehensive real-world example: independent coffee shop evaluating delivery service expansion
+  - Example includes all four SWOT quadrants with specific details and strategic insights for leveraging strengths with opportunities
+  - Related models linked: opportunity_cost, second_order_effects, pre_mortem
+  - Complete toolParameters definition
+- Implementation was previously committed in git commits 78cb7e8 and 6c09853
+- Status: Subtask 3.1 verified and marked complete, ready for 3.2 (Six Thinking Hats extended documentation)
 
 ### 2026-01-06 14:30 - Phase 2 Completed (Subtasks 2.4-2.7)
 - Verified Inversion Thinking mental model implementation in web/lib/resources/models.ts (lines 169-185)
@@ -79,4 +92,4 @@
 - MODEL_TOOL description updated with categorized model list
 - TypeScript compilation verified
 
-## Overall Progress: 9/20 subtasks (45%)
+## Overall Progress: 10/20 subtasks (50%)
