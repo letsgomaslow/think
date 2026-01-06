@@ -2,6 +2,8 @@ import { MetacognitiveMonitoringData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
 export class ReflectServer {
+  private monitoringSessions: Record<string, MetacognitiveMonitoringData[]> = {};
+
   private validateInputData(input: unknown): MetacognitiveMonitoringData {
     const data = input as MetacognitiveMonitoringData;
     if (!data.task || !data.stage || !data.monitoringId) {
@@ -108,9 +110,20 @@ export class ReflectServer {
     return output;
   }
 
+  private storeAssessment(data: MetacognitiveMonitoringData): void {
+    if (!this.monitoringSessions[data.monitoringId]) {
+      this.monitoringSessions[data.monitoringId] = [];
+    }
+    this.monitoringSessions[data.monitoringId].push(data);
+  }
+
   public processMetacognitiveMonitoring(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
     try {
       const validatedData = this.validateInputData(input);
+
+      // Store the assessment for future reference
+      this.storeAssessment(validatedData);
+
       const formattedOutput = this.formatOutput(validatedData);
       console.error(formattedOutput);
 
