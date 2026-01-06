@@ -97,11 +97,13 @@
           "id": "2.1",
           "title": "Create schema for CollaborativeReasoningData (council tool)",
           "description": "Create Zod schemas for PersonaData, ContributionData, DisagreementData, and CollaborativeReasoningData",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/schemas/council.ts"
           ],
-          "estimatedMinutes": 20
+          "estimatedMinutes": 20,
+          "notes": "Created src/schemas/council.ts with comprehensive Zod schemas for council tool:\n- PersonaData schema with all required fields (id, name, expertise, background, perspective, biases, communication) and optional fields (category, tags, concerns, typicalQuestions)\n- ContributionData schema with required fields (personaId, content, type, confidence) and optional referenceIds\n- DisagreementData schema with topic and nested positions array\n- CollaborativeReasoningData schema with all required fields (topic, personas, contributions, stage, activePersonaId, sessionId, iteration, nextContributionNeeded) and optional fields (nextPersonaId, consensusPoints, disagreements, keyInsights, openQuestions, finalRecommendation, suggestedContributionTypes)\nAll schemas use common schemas for consistency and include comprehensive documentation. Follows the same pattern as trace.ts, model.ts, debug.ts, pattern.ts, and paradigm.ts schemas.",
+          "updated_at": "2026-01-06T19:59:45.889674+00:00"
         },
         {
           "id": "2.2",
@@ -343,5 +345,5 @@
     "testsPassed": ""
   },
   "final_acceptance": [],
-  "last_updated": "2026-01-06T19:57:55.089827+00:00"
+  "last_updated": "2026-01-06T19:59:45.889686+00:00"
 }
