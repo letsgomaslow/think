@@ -253,6 +253,80 @@ sequenceDiagram
 
 ---
 
+### Scenario 5: Order Lifecycle (State Machine)
+
+**Context**: Modeling the complete order lifecycle from creation to completion, including all possible states and transitions to understand the business process.
+
+**Input**:
+```json
+{
+  "operation": "create",
+  "diagramId": "order-lifecycle",
+  "diagramType": "stateMachine",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elements": [
+    {"id": "pending", "type": "node", "label": "Pending", "properties": {"isStart": true}},
+    {"id": "paid", "type": "node", "label": "Paid", "properties": {}},
+    {"id": "processing", "type": "node", "label": "Processing", "properties": {}},
+    {"id": "shipped", "type": "node", "label": "Shipped", "properties": {}},
+    {"id": "delivered", "type": "node", "label": "Delivered", "properties": {"isEnd": true}},
+    {"id": "cancelled", "type": "node", "label": "Cancelled", "properties": {"isEnd": true}},
+    {"id": "t1", "type": "edge", "source": "pending", "target": "paid", "label": "Payment confirmed", "properties": {}},
+    {"id": "t2", "type": "edge", "source": "paid", "target": "processing", "label": "Order queued", "properties": {}},
+    {"id": "t3", "type": "edge", "source": "processing", "target": "shipped", "label": "Shipped to carrier", "properties": {}},
+    {"id": "t4", "type": "edge", "source": "shipped", "target": "delivered", "label": "Delivery confirmed", "properties": {}},
+    {"id": "t5", "type": "edge", "source": "pending", "target": "cancelled", "label": "Payment failed", "properties": {}},
+    {"id": "t6", "type": "edge", "source": "paid", "target": "cancelled", "label": "Customer cancelled", "properties": {}},
+    {"id": "t7", "type": "edge", "source": "processing", "target": "cancelled", "label": "Out of stock", "properties": {}}
+  ],
+  "observation": "The order can be cancelled from multiple states (Pending, Paid, Processing) but not after shipping"
+}
+```
+
+**Output**:
+```json
+{
+  "operation": "create",
+  "diagramId": "order-lifecycle",
+  "diagramType": "stateMachine",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elementCount": 13,
+  "status": "success",
+  "mermaidOutput": "stateDiagram-v2\n    [*] --> Pending\n    Pending --> Paid: Payment confirmed\n    Paid --> Processing: Order queued\n    Processing --> Shipped: Shipped to carrier\n    Shipped --> Delivered: Delivery confirmed\n    Pending --> Cancelled: Payment failed\n    Paid --> Cancelled: Customer cancelled\n    Processing --> Cancelled: Out of stock\n    Delivered --> [*]\n    Cancelled --> [*]"
+}
+```
+
+**Mermaid Diagram**:
+```mermaid
+stateDiagram-v2
+    [*] --> Pending
+    Pending --> Paid: Payment confirmed
+    Paid --> Processing: Order queued
+    Processing --> Shipped: Shipped to carrier
+    Shipped --> Delivered: Delivery confirmed
+    Pending --> Cancelled: Payment failed
+    Paid --> Cancelled: Customer cancelled
+    Processing --> Cancelled: Out of stock
+    Delivered --> [*]
+    Cancelled --> [*]
+```
+
+**What This Means**:
+- **Start State**: `[*] --> Pending` shows that all orders begin in the Pending state
+- **End States**: Both `Delivered` and `Cancelled` lead to `[*]`, representing terminal states
+- **Happy Path**: Pending → Paid → Processing → Shipped → Delivered
+- **Cancellation Windows**:
+  - From Pending (payment failed)
+  - From Paid (customer cancellation)
+  - From Processing (inventory issues)
+- **Critical Insight**: Once an order reaches "Shipped" state, it cannot be cancelled - this is a business rule that's immediately visible in the state diagram
+- **Transition Labels**: Each edge label describes the event or condition that triggers the state change
+- **Business Logic**: The visual reveals that there's no path from Shipped back to any previous state, indicating a one-way progression after dispatch
+
+---
+
 ## User Experience
 
 Map produces visual structure records:
