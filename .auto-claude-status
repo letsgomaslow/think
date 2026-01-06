@@ -9,7 +9,7 @@
     "failed": 0
   },
   "phase": {
-    "current": "Extended Model Documentation",
+    "current": "Resource Catalog Updates",
     "id": null,
     "total": 7
   },
@@ -18,8 +18,8 @@
     "max": 1
   },
   "session": {
-    "number": 9,
-    "started_at": "2026-01-06T06:25:23.210577"
+    "number": 4,
+    "started_at": "2026-01-06T06:48:47.057711"
   },
-  "last_update": "2026-01-06T06:42:47.185329"
+  "last_update": "2026-01-06T06:55:14.100334"
 }
