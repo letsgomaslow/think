@@ -327,6 +327,118 @@ stateDiagram-v2
 
 ---
 
+### Scenario 6: E-Commerce Database Schema (Entity-Relationship Diagram)
+
+**Context**: Designing a database schema for an e-commerce platform to understand entity relationships, attribute requirements, and cardinality constraints.
+
+**Input**:
+```json
+{
+  "operation": "create",
+  "diagramId": "ecommerce-schema",
+  "diagramType": "erDiagram",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elements": [
+    {"id": "User", "type": "node", "label": "User", "properties": {
+      "attributes": [
+        {"name": "id", "type": "int", "key": true},
+        {"name": "email", "type": "string"},
+        {"name": "name", "type": "string"},
+        {"name": "created_at", "type": "timestamp"}
+      ]
+    }},
+    {"id": "Order", "type": "node", "label": "Order", "properties": {
+      "attributes": [
+        {"name": "id", "type": "int", "key": true},
+        {"name": "user_id", "type": "int"},
+        {"name": "total", "type": "decimal"},
+        {"name": "status", "type": "string"},
+        {"name": "created_at", "type": "timestamp"}
+      ]
+    }},
+    {"id": "Product", "type": "node", "label": "Product", "properties": {
+      "attributes": [
+        {"name": "id", "type": "int", "key": true},
+        {"name": "name", "type": "string"},
+        {"name": "price", "type": "decimal"},
+        {"name": "stock", "type": "int"}
+      ]
+    }},
+    {"id": "rel-1", "type": "edge", "label": "places", "source": "User", "target": "Order", "properties": {"cardinality": "||--o{"}},
+    {"id": "rel-2", "type": "edge", "label": "contains", "source": "Order", "target": "Product", "properties": {"cardinality": "}o--o{"}},
+    {"id": "rel-3", "type": "edge", "label": "views", "source": "User", "target": "Product", "properties": {"cardinality": "}o--o{"}}
+  ],
+  "observation": "The schema reveals a classic e-commerce pattern with User-Order-Product entities and both one-to-many and many-to-many relationships"
+}
+```
+
+**Output**:
+```json
+{
+  "operation": "create",
+  "diagramId": "ecommerce-schema",
+  "diagramType": "erDiagram",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elementCount": 6,
+  "status": "success",
+  "mermaidOutput": "erDiagram\n    User {\n        int id PK\n        string email\n        string name\n        timestamp created_at\n    }\n    Order {\n        int id PK\n        int user_id\n        decimal total\n        string status\n        timestamp created_at\n    }\n    Product {\n        int id PK\n        string name\n        decimal price\n        int stock\n    }\n    User ||--o{ Order : places\n    Order }o--o{ Product : contains\n    User }o--o{ Product : views"
+}
+```
+
+**Mermaid Diagram**:
+```mermaid
+erDiagram
+    User {
+        int id PK
+        string email
+        string name
+        timestamp created_at
+    }
+    Order {
+        int id PK
+        int user_id
+        decimal total
+        string status
+        timestamp created_at
+    }
+    Product {
+        int id PK
+        string name
+        decimal price
+        int stock
+    }
+    User ||--o{ Order : places
+    Order }o--o{ Product : contains
+    User }o--o{ Product : views
+```
+
+**What This Means**:
+- **Entities as Nodes**: Each entity (User, Order, Product) becomes a table-like block in the diagram
+- **Attributes with Types**: The `properties.attributes` array defines columns with data types (int, string, decimal, timestamp)
+- **Primary Keys**: Attributes with `"key": true` are marked with `PK` suffix in the diagram
+- **Relationship Cardinality**:
+  - `||--o{` (one-to-many): User **places** Order - one user can place zero or many orders
+  - `}o--o{` (many-to-many): Order **contains** Product - one order can contain many products, one product can be in many orders
+  - `}o--o{` (many-to-many): User **views** Product - one user can view many products, one product can be viewed by many users
+- **Foreign Keys**: The `user_id` in Order implicitly references User.id, establishing the one-to-many relationship
+- **Data Type Insights**:
+  - `decimal` for monetary values (price, total) ensures precision
+  - `timestamp` for audit trail (created_at) enables temporal queries
+  - `int` for stock enables inventory calculations
+- **Schema Validation**: The visual reveals potential issues:
+  - No OrderItem join table explicitly shown - the many-to-many relationship between Order and Product likely needs an intermediate table with quantity and price_at_purchase
+  - No indexes indicated - might want to index foreign keys (user_id) and frequently queried fields (status, email)
+- **Business Logic**: The "views" relationship suggests product analytics tracking, separate from purchase behavior
+
+**Design Considerations**:
+- To properly implement the Order-Product many-to-many, you'd typically add an `OrderItem` entity with order_id, product_id, quantity, and unit_price
+- Consider adding a `payment_method` field to Order for transaction tracking
+- The `stock` field in Product suggests inventory management - you might need stock alerts or reserved quantities
+
+---
+
 ## User Experience
 
 Map produces visual structure records:
