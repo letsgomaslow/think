@@ -1,0 +1,351 @@
+{
+  "spec_id": "006-expanded-council-personas",
+  "title": "Expanded Council Personas",
+  "description": "Expand the council tool with domain-specific persona sets: Technical Experts, Business Experts, Creative Experts, and support for custom persona definitions",
+  "acceptance_criteria": [
+    "15+ predefined personas available across 4 domain categories",
+    "Custom persona definition via configuration",
+    "Personas have distinct voices, concerns, and expertise areas",
+    "Documentation provides persona selection guidance",
+    "Backward compatible with existing council calls",
+    "Test coverage for all new personas"
+  ],
+  "phases": [
+    {
+      "phase_id": "phase-1",
+      "name": "Design Persona Library Architecture",
+      "description": "Create the foundational architecture for the persona library system",
+      "subtasks": [
+        {
+          "subtask_id": "1.1",
+          "title": "Create persona library types and interfaces",
+          "description": "Define TypeScript interfaces for PersonaCategory, PredefinedPersona, PersonaLibrary, and enhanced PersonaData with category support",
+          "files": ["src/personas/types.ts"],
+          "status": "completed",
+          "notes": "Created comprehensive TypeScript interfaces for persona library architecture including PersonaCategoryId, PersonaCategory, EnhancedPersonaData, PredefinedPersona, PersonaLibrary, PersonaCreationOptions, PersonaQueryOptions, and PersonaSearchResult. File: src/personas/types.ts"
+        },
+        {
+          "subtask_id": "1.2",
+          "title": "Create persona registry system",
+          "description": "Implement PersonaRegistry class to store, retrieve, and query predefined personas by category, ID, or expertise",
+          "files": ["src/personas/registry.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "1.3",
+          "title": "Create persona factory for instantiation",
+          "description": "Implement PersonaFactory to create persona instances from predefined templates or custom definitions",
+          "files": ["src/personas/factory.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-2",
+      "name": "Implement Technical Expert Personas",
+      "description": "Create the technical experts persona category with 5 specialized personas",
+      "subtasks": [
+        {
+          "subtask_id": "2.1",
+          "title": "Implement Security Specialist persona",
+          "description": "Create security-focused persona with expertise in threat modeling, vulnerability assessment, secure architecture, and compliance",
+          "files": ["src/personas/technical/security-specialist.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.2",
+          "title": "Implement Performance Engineer persona",
+          "description": "Create performance-focused persona with expertise in optimization, profiling, scalability, and resource management",
+          "files": ["src/personas/technical/performance-engineer.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.3",
+          "title": "Implement UX Researcher persona",
+          "description": "Create UX-focused persona with expertise in user research, usability testing, accessibility, and human-centered design",
+          "files": ["src/personas/technical/ux-researcher.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.4",
+          "title": "Implement DevOps Expert persona",
+          "description": "Create DevOps-focused persona with expertise in CI/CD, infrastructure, observability, and reliability engineering",
+          "files": ["src/personas/technical/devops-expert.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.5",
+          "title": "Create Technical Experts category index",
+          "description": "Export all technical personas with category metadata and create category-level utilities",
+          "files": ["src/personas/technical/index.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-3",
+      "name": "Implement Business Expert Personas",
+      "description": "Create the business experts persona category with 5 specialized personas",
+      "subtasks": [
+        {
+          "subtask_id": "3.1",
+          "title": "Implement Product Manager persona",
+          "description": "Create product-focused persona with expertise in roadmapping, prioritization, stakeholder management, and product strategy",
+          "files": ["src/personas/business/product-manager.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "3.2",
+          "title": "Implement Growth Hacker persona",
+          "description": "Create growth-focused persona with expertise in acquisition, activation, retention, referral, and revenue optimization",
+          "files": ["src/personas/business/growth-hacker.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "3.3",
+          "title": "Implement Customer Success persona",
+          "description": "Create customer-focused persona with expertise in onboarding, churn prevention, customer health, and value realization",
+          "files": ["src/personas/business/customer-success.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "3.4",
+          "title": "Implement Business Analyst persona",
+          "description": "Create analysis-focused persona with expertise in requirements gathering, process optimization, data analysis, and ROI modeling",
+          "files": ["src/personas/business/business-analyst.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "3.5",
+          "title": "Create Business Experts category index",
+          "description": "Export all business personas with category metadata and create category-level utilities",
+          "files": ["src/personas/business/index.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-4",
+      "name": "Implement Creative Expert Personas",
+      "description": "Create the creative experts persona category with 4 specialized personas",
+      "subtasks": [
+        {
+          "subtask_id": "4.1",
+          "title": "Implement Design Thinker persona",
+          "description": "Create design-thinking-focused persona with expertise in empathy, ideation, prototyping, and human-centered innovation",
+          "files": ["src/personas/creative/design-thinker.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "4.2",
+          "title": "Implement Storyteller persona",
+          "description": "Create narrative-focused persona with expertise in compelling narratives, emotional resonance, and persuasive communication",
+          "files": ["src/personas/creative/storyteller.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "4.3",
+          "title": "Implement Brand Strategist persona",
+          "description": "Create brand-focused persona with expertise in brand positioning, identity, messaging, and market differentiation",
+          "files": ["src/personas/creative/brand-strategist.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "4.4",
+          "title": "Implement Innovation Catalyst persona",
+          "description": "Create innovation-focused persona with expertise in disruption, emerging trends, blue ocean strategy, and creative problem-solving",
+          "files": ["src/personas/creative/innovation-catalyst.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "4.5",
+          "title": "Create Creative Experts category index",
+          "description": "Export all creative personas with category metadata and create category-level utilities",
+          "files": ["src/personas/creative/index.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-5",
+      "name": "Implement General Expert Personas",
+      "description": "Create general-purpose personas for common use cases (2 personas to reach 16 total)",
+      "subtasks": [
+        {
+          "subtask_id": "5.1",
+          "title": "Implement Devil's Advocate persona",
+          "description": "Create critical-thinking persona that challenges assumptions, identifies weaknesses, and stress-tests ideas",
+          "files": ["src/personas/general/devils-advocate.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "5.2",
+          "title": "Implement Systems Thinker persona",
+          "description": "Create systems-focused persona with expertise in interconnections, feedback loops, unintended consequences, and holistic analysis",
+          "files": ["src/personas/general/systems-thinker.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "5.3",
+          "title": "Create General Experts category index",
+          "description": "Export all general personas with category metadata and utilities",
+          "files": ["src/personas/general/index.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-6",
+      "name": "Create Persona Library Main Export",
+      "description": "Create the main persona library entry point and utility functions",
+      "subtasks": [
+        {
+          "subtask_id": "6.1",
+          "title": "Create main persona library index",
+          "description": "Export all categories, registry, factory, and provide high-level API for persona access",
+          "files": ["src/personas/index.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "6.2",
+          "title": "Create persona selection helpers",
+          "description": "Implement utility functions: getPersonasByCategory, getRecommendedPersonas, suggestPersonasForTopic",
+          "files": ["src/personas/helpers.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-7",
+      "name": "Update Council Tool Integration",
+      "description": "Integrate persona library with council tool while maintaining backward compatibility",
+      "subtasks": [
+        {
+          "subtask_id": "7.1",
+          "title": "Add optional persona category support to council schema",
+          "description": "Extend council tool schema with optional 'personaCategory' and 'predefinedPersonas' fields for easy access to predefined personas",
+          "files": ["src/index.ts", "web/lib/tools/council.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "7.2",
+          "title": "Update councilServer to use persona library",
+          "description": "Modify CouncilServer to resolve predefined persona references and enrich custom personas with defaults",
+          "files": ["src/tools/councilServer.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "7.3",
+          "title": "Update interfaces for enhanced persona support",
+          "description": "Add category field and predefined persona ID support to PersonaData interface",
+          "files": ["src/models/interfaces.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-8",
+      "name": "Testing",
+      "description": "Comprehensive test coverage for all new functionality",
+      "subtasks": [
+        {
+          "subtask_id": "8.1",
+          "title": "Write unit tests for persona registry",
+          "description": "Test persona lookup by ID, category, and expertise; test registry initialization",
+          "files": ["src/personas/registry.test.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "8.2",
+          "title": "Write unit tests for persona factory",
+          "description": "Test persona creation from predefined templates and custom definitions",
+          "files": ["src/personas/factory.test.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "8.3",
+          "title": "Write unit tests for all predefined personas",
+          "description": "Test that each persona has valid structure, distinct voice characteristics, and proper expertise areas",
+          "files": ["src/personas/personas.test.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "8.4",
+          "title": "Write integration tests for council with predefined personas",
+          "description": "Test council sessions using predefined personas, mixing predefined with custom personas, and backward compatibility",
+          "files": ["src/tools/councilServer.test.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-9",
+      "name": "Documentation",
+      "description": "Update and create documentation for persona library",
+      "subtasks": [
+        {
+          "subtask_id": "9.1",
+          "title": "Update council tool documentation",
+          "description": "Add persona library examples, category descriptions, and usage patterns to docs/tools/council.md",
+          "files": ["docs/tools/council.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "9.2",
+          "title": "Create persona selection guide",
+          "description": "Create comprehensive guide with persona profiles, when to use each category, and best practices",
+          "files": ["docs/guides/persona-selection.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "9.3",
+          "title": "Update web demo data with new personas",
+          "description": "Update council demo to showcase predefined personas from different categories",
+          "files": ["web/components/council/council-demo-data.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    }
+  ],
+  "qa_signoff": {
+    "status": "pending",
+    "tests_passed": "",
+    "issues": ""
+  },
+  "created_at": "2026-01-05",
+  "updated_at": "2026-01-05",
+  "status": "planned",
+  "estimated_effort": "6-8 hours"
+}
