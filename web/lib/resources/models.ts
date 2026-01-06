@@ -149,6 +149,23 @@ const MENTAL_MODELS: ResourceCatalogItem[] = [
       'Blue Hat: Manage the thinking process, summarize, and decide next steps',
     ],
   },
+  {
+    name: 'mece',
+    title: 'MECE (Mutually Exclusive Collectively Exhaustive)',
+    description: 'Structure analysis to ensure categories are Mutually Exclusive (no overlap) and Collectively Exhaustive (complete coverage).',
+    useCases: [
+      'Structuring complex problem analysis and frameworks',
+      'Organizing data and information into clear categories',
+      'Creating comprehensive business strategies',
+      'Ensuring complete coverage in research and analysis',
+    ],
+    steps: [
+      'Define the problem or domain to analyze',
+      'Create categories that cover all possibilities (Collectively Exhaustive)',
+      'Ensure no overlap between categories (Mutually Exclusive)',
+      'Validate completeness and test for gaps or duplications',
+    ],
+  },
 ];
 
 /**
