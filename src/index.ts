@@ -183,6 +183,11 @@ Supports various debugging methods including:
 - Backtracking
 - Cause Elimination
 - Program Slicing
+- Wolf Fence
+- Rubber Duck
+- Delta Debugging
+- Fault Tree
+- Time Travel
 
 Each approach provides a structured method for identifying and resolving issues.`,
     inputSchema: {
@@ -197,6 +202,11 @@ Each approach provides a structured method for identifying and resolving issues.
                     "backtracking",
                     "cause_elimination",
                     "program_slicing",
+                    "wolf_fence",
+                    "rubber_duck",
+                    "delta_debugging",
+                    "fault_tree",
+                    "time_travel",
                 ],
             },
             issue: { type: "string" },
