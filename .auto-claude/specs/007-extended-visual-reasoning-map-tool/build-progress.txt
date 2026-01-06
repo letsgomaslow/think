@@ -23,7 +23,7 @@
 - [x] 2.7 Add Mermaid generation for existing diagram types
 
 ### Phase 3: MapServer Integration
-- [ ] 3.1 Update MapServer to use MermaidGenerator
+- [x] 3.1 Update MapServer to use MermaidGenerator
 - [ ] 3.2 Update formatOutput for new diagram types
 
 ### Phase 4: Comprehensive Testing

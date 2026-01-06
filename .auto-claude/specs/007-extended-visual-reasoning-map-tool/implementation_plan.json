@@ -121,8 +121,8 @@
           "title": "Update MapServer to use MermaidGenerator",
           "description": "Import MermaidGenerator and call it during processVisualReasoning. Include mermaidOutput in the JSON response when elements are provided.",
           "file_paths": ["src/tools/mapServer.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Successfully imported MermaidGenerator and integrated it into MapServer.processVisualReasoning(). The method now generates Mermaid syntax when elements are provided and includes mermaidOutput in the JSON response. Changes committed."
         },
         {
           "subtask_id": "3.2",
