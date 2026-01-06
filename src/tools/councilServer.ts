@@ -24,6 +24,8 @@ interface CouncilInput {
 }
 
 export class CouncilServer {
+  private sessions: Record<string, CollaborativeReasoningData[]> = {};
+
   /**
    * Resolve personas from predefined IDs and category
    * Merges predefined personas with custom personas
@@ -169,13 +171,23 @@ export class CouncilServer {
     return output;
   }
 
+  private storeContribution(data: CollaborativeReasoningData): void {
+    if (!this.sessions[data.sessionId]) {
+      this.sessions[data.sessionId] = [];
+    }
+    this.sessions[data.sessionId].push(data);
+  }
+
   public processCollaborativeReasoning(input: unknown): CollaborativeReasoningData {
     const validatedData = this.validateInputData(input);
-    
+
+    // Store the contribution for future reference
+    this.storeContribution(validatedData);
+
     // Log formatted output to console
     const formattedOutput = this.formatOutput(validatedData);
     console.error(formattedOutput);
-    
+
     return validatedData;
   }
 }
