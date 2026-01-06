@@ -183,6 +183,23 @@ const MENTAL_MODELS: ResourceCatalogItem[] = [
       'Work backwards to identify what to avoid and prevent',
     ],
   },
+  {
+    name: 'second_order_effects',
+    title: 'Second-Order Effects',
+    description: 'Analyze the cascading chain of consequences beyond immediate outcomes. First-order effects are direct and obvious; second-order effects are the consequences of those consequences; third-order effects extend even further.',
+    useCases: [
+      'Strategic planning and long-term decision-making',
+      'Policy analysis and unintended consequence prediction',
+      'Systems thinking and impact assessment',
+      'Risk management and scenario planning',
+    ],
+    steps: [
+      'Identify the action or decision and its first-order (direct) effects',
+      'Analyze second-order effects: what happens as a result of first-order effects',
+      'Consider third-order and beyond: trace the ripple effects through the system',
+      'Evaluate both positive and negative cascading consequences',
+    ],
+  },
 ];
 
 /**
