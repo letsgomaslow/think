@@ -10,6 +10,12 @@ Phase 1: Core Schema & Interface Updates
   - File: src/models/interfaces.ts
   - Status: COMPLETED
 
+✓ Subtask 1.2: Update MAP_TOOL schema in index.ts
+  - Extended diagramType enum in MAP_TOOL to include 5 new diagram types
+  - Added mermaidOutput as an optional string field in the schema
+  - File: src/index.ts
+  - Commit: 168246d
+  - Status: COMPLETED
+
 Next Steps:
-- Subtask 1.2: Update MAP_TOOL schema in index.ts
 - Subtask 1.3: Update web tool schemas
