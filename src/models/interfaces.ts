@@ -194,6 +194,30 @@ export interface EisenhowerClassification {
     quadrant: EisenhowerQuadrant;
 }
 
+// Cost-Benefit Analysis types
+export type CostBenefitType = "monetary" | "non-monetary";
+
+export interface CostBenefitItem {
+    optionId: string;
+    description: string;
+    amount: number;
+    type: CostBenefitType;
+    category?: string;
+    timeframe?: string;
+}
+
+export interface CostBenefitAnalysis {
+    optionId: string;
+    costs: CostBenefitItem[];
+    benefits: CostBenefitItem[];
+    netValue: number;
+    benefitCostRatio?: number;
+    roi?: number;
+    discountRate?: number;
+    timePeriodYears?: number;
+    npv?: number;
+}
+
 // reflect tool
 export interface KnowledgeAssessment {
     domain: string;
