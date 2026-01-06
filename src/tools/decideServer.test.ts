@@ -1642,4 +1642,481 @@ describe('DecideServer', () => {
       expect(output).toContain('Easy to convert to permanent');
     });
   });
+
+  describe('Regret Minimization Framework', () => {
+    it('should display 10/10/10 analysis with all three time horizons', () => {
+      const regretInput = {
+        decisionStatement: 'Should I quit my stable job to start a company?',
+        options: [
+          { id: 'quit', name: 'Quit and Start Company', description: 'Leave stable job to pursue entrepreneurship' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'career-decision-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'quit',
+            futureSelfPerspective: 'Looking back from age 80, will I regret not taking this chance when I had the energy and fewer responsibilities?',
+            potentialRegrets: {
+              tenMinutes: 'Immediate anxiety about financial stability and uncertainty',
+              tenMonths: 'Might regret the stress and financial struggles, but proud of taking action',
+              tenYears: 'Will likely regret NOT trying - the "what if" question will haunt me forever',
+            },
+            regretScore: 2.5,
+            timeHorizonAnalysis: 'Short-term concerns fade quickly, while long-term regret of not pursuing dreams persists',
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(result.analysisType).toBe('regret-minimization');
+      expect(result.regretMinimizationAnalysis).toHaveLength(1);
+      expect(output).toContain('Regret Minimization Framework');
+      expect(output).toContain('10/10/10 Analysis');
+      expect(output).toContain('Future Self Perspective');
+
+      // Check all three time horizons appear
+      expect(output).toContain('In 10 Minutes');
+      expect(output).toContain('In 10 Months');
+      expect(output).toContain('In 10 Years');
+
+      // Check emoji indicators
+      expect(output).toContain('⏱️');
+      expect(output).toContain('📅');
+      expect(output).toContain('🔮');
+
+      // Check regret content
+      expect(output).toContain('Immediate anxiety about financial stability');
+      expect(output).toContain('Might regret the stress and financial struggles');
+      expect(output).toContain('Will likely regret NOT trying');
+
+      // Check regret score
+      expect(output).toContain('2.5/10');
+      expect(output).toContain('Low regret potential');
+
+      // Check time horizon analysis
+      expect(output).toContain('Short-term concerns fade quickly');
+
+      // Check framework guidance
+      expect(output).toContain('Regret Minimization Guidance');
+      expect(output).toContain('Will I regret not taking this action when I\'m 80?');
+    });
+
+    it('should handle low regret score (<=3) with green indicator', () => {
+      const regretInput = {
+        decisionStatement: 'Should I invest in learning a new programming language?',
+        options: [
+          { id: 'learn', name: 'Learn Rust', description: 'Dedicate 3 months to mastering Rust' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'learning-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'learn',
+            futureSelfPerspective: 'Investing in skills is rarely regrettable - it compounds over time',
+            potentialRegrets: {
+              tenMinutes: 'None - excited to learn something new',
+              tenMonths: 'Happy with new capabilities and career opportunities',
+              tenYears: 'Grateful for expanding technical expertise when I had the chance',
+            },
+            regretScore: 1.0,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(result.regretMinimizationAnalysis![0].regretScore).toBe(1.0);
+      expect(output).toContain('1.0/10');
+      expect(output).toContain('Low regret potential');
+      expect(output).toContain('decision aligns with long-term values');
+      expect(output).toContain('✓');
+    });
+
+    it('should handle moderate regret score (4-6) with yellow indicator', () => {
+      const regretInput = {
+        decisionStatement: 'Should I accept a promotion that requires relocation?',
+        options: [
+          { id: 'accept', name: 'Accept Promotion', description: 'Move to new city for senior role' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'relocation-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'accept',
+            futureSelfPerspective: 'Career advancement vs. leaving established community and relationships',
+            potentialRegrets: {
+              tenMinutes: 'Uncertain - could go either way',
+              tenMonths: 'May regret leaving friends and community, but career is advancing',
+              tenYears: 'Could regret either choice - depends on how relationships and career develop',
+            },
+            regretScore: 5.0,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(result.regretMinimizationAnalysis![0].regretScore).toBe(5.0);
+      expect(output).toContain('5.0/10');
+      expect(output).toContain('Moderate regret potential');
+      expect(output).toContain('consider implications carefully');
+      expect(output).toContain('⚠');
+    });
+
+    it('should handle high regret score (>6) with red indicator', () => {
+      const regretInput = {
+        decisionStatement: 'Should I compromise my values for a high-paying job?',
+        options: [
+          { id: 'compromise', name: 'Take the Job', description: 'Accept position at company with questionable ethics' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'ethics-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'compromise',
+            futureSelfPerspective: 'Money is temporary, but integrity and self-respect are permanent',
+            potentialRegrets: {
+              tenMinutes: 'Immediate relief from financial pressure, but nagging doubt',
+              tenMonths: 'Deep regret - the money doesn\'t compensate for the loss of self-respect',
+              tenYears: 'Profound regret - this choice conflicts with core values and identity',
+            },
+            regretScore: 8.5,
+            timeHorizonAnalysis: 'Financial gains are short-term, but values-based regrets persist for decades',
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(result.regretMinimizationAnalysis![0].regretScore).toBe(8.5);
+      expect(output).toContain('8.5/10');
+      expect(output).toContain('High regret potential');
+      expect(output).toContain('reconsider this option');
+      expect(output).toContain('⚠');
+    });
+
+    it('should compare multiple options with different regret profiles', () => {
+      const regretInput = {
+        decisionStatement: 'What should I do after college graduation?',
+        options: [
+          { id: 'corporate', name: 'Corporate Job', description: 'Stable, well-paying corporate position' },
+          { id: 'startup', name: 'Join Startup', description: 'High-risk startup with equity' },
+          { id: 'travel', name: 'Travel Year', description: 'Defer career to travel the world' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'post-graduation-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'corporate',
+            futureSelfPerspective: 'Safe choice, but might wonder about missed adventures',
+            potentialRegrets: {
+              tenMinutes: 'Relief at having a plan and income',
+              tenMonths: 'Content but curious about alternatives',
+              tenYears: 'May regret playing it too safe when young and free',
+            },
+            regretScore: 4.5,
+          },
+          {
+            optionId: 'startup',
+            futureSelfPerspective: 'High-risk, high-learning opportunity in formative years',
+            potentialRegrets: {
+              tenMinutes: 'Excited and nervous about the adventure',
+              tenMonths: 'Learning tons, grateful for the experience regardless of outcome',
+              tenYears: 'Proud of taking the risk when I could afford to',
+            },
+            regretScore: 2.0,
+          },
+          {
+            optionId: 'travel',
+            futureSelfPerspective: 'Once-in-a-lifetime opportunity before life responsibilities accumulate',
+            potentialRegrets: {
+              tenMinutes: 'Thrill of freedom and possibility',
+              tenMonths: 'Incredible experiences, though financial reality looming',
+              tenYears: 'Zero regrets - these experiences shaped who I became',
+            },
+            regretScore: 1.5,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(result.regretMinimizationAnalysis).toHaveLength(3);
+
+      // Verify all options appear
+      expect(output).toContain('Corporate Job');
+      expect(output).toContain('Join Startup');
+      expect(output).toContain('Travel Year');
+
+      // Verify regret scores
+      expect(output).toContain('4.5/10');
+      expect(output).toContain('2.0/10');
+      expect(output).toContain('1.5/10');
+
+      // Verify different regret perspectives
+      expect(output).toContain('Safe choice, but might wonder');
+      expect(output).toContain('High-risk, high-learning opportunity');
+      expect(output).toContain('Once-in-a-lifetime opportunity');
+
+      // Verify time horizon content
+      expect(output).toContain('Relief at having a plan');
+      expect(output).toContain('Learning tons, grateful for the experience');
+      expect(output).toContain('Zero regrets - these experiences shaped');
+    });
+
+    it('should handle missing optional fields (regretScore and timeHorizonAnalysis)', () => {
+      const regretInput = {
+        decisionStatement: 'Should I speak up at the meeting?',
+        options: [
+          { id: 'speak', name: 'Voice Opinion', description: 'Share my perspective publicly' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'speak-up-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'speak',
+            futureSelfPerspective: 'Better to speak and be heard than stay silent and wonder "what if"',
+            potentialRegrets: {
+              tenMinutes: 'Might feel vulnerable or exposed',
+              tenMonths: 'Glad I contributed my voice',
+              tenYears: 'Won\'t even remember the anxiety, but will remember speaking up',
+            },
+            // No regretScore or timeHorizonAnalysis
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(result.regretMinimizationAnalysis![0].regretScore).toBeUndefined();
+      expect(result.regretMinimizationAnalysis![0].timeHorizonAnalysis).toBeUndefined();
+
+      // Should still show all required fields
+      expect(output).toContain('Future Self Perspective');
+      expect(output).toContain('In 10 Minutes');
+      expect(output).toContain('In 10 Months');
+      expect(output).toContain('In 10 Years');
+
+      // Should not show optional sections
+      expect(output).not.toContain('Overall Regret Score');
+      expect(output).not.toContain('Time Horizon Analysis:');
+    });
+
+    it('should handle boundary regret scores (3.0, 6.0)', () => {
+      const regretInput = {
+        decisionStatement: 'Test regret score boundaries',
+        options: [
+          { id: 'low-boundary', name: 'Low Score Boundary', description: 'Exactly 3.0 regret score' },
+          { id: 'medium-boundary', name: 'Medium Score Boundary', description: 'Exactly 6.0 regret score' },
+          { id: 'high-boundary', name: 'High Score Boundary', description: 'Just above 6.0' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'boundary-test-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'low-boundary',
+            futureSelfPerspective: 'Testing low boundary at exactly 3.0',
+            potentialRegrets: {
+              tenMinutes: 'Test 10 minutes',
+              tenMonths: 'Test 10 months',
+              tenYears: 'Test 10 years',
+            },
+            regretScore: 3.0,
+          },
+          {
+            optionId: 'medium-boundary',
+            futureSelfPerspective: 'Testing medium boundary at exactly 6.0',
+            potentialRegrets: {
+              tenMinutes: 'Test 10 minutes',
+              tenMonths: 'Test 10 months',
+              tenYears: 'Test 10 years',
+            },
+            regretScore: 6.0,
+          },
+          {
+            optionId: 'high-boundary',
+            futureSelfPerspective: 'Testing high boundary just above 6.0',
+            potentialRegrets: {
+              tenMinutes: 'Test 10 minutes',
+              tenMonths: 'Test 10 months',
+              tenYears: 'Test 10 years',
+            },
+            regretScore: 6.1,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      // Verify scores
+      expect(result.regretMinimizationAnalysis![0].regretScore).toBe(3.0);
+      expect(result.regretMinimizationAnalysis![1].regretScore).toBe(6.0);
+      expect(result.regretMinimizationAnalysis![2].regretScore).toBe(6.1);
+
+      // 3.0 should be LOW (<=3)
+      const lowIndex = output.indexOf('3.0/10');
+      const lowRegretIndex = output.indexOf('Low regret potential', lowIndex);
+      expect(lowRegretIndex).toBeGreaterThan(lowIndex);
+
+      // 6.0 should be MODERATE (<=6)
+      const mediumIndex = output.indexOf('6.0/10');
+      const moderateRegretIndex = output.indexOf('Moderate regret potential', mediumIndex);
+      expect(moderateRegretIndex).toBeGreaterThan(mediumIndex);
+
+      // 6.1 should be HIGH (>6)
+      const highIndex = output.indexOf('6.1/10');
+      const highRegretIndex = output.indexOf('High regret potential', highIndex);
+      expect(highRegretIndex).toBeGreaterThan(highIndex);
+    });
+
+    it('should handle empty regretMinimizationAnalysis array', () => {
+      const regretInput = {
+        decisionStatement: 'No regret analysis provided',
+        options: [
+          { id: 'option', name: 'Some Option', description: 'No regret data' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'no-data-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(result.regretMinimizationAnalysis).toHaveLength(0);
+      expect(output).toBe('');
+    });
+
+    it('should display framework guidance about long-term perspective', () => {
+      const regretInput = {
+        decisionStatement: 'Test framework guidance display',
+        options: [
+          { id: 'test', name: 'Test Option', description: 'Testing guidance' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'guidance-test-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'test',
+            futureSelfPerspective: 'Test perspective',
+            potentialRegrets: {
+              tenMinutes: 'Test',
+              tenMonths: 'Test',
+              tenYears: 'Test',
+            },
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(output).toContain('Regret Minimization Guidance');
+      expect(output).toContain('Will I regret not taking this action when I\'m 80?');
+      expect(output).toContain('Short-term concerns');
+      expect(output).toContain('long-term regrets');
+      expect(output).toContain('future self\'s values and priorities');
+    });
+
+    it('should handle real-world scenario: major life decision with time horizon analysis', () => {
+      const regretInput = {
+        decisionStatement: 'Should I have children?',
+        options: [
+          { id: 'yes', name: 'Have Children', description: 'Start a family in the next few years' },
+          { id: 'no', name: 'Remain Child-Free', description: 'Focus on career, hobbies, and freedom' },
+        ],
+        analysisType: 'regret-minimization' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'life-decision-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        regretMinimizationAnalysis: [
+          {
+            optionId: 'yes',
+            futureSelfPerspective: 'At 80, will I value the legacy and relationships, or regret the sacrifices?',
+            potentialRegrets: {
+              tenMinutes: 'Excited but anxious about the commitment and responsibility',
+              tenMonths: 'Sleep-deprived and overwhelmed, questioning the decision during hard moments',
+              tenYears: 'Deep fulfillment from watching them grow, though sacrifices were real',
+            },
+            regretScore: 2.0,
+            timeHorizonAnalysis: 'The immediate challenges are intense but temporary. Long-term, most parents report deep satisfaction despite the costs.',
+          },
+          {
+            optionId: 'no',
+            futureSelfPerspective: 'At 80, will I value the freedom and achievements, or feel the absence of children?',
+            potentialRegrets: {
+              tenMinutes: 'Relief at maintaining current lifestyle and freedom',
+              tenMonths: 'Enjoying career advancement and personal pursuits without constraints',
+              tenYears: 'May feel the absence during family gatherings, wondering about missed experiences',
+            },
+            regretScore: 5.5,
+            timeHorizonAnalysis: 'The freedom is wonderful now, but some report feeling the absence more acutely in later years when biological clock has passed.',
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(regretInput);
+      const output = server.formatOutput(result);
+
+      expect(result.regretMinimizationAnalysis).toHaveLength(2);
+      expect(output).toContain('Have Children');
+      expect(output).toContain('Remain Child-Free');
+
+      // Check regret scores and interpretations
+      expect(output).toContain('2.0/10');
+      expect(output).toContain('Low regret potential');
+      expect(output).toContain('5.5/10');
+      expect(output).toContain('Moderate regret potential');
+
+      // Check time horizon analyses
+      expect(output).toContain('The immediate challenges are intense but temporary');
+      expect(output).toContain('The freedom is wonderful now');
+
+      // Check future perspectives
+      expect(output).toContain('will I value the legacy and relationships');
+      expect(output).toContain('will I value the freedom and achievements');
+
+      // Check 10/10/10 content
+      expect(output).toContain('Sleep-deprived and overwhelmed');
+      expect(output).toContain('Deep fulfillment from watching them grow');
+      expect(output).toContain('Enjoying career advancement');
+      expect(output).toContain('May feel the absence during family gatherings');
+    });
+  });
 });
