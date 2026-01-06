@@ -1,6 +1,6 @@
 # Build Progress: Extended Mental Models Library
 
-## Status: Phase 1 Completed
+## Status: Phase 2 Completed
 
 ### Phase 1: Core Tool Schema Updates ✅
 - **Subtask 1.1**: Add new model names to MODEL_TOOL enum - COMPLETED
@@ -13,8 +13,34 @@
   - Proper categorization: Analytical, Strategic, Creative & Problem-Solving, Decision & Prioritization
   - Work completed in previous session
 
-### Phase 2: Resource Catalog Updates - PENDING
-Next steps: Add all 7 new models to web/lib/resources/models.ts
+### Phase 2: Resource Catalog Updates ✅
+- **Subtask 2.1**: Add SWOT Analysis to catalog - COMPLETED
+  - Already present in MENTAL_MODELS array (lines 117-132)
+  - Includes name, title, description, 4 use cases, 4 steps
+
+- **Subtask 2.2**: Add Six Thinking Hats to catalog - COMPLETED
+  - Already present in MENTAL_MODELS array (lines 134-151)
+  - All 6 hat colors explained: White, Red, Black, Yellow, Green, Blue
+
+- **Subtask 2.3**: Add MECE to catalog - COMPLETED
+  - Already present in MENTAL_MODELS array (lines 153-168)
+  - ME and CE concepts clearly explained
+
+- **Subtask 2.4**: Add Inversion Thinking to catalog - COMPLETED
+  - Already present in MENTAL_MODELS array (lines 170-185)
+  - Mentions Charlie Munger, working backwards from failure
+
+- **Subtask 2.5**: Add Second-Order Effects to catalog - COMPLETED
+  - Already present in MENTAL_MODELS array (lines 187-202)
+  - First, second, third-order effects explained
+
+- **Subtask 2.6**: Add Pre-Mortem Analysis to catalog - COMPLETED
+  - Already present in MENTAL_MODELS array (lines 204-219)
+  - Prospective hindsight technique explained
+
+- **Subtask 2.7**: Add Five Whys to catalog - COMPLETED
+  - Already present in MENTAL_MODELS array (lines 221-237)
+  - Mentions Toyota Production System, iterative questioning
 
 ### Phase 3: Extended Model Documentation - PENDING
 Next steps: Add detailed documentation to web/lib/resources/extended/models.ts
