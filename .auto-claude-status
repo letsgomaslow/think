@@ -1,0 +1,25 @@
+{
+  "active": true,
+  "spec": "002-make-privacy-policy-text-a-clickable-link-in-waitl",
+  "state": "building",
+  "subtasks": {
+    "completed": 0,
+    "total": 0,
+    "in_progress": 1,
+    "failed": 0
+  },
+  "phase": {
+    "current": "Implementation",
+    "id": null,
+    "total": 1
+  },
+  "workers": {
+    "active": 0,
+    "max": 1
+  },
+  "session": {
+    "number": 2,
+    "started_at": "2026-01-05T22:00:17.286101"
+  },
+  "last_update": "2026-01-05T22:01:28.465562"
+}

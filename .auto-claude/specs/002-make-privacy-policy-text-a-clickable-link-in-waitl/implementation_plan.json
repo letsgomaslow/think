@@ -1,0 +1,66 @@
+{
+  "feature": "Make privacy policy text a clickable link in waitlist form",
+  "description": "Convert the 'privacy policy' text in the waitlist form checkbox label to an actual link that opens the /privacy page",
+  "created_at": "2026-01-06T02:57:12.565Z",
+  "updated_at": "2026-01-06T03:00:15.803Z",
+  "status": "in_progress",
+  "planStatus": "in_progress",
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Implementation",
+      "description": "Update the waitlist form to make privacy policy text clickable",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Add Link import and update FormLabel",
+          "description": "Import the Next.js Link component and modify the privacy checkbox FormLabel to wrap 'privacy policy' text in a clickable link pointing to /privacy. The link should open in a new tab to avoid disrupting the form flow, and should have appropriate styling (underline, hover effect) to indicate it's interactive.",
+          "file_paths": ["web/components/sections/waitlist-form.tsx"],
+          "status": "pending",
+          "acceptance_criteria": [
+            "Link component is imported from next/link",
+            "privacy policy text is wrapped in a Link component",
+            "Link points to /privacy",
+            "Link opens in new tab (target='_blank')",
+            "Link has visual styling to indicate it's clickable",
+            "Clicking the link does not trigger the checkbox"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Testing & Verification",
+      "description": "Verify the implementation works correctly",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Manual verification",
+          "description": "Verify the link is visible, clickable, and opens /privacy in a new tab. Ensure clicking the link does not accidentally toggle the checkbox.",
+          "file_paths": [],
+          "status": "pending",
+          "acceptance_criteria": [
+            "Link is visually distinct as clickable text",
+            "Link opens /privacy page in new tab when clicked",
+            "Checkbox functionality remains intact",
+            "Form submission still works correctly"
+          ]
+        }
+      ]
+    }
+  ],
+  "workflow_type": "development",
+  "services_involved": ["web/components/sections/waitlist-form.tsx"],
+  "final_acceptance": [
+    "Privacy policy text is a clickable link in the waitlist form",
+    "Link opens /privacy page in new tab",
+    "Checkbox toggle still works correctly",
+    "Form submission still works"
+  ],
+  "spec_file": "spec.md",
+  "qa_sign_off": {
+    "status": "pending",
+    "tests_passed": "",
+    "issues": ""
+  }
+}

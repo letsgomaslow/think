@@ -6,6 +6,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import { motion } from "framer-motion";
 import { Check, Loader2 } from "lucide-react";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -172,7 +173,17 @@ export function WaitlistForm() {
                 <div className="space-y-1 leading-none">
                   <FormLabel className="text-sm text-slate-400 font-normal cursor-pointer">
                     I agree to receive updates and understand my data will be
-                    processed according to the privacy policy.
+                    processed according to the{" "}
+                    <Link
+                      href="/privacy"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      onClick={(e) => e.stopPropagation()}
+                      className="text-[hsl(var(--brand-primary))] underline hover:text-[hsl(var(--brand-primary)/0.85)] transition-colors"
+                    >
+                      privacy policy
+                    </Link>
+                    .
                   </FormLabel>
                   <FormMessage className="text-[hsl(var(--brand-accent))]" />
                 </div>

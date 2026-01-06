@@ -1,0 +1,34 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Read(./**)",
+      "Write(./**)",
+      "Edit(./**)",
+      "Glob(./**)",
+      "Grep(./**)",
+      "Read(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/002-make-privacy-policy-text-a-clickable-link-in-waitl/**)",
+      "Write(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/002-make-privacy-policy-text-a-clickable-link-in-waitl/**)",
+      "Edit(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/002-make-privacy-policy-text-a-clickable-link-in-waitl/**)",
+      "Glob(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/002-make-privacy-policy-text-a-clickable-link-in-waitl/**)",
+      "Grep(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/002-make-privacy-policy-text-a-clickable-link-in-waitl/**)",
+      "Read(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/002-make-privacy-policy-text-a-clickable-link-in-waitl/.auto-claude/specs/002-make-privacy-policy-text-a-clickable-link-in-waitl/**)",
+      "Write(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/002-make-privacy-policy-text-a-clickable-link-in-waitl/.auto-claude/specs/002-make-privacy-policy-text-a-clickable-link-in-waitl/**)",
+      "Edit(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/002-make-privacy-policy-text-a-clickable-link-in-waitl/.auto-claude/specs/002-make-privacy-policy-text-a-clickable-link-in-waitl/**)",
+      "Bash(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "mcp__context7__resolve-library-id(*)",
+      "mcp__context7__get-library-docs(*)",
+      "mcp__graphiti-memory__search_nodes(*)",
+      "mcp__graphiti-memory__search_facts(*)",
+      "mcp__graphiti-memory__add_episode(*)",
+      "mcp__graphiti-memory__get_episodes(*)",
+      "mcp__graphiti-memory__get_entity_edge(*)"
+    ]
+  }
+}
