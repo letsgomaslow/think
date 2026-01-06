@@ -2,6 +2,8 @@ import { ScientificInquiryData, HypothesisData, ExperimentData } from '../models
 import chalk from 'chalk';
 
 export class HypothesisServer {
+  private inquiries: Record<string, ScientificInquiryData[]> = {};
+
   private validateInputData(input: unknown): ScientificInquiryData {
     const data = input as ScientificInquiryData;
     if (!data.stage || !data.inquiryId) {
@@ -157,7 +159,7 @@ export class HypothesisServer {
 
   private processExperiment(experiment?: ExperimentData): ExperimentData | undefined {
     if (!experiment) return undefined;
-    
+
     return {
       ...experiment,
       predictions: experiment.predictions || [],
@@ -168,6 +170,13 @@ export class HypothesisServer {
     };
   }
 
+  private storeInquiryStage(data: ScientificInquiryData): void {
+    if (!this.inquiries[data.inquiryId]) {
+      this.inquiries[data.inquiryId] = [];
+    }
+    this.inquiries[data.inquiryId].push(data);
+  }
+
   public processScientificMethod(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
     try {
       const validatedData = this.validateInputData(input);
@@ -176,7 +185,10 @@ export class HypothesisServer {
         hypothesis: this.processHypothesis(validatedData.hypothesis),
         experiment: this.processExperiment(validatedData.experiment)
       };
-      
+
+      // Store the inquiry stage for future reference
+      this.storeInquiryStage(processedData);
+
       const formattedOutput = this.formatOutput(processedData);
       console.error(formattedOutput);
 
