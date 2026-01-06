@@ -43,7 +43,19 @@ Tools for visual thinking and diagram creation.
 
 | Tool | Description | Best For |
 |------|-------------|----------|
-| [**Map**](./map.md) | Visual diagram creation | Flowcharts, concept maps, system architecture |
+| [**Map**](./map.md) | Visual diagram creation with **11 diagram types** | Flowcharts, sequence diagrams, state machines, ER diagrams, mind maps, system context (C4), and more |
+
+#### New Diagram Types
+
+The Map tool now supports **5 additional diagram types** with Mermaid output for easy rendering:
+
+| Diagram Type | Best For | Use When |
+|--------------|----------|----------|
+| **Sequence Diagram** | Component interactions | Visualizing API flows, protocol exchanges, message passing between systems |
+| **State Machine** | System behavior | Modeling lifecycles with complex transitions (orders, auth flows, workflows) |
+| **ER Diagram** | Data models | Designing database schemas with entities, attributes, and relationships |
+| **Mind Map** | Brainstorming | Organizing ideas hierarchically around a central concept |
+| **Context Diagram** | System architecture (C4) | Showing high-level system boundaries with external actors and dependencies |
 
 ---
 
@@ -62,6 +74,27 @@ Tools for visual thinking and diagram creation.
 | Assess my confidence | [Reflect](./reflect.md) |
 | Choose a coding approach | [Paradigm](./paradigm.md) |
 | Visualize relationships | [Map](./map.md) |
+| Map API interactions | [Map](./map.md) (Sequence Diagram) |
+| Model state transitions | [Map](./map.md) (State Machine) |
+| Design database schema | [Map](./map.md) (ER Diagram) |
+| Brainstorm features | [Map](./map.md) (Mind Map) |
+| Document system context | [Map](./map.md) (Context Diagram) |
+
+### Diagram Type Selection Guide
+
+When using the [Map](./map.md) tool, choose the right diagram type for your visualization needs:
+
+| Your Goal | Diagram Type | Key Features |
+|-----------|--------------|--------------|
+| Show how components communicate | Sequence Diagram | Message flows, request/response patterns, timing |
+| Model object/system lifecycle | State Machine | States, transitions, start/end markers |
+| Design database structure | ER Diagram | Entities, attributes, relationships, cardinality |
+| Organize ideas hierarchically | Mind Map | Central concept, branching subtopics, visual shapes |
+| Show system boundaries | Context Diagram | External actors, systems, dependencies (C4 model) |
+| Map a process or algorithm | Flowchart | Decision points, sequential steps, control flow |
+| Explore concept relationships | Concept Map | Bidirectional connections, labeled relationships |
+| Show organizational hierarchy | Tree Diagram | Parent-child structure, top-down layout |
+| Visualize network connections | Graph | General networks, interconnected nodes |
 
 ---
 
