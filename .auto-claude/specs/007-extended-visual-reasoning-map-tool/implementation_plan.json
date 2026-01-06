@@ -205,8 +205,8 @@
           "file_paths": [
             "web/components/demos/map-demo-data.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Added comprehensive demo scenarios for all 5 new diagram types: sequenceDiagramDemo (API auth flow with 4 participants and 7 messages), stateMachineDemo (order lifecycle with 6 states including start/end markers), erDiagramDemo (User-Order-Product schema with attributes and relationships), mindMapDemo (mobile app feature brainstorm with hierarchical structure using contains), and contextDiagramDemo (e-commerce system with C4 context showing Person/System nodes). Each demo follows existing MapDemoStep pattern with realistic business scenarios. Also updated DiagramType type definition to include all 5 new types. Committed in fff06b3."
         },
         {
           "subtask_id": "5.2",
@@ -215,8 +215,8 @@
           "file_paths": [
             "web/components/demos/map-demo-data.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Updated diagramTypeLabels object to include display names for all 5 new diagram types: sequenceDiagram ('Sequence Diagram'), stateMachine ('State Machine'), erDiagram ('ER Diagram'), mindMap ('Mind Map'), and contextDiagram ('Context Diagram'). Follows existing pattern with user-friendly display names. Committed in fff06b3."
         },
         {
           "subtask_id": "5.3",
@@ -225,8 +225,8 @@
           "file_paths": [
             "web/lib/tools/map.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Modified handleMap function to include mermaidOutput as a regular field in the response object. Changed from conditional spread operator to explicit field assignment (mermaidOutput: mermaidOutput || undefined). This ensures mermaidOutput is always present in the response with a predictable structure, consistent with the elements field pattern. Committed in c9eba7e."
         }
       ]
     },

@@ -162,7 +162,47 @@ Phase 4 Status: COMPLETED ✓
 - Comprehensive coverage for all 11 diagram types
 - Ready for execution once environment is configured
 
+Phase 5: Web Playground Integration
+----------------------------------------
+✓ Subtask 5.1: Update map-demo-data with new diagram examples
+  - Added 5 comprehensive demo scenarios for new diagram types:
+    * sequenceDiagramDemo: API authentication flow with 4 participants (Client, API Gateway, Auth Service, Database)
+    * stateMachineDemo: Order lifecycle with 6 states including start/end markers (Pending → Paid → Processing → Shipped → Delivered)
+    * erDiagramDemo: User-Order-Product database schema with attributes and cardinality relationships
+    * mindMapDemo: Mobile app feature brainstorm with hierarchical structure using contains array
+    * contextDiagramDemo: E-commerce system C4 context diagram with Person/System/System_Ext nodes
+  - Updated DiagramType union type to include all 5 new diagram types
+  - Each demo follows existing MapDemoStep pattern with realistic business scenarios
+  - File: web/components/demos/map-demo-data.ts
+  - Commit: fff06b3
+  - Status: COMPLETED
+
+✓ Subtask 5.2: Add diagram type labels and icons
+  - Updated diagramTypeLabels object with display names for all 5 new types:
+    * sequenceDiagram: 'Sequence Diagram'
+    * stateMachine: 'State Machine'
+    * erDiagram: 'ER Diagram'
+    * mindMap: 'Mind Map'
+    * contextDiagram: 'Context Diagram'
+  - Follows existing pattern with user-friendly display names
+  - File: web/components/demos/map-demo-data.ts
+  - Commit: fff06b3
+  - Status: COMPLETED
+
+✓ Subtask 5.3: Update handleMap for Mermaid output
+  - Modified handleMap function to include mermaidOutput as a regular field in response object
+  - Changed from conditional spread operator to explicit field assignment (mermaidOutput: mermaidOutput || undefined)
+  - Ensures mermaidOutput is always present in the response with a predictable structure
+  - Consistent with the elements field pattern
+  - File: web/lib/tools/map.ts
+  - Commit: c9eba7e
+  - Status: COMPLETED
+
+Phase 5 Status: COMPLETED ✓
+- Web playground fully integrated with Mermaid output support
+- Demo data includes all 5 new diagram types
+- handleMap function properly returns mermaidOutput
+
 Next Steps:
-- Phase 5: Web Playground Integration
-- Phase 6: Documentation
-- Phase 7: Final Validation & Build
+- Phase 6: Documentation (8 subtasks)
+- Phase 7: Final Validation & Build (3 subtasks)
