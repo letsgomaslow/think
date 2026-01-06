@@ -27,7 +27,7 @@
 - [x] 3.2 Update formatOutput for new diagram types
 
 ### Phase 4: Comprehensive Testing
-- [ ] 4.1 Create MermaidGenerator tests
+- [x] 4.1 Create MermaidGenerator tests
 - [ ] 4.2 Update MapServer tests for new diagram types
 - [ ] 4.3 Run test suite and verify all pass
 
