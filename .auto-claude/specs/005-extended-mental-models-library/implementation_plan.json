@@ -197,12 +197,14 @@
           "title": "Add Inversion Thinking extended documentation",
           "description": "Add Inversion Thinking to EXTENDED_MODELS with Charlie Munger-style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Inversion concept clearly explained",
             "Practical avoidance example",
             "Related models linked"
-          ]
+          ],
+          "completed_at": "2026-01-06T15:15:00.000Z",
+          "notes": "Verified Inversion Thinking extended model in web/lib/resources/extended/models.ts (lines 434-503). All acceptance criteria met: Complete ExtendedModel structure with name, title, description, whenToUse (5 scenarios), steps (6 detailed steps), comprehensive Charlie Munger-style example (investment portfolio with 8 failure modes and avoidance strategies, includes Munger's famous quote: 'It is remarkable how much long-term advantage people like us have gotten by trying to be consistently not stupid, instead of trying to be very intelligent.' Plus career application example), relatedModels (pre_mortem, second_order_effects, first_principles), and toolParameters. Code is in correct state and was previously implemented."
         },
         {
           "subtask_id": "3.5",
