@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (29/33 subtasks completed - 88%)
+## Current Status: In Progress (31/33 subtasks completed - 94%)
 
 ### Completed Subtasks
 
@@ -168,10 +168,19 @@
 
 #### Phase 8: Testing ✅ COMPLETE
 
+#### Phase 9: Documentation (In Progress)
+- [x] 9.1 - Update council tool documentation
+  - File: docs/tools/council.md
+  - Status: Committed (commit: cef50cf)
+  - Notes: Comprehensive persona library documentation added with overview of 14 personas across 4 categories, detailed persona tables, usage patterns (personaCategory, predefinedPersonas, mixed), category selection guide, and updated Quick Reference
+
+- [x] 9.2 - Create persona selection guide
+  - File: docs/guides/persona-selection.md
+  - Status: Committed (commit: ca2ddf3)
+  - Notes: Comprehensive 991-line persona selection guide created with detailed profiles for all 14 personas, category selection guide with decision matrix, best practices (3-5 personas, productive tension, critical voices), common persona combinations, anti-patterns to avoid, advanced selection strategies, 5-step decision framework, and quick reference cheat sheet. Provides actionable guidance for effective persona selection across all use cases.
+
 ### Next Steps
 - [ ] Continue with Phase 9: Documentation
-  - 9.1 - Update council tool documentation
-  - 9.2 - Create persona selection guide
   - 9.3 - Update web demo data with new personas
 
 ### Build Notes

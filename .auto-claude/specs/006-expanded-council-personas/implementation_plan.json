@@ -380,8 +380,8 @@
           "files": [
             "docs/tools/council.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Comprehensive persona library documentation added to docs/tools/council.md. Includes: (1) Overview of 14 expert personas across 4 categories (Technical, Business, Creative, General), (2) Detailed persona tables showing IDs, names, and expertise focus for each category, (3) When to use each category guidance, (4) Three usage patterns with JSON examples: personaCategory for entire categories, predefinedPersonas for specific personas, and mixed approach combining predefined with custom, (5) Category selection guide with example use cases, (6) Benefits of using predefined personas, (7) Updated Quick Reference table with new personaCategory and predefinedPersonas parameters. Documentation provides clear, actionable guidance for users to leverage the persona library effectively. Committed in cef50cf."
         },
         {
           "subtask_id": "9.2",
@@ -390,8 +390,8 @@
           "files": [
             "docs/guides/persona-selection.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Comprehensive persona selection guide created in docs/guides/persona-selection.md (991 lines). Includes: (1) Introduction to persona library and categories with when-to-use guidance, (2) Detailed profiles for all 14 personas with expertise, perspectives, communication styles, concerns, when to include, and complementary personas, (3) Category selection guide with decision matrix mapping goals to recommended categories, (4) Best practices for persona selection including optimal count (3-5), ensuring productive tension, including critical voices, and mixing predefined with custom, (5) Common persona combinations for technical, product, strategic decisions with explanations, (6) Anti-patterns to avoid (all agreeable personas, too many personas, category silos, etc.), (7) Advanced selection strategies (Challenger Method, Stakeholder Mirror, Innovation Sprint, Risk Assessment), (8) Decision framework with 5-step selection process, (9) Quick reference cheat sheet mapping decision types to recommended personas. Guide provides comprehensive, actionable guidance for effective persona selection across all use cases. Committed in ca2ddf3."
         },
         {
           "subtask_id": "9.3",
