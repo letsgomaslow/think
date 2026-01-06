@@ -1,0 +1,10 @@
+{
+  "discovered_files": {
+    "./web/components/demos/decide-demo-data.ts": {
+      "description": "Extended demo data types to support 5 new decision frameworks: Eisenhower Matrix, Cost-Benefit Analysis, Risk Assessment Matrix, Reversibility Analysis, and Regret Minimization. Added comprehensive TypeScript interfaces matching server-side definitions from src/models/interfaces.ts. DecisionData interface now includes optional fields for all framework-specific data.",
+      "category": "type-definitions",
+      "discovered_at": "2026-01-06T07:33:52.718982+00:00"
+    }
+  },
+  "last_updated": "2026-01-06T07:33:52.719000+00:00"
+}

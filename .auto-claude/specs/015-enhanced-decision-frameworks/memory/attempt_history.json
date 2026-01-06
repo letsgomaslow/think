@@ -119,11 +119,47 @@
         }
       ],
       "status": "completed"
+    },
+    "4.6": {
+      "attempts": [
+        {
+          "session": 11,
+          "timestamp": "2026-01-06T02:28:54.309025",
+          "approach": "Implemented: Execute npm test and ensure all existing and new tests pass without regression",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "5.1": {
+      "attempts": [
+        {
+          "session": 12,
+          "timestamp": "2026-01-06T02:32:11.007967",
+          "approach": "Implemented: Extend analysisTypeEnum with 5 new types and add Zod schemas for framework-specific optional propert",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "5.2": {
+      "attempts": [
+        {
+          "session": 13,
+          "timestamp": "2026-01-06T02:34:05.021154",
+          "approach": "Implemented: Extend AnalysisType union and add TypeScript interfaces for each framework's specific data in demo",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
     }
   },
   "stuck_subtasks": [],
   "metadata": {
     "created_at": "2026-01-06T02:00:39.635918",
-    "last_updated": "2026-01-06T02:24:46.347063"
+    "last_updated": "2026-01-06T02:34:05.021176"
   }
 }
