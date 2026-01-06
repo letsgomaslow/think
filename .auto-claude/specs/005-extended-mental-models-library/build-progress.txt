@@ -21,6 +21,37 @@ Acceptance criteria met:
 ✓ Description updated to list new models (references 13 models)
 ✓ No uncommitted changes to src/index.ts (work was completed in previous session)
 
+### Subtask 1.2: Update MODEL_TOOL description
+**Status: COMPLETE (verified)**
+
+The MODEL_TOOL description in src/index.ts (lines 32-56) already includes all 7 new mental models organized by category:
+
+Analytical Models:
+✓ First Principles Thinking
+✓ MECE (Mutually Exclusive Collectively Exhaustive)
+✓ Five Whys (root cause analysis)
+✓ Occam's Razor
+
+Strategic Models:
+✓ SWOT Analysis
+✓ Second-Order Effects
+✓ Opportunity Cost Analysis
+✓ Pre-Mortem Analysis
+
+Creative & Problem-Solving Models:
+✓ Six Thinking Hats (De Bono)
+✓ Inversion Thinking
+✓ Rubber Duck Debugging
+
+Decision & Prioritization Models:
+✓ Pareto Principle
+✓ Error Propagation Understanding
+
+Acceptance criteria met:
+✓ Description lists all 13 mental models (6 existing + 7 new)
+✓ Clear categorization of model types
+
+**Phase 1 (Core Tool Schema Updates): COMPLETE**
+
 **Next Steps:**
-- Verify if subtask 1.2 (Update MODEL_TOOL description) is also complete
 - Continue with Phase 2: Resource Catalog Updates

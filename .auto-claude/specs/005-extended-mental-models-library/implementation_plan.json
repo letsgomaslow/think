@@ -28,7 +28,7 @@
           "title": "Update MODEL_TOOL description",
           "description": "Update the MODEL_TOOL description to include all 7 new mental models in the supported list",
           "file_path": "src/index.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Description lists all 13 mental models (6 existing + 7 new)",
             "Clear categorization of model types"
