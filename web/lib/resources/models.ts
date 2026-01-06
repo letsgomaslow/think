@@ -130,6 +130,25 @@ const MENTAL_MODELS: ResourceCatalogItem[] = [
       'Identify external Threats (risks and competitive challenges)',
     ],
   },
+  {
+    name: 'six_thinking_hats',
+    title: 'Six Thinking Hats (De Bono)',
+    description: 'Explore problems from six distinct perspectives: White (facts), Red (emotions), Black (caution), Yellow (optimism), Green (creativity), and Blue (process control).',
+    useCases: [
+      'Group problem-solving and team discussions',
+      'Decision-making with multiple perspectives',
+      'Creative brainstorming and innovation',
+      'Conflict resolution and balanced analysis',
+    ],
+    steps: [
+      'White Hat: Gather facts, data, and objective information',
+      'Red Hat: Express emotions, intuitions, and gut feelings',
+      'Black Hat: Identify risks, weaknesses, and potential problems',
+      'Yellow Hat: Explore benefits, optimism, and positive outcomes',
+      'Green Hat: Generate creative ideas, alternatives, and possibilities',
+      'Blue Hat: Manage the thinking process, summarize, and decide next steps',
+    ],
+  },
 ];
 
 /**
