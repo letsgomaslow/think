@@ -1,0 +1,156 @@
+{
+  "feature": "Enhance loading state with skeleton placeholders",
+  "description": "Replace the simple spinner loading state with a skeleton UI that mirrors the page structure for better perceived performance",
+  "created_at": "2026-01-06T02:57:07.488Z",
+  "updated_at": "2026-01-06T03:00:00.000Z",
+  "status": "in_progress",
+  "planStatus": "approved",
+  "workflow_type": "development",
+  "services_involved": [
+    "web"
+  ],
+  "spec_file": "spec.md",
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Create Reusable Skeleton Component",
+      "description": "Build a flexible Skeleton component that can be composed for different layouts",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Create base Skeleton component",
+          "description": "Create web/components/ui/skeleton.tsx with base Skeleton component using Tailwind animate-pulse. Support variants: text, circular, rectangular with configurable width/height. Follow existing tools/[slug]/loading.tsx patterns (bg-slate-800/50 animate-pulse).",
+          "status": "completed",
+          "files": [
+            "web/components/ui/skeleton.tsx"
+          ],
+          "estimated_lines": 45,
+          "notes": "Created web/components/ui/skeleton.tsx with base Skeleton component following existing UI component patterns. Supports three variants (text, circular, rectangular) with configurable width/height. Uses bg-slate-800/50 animate-pulse for consistency with existing loading states.",
+          "updated_at": "2026-01-06T03:00:33.021324+00:00"
+        },
+        {
+          "id": "1.2",
+          "title": "Export Skeleton from UI index",
+          "description": "Check if there's a UI barrel export and add Skeleton if so. Otherwise, component will be imported directly.",
+          "status": "completed",
+          "files": [
+            "web/components/ui/index.ts"
+          ],
+          "estimated_lines": 5,
+          "notes": "Verified that no UI barrel export (index.ts) exists in web/components/ui/. Confirmed the project pattern: UI components are imported directly from their individual files (e.g., from \"@/components/ui/skeleton\"). No action needed - Skeleton component will be imported directly following existing project conventions.",
+          "updated_at": "2026-01-06T03:01:47.696285+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Create Section Skeletons",
+      "description": "Build skeleton components that mirror each page section",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Create HeroSkeleton component",
+          "description": "Create web/components/skeletons/hero-skeleton.tsx mirroring PillarHero structure: full-screen container, centered badge placeholder, large headline placeholder (2 lines), subheadline placeholder (2 lines), CTA button placeholder, and scroll indicator placeholder.",
+          "status": "pending",
+          "files": [
+            "web/components/skeletons/hero-skeleton.tsx"
+          ],
+          "estimated_lines": 50
+        },
+        {
+          "id": "2.2",
+          "title": "Create BentoToolsSkeleton component",
+          "description": "Create web/components/skeletons/bento-tools-skeleton.tsx mirroring BentoToolsSection: section header (badge, title, subtitle), category headers, and grid of 6-8 tool card placeholders with icon, title, description, and badge areas.",
+          "status": "pending",
+          "files": [
+            "web/components/skeletons/bento-tools-skeleton.tsx"
+          ],
+          "estimated_lines": 80
+        },
+        {
+          "id": "2.3",
+          "title": "Create remaining section skeletons",
+          "description": "Create lightweight skeleton components for ToolChains, Install, OriginStory, Waitlist, and Footer sections. These can be simpler as they're below the fold. Store in web/components/skeletons/.",
+          "status": "pending",
+          "files": [
+            "web/components/skeletons/tool-chains-skeleton.tsx",
+            "web/components/skeletons/install-skeleton.tsx",
+            "web/components/skeletons/footer-skeleton.tsx"
+          ],
+          "estimated_lines": 100
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Update Loading Components",
+      "description": "Replace spinner loading states with skeleton implementations",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Update main app loading.tsx",
+          "description": "Replace spinner in web/app/loading.tsx with composed skeleton layout: HeroSkeleton (above fold priority), followed by partial BentoToolsSkeleton. Use same bg-[hsl(var(--surface-dark))] background as main page.",
+          "status": "pending",
+          "files": [
+            "web/app/loading.tsx"
+          ],
+          "estimated_lines": 25
+        },
+        {
+          "id": "3.2",
+          "title": "Create skeleton barrel export",
+          "description": "Create web/components/skeletons/index.ts to export all skeleton components for clean imports.",
+          "status": "pending",
+          "files": [
+            "web/components/skeletons/index.ts"
+          ],
+          "estimated_lines": 10
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Testing & Validation",
+      "description": "Verify skeleton implementations work correctly",
+      "subtasks": [
+        {
+          "id": "4.1",
+          "title": "Manual visual testing",
+          "description": "Run dev server and verify: 1) Skeleton renders without errors, 2) Layout matches page structure, 3) Animation is smooth, 4) Responsive on mobile/tablet. Document findings in build-progress.txt.",
+          "status": "pending",
+          "files": [],
+          "estimated_lines": 0
+        },
+        {
+          "id": "4.2",
+          "title": "Build verification",
+          "description": "Run 'npm run build' in web directory to verify TypeScript compiles and no build errors. Fix any issues found.",
+          "status": "pending",
+          "files": [],
+          "estimated_lines": 0
+        }
+      ]
+    }
+  ],
+  "total_subtasks": 8,
+  "completed_subtasks": 0,
+  "qa_signoff": {
+    "status": "pending",
+    "issues": "",
+    "tests_passed": ""
+  },
+  "final_acceptance": [
+    "Skeleton loading state renders instead of spinner",
+    "Layout mirrors actual page structure (Hero, Tools section)",
+    "Animations are smooth using animate-pulse",
+    "No TypeScript or build errors",
+    "Responsive design works on mobile/tablet"
+  ],
+  "notes": [
+    "Reference pattern: web/app/tools/[slug]/loading.tsx already has excellent skeleton implementation",
+    "Use Tailwind animate-pulse with bg-slate-800/50 for consistency",
+    "Focus on above-the-fold content (Hero, BentoTools header) for best perceived performance",
+    "CSS variables use hsl() format: hsl(var(--surface-dark)), hsl(var(--brand-primary))"
+  ],
+  "last_updated": "2026-01-06T03:01:47.696299+00:00"
+}
