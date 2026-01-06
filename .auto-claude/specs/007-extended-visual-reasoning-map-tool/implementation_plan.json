@@ -180,8 +180,8 @@
           "file_paths": [
             "src/tools/mapServer.test.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Extended mapServer.test.ts with comprehensive tests for all 5 new diagram types. Updated 'should handle all diagram types' test to include sequenceDiagram, stateMachine, erDiagram, mindMap, and contextDiagram. Added test to verify mermaidOutput is included when elements are provided. Added specific tests for each new diagram type: sequenceDiagram (validates participant and message syntax), stateMachine (validates state transitions with start states), erDiagram (validates entities with attributes and relationships), mindMap (validates hierarchical structure with contains), contextDiagram (validates C4 syntax with Person/System nodes). All tests verify mermaidOutput field is present and contains expected Mermaid syntax. Committed in 3fc9d41 with 219 lines added."
         },
         {
           "subtask_id": "4.3",

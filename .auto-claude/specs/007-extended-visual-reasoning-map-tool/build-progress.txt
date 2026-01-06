@@ -121,6 +121,21 @@ Phase 4: Comprehensive Testing
   - Commit: b0eeaae
   - Status: COMPLETED
 
+✓ Subtask 4.2: Update MapServer tests for new diagram types
+  - Extended mapServer.test.ts with comprehensive tests for all 5 new diagram types
+  - Updated 'should handle all diagram types' test to include all 5 new types
+  - Added test to verify mermaidOutput is included when elements are provided
+  - Added specific tests for each new diagram type:
+    * sequenceDiagram: validates participant and message syntax
+    * stateMachine: validates state transitions with start states
+    * erDiagram: validates entities with attributes and relationships
+    * mindMap: validates hierarchical structure with contains
+    * contextDiagram: validates C4 syntax with Person/System nodes
+  - All tests verify mermaidOutput field is present and contains expected Mermaid syntax
+  - File: src/tools/mapServer.test.ts
+  - Commit: 3fc9d41
+  - Added: 219 lines
+  - Status: COMPLETED
+
 Next Steps:
-- Subtask 4.2: Update MapServer tests for new diagram types
 - Subtask 4.3: Run test suite and verify all pass
