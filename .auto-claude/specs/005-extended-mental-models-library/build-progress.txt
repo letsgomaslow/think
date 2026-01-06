@@ -55,3 +55,58 @@ Acceptance criteria met:
 
 **Next Steps:**
 - Continue with Phase 2: Resource Catalog Updates
+
+---
+
+### 2026-01-06 - Phase 2: Resource Catalog Updates
+
+**Subtasks 2.1-2.7: Add all 7 new mental models to catalog**
+**Status: COMPLETE (verified)**
+
+All 7 new mental models successfully added to web/lib/resources/models.ts MENTAL_MODELS array:
+
+✓ **2.1 SWOT Analysis** (lines 117-132)
+  - Name: swot_analysis
+  - 4 use cases: Strategic planning, Competitive analysis, Project planning, Personal development
+  - 4 steps covering Strengths, Weaknesses, Opportunities, Threats
+
+✓ **2.2 Six Thinking Hats** (lines 134-151)
+  - Name: six_thinking_hats
+  - 4 use cases: Group problem-solving, Decision-making, Creative brainstorming, Conflict resolution
+  - 6 steps explaining all hat colors (White, Red, Black, Yellow, Green, Blue)
+
+✓ **2.3 MECE** (lines 153-168)
+  - Name: mece
+  - 4 use cases: Structuring analysis, Organizing data, Business strategies, Research
+  - 4 steps covering ME and CE concepts
+
+✓ **2.4 Inversion Thinking** (lines 170-185)
+  - Name: inversion_thinking
+  - 4 use cases: Risk identification, Avoiding pitfalls, Pre-emptive problem-solving, Strategic planning
+  - 4 steps explaining the inversion approach
+
+✓ **2.5 Second-Order Effects** (lines 187-202)
+  - Name: second_order_effects
+  - 4 use cases: Strategic planning, Policy analysis, Systems thinking, Risk management
+  - 4 steps covering cascading consequence chains
+
+✓ **2.6 Pre-Mortem Analysis** (lines 204-219)
+  - Name: pre_mortem
+  - 4 use cases: Project planning, Team alignment, Failure prevention, Strategic evaluation
+  - 4 steps explaining prospective hindsight technique
+
+✓ **2.7 Five Whys** (lines 221-237)
+  - Name: five_whys
+  - 4 use cases: Root cause analysis, Quality control, Process improvement, Problem-solving
+  - 5 steps covering iterative questioning technique
+
+All acceptance criteria met for each subtask:
+✓ Each model has proper structure (name, title, description, useCases, steps)
+✓ All models include 4+ use cases
+✓ All models include 4+ implementation steps
+✓ MENTAL_MODELS array now contains 13 models total (6 existing + 7 new)
+
+**Phase 2 (Resource Catalog Updates): COMPLETE**
+
+**Next Steps:**
+- Continue with Phase 3: Extended Model Documentation
