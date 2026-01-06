@@ -419,8 +419,72 @@ It provides a framework for structured collaborative reasoning and perspective i
 const DECIDE_TOOL: Tool = {
     name: TOOL_NAMES.DECIDE,
     description: `A detailed tool for structured decision analysis and rational choice.
-This tool helps models systematically evaluate options, criteria, and outcomes.
-It supports multiple decision frameworks, probability estimates, and value judgments.`,
+This tool helps models systematically evaluate options, criteria, and outcomes using 10 proven decision frameworks.
+
+Framework Selection Guide:
+
+1. PROS-CONS
+   When to use: Simple decisions with qualitative factors, quick evaluations
+   Example: "Should I accept this job offer?" - List advantages (higher salary, better commute) vs disadvantages (different team culture, longer hours)
+   Best for: Binary choices, initial exploration, brainstorming phase
+
+2. WEIGHTED-CRITERIA
+   When to use: Complex decisions with multiple measurable factors of varying importance
+   Example: "Which vendor should we choose?" - Evaluate cost (30%), reliability (40%), features (20%), support (10%)
+   Best for: Multi-criteria decisions, procurement, hiring, tool selection
+
+3. DECISION-TREE
+   When to use: Sequential decisions with multiple stages and branching paths
+   Example: "Should we build, buy, or partner?" - Map out different paths and their downstream implications
+   Best for: Strategic planning, investment decisions, project pathways
+
+4. EXPECTED-VALUE
+   When to use: Decisions with quantifiable outcomes and probability estimates
+   Example: "Should we invest in this project?" - Calculate EV = (0.6 × $100K profit) + (0.4 × -$20K loss) = $52K
+   Best for: Financial decisions, risk-reward analysis, portfolio optimization
+
+5. SCENARIO-ANALYSIS
+   When to use: Decisions under uncertainty with multiple possible future states
+   Example: "How should we plan for market changes?" - Explore best-case, worst-case, and likely scenarios
+   Best for: Strategic planning, contingency planning, risk management
+
+6. EISENHOWER-MATRIX
+   When to use: Prioritizing tasks or options by urgency and importance
+   Example: "How should I prioritize my tasks?" - Categorize into Do First (urgent+important), Schedule (important), Delegate (urgent), Eliminate (neither)
+   Best for: Time management, task prioritization, workload optimization
+
+7. COST-BENEFIT
+   When to use: Decisions requiring detailed quantitative justification
+   Example: "Should we implement this system?" - Quantify costs ($50K implementation + $10K/year) vs benefits ($30K/year savings + efficiency gains), calculate NPV and ROI
+   Best for: Business cases, investment justification, policy decisions
+
+8. RISK-ASSESSMENT
+   When to use: Decisions where potential downsides need systematic evaluation
+   Example: "Should we launch in this market?" - Identify risks (regulatory 0.3×8=2.4, competition 0.7×6=4.2) and mitigation strategies
+   Best for: Project planning, compliance, security decisions, new ventures
+
+9. REVERSIBILITY
+   When to use: Decisions where reversibility affects decision speed and thoroughness
+   Example: "Should we migrate to this new architecture?" - One-way door (high cost to reverse) = slow, careful decision vs two-way door (easy to reverse) = fast decision
+   Best for: Architecture decisions, commitments, resource allocation, strategic choices
+   Framework: Bezos's Two-Way Door Framework
+
+10. REGRET-MINIMIZATION
+    When to use: Important life/career decisions viewed from future perspective
+    Example: "Should I start this business?" - Consider: In 10 minutes (excited?), 10 months (still engaged?), 10 years (proud of trying?)
+    Best for: Career changes, major commitments, values-based decisions, life choices
+    Framework: 10/10/10 Framework (10 minutes, 10 months, 10 years)
+
+General Guidelines:
+- Use PROS-CONS or WEIGHTED-CRITERIA for most everyday decisions
+- Use EXPECTED-VALUE or COST-BENEFIT when numbers matter
+- Use RISK-ASSESSMENT when downsides are critical
+- Use EISENHOWER-MATRIX for prioritization and time management
+- Use REVERSIBILITY for strategic decisions (guides decision speed)
+- Use REGRET-MINIMIZATION for important life/career decisions
+- Use DECISION-TREE for multi-stage decisions
+- Use SCENARIO-ANALYSIS when facing high uncertainty
+- Combine multiple frameworks for complex, high-stakes decisions`,
     inputSchema: {
         type: "object",
         properties: {
