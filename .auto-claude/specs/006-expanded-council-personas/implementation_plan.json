@@ -278,8 +278,8 @@
           "files": [
             "src/personas/helpers.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Persona selection helpers fully implemented in src/personas/helpers.ts. Includes four utility functions: getPersonasByCategory (retrieves personas by category ID), getRecommendedPersonas (finds topic-relevant personas with weighted scoring), suggestPersonasForTopic (smart suggestions with category diversity to ensure varied perspectives), and getComplementaryPersonas (finds personas that work well together). Updated src/personas/index.ts to delegate to helper functions for better code organization. All functions include proper TypeScript types, JSDoc documentation, and follow existing codebase patterns. Committed in a823bbd."
         }
       ]
     },

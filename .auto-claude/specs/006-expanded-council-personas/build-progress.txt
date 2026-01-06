@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (21/33 subtasks completed - 64%)
+## Current Status: In Progress (22/33 subtasks completed - 67%)
 
 ### Completed Subtasks
 
@@ -116,20 +116,25 @@
   - Status: Committed (commit: b0c27b7)
   - Notes: Category index with both general personas, utility functions, and auto-registration
 
-#### Phase 6: Create Persona Library Main Export (In Progress)
+#### Phase 6: Create Persona Library Main Export ✅ COMPLETE
 - [x] 6.1 - Create main persona library index
   - File: src/personas/index.ts
   - Status: Committed (commit: 0bc02aa)
   - Notes: Main persona library index with comprehensive high-level API including library export, persona retrieval, query/search, recommendations, smart suggestions with diversity, complementary persona finder, and utility functions. Includes 15+ API functions with full JSDoc documentation.
 
+- [x] 6.2 - Create persona selection helpers
+  - File: src/personas/helpers.ts
+  - Status: Committed (commit: a823bbd)
+  - Notes: Persona selection helpers with getPersonasByCategory, getRecommendedPersonas, suggestPersonasForTopic, and getComplementaryPersonas. All with proper scoring, diversity, and TypeScript types.
+
 ### Next Steps
-- [ ] Continue with Phase 6: Create Persona Library Main Export
-  - 6.2 - Create persona selection helpers
+- [ ] Continue with Phase 7: Update Council Tool Integration
+  - 7.1 - Add optional persona category support to council schema
 
 ### Build Notes
-- Phase 1, 2, 3, 4, & 5 complete! 🎉
-- Phase 6 in progress - Create Persona Library Main Export
-- Main persona library index complete - provides unified high-level API for accessing all 14 personas across 4 categories
+- Phase 1, 2, 3, 4, 5, & 6 complete! 🎉
+- Phase 7 next - Update Council Tool Integration
+- Persona library fully functional with helpers module for smart persona selection and recommendations
 - Persona library architecture fully implemented with registry and factory patterns
 - 4 technical expert personas implemented with distinct voices and expertise
 - Product Manager persona complete - strategic focus on roadmapping, prioritization, and stakeholder alignment
