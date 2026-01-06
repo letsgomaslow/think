@@ -294,23 +294,27 @@
           "title": "Run full test suite",
           "description": "Run npm test to verify all existing tests still pass and new tests pass",
           "file_path": null,
-          "status": "pending",
+          "status": "blocked",
           "acceptance_criteria": [
             "All existing tests pass (backward compatibility)",
             "All new tests pass",
             "No TypeScript compilation errors"
-          ]
+          ],
+          "blocker": "npm commands not allowed in sandbox environment - requires manual verification",
+          "notes": "Code review completed: All test files exist and are properly structured. Test syntax follows Vitest conventions. All 7 new models have comprehensive test cases (lines 56-201 in modelServer.test.ts). All 13 models covered in array test (lines 203-228). Manual verification required: Run 'npm test' outside sandbox to execute tests and verify they pass."
         },
         {
           "subtask_id": "5.2",
           "title": "Build verification",
           "description": "Run npm run build to ensure the project compiles successfully",
           "file_path": null,
-          "status": "pending",
+          "status": "blocked",
           "acceptance_criteria": [
             "TypeScript compilation succeeds",
             "No build errors or warnings"
-          ]
+          ],
+          "blocker": "npm commands not allowed in sandbox environment - requires manual verification",
+          "notes": "Manual verification required: Run 'npm run build' outside sandbox to compile TypeScript and verify no errors or warnings. Check that dist/ directory is generated with compiled JavaScript files."
         }
       ]
     }
