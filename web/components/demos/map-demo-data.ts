@@ -1,7 +1,7 @@
 // Map Demo Data - Customer Journey Touchpoints Scenario
 // Aligned with MCP Map Tool JSON schema
 
-export type DiagramType = 'graph' | 'flowchart' | 'stateDiagram' | 'conceptMap' | 'treeDiagram' | 'custom';
+export type DiagramType = 'graph' | 'flowchart' | 'stateDiagram' | 'conceptMap' | 'treeDiagram' | 'custom' | 'sequenceDiagram' | 'stateMachine' | 'erDiagram' | 'mindMap' | 'contextDiagram';
 export type OperationType = 'create' | 'update' | 'delete' | 'transform' | 'observe';
 export type TransformType = 'rotate' | 'move' | 'resize' | 'recolor' | 'regroup';
 export type ElementType = 'node' | 'edge' | 'container' | 'annotation';
@@ -363,6 +363,460 @@ export const mapDemoSteps: MapDemoStep[] = [
   }
 ];
 
+// Sequence Diagram Demo - API Request Flow
+export const sequenceDiagramDemo: MapDemoStep[] = [
+  {
+    operation: 'create',
+    diagramId: 'api-flow-001',
+    diagramType: 'sequenceDiagram',
+    iteration: 0,
+    nextOperationNeeded: false,
+    status: 'success',
+    elementCount: 11,
+    nodeCount: 4,
+    edgeCount: 7,
+    containerCount: 0,
+    annotationCount: 0,
+    elements: [
+      {
+        id: 'client',
+        type: 'node',
+        label: 'Client App',
+        properties: {}
+      },
+      {
+        id: 'api',
+        type: 'node',
+        label: 'API Gateway',
+        properties: {}
+      },
+      {
+        id: 'auth',
+        type: 'node',
+        label: 'Auth Service',
+        properties: {}
+      },
+      {
+        id: 'db',
+        type: 'node',
+        label: 'Database',
+        properties: {}
+      },
+      {
+        id: 'msg-1',
+        type: 'edge',
+        label: 'POST /login',
+        source: 'client',
+        target: 'api',
+        properties: { arrowType: '->>' }
+      },
+      {
+        id: 'msg-2',
+        type: 'edge',
+        label: 'Validate credentials',
+        source: 'api',
+        target: 'auth',
+        properties: { arrowType: '->>' }
+      },
+      {
+        id: 'msg-3',
+        type: 'edge',
+        label: 'Query user',
+        source: 'auth',
+        target: 'db',
+        properties: { arrowType: '->>' }
+      },
+      {
+        id: 'msg-4',
+        type: 'edge',
+        label: 'User data',
+        source: 'db',
+        target: 'auth',
+        properties: { arrowType: '-->>' }
+      },
+      {
+        id: 'msg-5',
+        type: 'edge',
+        label: 'JWT token',
+        source: 'auth',
+        target: 'api',
+        properties: { arrowType: '-->>' }
+      },
+      {
+        id: 'msg-6',
+        type: 'edge',
+        label: '200 OK + token',
+        source: 'api',
+        target: 'client',
+        properties: { arrowType: '-->>' }
+      },
+      {
+        id: 'msg-7',
+        type: 'edge',
+        label: 'Store token',
+        source: 'client',
+        target: 'client',
+        properties: { arrowType: '->>' }
+      }
+    ]
+  }
+];
+
+// State Machine Demo - Order Lifecycle
+export const stateMachineDemo: MapDemoStep[] = [
+  {
+    operation: 'create',
+    diagramId: 'order-lifecycle-001',
+    diagramType: 'stateMachine',
+    iteration: 0,
+    nextOperationNeeded: false,
+    status: 'success',
+    elementCount: 11,
+    nodeCount: 6,
+    edgeCount: 5,
+    containerCount: 0,
+    annotationCount: 0,
+    elements: [
+      {
+        id: 'pending',
+        type: 'node',
+        label: 'Pending Payment',
+        properties: { isStart: true }
+      },
+      {
+        id: 'paid',
+        type: 'node',
+        label: 'Payment Confirmed',
+        properties: {}
+      },
+      {
+        id: 'processing',
+        type: 'node',
+        label: 'Processing Order',
+        properties: {}
+      },
+      {
+        id: 'shipped',
+        type: 'node',
+        label: 'Shipped',
+        properties: {}
+      },
+      {
+        id: 'delivered',
+        type: 'node',
+        label: 'Delivered',
+        properties: { isEnd: true }
+      },
+      {
+        id: 'cancelled',
+        type: 'node',
+        label: 'Cancelled',
+        properties: { isEnd: true }
+      },
+      {
+        id: 'trans-1',
+        type: 'edge',
+        label: 'payment received',
+        source: 'pending',
+        target: 'paid',
+        properties: {}
+      },
+      {
+        id: 'trans-2',
+        type: 'edge',
+        label: 'start fulfillment',
+        source: 'paid',
+        target: 'processing',
+        properties: {}
+      },
+      {
+        id: 'trans-3',
+        type: 'edge',
+        label: 'dispatch',
+        source: 'processing',
+        target: 'shipped',
+        properties: {}
+      },
+      {
+        id: 'trans-4',
+        type: 'edge',
+        label: 'customer confirmation',
+        source: 'shipped',
+        target: 'delivered',
+        properties: {}
+      },
+      {
+        id: 'trans-5',
+        type: 'edge',
+        label: 'cancel request',
+        source: 'pending',
+        target: 'cancelled',
+        properties: {}
+      }
+    ]
+  }
+];
+
+// ER Diagram Demo - User Database Schema
+export const erDiagramDemo: MapDemoStep[] = [
+  {
+    operation: 'create',
+    diagramId: 'user-schema-001',
+    diagramType: 'erDiagram',
+    iteration: 0,
+    nextOperationNeeded: false,
+    status: 'success',
+    elementCount: 6,
+    nodeCount: 3,
+    edgeCount: 3,
+    containerCount: 0,
+    annotationCount: 0,
+    elements: [
+      {
+        id: 'User',
+        type: 'node',
+        label: 'User',
+        properties: {
+          attributes: [
+            { name: 'id', type: 'int', key: true },
+            { name: 'email', type: 'string' },
+            { name: 'name', type: 'string' },
+            { name: 'created_at', type: 'timestamp' }
+          ]
+        }
+      },
+      {
+        id: 'Order',
+        type: 'node',
+        label: 'Order',
+        properties: {
+          attributes: [
+            { name: 'id', type: 'int', key: true },
+            { name: 'user_id', type: 'int' },
+            { name: 'total', type: 'decimal' },
+            { name: 'status', type: 'string' },
+            { name: 'created_at', type: 'timestamp' }
+          ]
+        }
+      },
+      {
+        id: 'Product',
+        type: 'node',
+        label: 'Product',
+        properties: {
+          attributes: [
+            { name: 'id', type: 'int', key: true },
+            { name: 'name', type: 'string' },
+            { name: 'price', type: 'decimal' },
+            { name: 'stock', type: 'int' }
+          ]
+        }
+      },
+      {
+        id: 'rel-1',
+        type: 'edge',
+        label: 'places',
+        source: 'User',
+        target: 'Order',
+        properties: { cardinality: '||--o{' }
+      },
+      {
+        id: 'rel-2',
+        type: 'edge',
+        label: 'contains',
+        source: 'Order',
+        target: 'Product',
+        properties: { cardinality: '}o--o{' }
+      },
+      {
+        id: 'rel-3',
+        type: 'edge',
+        label: 'views',
+        source: 'User',
+        target: 'Product',
+        properties: { cardinality: '}o--o{' }
+      }
+    ]
+  }
+];
+
+// Mind Map Demo - Feature Brainstorm
+export const mindMapDemo: MapDemoStep[] = [
+  {
+    operation: 'create',
+    diagramId: 'feature-brainstorm-001',
+    diagramType: 'mindMap',
+    iteration: 0,
+    nextOperationNeeded: false,
+    status: 'success',
+    elementCount: 11,
+    nodeCount: 11,
+    edgeCount: 0,
+    containerCount: 0,
+    annotationCount: 0,
+    elements: [
+      {
+        id: 'mobile-app',
+        type: 'node',
+        label: 'Mobile App v2.0',
+        properties: { isRoot: true, shape: 'circle' },
+        contains: ['auth', 'social', 'analytics']
+      },
+      {
+        id: 'auth',
+        type: 'node',
+        label: 'Authentication',
+        properties: { shape: 'square' },
+        contains: ['biometric', 'sso']
+      },
+      {
+        id: 'biometric',
+        type: 'node',
+        label: 'Biometric Login',
+        properties: {}
+      },
+      {
+        id: 'sso',
+        type: 'node',
+        label: 'SSO Integration',
+        properties: {}
+      },
+      {
+        id: 'social',
+        type: 'node',
+        label: 'Social Features',
+        properties: { shape: 'square' },
+        contains: ['sharing', 'friends', 'chat']
+      },
+      {
+        id: 'sharing',
+        type: 'node',
+        label: 'Content Sharing',
+        properties: {}
+      },
+      {
+        id: 'friends',
+        type: 'node',
+        label: 'Friend Network',
+        properties: {}
+      },
+      {
+        id: 'chat',
+        type: 'node',
+        label: 'Real-time Chat',
+        properties: {}
+      },
+      {
+        id: 'analytics',
+        type: 'node',
+        label: 'Analytics',
+        properties: { shape: 'square' },
+        contains: ['tracking', 'reports']
+      },
+      {
+        id: 'tracking',
+        type: 'node',
+        label: 'Event Tracking',
+        properties: {}
+      },
+      {
+        id: 'reports',
+        type: 'node',
+        label: 'User Reports',
+        properties: {}
+      }
+    ]
+  }
+];
+
+// Context Diagram Demo - System Overview
+export const contextDiagramDemo: MapDemoStep[] = [
+  {
+    operation: 'create',
+    diagramId: 'system-context-001',
+    diagramType: 'contextDiagram',
+    iteration: 0,
+    nextOperationNeeded: false,
+    status: 'success',
+    elementCount: 8,
+    nodeCount: 5,
+    edgeCount: 3,
+    containerCount: 0,
+    annotationCount: 0,
+    elements: [
+      {
+        id: 'customer',
+        type: 'node',
+        label: 'Customer',
+        properties: {
+          nodeType: 'Person',
+          description: 'End user of the e-commerce platform'
+        }
+      },
+      {
+        id: 'admin',
+        type: 'node',
+        label: 'Administrator',
+        properties: {
+          nodeType: 'Person',
+          description: 'System administrator'
+        }
+      },
+      {
+        id: 'ecommerce',
+        type: 'node',
+        label: 'E-Commerce Platform',
+        properties: {
+          nodeType: 'System',
+          description: 'Main application handling orders and inventory'
+        }
+      },
+      {
+        id: 'payment',
+        type: 'node',
+        label: 'Payment Gateway',
+        properties: {
+          nodeType: 'System_Ext',
+          description: 'External payment processing service'
+        }
+      },
+      {
+        id: 'email',
+        type: 'node',
+        label: 'Email Service',
+        properties: {
+          nodeType: 'System_Ext',
+          description: 'Transactional email provider'
+        }
+      },
+      {
+        id: 'rel-1',
+        type: 'edge',
+        label: 'Browse & purchase products',
+        source: 'customer',
+        target: 'ecommerce',
+        properties: { technology: 'HTTPS/REST' }
+      },
+      {
+        id: 'rel-2',
+        type: 'edge',
+        label: 'Manage catalog',
+        source: 'admin',
+        target: 'ecommerce',
+        properties: { technology: 'HTTPS/REST' }
+      },
+      {
+        id: 'rel-3',
+        type: 'edge',
+        label: 'Process payments',
+        source: 'ecommerce',
+        target: 'payment',
+        properties: { technology: 'REST API' }
+      }
+    ]
+  }
+];
+
 // Helper to get current cumulative elements at any step
 export function getCumulativeElements(stepIndex: number): MapElement[] {
   const step = mapDemoSteps[stepIndex];
@@ -385,7 +839,12 @@ export const diagramTypeLabels: Record<DiagramType, string> = {
   stateDiagram: 'State Diagram',
   conceptMap: 'Concept Map',
   treeDiagram: 'Tree Diagram',
-  custom: 'Custom'
+  custom: 'Custom',
+  sequenceDiagram: 'Sequence Diagram',
+  stateMachine: 'State Machine',
+  erDiagram: 'ER Diagram',
+  mindMap: 'Mind Map',
+  contextDiagram: 'Context Diagram'
 };
 
 // Transform type display names
