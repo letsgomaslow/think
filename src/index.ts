@@ -546,6 +546,99 @@ It supports multiple decision frameworks, probability estimates, and value judgm
                     required: ["optionId", "urgency", "importance"],
                 },
             },
+            costBenefitAnalysis: {
+                type: "array",
+                description: "Cost-benefit analysis data with quantified costs, benefits, and financial metrics",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        costs: {
+                            type: "array",
+                            description: "Array of cost items",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    optionId: { type: "string" },
+                                    description: { type: "string" },
+                                    amount: {
+                                        type: "number",
+                                        description: "Monetary value or quantified amount"
+                                    },
+                                    type: {
+                                        type: "string",
+                                        enum: ["monetary", "non-monetary"],
+                                        description: "Type of cost"
+                                    },
+                                    category: {
+                                        type: "string",
+                                        description: "Optional category for grouping"
+                                    },
+                                    timeframe: {
+                                        type: "string",
+                                        description: "Optional time period"
+                                    },
+                                },
+                                required: ["optionId", "description", "amount", "type"],
+                            },
+                        },
+                        benefits: {
+                            type: "array",
+                            description: "Array of benefit items",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    optionId: { type: "string" },
+                                    description: { type: "string" },
+                                    amount: {
+                                        type: "number",
+                                        description: "Monetary value or quantified amount"
+                                    },
+                                    type: {
+                                        type: "string",
+                                        enum: ["monetary", "non-monetary"],
+                                        description: "Type of benefit"
+                                    },
+                                    category: {
+                                        type: "string",
+                                        description: "Optional category for grouping"
+                                    },
+                                    timeframe: {
+                                        type: "string",
+                                        description: "Optional time period"
+                                    },
+                                },
+                                required: ["optionId", "description", "amount", "type"],
+                            },
+                        },
+                        netValue: {
+                            type: "number",
+                            description: "Total benefits minus total costs"
+                        },
+                        benefitCostRatio: {
+                            type: "number",
+                            description: "Ratio of total benefits to total costs"
+                        },
+                        roi: {
+                            type: "number",
+                            description: "Return on investment percentage"
+                        },
+                        discountRate: {
+                            type: "number",
+                            description: "Discount rate for NPV calculation (e.g., 0.05 for 5%)"
+                        },
+                        timePeriodYears: {
+                            type: "number",
+                            description: "Time period in years for the analysis"
+                        },
+                        npv: {
+                            type: "number",
+                            description: "Net present value with discounting"
+                        },
+                    },
+                    required: ["optionId", "costs", "benefits", "netValue"],
+                },
+            },
         },
         required: [
             "decisionStatement",
