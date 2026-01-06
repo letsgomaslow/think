@@ -115,6 +115,11 @@ describe('MapServer', () => {
       'conceptMap',
       'treeDiagram',
       'custom',
+      'sequenceDiagram',
+      'stateMachine',
+      'erDiagram',
+      'mindMap',
+      'contextDiagram',
     ] as const;
 
     diagramTypes.forEach(diagramType => {
@@ -126,6 +131,220 @@ describe('MapServer', () => {
       expect(parsed.status).toBe('success');
       expect(parsed.diagramType).toBe(diagramType);
     });
+  });
+
+  it('should include mermaidOutput when elements are provided', () => {
+    const result = server.processVisualReasoning(validInput);
+    const parsed = parseResult(result);
+
+    expect(parsed.status).toBe('success');
+    expect(parsed.mermaidOutput).toBeDefined();
+    expect(typeof parsed.mermaidOutput).toBe('string');
+    expect(parsed.mermaidOutput.length).toBeGreaterThan(0);
+  });
+
+  it('should include mermaidOutput for sequenceDiagram', () => {
+    const input = {
+      operation: 'create' as const,
+      diagramId: 'seq-1',
+      diagramType: 'sequenceDiagram' as const,
+      iteration: 0,
+      nextOperationNeeded: true,
+      elements: [
+        {
+          id: 'participant-1',
+          type: 'node' as const,
+          label: 'Client',
+          properties: {},
+        },
+        {
+          id: 'participant-2',
+          type: 'node' as const,
+          label: 'Server',
+          properties: {},
+        },
+        {
+          id: 'msg-1',
+          type: 'edge' as const,
+          source: 'participant-1',
+          target: 'participant-2',
+          label: 'Request',
+          properties: { arrowType: '->>' },
+        },
+      ],
+    };
+
+    const result = server.processVisualReasoning(input);
+    const parsed = parseResult(result);
+
+    expect(parsed.status).toBe('success');
+    expect(parsed.mermaidOutput).toBeDefined();
+    expect(parsed.mermaidOutput).toContain('sequenceDiagram');
+    expect(parsed.mermaidOutput).toContain('participant');
+  });
+
+  it('should include mermaidOutput for stateMachine', () => {
+    const input = {
+      operation: 'create' as const,
+      diagramId: 'state-1',
+      diagramType: 'stateMachine' as const,
+      iteration: 0,
+      nextOperationNeeded: true,
+      elements: [
+        {
+          id: 'state-1',
+          type: 'node' as const,
+          label: 'Idle',
+          properties: { isStart: true },
+        },
+        {
+          id: 'state-2',
+          type: 'node' as const,
+          label: 'Processing',
+          properties: {},
+        },
+        {
+          id: 'trans-1',
+          type: 'edge' as const,
+          source: 'state-1',
+          target: 'state-2',
+          label: 'start',
+          properties: {},
+        },
+      ],
+    };
+
+    const result = server.processVisualReasoning(input);
+    const parsed = parseResult(result);
+
+    expect(parsed.status).toBe('success');
+    expect(parsed.mermaidOutput).toBeDefined();
+    expect(parsed.mermaidOutput).toContain('stateDiagram-v2');
+    expect(parsed.mermaidOutput).toContain('[*]');
+  });
+
+  it('should include mermaidOutput for erDiagram', () => {
+    const input = {
+      operation: 'create' as const,
+      diagramId: 'er-1',
+      diagramType: 'erDiagram' as const,
+      iteration: 0,
+      nextOperationNeeded: true,
+      elements: [
+        {
+          id: 'user',
+          type: 'node' as const,
+          label: 'User',
+          properties: {
+            attributes: ['id', 'name', 'email'],
+          },
+        },
+        {
+          id: 'order',
+          type: 'node' as const,
+          label: 'Order',
+          properties: {
+            attributes: ['id', 'total'],
+          },
+        },
+        {
+          id: 'rel-1',
+          type: 'edge' as const,
+          source: 'user',
+          target: 'order',
+          label: 'places',
+          properties: { cardinality: '||--o{' },
+        },
+      ],
+    };
+
+    const result = server.processVisualReasoning(input);
+    const parsed = parseResult(result);
+
+    expect(parsed.status).toBe('success');
+    expect(parsed.mermaidOutput).toBeDefined();
+    expect(parsed.mermaidOutput).toContain('erDiagram');
+    expect(parsed.mermaidOutput).toContain('User');
+    expect(parsed.mermaidOutput).toContain('Order');
+  });
+
+  it('should include mermaidOutput for mindMap', () => {
+    const input = {
+      operation: 'create' as const,
+      diagramId: 'mind-1',
+      diagramType: 'mindMap' as const,
+      iteration: 0,
+      nextOperationNeeded: true,
+      elements: [
+        {
+          id: 'root',
+          type: 'node' as const,
+          label: 'Main Idea',
+          properties: {},
+          contains: ['child-1', 'child-2'],
+        },
+        {
+          id: 'child-1',
+          type: 'node' as const,
+          label: 'Subtopic 1',
+          properties: {},
+        },
+        {
+          id: 'child-2',
+          type: 'node' as const,
+          label: 'Subtopic 2',
+          properties: {},
+        },
+      ],
+    };
+
+    const result = server.processVisualReasoning(input);
+    const parsed = parseResult(result);
+
+    expect(parsed.status).toBe('success');
+    expect(parsed.mermaidOutput).toBeDefined();
+    expect(parsed.mermaidOutput).toContain('mindmap');
+    expect(parsed.mermaidOutput).toContain('Main Idea');
+  });
+
+  it('should include mermaidOutput for contextDiagram', () => {
+    const input = {
+      operation: 'create' as const,
+      diagramId: 'context-1',
+      diagramType: 'contextDiagram' as const,
+      iteration: 0,
+      nextOperationNeeded: true,
+      elements: [
+        {
+          id: 'user',
+          type: 'node' as const,
+          label: 'User',
+          properties: { nodeType: 'Person' },
+        },
+        {
+          id: 'system',
+          type: 'node' as const,
+          label: 'My System',
+          properties: { nodeType: 'System' },
+        },
+        {
+          id: 'rel-1',
+          type: 'edge' as const,
+          source: 'user',
+          target: 'system',
+          label: 'Uses',
+          properties: {},
+        },
+      ],
+    };
+
+    const result = server.processVisualReasoning(input);
+    const parsed = parseResult(result);
+
+    expect(parsed.status).toBe('success');
+    expect(parsed.mermaidOutput).toBeDefined();
+    expect(parsed.mermaidOutput).toContain('C4Context');
+    expect(parsed.mermaidOutput).toContain('Person');
   });
 
   it('should handle transform operations', () => {
