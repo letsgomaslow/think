@@ -439,6 +439,100 @@ erDiagram
 
 ---
 
+### Scenario 7: Feature Brainstorming (Mind Map)
+
+**Context**: Planning features for a mobile app v2.0 release using a mind map to organize ideas hierarchically, group related features, and visualize the feature tree from central concept to implementation details.
+
+**Input**:
+```json
+{
+  "operation": "create",
+  "diagramId": "feature-brainstorm",
+  "diagramType": "mindMap",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elements": [
+    {"id": "mobile-app", "type": "node", "label": "Mobile App v2.0", "properties": {"isRoot": true, "shape": "circle"}, "contains": ["auth", "social", "analytics"]},
+    {"id": "auth", "type": "node", "label": "Authentication", "properties": {"shape": "square"}, "contains": ["biometric", "sso"]},
+    {"id": "biometric", "type": "node", "label": "Biometric Login", "properties": {}},
+    {"id": "sso", "type": "node", "label": "SSO Integration", "properties": {}},
+    {"id": "social", "type": "node", "label": "Social Features", "properties": {"shape": "square"}, "contains": ["sharing", "friends", "chat"]},
+    {"id": "sharing", "type": "node", "label": "Content Sharing", "properties": {}},
+    {"id": "friends", "type": "node", "label": "Friend Network", "properties": {}},
+    {"id": "chat", "type": "node", "label": "Real-time Chat", "properties": {}},
+    {"id": "analytics", "type": "node", "label": "Analytics", "properties": {"shape": "square"}, "contains": ["tracking", "reports"]},
+    {"id": "tracking", "type": "node", "label": "Event Tracking", "properties": {}},
+    {"id": "reports", "type": "node", "label": "User Reports", "properties": {}}
+  ],
+  "observation": "The mind map reveals three major feature pillars (Authentication, Social, Analytics) with clear implementation sub-tasks under each category"
+}
+```
+
+**Output**:
+```json
+{
+  "operation": "create",
+  "diagramId": "feature-brainstorm",
+  "diagramType": "mindMap",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elementCount": 11,
+  "status": "success",
+  "mermaidOutput": "mindmap\n  root((Mobile App v2.0))\n    [Authentication]\n      Biometric Login\n      SSO Integration\n    [Social Features]\n      Content Sharing\n      Friend Network\n      Real-time Chat\n    [Analytics]\n      Event Tracking\n      User Reports"
+}
+```
+
+**Mermaid Diagram**:
+```mermaid
+mindmap
+  root((Mobile App v2.0))
+    [Authentication]
+      Biometric Login
+      SSO Integration
+    [Social Features]
+      Content Sharing
+      Friend Network
+      Real-time Chat
+    [Analytics]
+      Event Tracking
+      User Reports
+```
+
+**What This Means**:
+- **Root Node**: `Mobile App v2.0` is the central concept, marked with `isRoot: true` and rendered as a circle `(( ))` in Mermaid
+- **Hierarchical Structure**: The `contains` array defines parent-child relationships without explicit edges
+  - Level 1: Three main feature categories (Authentication, Social Features, Analytics)
+  - Level 2: Specific implementations under each category
+- **Visual Shapes**:
+  - Circle `(( ))` for the root - the main product/concept
+  - Square `[ ]` for major feature categories - organizational grouping
+  - Plain text for leaf nodes - concrete implementation tasks
+- **Feature Distribution**:
+  - Authentication: 2 sub-features (Biometric, SSO)
+  - Social Features: 3 sub-features (Sharing, Friends, Chat)
+  - Analytics: 2 sub-features (Tracking, Reports)
+- **Critical Insights**:
+  - Social features dominate with 3 implementations - likely the differentiator for v2.0
+  - Authentication improvements focus on user convenience (biometric) and enterprise adoption (SSO)
+  - Analytics is scoped to essential tracking and reporting - not overbuilt
+- **Scope Clarity**: The visual immediately shows that v2.0 has 7 concrete implementation tasks across 3 pillars - helps with sprint planning and effort estimation
+- **Cross-cutting Concerns**: Notice that "Event Tracking" in Analytics likely needs integration with all other features (auth events, social interactions, etc.)
+
+**Brainstorming Strategy**:
+- **Radial Organization**: Ideas branch outward from the center, making it easy to add new categories or expand existing ones
+- **Depth vs. Breadth**: The current structure is 2 levels deep - consider if any leaf nodes need further breakdown (e.g., "Biometric Login" might expand to "Face ID", "Fingerprint", "Voice Recognition")
+- **Missing Branches**: The mind map might reveal gaps - for example, no "Performance" or "Security" categories despite adding social features that could impact both
+- **Prioritization**: Main branches (square nodes) can be color-coded or numbered in future iterations to indicate development priority
+
+**Practical Use Cases**:
+- **Product Planning**: Visualize feature scope for stakeholder presentations
+- **Sprint Planning**: Each leaf node becomes a potential user story or task
+- **Team Alignment**: Shared visual helps cross-functional teams understand the full feature landscape
+- **Dependency Discovery**: Realize that SSO Integration might affect both Authentication and Social Features (single sign-on for friend connections)
+- **Gap Analysis**: Missing node like "Onboarding" or "Settings" becomes obvious when you see the overall structure
+
+---
+
 ## User Experience
 
 Map produces visual structure records:
