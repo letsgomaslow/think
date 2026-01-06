@@ -231,8 +231,8 @@
           "files": [
             "src/personas/general/devils-advocate.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Devil's Advocate persona fully implemented in src/personas/general/devils-advocate.ts. Includes comprehensive expertise in critical thinking, assumption challenging, risk analysis, and stress-testing. Features analytical communication style focused on rigorous critique and constructive dissent. Covers 15 areas of expertise, extensive concerns about groupthink and blind spots, 18 typical questions about assumptions and failure modes, and 16 use cases from pre-mortem analysis to edge case testing. Committed in d46dce3."
         },
         {
           "subtask_id": "5.2",

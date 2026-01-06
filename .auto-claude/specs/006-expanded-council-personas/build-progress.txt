@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (17/33 subtasks completed - 52%)
+## Current Status: In Progress (18/33 subtasks completed - 55%)
 
 ### Completed Subtasks
 
@@ -100,9 +100,14 @@
 
 #### Phase 4: Implement Creative Expert Personas ✅ COMPLETE
 
+#### Phase 5: Implement General Expert Personas (In Progress)
+- [x] 5.1 - Devil's Advocate persona
+  - File: src/personas/general/devils-advocate.ts
+  - Status: Committed (commit: d46dce3)
+  - Notes: Critical thinking expert with expertise in assumption challenging, risk analysis, and stress-testing
+
 ### Next Steps
 - [ ] Continue with Phase 5: General Expert Personas
-  - 5.1 - Devil's Advocate persona
   - 5.2 - Systems Thinker persona
   - 5.3 - General Experts category index
 
@@ -123,3 +128,4 @@
 - Brand Strategist persona complete - strategic focus on brand positioning, identity systems, messaging, market differentiation, brand equity, and brand experience design
 - Innovation Catalyst persona complete - visionary focus on disruptive innovation, blue ocean strategy, emerging trends, business model innovation, and transformative change
 - Creative Experts category index complete - exports all 4 creative personas with comprehensive utility functions and auto-registration
+- Devil's Advocate persona complete - analytical focus on critical thinking, assumption challenging, risk analysis, stress-testing, and constructive dissent with pre-mortem and scenario analysis expertise
