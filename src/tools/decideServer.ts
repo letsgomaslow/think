@@ -1,19 +1,19 @@
 import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis, RiskItem, ReversibilityData, RegretMinimizationData } from '../models/interfaces.js';
+import { decisionFrameworkDataSchema } from '../schemas/decide.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class DecideServer {
   private validateInputData(input: unknown): DecisionFrameworkData {
-    const data = input as DecisionFrameworkData;
-    if (!data.decisionStatement || !data.options || !data.analysisType || !data.stage || !data.decisionId) {
-      throw new Error("Invalid input for DecisionFramework: Missing required fields.");
+    try {
+      return decisionFrameworkDataSchema.parse(input);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid decision framework data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (typeof data.iteration !== 'number' || data.iteration < 0) {
-        throw new Error("Invalid iteration value for DecisionFrameworkData.");
-    }
-    if (typeof data.nextStageNeeded !== 'boolean') {
-        throw new Error("Invalid nextStageNeeded value for DecisionFrameworkData.");
-    }
-    return data;
   }
 
   private formatEisenhowerMatrix(data: DecisionFrameworkData): string {
