@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (8/33 subtasks completed - 24%)
+## Current Status: In Progress (9/33 subtasks completed - 27%)
 
 ### Completed Subtasks
 
@@ -46,9 +46,14 @@
   - Status: Committed (commit: 8bc8fca)
   - Notes: Category index with all 4 technical personas, utility functions, and auto-registration
 
+#### Phase 3: Implement Business Expert Personas (In Progress)
+- [x] 3.1 - Product Manager persona
+  - File: src/personas/business/product-manager.ts
+  - Status: Committed (commit: 7df3eb8)
+  - Notes: Product strategy expert with expertise in roadmapping, prioritization, stakeholder management, and metrics
+
 ### Next Steps
 - [ ] Continue with Phase 3: Business Expert Personas
-  - 3.1 - Product Manager persona
   - 3.2 - Growth Hacker persona
   - 3.3 - Customer Success persona
   - 3.4 - Business Analyst persona
@@ -56,8 +61,10 @@
 
 ### Build Notes
 - Phase 1 & 2 complete! 🎉
+- Phase 3 in progress - Business Expert Personas
 - Persona library architecture fully implemented with registry and factory patterns
 - 4 technical expert personas implemented with distinct voices and expertise
+- Product Manager persona complete - strategic focus on roadmapping, prioritization, and stakeholder alignment
 - All personas include: expertise, background, perspective, biases, communication style, concerns, typical questions, use cases, and complementary personas
 - Auto-registration system ensures personas are available in global registry
 - Search and query capabilities with relevance scoring
