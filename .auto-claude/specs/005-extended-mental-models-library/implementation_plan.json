@@ -228,7 +228,7 @@
           "title": "Add unit tests for all new models",
           "description": "Add test cases in modelServer.test.ts to verify all 7 new models can be processed successfully with example scenarios",
           "file_path": "src/tools/modelServer.test.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Test for each new model with valid input",
             "All tests pass",
@@ -240,7 +240,7 @@
           "title": "Update models array test",
           "description": "Update the 'should process all mental model types' test to include all 13 models",
           "file_path": "src/tools/modelServer.test.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Test covers all 13 model names",
             "Test passes successfully"
