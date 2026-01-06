@@ -249,3 +249,49 @@
 **Status:** Subtask 3.1 verified and marked as completed in implementation plan.
 
 **Next:** Phase 3 - Continue with subtask 3.2 (Six Thinking Hats extended documentation)
+
+---
+
+### Latest Update: 2026-01-06 14:45:00
+
+**Subtask 3.2 - Add Six Thinking Hats extended documentation: COMPLETED**
+
+✅ Verified Six Thinking Hats extended model in web/lib/resources/extended/models.ts (lines 292-365):
+  - name: 'six_thinking_hats' ✓
+  - title: 'Six Thinking Hats (De Bono)' ✓
+  - description: Clear explanation of systematic perspective exploration ✓
+  - whenToUse: 5 scenarios provided ✓
+    1. When group discussions become argumentative or stuck in one perspective
+    2. When you need creative solutions and diverse viewpoints
+    3. When making complex decisions that benefit from multiple angles
+    4. When facilitating productive meetings with conflicting stakeholders
+    5. When you want to separate emotion from logic in problem-solving
+  - steps: 6 detailed implementation steps (one for each hat) ✓
+    1. White Hat (Facts & Information): Focus on data and information
+    2. Red Hat (Emotions & Intuition): Express feelings and hunches
+    3. Black Hat (Caution & Risks): Identify problems and weaknesses
+    4. Yellow Hat (Optimism & Benefits): Explore positive aspects
+    5. Green Hat (Creativity & Alternatives): Generate new ideas
+    6. Blue Hat (Process Control & Summary): Manage the thinking process
+  - example: Comprehensive real-world example included ✓
+    * Context: Product team debating AI-powered chatbot for SaaS support
+    * Application: All 6 hats demonstrated with specific perspectives from team members
+    * Blue Hat facilitates process with 5 minutes per hat
+    * White Hat: Facts and data (1,200 tickets/month, 40% repetitive, etc.)
+    * Red Hat: Team emotions (Sarah excited, Mike anxious, Lisa nervous)
+    * Black Hat: Risks identified (30-40% need human intervention, UX concerns)
+    * Yellow Hat: Benefits explored (24/7 availability, instant responses, scalability)
+    * Green Hat: Creative solutions (hybrid approach, pilot testing, brand voice)
+    * Blue Hat Summary: Final decision with metrics and ownership
+  - relatedModels: 3 related models linked ✓
+    * swot_analysis, pre_mortem, first_principles
+  - toolParameters: Complete parameter structure ✓
+
+✅ All acceptance criteria met:
+  - All 6 hats explained in steps ✓
+  - Creative problem-solving example ✓
+  - Related models linked ✓
+
+**Status:** Subtask 3.2 verified and marked as completed in implementation plan.
+
+**Next:** Phase 3 - Continue with subtasks 3.3-3.7 (MECE, Inversion, Second-Order, Pre-Mortem, Five Whys extended documentation)
