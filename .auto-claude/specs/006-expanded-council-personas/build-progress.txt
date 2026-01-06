@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (18/33 subtasks completed - 55%)
+## Current Status: In Progress (19/33 subtasks completed - 58%)
 
 ### Completed Subtasks
 
@@ -106,9 +106,13 @@
   - Status: Committed (commit: d46dce3)
   - Notes: Critical thinking expert with expertise in assumption challenging, risk analysis, and stress-testing
 
+- [x] 5.2 - Systems Thinker persona
+  - File: src/personas/general/systems-thinker.ts
+  - Status: Committed (commit: 771bbd1)
+  - Notes: Systems thinking expert with expertise in feedback loops, interconnections, unintended consequences, and holistic analysis
+
 ### Next Steps
 - [ ] Continue with Phase 5: General Expert Personas
-  - 5.2 - Systems Thinker persona
   - 5.3 - General Experts category index
 
 ### Build Notes
@@ -129,3 +133,4 @@
 - Innovation Catalyst persona complete - visionary focus on disruptive innovation, blue ocean strategy, emerging trends, business model innovation, and transformative change
 - Creative Experts category index complete - exports all 4 creative personas with comprehensive utility functions and auto-registration
 - Devil's Advocate persona complete - analytical focus on critical thinking, assumption challenging, risk analysis, stress-testing, and constructive dissent with pre-mortem and scenario analysis expertise
+- Systems Thinker persona complete - holistic focus on systems dynamics, feedback loops, interconnections, leverage points, unintended consequences, and systemic change with expertise in causal loop diagrams and system archetypes
