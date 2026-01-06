@@ -24,7 +24,7 @@ Expand the council tool with domain-specific persona sets and custom persona sup
 - [x] 2.5 Technical Experts category index
 
 ### Phase 3: Implement Business Expert Personas
-- [ ] 3.1 Product Manager persona
+- [x] 3.1 Product Manager persona
 - [ ] 3.2 Growth Hacker persona
 - [ ] 3.3 Customer Success persona
 - [ ] 3.4 Business Analyst persona
@@ -80,3 +80,4 @@ Expand the council tool with domain-specific persona sets and custom persona sup
 - 2026-01-05: Completed 2.3 - Created UX Researcher persona with user research, usability testing, accessibility, and human-centered design expertise (src/personas/technical/ux-researcher.ts)
 - 2026-01-05: Completed 2.4 - Created DevOps Expert persona with CI/CD, infrastructure as code, container orchestration, cloud platforms, and SRE expertise (src/personas/technical/devops-expert.ts)
 - 2026-01-05: Completed 2.5 - Created Technical Experts category index with metadata, all 4 persona exports, and utility functions for querying and recommendations (src/personas/technical/index.ts) - Phase 2 complete!
+- 2026-01-05: Completed 3.1 - Created Product Manager persona with roadmapping, prioritization frameworks (RICE, MoSCoW, Kano), stakeholder management, product-market fit validation, metrics definition (OKRs, KPIs), and go-to-market strategy expertise (src/personas/business/product-manager.ts)
