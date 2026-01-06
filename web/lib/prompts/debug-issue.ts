@@ -66,6 +66,11 @@ Based on the issue type, we'll use the **debug** tool with the most appropriate 
 | Intermittent/flaky | **cause_elimination** - Systematically test hypotheses |
 | Unknown system behavior | **reverse_engineering** - Build understanding |
 | Specific variable wrong | **program_slicing** - Find all affecting code |
+| Bug location unknown | **wolf_fence** - Binary isolation to narrow down |
+| Stuck with no clear steps | **rubber_duck** - Explain step-by-step to find assumptions |
+| Complex bug report/input | **delta_debugging** - Minimize to simplest failing case |
+| Multi-factor system failure | **fault_tree** - Map all failure paths systematically |
+| State corruption/race condition | **time_travel** - Record and replay execution states |
 
 ### Step 3: Apply Debugging Method
 We'll apply the chosen approach step by step, documenting findings with **trace**.
@@ -85,9 +90,9 @@ After implementing a fix:
 Let's start by characterizing the issue. What's the pattern of occurrence?`,
       toolGuidance: [
         'Use **trace** to document issue symptoms and reproduction steps',
-        'Apply **debug** with appropriate approach (binary_search, divide_conquer, etc.)',
+        'Apply **debug** with appropriate approach from 11 methodologies (binary_search, divide_conquer, wolf_fence, rubber_duck, delta_debugging, fault_tree, time_travel, etc.)',
         'Use **hypothesis** to formulate and test theories about the cause',
-        'Apply **model** (rubber_duck) to explain the problem step by step',
+        'Apply **debug** (rubber_duck) when stuck to explain the problem step by step',
         'Use **trace** to document the fix and verify it resolves the issue',
       ],
     },
