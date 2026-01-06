@@ -169,11 +169,13 @@
           "id": "2.7",
           "title": "Create schema index with exports",
           "description": "Create src/schemas/index.ts that exports all schemas for easy import",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/schemas/index.ts"
           ],
-          "estimatedMinutes": 5
+          "estimatedMinutes": 5,
+          "notes": "Created src/schemas/index.ts that exports all schemas from all 12 tool categories (common, trace, model, debug, pattern, paradigm, council, decide, debate, reflect, hypothesis, map). The index file provides a central export point with well-organized sections and comments. Each section exports both the Zod schemas and their corresponding TypeScript types for easy consumption by tool servers.",
+          "updated_at": "2026-01-06T20:12:06.975138+00:00"
         }
       ]
     },
@@ -186,21 +188,25 @@
           "id": "3.1",
           "title": "Update traceServer.ts to use Zod",
           "description": "Replace validateThoughtData method with Zod schema.parse(), update error handling",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/tools/traceServer.ts"
           ],
-          "estimatedMinutes": 15
+          "estimatedMinutes": 15,
+          "notes": "Replaced validateThoughtData method with Zod schema validation. Imported thoughtDataSchema from schemas/trace.ts and replaced 40 lines of manual validation with 10 lines using schema.parse(). Added comprehensive ZodError handling that formats validation errors into readable messages. The implementation maintains all existing functionality while providing better type safety and more detailed error messages.",
+          "updated_at": "2026-01-06T20:13:36.886622+00:00"
         },
         {
           "id": "3.2",
           "title": "Update modelServer.ts to use Zod",
           "description": "Replace validateModelData method with Zod schema.parse(), update error handling",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/tools/modelServer.ts"
           ],
-          "estimatedMinutes": 15
+          "estimatedMinutes": 15,
+          "notes": "Replaced validateModelData method with Zod schema validation. Imported mentalModelDataSchema from schemas/model.ts and replaced 25 lines of manual validation with 10 lines using schema.parse(). Added comprehensive ZodError handling that formats validation errors into readable messages. The implementation maintains all existing functionality while providing better type safety and more detailed error messages. Follows the exact pattern established in traceServer.ts.",
+          "updated_at": "2026-01-06T20:14:58.803639+00:00"
         },
         {
           "id": "3.3",
@@ -355,5 +361,5 @@
     "testsPassed": ""
   },
   "final_acceptance": [],
-  "last_updated": "2026-01-06T20:09:51.752559+00:00"
+  "last_updated": "2026-01-06T20:14:58.803648+00:00"
 }
