@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (11/33 subtasks completed - 33%)
+## Current Status: In Progress (14/33 subtasks completed - 42%)
 
 ### Completed Subtasks
 
@@ -62,19 +62,39 @@
   - Status: Committed (commit: 0874e70)
   - Notes: Customer success expert with expertise in onboarding, churn prevention, health scoring, and value realization
 
+- [x] 3.4 - Business Analyst persona
+  - File: src/personas/business/business-analyst.ts
+  - Status: Committed (commit: 232caa3)
+  - Notes: Business analyst expert with expertise in requirements gathering, process optimization, data analysis, and ROI modeling
+
+- [x] 3.5 - Business Experts category index
+  - File: src/personas/business/index.ts
+  - Status: Committed (commit: 55855f4)
+  - Notes: Category index with all 4 business personas, utility functions, and auto-registration
+
+#### Phase 4: Implement Creative Expert Personas (In Progress)
+- [x] 4.1 - Design Thinker persona
+  - File: src/personas/creative/design-thinker.ts
+  - Status: Committed (commit: ff8d89f)
+  - Notes: Design thinking expert with expertise in empathy, ideation, prototyping, and human-centered innovation
+
 ### Next Steps
-- [ ] Continue with Phase 3: Business Expert Personas
-  - 3.4 - Business Analyst persona
-  - 3.5 - Business Experts category index
+- [ ] Continue with Phase 4: Creative Expert Personas
+  - 4.2 - Storyteller persona
+  - 4.3 - Brand Strategist persona
+  - 4.4 - Innovation Catalyst persona
+  - 4.5 - Creative Experts category index
 
 ### Build Notes
-- Phase 1 & 2 complete! 🎉
-- Phase 3 in progress - Business Expert Personas (3/5 complete)
+- Phase 1, 2, & 3 complete! 🎉
+- Phase 4 in progress - Creative Expert Personas (1/5 complete)
 - Persona library architecture fully implemented with registry and factory patterns
 - 4 technical expert personas implemented with distinct voices and expertise
 - Product Manager persona complete - strategic focus on roadmapping, prioritization, and stakeholder alignment
 - Growth Hacker persona complete - data-driven focus on AARRR metrics, viral loops, and experimentation
 - Customer Success persona complete - empathetic focus on onboarding, retention, health scoring, and value realization
+- Business Analyst persona complete - analytical focus on requirements gathering, process optimization, data analysis, and ROI modeling
 - All personas include: expertise, background, perspective, biases, communication style, concerns, typical questions, use cases, and complementary personas
 - Auto-registration system ensures personas are available in global registry
 - Search and query capabilities with relevance scoring
+- Design Thinker persona complete - empathetic focus on human-centered design, ideation, prototyping, and creative problem-solving with "How might we...?" framework
