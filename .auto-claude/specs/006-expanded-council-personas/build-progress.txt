@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (24/33 subtasks completed - 73%)
+## Current Status: In Progress (25/33 subtasks completed - 76%)
 
 ### Completed Subtasks
 
@@ -138,9 +138,16 @@
   - Status: Committed (commit: 69a67ff)
   - Notes: CouncilServer successfully updated to resolve predefined persona references. Implements resolvePersonas() method that handles predefinedPersonas array, personaCategory selection, and custom personas. Custom personas can override predefined ones. Fully backward compatible.
 
+- [x] 7.3 - Update interfaces for enhanced persona support
+  - Files: src/models/interfaces.ts, src/personas/factory.ts
+  - Status: Committed (commit: 3bd85ad)
+  - Notes: PersonaData interface enhanced with optional category, tags, concerns, and typicalQuestions fields. PersonaFactory.toBasePersonaData() updated to preserve enhanced fields. Fully backward compatible - all new fields are optional.
+
+#### Phase 7: Update Council Tool Integration ✅ COMPLETE
+
 ### Next Steps
-- [ ] Continue with Phase 7: Update Council Tool Integration
-  - 7.3 - Update interfaces for enhanced persona support
+- [ ] Continue with Phase 8: Testing
+  - 8.1 - Write unit tests for persona registry
 
 ### Build Notes
 - Phase 1, 2, 3, 4, 5, & 6 complete! 🎉

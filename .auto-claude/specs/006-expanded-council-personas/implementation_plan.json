@@ -316,8 +316,8 @@
           "files": [
             "src/models/interfaces.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "PersonaData interface enhanced with optional category, tags, concerns, and typicalQuestions fields. PersonaFactory.toBasePersonaData() updated to preserve enhanced fields. Changes maintain full backward compatibility as all new fields are optional. This enables predefined personas to retain their metadata when used in council sessions, providing richer context for persona-driven contributions. Committed in 3bd85ad."
         }
       ]
     },
