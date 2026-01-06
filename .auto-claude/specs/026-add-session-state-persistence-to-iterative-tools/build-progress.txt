@@ -1,0 +1,71 @@
+# Build Progress - Add Session State Persistence to Iterative Tools
+
+## Phase 1: Add State Persistence to CouncilServer
+
+### ✅ Subtask 1.1: Add session state storage to CouncilServer (COMPLETED)
+- Added private sessions: Record<string, CollaborativeReasoningData[]> storage
+- Implemented storeContribution() method that stores data by sessionId
+- Integrated storeContribution() call in processCollaborativeReasoning()
+- Followed the exact pattern from traceServer (thoughtHistory, storeThought)
+- Commit: e7d444b
+
+**Pattern Applied:**
+- Private storage field initialized as empty object
+- Private store method checks if sessionId exists, creates array if not, then pushes data
+- Public process method calls store after validation, before output formatting
+
+**Files Modified:**
+- src/tools/councilServer.ts
+
+---
+
+### ✅ Subtask 1.2: Add history retrieval methods to CouncilServer (COMPLETED)
+- Added public getSessionHistory(sessionId) method
+  - Returns all CollaborativeReasoningData entries for a session
+  - Returns empty array if session doesn't exist
+- Added public getSessionSummary(sessionId) method
+  - Returns summary with: totalIterations, lastStage, lastActivePersonaId, lastIteration, totalContributions
+  - Handles non-existent sessions gracefully with null values
+- Commit: f259b0b
+
+**Implementation Details:**
+- getSessionHistory: Simple retrieval with fallback to empty array
+- getSessionSummary: Aggregates statistics from session history
+  - Counts total iterations (length of history array)
+  - Sums all contributions across all iterations
+  - Returns last entry details (stage, active persona, iteration)
+
+**Files Modified:**
+- src/tools/councilServer.ts
+
+---
+
+### ✅ Subtask 1.3: Add tests for CouncilServer state persistence (COMPLETED)
+- Added comprehensive state persistence test suite to councilServer.test.ts
+- Tests verify multiple contributions stored for same session across iterations
+- Tests verify different sessions maintain separate state
+- Tests verify getSessionHistory returns all contributions for a session
+- Tests verify getSessionSummary returns correct statistics
+- Tests verify data preservation across all fields
+- Commit: f820974
+
+**Test Coverage:**
+1. **Multiple contributions per session**: Verifies 3 iterations stored with correct iteration numbers
+2. **Session isolation**: Verifies separate sessions maintain independent state
+3. **Non-existent session handling**: Verifies empty array returned for missing sessions
+4. **getSessionSummary accuracy**:
+   - Verifies totalIterations, lastStage, lastActivePersonaId, lastIteration
+   - Verifies totalContributions count across all iterations
+   - Verifies null values for non-existent sessions
+5. **Data preservation**: Verifies all fields (topic, stage, personas, contributions, etc.) are preserved
+
+**Files Modified:**
+- src/tools/councilServer.test.ts
+
+---
+
+## Phase 1 Status: COMPLETED ✅
+All subtasks for CouncilServer state persistence have been completed successfully.
+
+## Next Steps
+- Phase 2: Add State Persistence to DecideServer
