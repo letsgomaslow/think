@@ -291,6 +291,43 @@ Phase 6: Documentation
   - Added: 112 lines
   - Status: COMPLETED
 
+✓ Subtask 6.5: Add Mind Map example
+  - Added comprehensive Scenario 7 showing feature brainstorming mind map
+  - Includes JSON input with 11 nodes demonstrating hierarchical structure via contains relationships
+  - Shows central topic "Mobile App v2.0" as root with 3 main branches:
+    * Authentication (2 sub-features: Biometric Login, SSO Integration)
+    * Social Features (3 sub-features: Content Sharing, Friend Network, Real-time Chat)
+    * Analytics (2 sub-features: Event Tracking, User Reports)
+  - Demonstrates different shapes for hierarchy levels:
+    * Circle (( )) for root node (main product/concept)
+    * Square [ ] for major feature categories (organizational grouping)
+    * Plain text for leaf nodes (concrete implementation tasks)
+  - Shows JSON output with mermaidOutput field containing mindmap syntax
+  - Includes rendered Mermaid diagram visualization
+  - Detailed "What This Means" section explaining:
+    * Root node identification (isRoot: true)
+    * Hierarchical structure via contains array (no explicit edges)
+    * Visual shapes and their semantic meaning
+    * Feature distribution analysis (7 tasks across 3 pillars)
+    * Critical insights about scope, priorities, and cross-cutting concerns
+  - "Brainstorming Strategy" section covering:
+    * Radial organization (easy to expand categories)
+    * Depth vs. breadth considerations (2 levels deep currently)
+    * Gap analysis (missing Performance/Security categories)
+    * Prioritization approaches (color-coding, numbering)
+  - "Practical Use Cases" section with real-world applications:
+    * Product planning and stakeholder presentations
+    * Sprint planning (leaf nodes as user stories)
+    * Team alignment on full feature landscape
+    * Dependency discovery (SSO affecting multiple features)
+    * Gap analysis (missing Onboarding/Settings nodes)
+  - Follows existing documentation pattern from Scenarios 4, 5, and 6
+  - Real-world scenario: mobile app feature planning for v2.0 release
+  - File: docs/tools/map.md
+  - Commit: f8a2375
+  - Added: 94 lines
+  - Status: COMPLETED
+
 Next Steps:
-- Phase 6: Documentation (3 remaining subtasks: 6.5, 6.6, 6.7, 6.8)
+- Phase 6: Documentation (3 remaining subtasks: 6.6, 6.7, 6.8)
 - Phase 7: Final Validation & Build (3 subtasks)
