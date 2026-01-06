@@ -2,6 +2,8 @@ import { VisualOperationData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
 export class MapServer {
+  private diagrams: Record<string, VisualOperationData[]> = {};
+
   private validateInputData(input: unknown): VisualOperationData {
     const data = input as VisualOperationData;
     if (!data.operation || !data.diagramId || !data.diagramType) {
@@ -86,6 +88,14 @@ export class MapServer {
     return output;
   }
 
+  private storeOperation(data: VisualOperationData): void {
+    const diagramId = data.diagramId;
+    if (!this.diagrams[diagramId]) {
+      this.diagrams[diagramId] = [];
+    }
+    this.diagrams[diagramId].push(data);
+  }
+
   public processVisualReasoning(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
     try {
       const validatedData = this.validateInputData(input);
@@ -93,7 +103,10 @@ export class MapServer {
         ...validatedData,
         elements: validatedData.elements || []
       };
-      
+
+      // Store the operation for future reference
+      this.storeOperation(processedData);
+
       const formattedOutput = this.formatOutput(processedData);
       console.error(formattedOutput);
 
