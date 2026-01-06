@@ -112,6 +112,35 @@ export interface ChainBoundary {
   isComplete: boolean;
 }
 
+/**
+ * Memory usage statistics for the TraceServer
+ * Provides current memory consumption and configured limits
+ */
+export interface MemoryStats {
+  /** Current number of thoughts in main history */
+  thoughtHistoryCount: number;
+  /** Maximum allowed thoughts in main history */
+  thoughtHistoryLimit: number;
+  /** Current number of branches */
+  branchCount: number;
+  /** Maximum allowed branches */
+  branchLimit: number;
+  /** Object with branch IDs as keys and thought counts as values */
+  branchThoughtCounts: Record<string, number>;
+  /** Maximum thoughts allowed per branch */
+  perBranchLimit: number;
+  /** Number of completed chains currently in main history */
+  completedChainsInHistory: number;
+  /** Number of archived chain summaries */
+  chainSummaryCount: number;
+  /** Maximum allowed chain summaries */
+  chainSummaryLimit: number;
+  /** Total thoughts across all branches */
+  totalBranchThoughts: number;
+  /** Total thoughts (main history + all branches) */
+  totalThoughts: number;
+}
+
 export class TraceServer {
   private thoughtHistory: ThoughtData[] = [];
   private branches: Record<string, ThoughtData[]> = {};
@@ -269,6 +298,132 @@ export class TraceServer {
   public getChainSummaries(): ChainSummary[] {
     return [...this.chainSummaries];
   }
+
+  // ============================================================================
+  // Manual Cleanup Methods
+  // ============================================================================
+
+  /**
+   * Clears all thoughts from the main thought history
+   * Does not affect branches or chain summaries
+   */
+  public clearHistory(): void {
+    this.thoughtHistory = [];
+  }
+
+  /**
+   * Clears a specific branch by its ID
+   * Removes both the branch data and its metadata
+   * @param branchId - The ID of the branch to clear
+   * @returns true if the branch was found and cleared, false if branch didn't exist
+   */
+  public clearBranch(branchId: string): boolean {
+    if (!(branchId in this.branches)) {
+      return false;
+    }
+    delete this.branches[branchId];
+    delete this.branchMetadata[branchId];
+    return true;
+  }
+
+  /**
+   * Clears all branches and their metadata
+   * Does not affect the main thought history or chain summaries
+   */
+  public clearAllBranches(): void {
+    this.branches = {};
+    this.branchMetadata = {};
+  }
+
+  /**
+   * Clears only completed thought chains from main history and all branches
+   * Active (incomplete) chains are preserved
+   * Optionally archives completed chains before removal if retainChainSummaries is enabled
+   * @returns Object containing counts of cleared chains from history and branches
+   */
+  public clearCompletedChains(): { historyChains: number; branchChains: number } {
+    let historyChains = 0;
+    let branchChains = 0;
+
+    // Clear completed chains from main history
+    const completedInHistory = this.findCompletedChains(this.thoughtHistory);
+    // Process in reverse order to maintain correct indices
+    for (let i = completedInHistory.length - 1; i >= 0; i--) {
+      const chain = completedInHistory[i];
+      const chainThoughts = this.thoughtHistory.slice(chain.startIndex, chain.endIndex + 1);
+
+      // Archive if configured
+      this.archiveChain(chainThoughts);
+
+      // Remove the chain
+      this.thoughtHistory.splice(chain.startIndex, chain.endIndex - chain.startIndex + 1);
+      historyChains++;
+    }
+
+    // Clear completed chains from all branches
+    for (const branchId of Object.keys(this.branches)) {
+      const branch = this.branches[branchId];
+      const completedInBranch = this.findCompletedChains(branch);
+
+      // Process in reverse order to maintain correct indices
+      for (let i = completedInBranch.length - 1; i >= 0; i--) {
+        const chain = completedInBranch[i];
+        const chainThoughts = branch.slice(chain.startIndex, chain.endIndex + 1);
+
+        // Archive if configured
+        this.archiveChain(chainThoughts, branchId);
+
+        // Remove the chain
+        branch.splice(chain.startIndex, chain.endIndex - chain.startIndex + 1);
+        branchChains++;
+      }
+    }
+
+    return { historyChains, branchChains };
+  }
+
+  /**
+   * Returns current memory usage statistics
+   * Provides insight into memory consumption and how close to limits
+   * @returns MemoryStats object with detailed memory information
+   */
+  public getMemoryStats(): MemoryStats {
+    // Calculate branch thought counts
+    const branchThoughtCounts: Record<string, number> = {};
+    let totalBranchThoughts = 0;
+
+    for (const branchId of Object.keys(this.branches)) {
+      const count = this.branches[branchId].length;
+      branchThoughtCounts[branchId] = count;
+      totalBranchThoughts += count;
+    }
+
+    return {
+      thoughtHistoryCount: this.thoughtHistory.length,
+      thoughtHistoryLimit: this.config.maxThoughtHistory,
+      branchCount: Object.keys(this.branches).length,
+      branchLimit: this.config.maxBranches,
+      branchThoughtCounts,
+      perBranchLimit: this.config.maxThoughtsPerBranch,
+      completedChainsInHistory: this.findCompletedChains(this.thoughtHistory).length,
+      chainSummaryCount: this.chainSummaries.length,
+      chainSummaryLimit: this.config.maxChainSummaries,
+      totalBranchThoughts,
+      totalThoughts: this.thoughtHistory.length + totalBranchThoughts
+    };
+  }
+
+  /**
+   * Clears all chain summaries
+   * Useful when you want to free memory used by archived chain metadata
+   */
+  public clearChainSummaries(): void {
+    this.chainSummaries = [];
+  }
+
+  // ============================================================================
+  // End of Manual Cleanup Methods
+  // ============================================================================
 
   /**
    * Truncates a string to a maximum length, adding ellipsis if truncated
