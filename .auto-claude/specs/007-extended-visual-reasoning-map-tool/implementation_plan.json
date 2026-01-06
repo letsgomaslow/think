@@ -272,8 +272,8 @@
           "file_paths": [
             "docs/tools/map.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Added comprehensive Scenario 6 to docs/tools/map.md showing E-Commerce Database Schema. Includes JSON input with 3 entities (User, Order, Product) with typed attributes and primary keys. Shows JSON output with mermaidOutput field containing erDiagram syntax. Includes rendered Mermaid diagram visualization and detailed explanation covering: entities as table blocks, attributes with types, primary key notation (PK suffix), relationship cardinality (||--o{ for one-to-many User places Order, }o--o{ for many-to-many Order contains Product and User views Product), foreign key implications, data type insights, schema validation concerns, and design considerations for OrderItem join table and indexes. Follows existing documentation pattern from Scenarios 4 and 5. Committed in c1e6576 with 112 lines added."
         },
         {
           "subtask_id": "6.5",

@@ -242,6 +242,55 @@ Phase 6: Documentation
   - Added: 72 lines
   - Status: COMPLETED
 
+✓ Subtask 6.3: Add State Machine example
+  - Added comprehensive Scenario 5 showing order lifecycle state machine
+  - Includes JSON input with 6 states (Pending, Paid, Processing, Shipped, Delivered, Cancelled)
+  - Shows 7 transitions with descriptive labels
+  - Demonstrates start state (Pending) and end states (Delivered, Cancelled) using isStart/isEnd properties
+  - Shows JSON output with mermaidOutput field containing stateDiagram-v2 syntax
+  - Includes rendered Mermaid diagram visualization
+  - Detailed "What This Means" section explaining:
+    * Start/end state markers ([*])
+    * Happy path through the states
+    * Cancellation windows at different stages
+    * Business rule: no cancellation after shipping
+  - Follows existing documentation pattern from Scenario 4
+  - Real-world scenario: e-commerce order lifecycle
+  - File: docs/tools/map.md
+  - Commit: a0e9e69
+  - Added: 73 lines
+  - Status: COMPLETED
+
+✓ Subtask 6.4: Add Entity-Relationship example
+  - Added comprehensive Scenario 6 showing E-Commerce Database Schema
+  - Includes JSON input with 3 entities (User, Order, Product) with typed attributes
+  - Shows entity attributes with data types (int, string, decimal, timestamp)
+  - Demonstrates primary key notation with "key": true property (marked as PK in output)
+  - Shows 3 relationships with different cardinalities:
+    * User places Order (||--o{): one-to-many relationship
+    * Order contains Product (}o--o{): many-to-many relationship
+    * User views Product (}o--o{): many-to-many relationship
+  - Shows JSON output with mermaidOutput field containing erDiagram syntax
+  - Includes rendered Mermaid diagram visualization
+  - Detailed "What This Means" section explaining:
+    * How entities become table blocks with attributes
+    * Primary key notation (PK suffix)
+    * Cardinality symbols and their meanings
+    * Foreign key implications (user_id in Order)
+    * Data type insights (decimal for money, timestamp for audit)
+    * Schema validation concerns (missing OrderItem join table, no indexes)
+    * Business logic implications (product analytics tracking)
+  - "Design Considerations" section with schema improvement suggestions:
+    * Adding OrderItem join table with quantity and price_at_purchase
+    * Adding payment_method field to Order
+    * Stock management considerations
+  - Follows existing documentation pattern from Scenarios 4 and 5
+  - Real-world scenario: e-commerce database design
+  - File: docs/tools/map.md
+  - Commit: c1e6576
+  - Added: 112 lines
+  - Status: COMPLETED
+
 Next Steps:
-- Phase 6: Documentation (6 remaining subtasks)
+- Phase 6: Documentation (3 remaining subtasks: 6.5, 6.6, 6.7, 6.8)
 - Phase 7: Final Validation & Build (3 subtasks)
