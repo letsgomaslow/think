@@ -1,6 +1,6 @@
 # Build Progress: Extended Mental Models Library
 
-## Status: Phase 3 In Progress (3/7 subtasks completed)
+## Status: Phase 3 In Progress (4/7 subtasks completed)
 
 ### Phase 1: Core Tool Schema Updates ✅
 - **Subtask 1.1**: Add new model names to MODEL_TOOL enum - COMPLETED
@@ -59,7 +59,13 @@
   - Consulting-style example: retail revenue decline analysis with MECE framework
   - Related models linked: first_principles, swot_analysis, five_whys
 
-- **Subtask 3.4**: Add Inversion Thinking extended documentation - PENDING
+- **Subtask 3.4**: Add Inversion Thinking extended documentation - COMPLETED
+  - Fully implemented in EXTENDED_MODELS (lines 434-503)
+  - Inversion concept clearly explained with 6 detailed steps
+  - Charlie Munger investment example: 8 ways to guarantee failure with avoidance strategies
+  - Famous quote: "trying to be consistently not stupid, instead of trying to be very intelligent"
+  - Application to career success using inversion technique
+  - Related models linked: pre_mortem, second_order_effects, first_principles
 - **Subtask 3.5**: Add Second-Order Effects extended documentation - PENDING
 - **Subtask 3.6**: Add Pre-Mortem extended documentation - PENDING
 - **Subtask 3.7**: Add Five Whys extended documentation - PENDING
