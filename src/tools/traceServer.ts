@@ -274,6 +274,23 @@ export class TraceServer {
     }
   }
 
+  /**
+   * Enforces the maxThoughtsPerBranch limit on a specific branch
+   * Uses FIFO eviction to remove oldest thoughts when limit is exceeded
+   * @param branchId - The ID of the branch to enforce limits on
+   */
+  private enforceBranchThoughtLimit(branchId: string): void {
+    const branch = this.branches[branchId];
+    if (!branch) {
+      return;
+    }
+
+    // Use simple FIFO eviction for per-branch limits
+    while (branch.length > this.config.maxThoughtsPerBranch) {
+      branch.shift();
+    }
+  }
+
   private storeThought(thought: ThoughtData): void {
     // If this is a branch, store in the appropriate branch collection
     if (thought.branchId) {
@@ -296,6 +313,9 @@ export class TraceServer {
       }
 
       this.branches[branchId].push(thought);
+
+      // Enforce per-branch memory bounds
+      this.enforceBranchThoughtLimit(branchId);
     } else {
       // Otherwise store in main thought history
       this.thoughtHistory.push(thought);
