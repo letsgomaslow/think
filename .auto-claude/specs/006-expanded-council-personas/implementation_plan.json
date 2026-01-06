@@ -33,8 +33,8 @@
           "files": [
             "src/personas/registry.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "PersonaRegistry class fully implemented in src/personas/registry.ts. Includes comprehensive functionality: persona registration (single and bulk), category management, retrieval by ID/category/expertise/tags, advanced query and search capabilities with relevance scoring, and utility methods (counts, existence checks, library export). Features singleton pattern with global personaRegistry instance. All methods include proper validation and error handling."
         },
         {
           "subtask_id": "1.3",
@@ -43,8 +43,8 @@
           "files": [
             "src/personas/factory.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "PersonaFactory class fully implemented in src/personas/factory.ts. Includes comprehensive functionality: create personas from predefined templates with merge/replace strategies, create fully custom personas with validation, convert between EnhancedPersonaData and base PersonaData formats, create multiple personas from IDs or categories, clone personas, and helper methods for querying available personas. Features singleton pattern with global personaFactory instance."
         }
       ]
     },
