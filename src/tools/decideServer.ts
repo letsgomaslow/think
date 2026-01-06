@@ -2,6 +2,8 @@ import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefi
 import chalk from 'chalk';
 
 export class DecideServer {
+  private decisions: Record<string, DecisionFrameworkData[]> = {};
+
   private validateInputData(input: unknown): DecisionFrameworkData {
     const data = input as DecisionFrameworkData;
     if (!data.decisionStatement || !data.options || !data.analysisType || !data.stage || !data.decisionId) {
@@ -518,13 +520,23 @@ export class DecideServer {
     return output;
   }
 
+  private storeDecisionIteration(data: DecisionFrameworkData): void {
+    if (!this.decisions[data.decisionId]) {
+      this.decisions[data.decisionId] = [];
+    }
+    this.decisions[data.decisionId].push(data);
+  }
+
   public processDecisionFramework(input: unknown): DecisionFrameworkData {
     const validatedData = this.validateInputData(input);
-    
+
+    // Store the decision iteration for future reference
+    this.storeDecisionIteration(validatedData);
+
     // Log formatted output to console
     const formattedOutput = this.formatOutput(validatedData);
     console.error(formattedOutput);
-    
+
     return validatedData;
   }
 }
