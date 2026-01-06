@@ -1,5 +1,6 @@
 import { VisualOperationData } from '../models/interfaces.js';
 import chalk from 'chalk';
+import { MermaidGenerator } from './mermaidGenerator.js';
 
 export class MapServer {
   private validateInputData(input: unknown): VisualOperationData {
@@ -93,7 +94,15 @@ export class MapServer {
         ...validatedData,
         elements: validatedData.elements || []
       };
-      
+
+      // Generate Mermaid output if elements are provided
+      let mermaidOutput: string | undefined;
+      if (processedData.elements && processedData.elements.length > 0) {
+        const mermaidGenerator = new MermaidGenerator();
+        mermaidOutput = mermaidGenerator.generate(processedData.diagramType, processedData.elements);
+        processedData.mermaidOutput = mermaidOutput;
+      }
+
       const formattedOutput = this.formatOutput(processedData);
       console.error(formattedOutput);
 
@@ -107,6 +116,7 @@ export class MapServer {
             iteration: processedData.iteration,
             nextOperationNeeded: processedData.nextOperationNeeded,
             elementCount: processedData.elements ? processedData.elements.length : 0,
+            mermaidOutput: mermaidOutput,
             status: 'success'
           }, null, 2)
         }]
