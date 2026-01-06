@@ -431,6 +431,76 @@ Contrast with non-MECE approach:
       steps: ['Define universe', 'Choose segmentation criterion', 'Create non-overlapping categories', 'Ensure complete coverage'],
     },
   },
+  inversion_thinking: {
+    name: 'inversion_thinking',
+    title: 'Inversion Thinking',
+    description: 'Approach problems by inverting them - instead of asking how to succeed, ask how to fail, then avoid those things.',
+    whenToUse: [
+      'When direct problem-solving approaches aren\'t working',
+      'When you want to identify and avoid critical mistakes',
+      'When planning complex projects with many failure modes',
+      'When "what could go wrong?" is more valuable than "what could go right?"',
+      'When you need to stress-test a strategy or decision',
+    ],
+    steps: [
+      'State your goal clearly (what you want to achieve)',
+      'Invert the problem: Ask "What would guarantee failure?" or "How could this go terribly wrong?"',
+      'List all the ways to fail comprehensively - be specific and ruthless',
+      'For each failure mode, identify the root cause or behavior that creates it',
+      'Create strategies to avoid each failure mode - these become your success factors',
+      'Focus on NOT doing the stupid things rather than trying to be brilliant',
+    ],
+    example: {
+      context: 'Charlie Munger on building a successful investment portfolio',
+      application: `Traditional approach: "How do I pick winning stocks and maximize returns?"
+
+Munger's inversion: "How do I guarantee I'll lose money and destroy wealth?"
+
+Ways to guarantee investment failure:
+1. Chase hot tips and trends without understanding the business
+   → Avoid: Never invest in something you don't understand
+
+2. Use leverage and borrowed money to amplify bets
+   → Avoid: Don't use margin or debt for speculation
+
+3. Panic sell during market downturns
+   → Avoid: Have emotional discipline; don't check portfolio daily
+
+4. Pay high fees to active managers who underperform
+   → Avoid: Minimize fees; favor low-cost index funds for most holdings
+
+5. Fail to diversify - put all eggs in one basket
+   → Avoid: Spread risk across uncorrelated assets
+
+6. Trade frequently, racking up taxes and transaction costs
+   → Avoid: Buy and hold quality businesses; let compound interest work
+
+7. Ignore valuation - overpay for assets in bubbles
+   → Avoid: Maintain discipline on price; wait for margin of safety
+
+8. Follow the crowd into crowded trades
+   → Avoid: Be contrarian when everyone is euphoric or despairing
+
+Munger's insight: "It is remarkable how much long-term advantage people like us have gotten by trying to be consistently not stupid, instead of trying to be very intelligent."
+
+By systematically avoiding the ways to fail, you don't need to be a genius picker of winners. You survive long enough for compounding to work its magic.
+
+Application to your life:
+Want a successful career? Invert: How do I guarantee career failure?
+- Burn bridges and make enemies
+- Never learn new skills or adapt
+- Be unreliable and miss deadlines
+- Take credit for others' work
+
+Now avoid those things. You don't need to be the most talented person - just be reliable, keep learning, treat people well, and give credit where due. You'll outlast 90% of competition.`,
+    },
+    relatedModels: ['pre_mortem', 'second_order_effects', 'first_principles'],
+    toolParameters: {
+      modelName: 'inversion_thinking',
+      problem: 'Your goal or decision',
+      steps: ['Invert the problem', 'List failure modes', 'Identify avoidance strategies'],
+    },
+  },
 };
 
 /**
