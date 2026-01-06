@@ -120,24 +120,28 @@
           "title": "Add Pre-Mortem Analysis to catalog",
           "description": "Add Pre-Mortem Analysis mental model for prospective failure analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Pre-Mortem model defined with proper structure",
             "Explains prospective hindsight concept",
             "Includes project management use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T14:15:00.000Z",
+          "notes": "Verified Pre-Mortem Analysis mental model in web/lib/resources/models.ts (lines 204-218). All acceptance criteria met: proper structure with name 'pre_mortem', title 'Pre-Mortem Analysis', clear explanation of prospective hindsight concept, 4 use cases including project management (project planning, team alignment, failure prevention, strategic initiative evaluation), and 4 implementation steps (imagine failure, generate reasons, identify causes, develop preventive measures). Code is in correct state."
         },
         {
           "subtask_id": "2.7",
           "title": "Add Five Whys to catalog",
           "description": "Add Five Whys mental model for root cause analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Five Whys model defined with proper structure",
             "Explains iterative questioning technique",
             "Includes debugging and quality use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T14:20:00.000Z",
+          "notes": "Verified Five Whys mental model in web/lib/resources/models.ts (lines 221-237). All acceptance criteria met: proper structure with name 'five_whys', title 'Five Whys', clear explanation of iterative questioning technique with reference to Toyota Production System, 4+ use cases including debugging and quality control (root cause analysis, quality control, process improvement, manufacturing operations), and 5 implementation steps (state problem, ask why, iterate 5 times, reach root cause, implement solutions). Code is in correct state."
         }
       ]
     },

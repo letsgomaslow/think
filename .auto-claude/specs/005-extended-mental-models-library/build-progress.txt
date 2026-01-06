@@ -145,3 +145,68 @@
 **Status:** Subtask 2.4 verified and marked as completed in implementation plan.
 
 **Next:** Phase 2 - Continue with subtasks 2.5-2.7 (Second-Order, Pre-Mortem, Five Whys)
+
+---
+
+### Latest Update: 2026-01-06 14:15:00
+
+**Subtask 2.6 - Add Pre-Mortem Analysis to catalog: COMPLETED**
+
+✅ Verified Pre-Mortem Analysis mental model in web/lib/resources/models.ts (lines 204-218):
+  - name: 'pre_mortem' ✓
+  - title: 'Pre-Mortem Analysis' ✓
+  - description: Clear explanation of prospective hindsight concept ✓
+    "Imagine your project has failed in the future and work backwards to identify potential causes. This prospective hindsight technique helps uncover risks and failure modes before they occur."
+  - useCases: 4 project management use cases provided ✓
+    1. Project planning and risk identification
+    2. Team alignment on potential obstacles
+    3. Proactive failure prevention and mitigation
+    4. Strategic initiative evaluation and preparation
+  - steps: 4 implementation steps provided ✓
+    1. Imagine the project has completely failed at a future point
+    2. Generate reasons explaining why the failure occurred
+    3. Identify the most likely and impactful failure causes
+    4. Develop preventive measures and contingency plans for each risk
+
+✅ All acceptance criteria met:
+  - Pre-Mortem model defined with proper structure ✓
+  - Explains prospective hindsight concept ✓
+  - Includes project management use cases ✓
+
+**Status:** Subtask 2.6 verified and marked as completed in implementation plan.
+
+**Next:** Phase 2 - Complete subtask 2.7 (Five Whys)
+
+---
+
+### Latest Update: 2026-01-06 14:20:00
+
+**Subtask 2.7 - Add Five Whys to catalog: COMPLETED**
+
+✅ Verified Five Whys mental model in web/lib/resources/models.ts (lines 221-237):
+  - name: 'five_whys' ✓
+  - title: 'Five Whys' ✓
+  - description: Clear explanation of iterative questioning technique with Toyota Production System reference ✓
+    "Iteratively ask 'why' (typically five times) to drill down from symptoms to the root cause. Developed as part of the Toyota Production System..."
+  - useCases: 4+ use cases including debugging and quality control ✓
+    1. Root cause analysis for bugs and system failures
+    2. Quality control and defect investigation
+    3. Process improvement and efficiency optimization
+    4. Problem-solving in manufacturing and operations
+  - steps: 5 implementation steps provided ✓
+    1. State the problem clearly and specifically
+    2. Ask "Why did this happen?" and document the answer
+    3. Ask "Why?" again for each subsequent answer (typically 5 iterations)
+    4. Continue until you reach the fundamental root cause
+    5. Implement solutions that address the root cause, not just symptoms
+
+✅ All acceptance criteria met:
+  - Five Whys model defined with proper structure ✓
+  - Explains iterative questioning technique ✓
+  - Includes debugging and quality use cases ✓
+
+**Status:** Subtask 2.7 verified and marked as completed in implementation plan.
+
+**Phase 2 Status:** COMPLETE (7/7 subtasks done). All 7 new mental models successfully added to the resource catalog.
+
+**Next:** Phase 3 - Extended Model Documentation (subtasks 3.1-3.7)
