@@ -63,6 +63,18 @@ interface BranchMetadata {
   lastAccessedAt: number;
 }
 
+/**
+ * Represents the boundaries of a thought chain within an array
+ */
+export interface ChainBoundary {
+  /** Index of the first thought in the chain */
+  startIndex: number;
+  /** Index of the last thought in the chain */
+  endIndex: number;
+  /** Whether this chain is complete (last thought has nextThoughtNeeded: false) */
+  isComplete: boolean;
+}
+
 export class TraceServer {
   private thoughtHistory: ThoughtData[] = [];
   private branches: Record<string, ThoughtData[]> = {};
@@ -78,6 +90,138 @@ export class TraceServer {
       ...DEFAULT_TRACE_SERVER_CONFIG,
       ...config
     };
+  }
+
+  /**
+   * Checks if a sequence of thoughts forms a complete thought chain
+   * A chain is complete when the last thought has nextThoughtNeeded: false
+   * @param thoughts - Array of thoughts to check
+   * @returns true if the chain is complete, false otherwise
+   */
+  private isThoughtChainComplete(thoughts: ThoughtData[]): boolean {
+    if (thoughts.length === 0) {
+      return false;
+    }
+    const lastThought = thoughts[thoughts.length - 1];
+    return lastThought.nextThoughtNeeded === false;
+  }
+
+  /**
+   * Identifies chain boundaries within an array of thoughts
+   * Uses thoughtNumber to detect chain starts (thoughtNumber === 1 or reset)
+   * and nextThoughtNeeded: false to detect chain ends
+   *
+   * @param thoughts - Array of thoughts to analyze
+   * @returns Array of ChainBoundary objects representing each chain
+   */
+  private findChainBoundaries(thoughts: ThoughtData[]): ChainBoundary[] {
+    if (thoughts.length === 0) {
+      return [];
+    }
+
+    const boundaries: ChainBoundary[] = [];
+    let chainStartIndex = 0;
+
+    for (let i = 0; i < thoughts.length; i++) {
+      const thought = thoughts[i];
+      const isChainStart = i === 0 ||
+        thought.thoughtNumber === 1 ||
+        thought.thoughtNumber < thoughts[i - 1].thoughtNumber;
+
+      // If this is a new chain start (and not the first thought),
+      // close the previous chain
+      if (isChainStart && i > 0) {
+        const previousThought = thoughts[i - 1];
+        boundaries.push({
+          startIndex: chainStartIndex,
+          endIndex: i - 1,
+          isComplete: previousThought.nextThoughtNeeded === false
+        });
+        chainStartIndex = i;
+      }
+
+      // If this thought ends a chain, record it
+      if (thought.nextThoughtNeeded === false) {
+        boundaries.push({
+          startIndex: chainStartIndex,
+          endIndex: i,
+          isComplete: true
+        });
+        // Next thought (if any) will start a new chain
+        chainStartIndex = i + 1;
+      }
+    }
+
+    // Handle the last chain if it wasn't completed
+    if (chainStartIndex < thoughts.length) {
+      const lastThought = thoughts[thoughts.length - 1];
+      boundaries.push({
+        startIndex: chainStartIndex,
+        endIndex: thoughts.length - 1,
+        isComplete: lastThought.nextThoughtNeeded === false
+      });
+    }
+
+    return boundaries;
+  }
+
+  /**
+   * Finds all completed thought chains in an array of thoughts
+   * @param thoughts - Array of thoughts to analyze
+   * @returns Array of ChainBoundary objects for completed chains only
+   */
+  private findCompletedChains(thoughts: ThoughtData[]): ChainBoundary[] {
+    return this.findChainBoundaries(thoughts).filter(chain => chain.isComplete);
+  }
+
+  /**
+   * Finds completed chains in the main thought history
+   * @returns Array of ChainBoundary objects for completed chains in main history
+   */
+  public getCompletedChainsInHistory(): ChainBoundary[] {
+    return this.findCompletedChains(this.thoughtHistory);
+  }
+
+  /**
+   * Finds completed chains in a specific branch
+   * @param branchId - The ID of the branch to analyze
+   * @returns Array of ChainBoundary objects for completed chains, or empty array if branch doesn't exist
+   */
+  public getCompletedChainsInBranch(branchId: string): ChainBoundary[] {
+    const branch = this.branches[branchId];
+    if (!branch) {
+      return [];
+    }
+    return this.findCompletedChains(branch);
+  }
+
+  /**
+   * Checks if there are any completed chains in the main thought history
+   * @returns true if at least one completed chain exists
+   */
+  public hasCompletedChains(): boolean {
+    return this.getCompletedChainsInHistory().length > 0;
+  }
+
+  /**
+   * Gets all chain boundaries (complete and incomplete) in the main thought history
+   * @returns Array of ChainBoundary objects representing all chains
+   */
+  public getChainBoundaries(): ChainBoundary[] {
+    return this.findChainBoundaries(this.thoughtHistory);
+  }
+
+  /**
+   * Gets all chain boundaries for a specific branch
+   * @param branchId - The ID of the branch to analyze
+   * @returns Array of ChainBoundary objects, or empty array if branch doesn't exist
+   */
+  public getBranchChainBoundaries(branchId: string): ChainBoundary[] {
+    const branch = this.branches[branchId];
+    if (!branch) {
+      return [];
+    }
+    return this.findChainBoundaries(branch);
   }
 
   private validateThoughtData(input: unknown): ThoughtData {
