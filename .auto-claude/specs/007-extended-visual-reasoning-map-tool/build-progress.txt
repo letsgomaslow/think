@@ -28,7 +28,7 @@
 
 ### Phase 4: Comprehensive Testing
 - [x] 4.1 Create MermaidGenerator tests
-- [ ] 4.2 Update MapServer tests for new diagram types
+- [x] 4.2 Update MapServer tests for new diagram types
 - [ ] 4.3 Run test suite and verify all pass
 
 ### Phase 5: Web Playground Integration

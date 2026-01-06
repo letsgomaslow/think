@@ -152,8 +152,8 @@
           "title": "Update MapServer tests for new diagram types",
           "description": "Extend mapServer.test.ts to cover all 5 new diagram types. Verify mermaidOutput is included in responses.",
           "file_paths": ["src/tools/mapServer.test.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Successfully extended mapServer.test.ts with comprehensive tests for all 5 new diagram types. Added general mermaidOutput validation test and specific tests for sequenceDiagram, stateMachine, erDiagram, mindMap, and contextDiagram. All tests verify that mermaidOutput field is included in responses and contains expected Mermaid syntax patterns."
         },
         {
           "subtask_id": "4.3",
