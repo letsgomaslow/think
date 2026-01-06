@@ -242,8 +242,8 @@
           "file_paths": [
             "docs/tools/map.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Updated docs/tools/map.md with comprehensive Diagram Types section. Added table showing all 11 diagram types (flowchart, stateDiagram, conceptMap, treeDiagram, graph, sequenceDiagram, stateMachine, erDiagram, mindMap, contextDiagram, custom) with detailed when-to-use guidance. Highlighted the 5 new types with specific use cases: sequenceDiagram (component interactions), stateMachine (system behavior), erDiagram (data models), mindMap (brainstorming), contextDiagram (C4 system context). Also updated Quick Reference section to include all 11 types and added mermaidOutput parameter. Committed in 3b9b138."
         },
         {
           "subtask_id": "6.2",

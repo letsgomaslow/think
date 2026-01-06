@@ -203,6 +203,23 @@ Phase 5 Status: COMPLETED ✓
 - Demo data includes all 5 new diagram types
 - handleMap function properly returns mermaidOutput
 
+Phase 6: Documentation
+----------------------------------------
+✓ Subtask 6.1: Update map.md with new diagram types
+  - Updated Diagram Types section with comprehensive table showing all 11 types
+  - Added "When to Use" column with detailed guidance for each type
+  - Highlighted 5 new types with specific use cases:
+    * sequenceDiagram: Component interactions (API calls, protocol flows)
+    * stateMachine: System behavior (order lifecycle, authentication flow)
+    * erDiagram: Data models (database schemas with entities/attributes)
+    * mindMap: Brainstorming and ideation (feature planning, problem decomposition)
+    * contextDiagram: System context with C4 model (high-level system boundaries)
+  - Updated Quick Reference section to include all 11 diagram types
+  - Added mermaidOutput parameter to Quick Reference table
+  - File: docs/tools/map.md
+  - Commit: 3b9b138
+  - Status: COMPLETED
+
 Next Steps:
-- Phase 6: Documentation (8 subtasks)
+- Phase 6: Documentation (7 remaining subtasks)
 - Phase 7: Final Validation & Build (3 subtasks)
