@@ -3,7 +3,7 @@
   "title": "Extended Mental Models Library",
   "description": "Expand the model tool with 7 additional proven mental models: SWOT Analysis, Six Thinking Hats, MECE, Inversion Thinking, Second-Order Effects, Pre-Mortem Analysis, and 5 Whys root cause analysis.",
   "created_at": "2026-01-05",
-  "updated_at": "2026-01-06T07:02:15.431Z",
+  "updated_at": "2026-01-06T07:30:00.000Z",
   "status": "in_progress",
   "phases": [
     {
@@ -209,7 +209,7 @@
           "title": "Add Five Whys extended documentation",
           "description": "Add Five Whys to EXTENDED_MODELS with Toyota Production System style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Iterative root cause technique explained",
             "Manufacturing/process example",
