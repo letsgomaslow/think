@@ -29,10 +29,18 @@
 - 4 implementation steps: Strengths, Weaknesses, Opportunities, Threats
 - Code implemented in previous session (commit 8988367)
 
+#### Subtask 2.2: Add Six Thinking Hats to catalog ✓
+- Status: Completed (2026-01-06)
+- Six Thinking Hats model verified in web/lib/resources/models.ts (lines 133-151)
+- Proper structure with name, title, description
+- Description explains all 6 hat colors: White (facts), Red (emotions), Black (caution), Yellow (optimism), Green (creativity), Blue (process control)
+- 4 use cases: group problem-solving, decision-making with multiple perspectives, creative brainstorming, conflict resolution
+- 6 implementation steps: one for each hat explaining its specific perspective
+- Code implemented in previous session (commit 9099f5c)
+
 ### Next Steps
 - Phase 2: Continue Resource Catalog Updates
-  - Add remaining 6 mental models to web/lib/resources/models.ts
-  - Subtask 2.2: Six Thinking Hats
+  - Add remaining 5 mental models to web/lib/resources/models.ts
   - Subtask 2.3: MECE
   - Subtask 2.4: Inversion Thinking
   - Subtask 2.5: Second-Order Effects
