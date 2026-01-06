@@ -1,6 +1,6 @@
 # Build Progress: Extended Mental Models Library
 
-## Status: Phase 2 Completed
+## Status: Phase 3 In Progress (2/7 subtasks completed)
 
 ### Phase 1: Core Tool Schema Updates ✅
 - **Subtask 1.1**: Add new model names to MODEL_TOOL enum - COMPLETED
@@ -42,8 +42,22 @@
   - Already present in MENTAL_MODELS array (lines 221-237)
   - Mentions Toyota Production System, iterative questioning
 
-### Phase 3: Extended Model Documentation - PENDING
-Next steps: Add detailed documentation to web/lib/resources/extended/models.ts
+### Phase 3: Extended Model Documentation - IN PROGRESS
+- **Subtask 3.1**: Add SWOT Analysis extended documentation - COMPLETED
+  - Already present in EXTENDED_MODELS (lines 238-291)
+  - Includes complete structure with whenToUse, steps, example, and related models
+
+- **Subtask 3.2**: Add Six Thinking Hats extended documentation - COMPLETED
+  - Fully implemented in EXTENDED_MODELS (lines 292-365)
+  - All 6 hats explained: White (facts), Red (emotions), Black (risks), Yellow (benefits), Green (creativity), Blue (process)
+  - Comprehensive AI chatbot decision example with group problem-solving
+  - Related models linked: swot_analysis, pre_mortem, first_principles
+
+- **Subtask 3.3**: Add MECE extended documentation - PENDING
+- **Subtask 3.4**: Add Inversion Thinking extended documentation - PENDING
+- **Subtask 3.5**: Add Second-Order Effects extended documentation - PENDING
+- **Subtask 3.6**: Add Pre-Mortem extended documentation - PENDING
+- **Subtask 3.7**: Add Five Whys extended documentation - PENDING
 
 ### Phase 4: Unit Tests - PENDING
 Next steps: Add tests for all new models in modelServer.test.ts
