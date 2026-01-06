@@ -2119,4 +2119,272 @@ describe('DecideServer', () => {
       expect(output).toContain('May feel the absence during family gatherings');
     });
   });
+
+  describe('State Persistence', () => {
+    it('should persist multiple iterations for the same decision', () => {
+      const decisionId = 'persistent-decision-1';
+
+      // First iteration
+      server.processDecisionFramework({
+        ...validInput,
+        decisionId,
+        iteration: 0,
+        stage: 'problem-definition' as const,
+      });
+
+      // Second iteration
+      server.processDecisionFramework({
+        ...validInput,
+        decisionId,
+        iteration: 1,
+        stage: 'options-generation' as const,
+      });
+
+      // Third iteration
+      server.processDecisionFramework({
+        ...validInput,
+        decisionId,
+        iteration: 2,
+        stage: 'evaluation' as const,
+      });
+
+      const history = server.getDecisionHistory(decisionId);
+      expect(history).toHaveLength(3);
+      expect(history[0].iteration).toBe(0);
+      expect(history[1].iteration).toBe(1);
+      expect(history[2].iteration).toBe(2);
+    });
+
+    it('should maintain separate state for different decisions', () => {
+      const decision1 = 'decision-alpha';
+      const decision2 = 'decision-beta';
+
+      // Add iterations to decision 1
+      server.processDecisionFramework({
+        ...validInput,
+        decisionId: decision1,
+        iteration: 0,
+      });
+      server.processDecisionFramework({
+        ...validInput,
+        decisionId: decision1,
+        iteration: 1,
+      });
+
+      // Add iterations to decision 2
+      server.processDecisionFramework({
+        ...validInput,
+        decisionId: decision2,
+        iteration: 0,
+      });
+
+      const history1 = server.getDecisionHistory(decision1);
+      const history2 = server.getDecisionHistory(decision2);
+
+      expect(history1).toHaveLength(2);
+      expect(history2).toHaveLength(1);
+      expect(history1[0].decisionId).toBe(decision1);
+      expect(history2[0].decisionId).toBe(decision2);
+    });
+
+    it('should return empty array for non-existent decision', () => {
+      const history = server.getDecisionHistory('non-existent-decision');
+      expect(history).toEqual([]);
+    });
+
+    describe('getDecisionSummary', () => {
+      it('should track stage progression across iterations', () => {
+        const decisionId = 'stage-progression-test';
+
+        // Add iterations progressing through stages
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 0,
+          stage: 'problem-definition' as const,
+          analysisType: 'pros-cons' as const,
+          nextStageNeeded: true,
+        });
+
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 1,
+          stage: 'options-generation' as const,
+          analysisType: 'weighted-criteria' as const,
+          nextStageNeeded: true,
+        });
+
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 2,
+          stage: 'evaluation' as const,
+          analysisType: 'cost-benefit' as const,
+          nextStageNeeded: true,
+        });
+
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 3,
+          stage: 'decision' as const,
+          analysisType: 'risk-assessment' as const,
+          nextStageNeeded: false,
+        });
+
+        const summary = server.getDecisionSummary(decisionId);
+
+        expect(summary.decisionId).toBe(decisionId);
+        expect(summary.totalIterations).toBe(4);
+        expect(summary.stages).toContain('problem-definition');
+        expect(summary.stages).toContain('options-generation');
+        expect(summary.stages).toContain('evaluation');
+        expect(summary.stages).toContain('decision');
+        expect(summary.currentStage).toBe('decision');
+        expect(summary.currentAnalysisType).toBe('risk-assessment');
+        expect(summary.lastIteration).toBe(3);
+        expect(summary.nextStageNeeded).toBe(false);
+      });
+
+      it('should return null values for non-existent decision', () => {
+        const summary = server.getDecisionSummary('non-existent');
+
+        expect(summary.decisionId).toBe('non-existent');
+        expect(summary.totalIterations).toBe(0);
+        expect(summary.stages).toEqual([]);
+        expect(summary.currentStage).toBeNull();
+        expect(summary.currentAnalysisType).toBeNull();
+        expect(summary.lastIteration).toBeNull();
+        expect(summary.nextStageNeeded).toBeNull();
+      });
+
+      it('should track unique stages even with repeated stages', () => {
+        const decisionId = 'repeated-stages-test';
+
+        // Evaluation stage appears multiple times
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 0,
+          stage: 'evaluation' as const,
+        });
+
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 1,
+          stage: 'sensitivity-analysis' as const,
+        });
+
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 2,
+          stage: 'evaluation' as const,
+        });
+
+        const summary = server.getDecisionSummary(decisionId);
+        expect(summary.totalIterations).toBe(3);
+        expect(summary.stages).toHaveLength(2);
+        expect(summary.stages).toContain('evaluation');
+        expect(summary.stages).toContain('sensitivity-analysis');
+      });
+
+      it('should return current analysis type from latest iteration', () => {
+        const decisionId = 'analysis-type-test';
+
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 0,
+          analysisType: 'pros-cons' as const,
+        });
+
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 1,
+          analysisType: 'eisenhower-matrix' as const,
+        });
+
+        server.processDecisionFramework({
+          ...validInput,
+          decisionId,
+          iteration: 2,
+          analysisType: 'reversibility' as const,
+        });
+
+        const summary = server.getDecisionSummary(decisionId);
+        expect(summary.currentAnalysisType).toBe('reversibility');
+      });
+    });
+
+    it('should preserve all decision data in history', () => {
+      const decisionId = 'data-preservation-test';
+
+      const decisionData = {
+        ...validInput,
+        decisionId,
+        iteration: 0,
+        stage: 'evaluation' as const,
+        analysisType: 'cost-benefit' as const,
+        criteria: [
+          { name: 'Performance', weight: 0.4, description: 'System performance metrics' },
+          { name: 'Cost', weight: 0.6, description: 'Total cost of ownership' },
+        ],
+        stakeholders: ['Engineering Team', 'Product Manager'],
+        constraints: ['Must support 10k concurrent users', 'Budget under $50k'],
+        recommendation: 'Choose PostgreSQL',
+        rationale: 'Better performance for our use case',
+        nextStageNeeded: true,
+      };
+
+      server.processDecisionFramework(decisionData);
+
+      const history = server.getDecisionHistory(decisionId);
+      expect(history).toHaveLength(1);
+
+      const stored = history[0];
+      expect(stored.decisionStatement).toBe(decisionData.decisionStatement);
+      expect(stored.stage).toBe(decisionData.stage);
+      expect(stored.analysisType).toBe(decisionData.analysisType);
+      expect(stored.criteria).toEqual(decisionData.criteria);
+      expect(stored.stakeholders).toEqual(decisionData.stakeholders);
+      expect(stored.constraints).toEqual(decisionData.constraints);
+      expect(stored.recommendation).toBe(decisionData.recommendation);
+      expect(stored.rationale).toBe(decisionData.rationale);
+      expect(stored.nextStageNeeded).toBe(decisionData.nextStageNeeded);
+    });
+
+    it('should preserve complex analysis data across iterations', () => {
+      const decisionId = 'complex-data-test';
+
+      const eisenhowerData = {
+        decisionStatement: 'Prioritize tasks',
+        options: [
+          { id: 'task1', name: 'Critical Bug Fix', description: 'Fix production issue' },
+        ],
+        analysisType: 'eisenhower-matrix' as const,
+        stage: 'evaluation' as const,
+        decisionId,
+        iteration: 0,
+        nextStageNeeded: true,
+        eisenhowerClassification: [
+          {
+            optionId: 'task1',
+            urgency: 5,
+            importance: 5,
+            quadrant: 'do-first' as const,
+          },
+        ],
+      };
+
+      server.processDecisionFramework(eisenhowerData);
+
+      const history = server.getDecisionHistory(decisionId);
+      expect(history).toHaveLength(1);
+      expect(history[0].eisenhowerClassification).toEqual(eisenhowerData.eisenhowerClassification);
+    });
+  });
 });
