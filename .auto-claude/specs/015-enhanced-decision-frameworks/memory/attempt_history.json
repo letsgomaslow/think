@@ -1,131 +1,119 @@
 {
   "subtasks": {
-    "1.1": {
+    "3.3": {
+      "attempts": [
+        {
+          "session": 1,
+          "timestamp": "2026-01-06T02:02:23.969002",
+          "approach": "Implemented: Add costBenefitAnalysis property with costs array (item, amount, type), benefits array, discount rat",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.4": {
       "attempts": [
         {
           "session": 2,
-          "timestamp": "2026-01-05T22:42:04.419296",
-          "approach": "Implemented: Extend the analysisType enum in src/models/interfaces.ts to include: 'eisenhower-matrix', 'cost-bene",
+          "timestamp": "2026-01-06T02:04:08.881181",
+          "approach": "Implemented: Add riskAssessment property with risks array containing probability (0-1), impact (1-10), category, ",
           "success": true,
           "error": null
         }
       ],
       "status": "completed"
     },
-    "1.2": {
+    "3.5": {
       "attempts": [
         {
           "session": 3,
-          "timestamp": "2026-01-05T22:43:24.717747",
-          "approach": "Implemented: Add EisenhowerQuadrant type and EisenhowerClassification interface with urgency/importance ratings f",
+          "timestamp": "2026-01-06T02:06:06.794416",
+          "approach": "Implemented: Add reversibilityAnalysis property with reversibilityScore (0-1), undoCost, timeToReverse, and doorT",
           "success": true,
           "error": null
         }
       ],
       "status": "completed"
     },
-    "1.3": {
+    "3.6": {
       "attempts": [
         {
           "session": 4,
-          "timestamp": "2026-01-05T22:44:32.414664",
-          "approach": "Implemented: Add CostBenefitItem interface with quantified monetary/non-monetary costs and benefits, net value ca",
+          "timestamp": "2026-01-06T02:08:24.504274",
+          "approach": "Implemented: Add regretAnalysis property with timeHorizons (10min, 10months, 10years), projectedRegrets, and futu",
           "success": true,
           "error": null
         }
       ],
       "status": "completed"
     },
-    "1.4": {
+    "3.7": {
       "attempts": [
         {
           "session": 5,
-          "timestamp": "2026-01-05T22:46:02.406607",
-          "approach": "Implemented: Add RiskItem interface with probability, impact, risk score (probability x impact), and mitigation s",
+          "timestamp": "2026-01-06T02:10:05.646198",
+          "approach": "Implemented: Expand DECIDE_TOOL description to document when each of the 10 frameworks is most appropriate with u",
           "success": true,
           "error": null
         }
       ],
       "status": "completed"
     },
-    "1.5": {
+    "4.1": {
       "attempts": [
         {
           "session": 6,
-          "timestamp": "2026-01-05T22:47:20.407165",
-          "approach": "Implemented: Add ReversibilityData interface with reversibility score, undo cost, time to reverse, and one-way/tw",
+          "timestamp": "2026-01-06T02:12:31.140278",
+          "approach": "Implemented: Add tests for Eisenhower Matrix with task prioritization scenarios - verify 4 quadrant classificatio",
           "success": true,
           "error": null
         }
       ],
       "status": "completed"
     },
-    "1.6": {
+    "4.2": {
       "attempts": [
         {
           "session": 7,
-          "timestamp": "2026-01-05T22:49:05.353381",
-          "approach": "Implemented: Add RegretMinimizationData interface with future self perspective, potential regrets at 10 min/10 mo",
+          "timestamp": "2026-01-06T02:15:02.570349",
+          "approach": "Implemented: Add tests for CBA with quantitative inputs - verify cost/benefit calculations, NPV, and ROI computat",
           "success": true,
           "error": null
         }
       ],
       "status": "completed"
     },
-    "2.1": {
+    "4.3": {
       "attempts": [
         {
           "session": 8,
-          "timestamp": "2026-01-05T22:51:17.928154",
-          "approach": "Implemented: Add formatEisenhowerMatrix method to DecideServer that displays 4 quadrants: Do First (urgent+import",
+          "timestamp": "2026-01-06T02:18:09.971317",
+          "approach": "Implemented: Add tests for risk assessment - verify probability x impact scoring and risk level categorization",
           "success": true,
           "error": null
         }
       ],
       "status": "completed"
     },
-    "2.2": {
+    "4.4": {
       "attempts": [
         {
           "session": 9,
-          "timestamp": "2026-01-05T22:53:00.499950",
-          "approach": "Implemented: Add formatCostBenefitAnalysis method with quantified costs, benefits, NPV calculations, ROI display,",
+          "timestamp": "2026-01-06T02:21:25.061743",
+          "approach": "Implemented: Add tests for reversibility with one-way and two-way door decision scenarios",
           "success": true,
           "error": null
         }
       ],
       "status": "completed"
     },
-    "2.3": {
+    "4.5": {
       "attempts": [
         {
           "session": 10,
-          "timestamp": "2026-01-05T22:54:57.805467",
-          "approach": "Implemented: Add formatRiskAssessment method displaying probability x impact matrix with color-coded risk levels ",
-          "success": true,
-          "error": null
-        }
-      ],
-      "status": "completed"
-    },
-    "2.4": {
-      "attempts": [
-        {
-          "session": 11,
-          "timestamp": "2026-01-05T22:57:24.669990",
-          "approach": "Implemented: Add formatReversibilityAnalysis method showing one-way/two-way door classification, undo costs, and ",
-          "success": true,
-          "error": null
-        }
-      ],
-      "status": "completed"
-    },
-    "2.5": {
-      "attempts": [
-        {
-          "session": 12,
-          "timestamp": "2026-01-05T22:59:46.421808",
-          "approach": "Implemented: Add formatRegretMinimization method showing 10/10/10 analysis (10 min, 10 months, 10 years) and proj",
+          "timestamp": "2026-01-06T02:24:46.347042",
+          "approach": "Implemented: Add tests for regret minimization with future perspective scenarios and 10/10/10 analysis",
           "success": true,
           "error": null
         }
@@ -135,7 +123,7 @@
   },
   "stuck_subtasks": [],
   "metadata": {
-    "created_at": "2026-01-05T22:38:22.452619",
-    "last_updated": "2026-01-05T22:59:46.421827"
+    "created_at": "2026-01-06T02:00:39.635918",
+    "last_updated": "2026-01-06T02:24:46.347063"
   }
 }

@@ -3,13 +3,13 @@
   "spec": "015-enhanced-decision-frameworks",
   "state": "building",
   "subtasks": {
-    "completed": 11,
+    "completed": 24,
     "total": 29,
     "in_progress": 1,
     "failed": 0
   },
   "phase": {
-    "current": "DecideServer Implementation",
+    "current": "Testing",
     "id": null,
     "total": 6
   },
@@ -18,8 +18,8 @@
     "max": 1
   },
   "session": {
-    "number": 13,
-    "started_at": "2026-01-05T22:38:22.452927"
+    "number": 11,
+    "started_at": "2026-01-06T02:00:39.636455"
   },
-  "last_update": "2026-01-05T22:59:54.244479"
+  "last_update": "2026-01-06T02:24:52.472578"
 }
