@@ -458,6 +458,11 @@ It supports multiple decision frameworks, probability estimates, and value judgm
                     "decision-tree",
                     "expected-value",
                     "scenario-analysis",
+                    "eisenhower-matrix",
+                    "cost-benefit",
+                    "risk-assessment",
+                    "reversibility",
+                    "regret-minimization",
                 ],
             },
             stage: {
