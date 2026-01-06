@@ -239,5 +239,93 @@ Acceptance criteria met:
 ✓ Business analysis example (Retail revenue decline consulting case)
 ✓ Related models linked
 
+**Subtask 3.4: Add Inversion Thinking extended documentation**
+**Status: COMPLETE**
+**Commit: c6c377f**
+
+Successfully added Inversion Thinking to EXTENDED_MODELS in web/lib/resources/extended/models.ts (lines 434-503):
+
+✓ Complete ExtendedModel structure with all required fields:
+  - name: 'inversion_thinking'
+  - title: 'Inversion Thinking'
+  - description: Approach problems by inverting them - instead of asking how to succeed, ask how to fail, then avoid those things
+
+✓ whenToUse: 5 scenarios including:
+  - When direct problem-solving approaches aren't working
+  - When you want to identify and avoid critical mistakes
+  - When planning complex projects with many failure modes
+  - When "what could go wrong?" is more valuable than "what could go right?"
+  - When you need to stress-test a strategy or decision
+
+✓ steps: 6 detailed steps explaining the inversion approach:
+  - State your goal clearly (what you want to achieve)
+  - Invert the problem: Ask "What would guarantee failure?" or "How could this go terribly wrong?"
+  - List all the ways to fail comprehensively - be specific and ruthless
+  - For each failure mode, identify the root cause or behavior that creates it
+  - Create strategies to avoid each failure mode - these become your success factors
+  - Focus on NOT doing the stupid things rather than trying to be brilliant
+
+✓ Charlie Munger-style investment example:
+  - Context: Building a successful investment portfolio
+  - Application: Instead of asking "How do I pick winning stocks?", inverts to "How do I guarantee I'll lose money?"
+  - Lists 8 specific ways to guarantee investment failure with corresponding avoidance strategies
+  - Includes iconic Munger quote: "It is remarkable how much long-term advantage people like us have gotten by trying to be consistently not stupid, instead of trying to be very intelligent."
+  - Extends to general life/career application showing the universality of the mental model
+  - Practical wisdom: Don't need to be genius - just avoid stupid mistakes consistently
+
+✓ relatedModels: ['pre_mortem', 'second_order_effects', 'first_principles']
+
+✓ toolParameters: Proper structure following established pattern
+
+Acceptance criteria met:
+✓ Inversion concept clearly explained (Focus on avoiding failure rather than chasing success)
+✓ Practical avoidance example (Charlie Munger investment philosophy with 8 failure modes)
+✓ Related models linked
+
+**Subtask 3.5: Add Second-Order Effects extended documentation**
+**Status: COMPLETE**
+**Commit: 376f46b**
+
+Successfully added Second-Order Effects to EXTENDED_MODELS in web/lib/resources/extended/models.ts (lines 504-571):
+
+✓ Complete ExtendedModel structure with all required fields:
+  - name: 'second_order_effects'
+  - title: 'Second-Order Effects'
+  - description: Think beyond immediate consequences to understand the chain of effects - what happens after what happens
+
+✓ whenToUse: 5 scenarios including:
+  - When making policy decisions or strategic changes with broad impact
+  - When evaluating solutions that might have unintended consequences
+  - When thinking through complex systems with interconnected parts
+  - When the obvious first-order solution might create worse problems
+  - When you need to anticipate long-term ripple effects of decisions
+
+✓ steps: 6 detailed steps explaining consequence chains:
+  - Identify the action or decision being considered
+  - Map First-Order Effects (immediate, direct consequences)
+  - Map Second-Order Effects (consequences of consequences - system reactions)
+  - Map Third-Order Effects (ripple effects continue through the system)
+  - Identify feedback loops (amplifying or dampening mechanisms)
+  - Evaluate net impact (full cascade, not just initial effect)
+
+✓ Systems thinking example (rent control policy):
+  - Context: City government considering rent control for housing affordability
+  - Demonstrates First-Order Effects: Immediate tenant savings and predictable costs
+  - Demonstrates Second-Order Effects: Reduced maintenance, construction drops, conversions to condos, reduced mobility, black markets
+  - Demonstrates Third-Order Effects: Housing shortage intensifies, prices skyrocket, economic growth slows, inequality increases
+  - Shows how "obvious" solution creates worse version of original problem through cascading unintended consequences
+  - Includes real-world evidence from San Francisco, New York, Stockholm
+  - Provides alternative approaches considering second-order effects
+  - Key lesson: "Always ask 'And then what happens?' Systems push back."
+
+✓ relatedModels: ['inversion_thinking', 'swot_analysis', 'pre_mortem']
+
+✓ toolParameters: Proper structure following established pattern
+
+Acceptance criteria met:
+✓ First, second, third order effects explained (Steps 2, 3, 4 with clear definitions and guidance)
+✓ Unintended consequences example (Rent control policy demonstrating cascading system effects)
+✓ Related models linked
+
 **Next Steps:**
-- Continue with Subtask 3.4: Add Inversion Thinking extended documentation
+- Continue with Subtask 3.6: Add Pre-Mortem Analysis extended documentation
