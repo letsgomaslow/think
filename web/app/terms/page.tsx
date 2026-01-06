@@ -126,8 +126,8 @@ export default function TermsPage() {
                 For questions about these Terms, contact us at:
               </p>
               <p className="text-[hsl(var(--brand-primary))]">
-                <a href="mailto:hello@maslowai.com" className="hover:underline">
-                  hello@maslowai.com
+                <a href="mailto:rakesh@maslow.ai" className="hover:underline">
+                  rakesh@maslow.ai
                 </a>
               </p>
             </section>
