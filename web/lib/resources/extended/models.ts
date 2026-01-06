@@ -501,6 +501,74 @@ Now avoid those things. You don't need to be the most talented person - just be 
       steps: ['Invert the problem', 'List failure modes', 'Identify avoidance strategies'],
     },
   },
+  second_order_effects: {
+    name: 'second_order_effects',
+    title: 'Second-Order Effects',
+    description: 'Think beyond immediate consequences to understand the chain of effects - what happens after what happens. Consider how actions ripple through systems.',
+    whenToUse: [
+      'When making policy decisions or strategic changes with broad impact',
+      'When evaluating solutions that might have unintended consequences',
+      'When thinking through complex systems with interconnected parts',
+      'When the obvious first-order solution might create worse problems',
+      'When you need to anticipate long-term ripple effects of decisions',
+    ],
+    steps: [
+      'Identify the action or decision being considered (the intervention)',
+      'Map First-Order Effects: What are the immediate, direct consequences? These are usually obvious and intended.',
+      'Map Second-Order Effects: What are the consequences of those consequences? How will people and systems react to the first-order changes?',
+      'Map Third-Order Effects (and beyond): Continue the chain - what happens as the ripples spread further through the system?',
+      'Identify feedback loops: Do any effects amplify or dampen each other? Are there reinforcing cycles or balancing mechanisms?',
+      'Evaluate net impact: Consider the full cascade, not just the initial effect. Are second/third-order effects better or worse than the problem you\'re solving?',
+    ],
+    example: {
+      context: 'A city government considering rent control to make housing affordable',
+      application: `Problem: Rising rents are making the city unaffordable for middle-class families.
+
+Proposed Solution: Implement rent control - cap annual rent increases at 3%.
+
+First-Order Effects (immediate, obvious):
+✓ Existing tenants save money - rents increase more slowly
+✓ Renters have more predictable housing costs
+✓ Political win - constituents happy with immediate relief
+
+Second-Order Effects (consequences of consequences):
+⚠ Landlords reduce property maintenance (lower ROI means less reinvestment)
+⚠ New apartment construction drops sharply (developers can't justify investment with capped returns)
+⚠ Landlords convert rentals to condos or short-term vacation rentals to escape rent control
+⚠ Fewer people move (giving up a rent-controlled unit is too costly), reducing labor mobility
+⚠ Black market emerges: "key money" under-the-table payments to get rent-controlled units
+⚠ Screening becomes more aggressive - landlords only accept "perfect" tenants, discriminating against risky applicants
+
+Third-Order Effects (ripple effects continue):
+❌ Housing supply shrinks over 5-10 years (construction down, conversions up)
+❌ Housing shortage intensifies, making it harder for newcomers to find ANY apartment
+❌ Prices for non-controlled units skyrocket (limited supply, high demand)
+❌ The city becomes MORE unaffordable for anyone not already in a rent-controlled unit
+❌ Economic growth slows as workers can't relocate to the city for new jobs
+❌ Inequality increases: Those with rent-controlled apartments (incumbents) vs. those without (newcomers)
+
+System-Level Insight:
+The first-order effect (lower rent increases) solves the immediate problem for current tenants. But second and third-order effects create a worse version of the original problem: less housing supply, higher prices for new renters, reduced mobility, and entrenched inequality.
+
+Real-world evidence: This exact pattern has played out in San Francisco, New York, and Stockholm, where rent control led to housing shortages, reduced construction, and paradoxically higher market-rate rents.
+
+Alternative approach considering second-order effects:
+Instead of rent control (which reduces supply), increase supply through:
+- Upzoning and reducing building restrictions
+- Streamlining permit processes
+- Incentivizing mixed-income developments
+
+These interventions have positive second-order effects: more construction → more housing supply → lower prices through market forces → more people can afford to live in the city.
+
+Key lesson: Always ask "And then what happens?" The most obvious solution often triggers reactions that undermine the original goal. Systems push back.`,
+    },
+    relatedModels: ['inversion_thinking', 'swot_analysis', 'pre_mortem'],
+    toolParameters: {
+      modelName: 'second_order_effects',
+      problem: 'Your decision or policy requiring consequence analysis',
+      steps: ['First-order effects', 'Second-order effects', 'Third-order effects', 'Feedback loops', 'Net impact evaluation'],
+    },
+  },
 };
 
 /**
