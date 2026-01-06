@@ -1,4 +1,4 @@
-import { VisualOperationData } from '../models/interfaces.js';
+import { VisualOperationData, VisualElement } from '../models/interfaces.js';
 import chalk from 'chalk';
 
 export class MapServer {
@@ -94,6 +94,109 @@ export class MapServer {
       this.diagrams[diagramId] = [];
     }
     this.diagrams[diagramId].push(data);
+  }
+
+  /**
+   * Get the complete history of operations for a diagram
+   * @param diagramId - The unique identifier for the diagram
+   * @returns Array of all operations for the diagram
+   */
+  public getDiagramHistory(diagramId: string): VisualOperationData[] {
+    return this.diagrams[diagramId] || [];
+  }
+
+  /**
+   * Get the current state of all elements in a diagram
+   * Aggregates operations (create/update/delete) to build current element state
+   * @param diagramId - The unique identifier for the diagram
+   * @returns Current state with elements, diagram type, and total operations
+   */
+  public getCurrentDiagramState(diagramId: string): {
+    diagramId: string;
+    diagramType: string | null;
+    totalOperations: number;
+    elements: Record<string, VisualElement>;
+    lastOperation: string | null;
+    lastIteration: number | null;
+  } {
+    const history = this.diagrams[diagramId] || [];
+
+    if (history.length === 0) {
+      return {
+        diagramId,
+        diagramType: null,
+        totalOperations: 0,
+        elements: {},
+        lastOperation: null,
+        lastIteration: null
+      };
+    }
+
+    // Build current element state by processing operations in order
+    const elements: Record<string, VisualElement> = {};
+    let diagramType: string | null = null;
+    let lastOperation: string | null = null;
+    let lastIteration: number | null = null;
+
+    history.forEach(operation => {
+      // Track diagram type (should be consistent across operations)
+      if (!diagramType) {
+        diagramType = operation.diagramType;
+      }
+
+      lastOperation = operation.operation;
+      lastIteration = operation.iteration;
+
+      // Process elements based on operation type
+      if (operation.elements && operation.elements.length > 0) {
+        operation.elements.forEach(element => {
+          if (operation.operation === 'create') {
+            // Create new element
+            elements[element.id] = { ...element };
+          } else if (operation.operation === 'update') {
+            // Update existing element (merge properties)
+            if (elements[element.id]) {
+              elements[element.id] = {
+                ...elements[element.id],
+                ...element,
+                properties: {
+                  ...elements[element.id].properties,
+                  ...element.properties
+                }
+              };
+            } else {
+              // If element doesn't exist, treat update as create
+              elements[element.id] = { ...element };
+            }
+          } else if (operation.operation === 'delete') {
+            // Delete element
+            delete elements[element.id];
+          } else if (operation.operation === 'transform') {
+            // Transform updates existing elements
+            if (elements[element.id]) {
+              elements[element.id] = {
+                ...elements[element.id],
+                ...element,
+                properties: {
+                  ...elements[element.id].properties,
+                  ...element.properties
+                }
+              };
+            }
+          }
+          // 'observe' operation doesn't change element state
+        });
+      }
+    });
+
+    return {
+      diagramId,
+      diagramType,
+      totalOperations: history.length,
+      elements,
+      lastOperation,
+      lastIteration
+    };
   }
 
   public processVisualReasoning(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
