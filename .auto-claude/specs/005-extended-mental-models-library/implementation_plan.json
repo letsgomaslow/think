@@ -50,84 +50,98 @@
           "title": "Add SWOT Analysis to catalog",
           "description": "Add SWOT Analysis mental model with name, title, description, useCases, and steps to MENTAL_MODELS array",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "SWOT model defined with proper structure",
             "Includes 4+ use cases",
             "Includes 4+ implementation steps"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:30:00.000Z",
+          "notes": "SWOT Analysis model already present in MENTAL_MODELS array (lines 117-132) with name, title, description, 4 use cases (strategic planning, competitive analysis, project planning, personal development), and 4 steps (identify Strengths, Weaknesses, Opportunities, Threats). All acceptance criteria met."
         },
         {
           "subtask_id": "2.2",
           "title": "Add Six Thinking Hats to catalog",
           "description": "Add Six Thinking Hats (De Bono) mental model with all hat colors explained",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Six Hats model defined with proper structure",
             "Description explains all 6 hat colors",
             "Includes creative problem-solving use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:30:00.000Z",
+          "notes": "Six Thinking Hats model already present in MENTAL_MODELS array (lines 134-151) with all 6 hat colors explained in description and steps (White-facts, Red-emotions, Black-caution, Yellow-optimism, Green-creativity, Blue-process). Includes creative problem-solving use cases."
         },
         {
           "subtask_id": "2.3",
           "title": "Add MECE to catalog",
           "description": "Add MECE (Mutually Exclusive Collectively Exhaustive) mental model for comprehensive analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "MECE model defined with proper structure",
             "Clear explanation of ME and CE concepts",
             "Includes analytical use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:30:00.000Z",
+          "notes": "MECE model already present in MENTAL_MODELS array (lines 153-168) with clear explanation of Mutually Exclusive and Collectively Exhaustive concepts in description and steps. Includes analytical use cases like structuring complex problems and organizing data."
         },
         {
           "subtask_id": "2.4",
           "title": "Add Inversion Thinking to catalog",
           "description": "Add Inversion Thinking mental model for reverse problem-solving",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Inversion model defined with proper structure",
             "Explains working backwards from failure",
             "Includes risk identification use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:30:00.000Z",
+          "notes": "Inversion Thinking model already present in MENTAL_MODELS array (lines 170-185) with explanation of working backwards from failure. Mentions Charlie Munger. Includes risk identification and failure prevention use cases."
         },
         {
           "subtask_id": "2.5",
           "title": "Add Second-Order Effects to catalog",
           "description": "Add Second-Order Effects mental model for consequence chain analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Second-Order model defined with proper structure",
             "Explains cascading effects concept",
             "Includes strategic planning use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:30:00.000Z",
+          "notes": "Second-Order Effects model already present in MENTAL_MODELS array (lines 187-202) with clear explanation of cascading consequences (first, second, third-order effects). Includes strategic planning and systems thinking use cases."
         },
         {
           "subtask_id": "2.6",
           "title": "Add Pre-Mortem Analysis to catalog",
           "description": "Add Pre-Mortem Analysis mental model for prospective failure analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Pre-Mortem model defined with proper structure",
             "Explains prospective hindsight concept",
             "Includes project management use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:30:00.000Z",
+          "notes": "Pre-Mortem model already present in MENTAL_MODELS array (lines 204-219) with explanation of prospective hindsight technique (imagining future failure). Includes project planning and risk identification use cases."
         },
         {
           "subtask_id": "2.7",
           "title": "Add Five Whys to catalog",
           "description": "Add Five Whys mental model for root cause analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Five Whys model defined with proper structure",
             "Explains iterative questioning technique",
             "Includes debugging and quality use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:30:00.000Z",
+          "notes": "Five Whys model already present in MENTAL_MODELS array (lines 221-237) with explanation of iterative questioning technique (asking why 5 times). Mentions Toyota Production System. Includes debugging, quality control, and root cause analysis use cases."
         }
       ]
     },
