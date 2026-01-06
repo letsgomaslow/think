@@ -66,48 +66,48 @@
           "title": "Implement Sequence Diagram generation",
           "description": "Generate Mermaid sequenceDiagram syntax. Nodes become participants, edges become messages with arrow notation (->>, -->>). Support message labels and activation/deactivation.",
           "file_paths": ["src/tools/mermaidGenerator.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented in MermaidGenerator.generateSequenceDiagram() - converts nodes to participants and edges to messages with configurable arrow types"
         },
         {
           "subtask_id": "2.3",
           "title": "Implement State Machine Diagram generation",
           "description": "Generate Mermaid stateDiagram-v2 syntax. Nodes become states, edges become transitions. Support [*] for start/end states, state descriptions, and composite states via containers.",
           "file_paths": ["src/tools/mermaidGenerator.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented in MermaidGenerator.generateStateMachine() - supports start/end states via isStart/isEnd properties and labeled transitions"
         },
         {
           "subtask_id": "2.4",
           "title": "Implement Entity-Relationship Diagram generation",
           "description": "Generate Mermaid erDiagram syntax. Nodes with entity type become entities with attributes from properties. Edges become relationships with cardinality (||--o{, etc.).",
           "file_paths": ["src/tools/mermaidGenerator.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented in MermaidGenerator.generateERDiagram() - converts nodes to entities with attributes array and edges to relationships with cardinality"
         },
         {
           "subtask_id": "2.5",
           "title": "Implement Mind Map generation",
           "description": "Generate Mermaid mindmap syntax. Root node at center, child nodes branch out. Support multiple levels via contains relationships. Use shapes like ((), [], ()) for different node types.",
           "file_paths": ["src/tools/mermaidGenerator.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented in MermaidGenerator.generateMindMap() - builds hierarchical structure using contains relationships with support for circle, square, and cloud shapes"
         },
         {
           "subtask_id": "2.6",
           "title": "Implement System Context Diagram generation",
           "description": "Generate Mermaid C4Context syntax from C4 model. Nodes become Person, System, or SystemDb based on type property. Edges become Rel() calls with descriptions.",
           "file_paths": ["src/tools/mermaidGenerator.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented in MermaidGenerator.generateContextDiagram() - supports Person, System, SystemDb, System_Ext node types and Rel() relationships"
         },
         {
           "subtask_id": "2.7",
           "title": "Add Mermaid generation for existing diagram types",
           "description": "Implement Mermaid generation for the 6 existing types: graph (graph TD), flowchart (flowchart LR), stateDiagram (stateDiagram-v2), conceptMap (graph LR), treeDiagram (graph TD), custom (graph LR).",
           "file_paths": ["src/tools/mermaidGenerator.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented methods for all 6 existing types - graph, flowchart, stateDiagram, conceptMap, treeDiagram, custom - with appropriate Mermaid syntax and node shapes"
         }
       ]
     },
