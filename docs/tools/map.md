@@ -533,6 +533,120 @@ mindmap
 
 ---
 
+### Scenario 8: E-Commerce System Context (C4 Context Diagram)
+
+**Context**: Documenting the high-level system architecture to understand external actors, internal systems, and dependencies using the C4 model's System Context level.
+
+**Input**:
+```json
+{
+  "operation": "create",
+  "diagramId": "ecommerce-context",
+  "diagramType": "contextDiagram",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elements": [
+    {"id": "customer", "type": "node", "label": "Customer", "properties": {"nodeType": "Person", "description": "End user who browses and purchases products"}},
+    {"id": "admin", "type": "node", "label": "Admin", "properties": {"nodeType": "Person", "description": "Staff managing inventory and orders"}},
+    {"id": "ecommerce", "type": "node", "label": "E-Commerce Platform", "properties": {"nodeType": "System", "description": "Online shopping platform with cart, checkout, and order management"}},
+    {"id": "inventory", "type": "node", "label": "Inventory Service", "properties": {"nodeType": "System", "description": "Manages product catalog and stock levels"}},
+    {"id": "payment", "type": "node", "label": "Payment Gateway", "properties": {"nodeType": "System_Ext", "description": "External payment processor (Stripe/PayPal)"}},
+    {"id": "shipping", "type": "node", "label": "Shipping Provider", "properties": {"nodeType": "System_Ext", "description": "External logistics service (FedEx/UPS)"}},
+    {"id": "email", "type": "node", "label": "Email Service", "properties": {"nodeType": "System_Ext", "description": "Transactional email provider (SendGrid)"}},
+    {"id": "rel-1", "type": "edge", "source": "customer", "target": "ecommerce", "label": "Browses products, places orders", "properties": {"technology": "HTTPS/REST"}},
+    {"id": "rel-2", "type": "edge", "source": "admin", "target": "ecommerce", "label": "Manages products, views orders", "properties": {"technology": "HTTPS/Admin Portal"}},
+    {"id": "rel-3", "type": "edge", "source": "ecommerce", "target": "inventory", "label": "Checks stock, reserves items", "properties": {"technology": "gRPC"}},
+    {"id": "rel-4", "type": "edge", "source": "ecommerce", "target": "payment", "label": "Processes payments", "properties": {"technology": "HTTPS/REST API"}},
+    {"id": "rel-5", "type": "edge", "source": "ecommerce", "target": "shipping", "label": "Creates shipping labels", "properties": {"technology": "HTTPS/REST API"}},
+    {"id": "rel-6", "type": "edge", "source": "ecommerce", "target": "email", "label": "Sends order confirmations", "properties": {"technology": "SMTP/API"}}
+  ],
+  "observation": "The system has 2 user types, 2 internal systems, and 3 external dependencies - payment, shipping, and email services"
+}
+```
+
+**Output**:
+```json
+{
+  "operation": "create",
+  "diagramId": "ecommerce-context",
+  "diagramType": "contextDiagram",
+  "iteration": 1,
+  "nextOperationNeeded": false,
+  "elementCount": 13,
+  "status": "success",
+  "mermaidOutput": "C4Context\n    title System Context diagram for E-Commerce Platform\n\n    Person(customer, \"Customer\", \"End user who browses and purchases products\")\n    Person(admin, \"Admin\", \"Staff managing inventory and orders\")\n    System(ecommerce, \"E-Commerce Platform\", \"Online shopping platform with cart, checkout, and order management\")\n    System(inventory, \"Inventory Service\", \"Manages product catalog and stock levels\")\n    System_Ext(payment, \"Payment Gateway\", \"External payment processor (Stripe/PayPal)\")\n    System_Ext(shipping, \"Shipping Provider\", \"External logistics service (FedEx/UPS)\")\n    System_Ext(email, \"Email Service\", \"Transactional email provider (SendGrid)\")\n\n    Rel(customer, ecommerce, \"Browses products, places orders\", \"HTTPS/REST\")\n    Rel(admin, ecommerce, \"Manages products, views orders\", \"HTTPS/Admin Portal\")\n    Rel(ecommerce, inventory, \"Checks stock, reserves items\", \"gRPC\")\n    Rel(ecommerce, payment, \"Processes payments\", \"HTTPS/REST API\")\n    Rel(ecommerce, shipping, \"Creates shipping labels\", \"HTTPS/REST API\")\n    Rel(ecommerce, email, \"Sends order confirmations\", \"SMTP/API\")"
+}
+```
+
+**Mermaid Diagram**:
+```mermaid
+C4Context
+    title System Context diagram for E-Commerce Platform
+
+    Person(customer, "Customer", "End user who browses and purchases products")
+    Person(admin, "Admin", "Staff managing inventory and orders")
+    System(ecommerce, "E-Commerce Platform", "Online shopping platform with cart, checkout, and order management")
+    System(inventory, "Inventory Service", "Manages product catalog and stock levels")
+    System_Ext(payment, "Payment Gateway", "External payment processor (Stripe/PayPal)")
+    System_Ext(shipping, "Shipping Provider", "External logistics service (FedEx/UPS)")
+    System_Ext(email, "Email Service", "Transactional email provider (SendGrid)")
+
+    Rel(customer, ecommerce, "Browses products, places orders", "HTTPS/REST")
+    Rel(admin, ecommerce, "Manages products, views orders", "HTTPS/Admin Portal")
+    Rel(ecommerce, inventory, "Checks stock, reserves items", "gRPC")
+    Rel(ecommerce, payment, "Processes payments", "HTTPS/REST API")
+    Rel(ecommerce, shipping, "Creates shipping labels", "HTTPS/REST API")
+    Rel(ecommerce, email, "Sends order confirmations", "SMTP/API")
+```
+
+**What This Means**:
+- **C4 Context Level**: This diagram shows the system boundary and external interactions using the C4 model convention
+- **Node Types**:
+  - `Person`: External actors (Customer, Admin) who interact with the system
+  - `System`: Internal software systems under your control (E-Commerce Platform, Inventory Service)
+  - `System_Ext`: External systems/services you depend on but don't control (Payment, Shipping, Email)
+- **System Boundary**: The `System` nodes (E-Commerce Platform, Inventory Service) represent what your team builds and maintains
+- **External Dependencies**: Three critical external dependencies:
+  - **Payment Gateway** - Financial transactions (vendor lock-in risk)
+  - **Shipping Provider** - Physical logistics (operational dependency)
+  - **Email Service** - Customer communications (deliverability dependency)
+- **Relationships (Rel)**:
+  - Each `Rel()` shows the interaction between components with a description and technology
+  - Technology parameter reveals the integration method (REST API, gRPC, SMTP)
+- **Actor Insights**:
+  - **Customer**: Single entry point to the E-Commerce Platform - no direct access to internal systems
+  - **Admin**: Uses separate portal/interface - suggests role-based access control
+- **Integration Patterns**:
+  - Internal communication uses gRPC (ecommerce → inventory) - high performance needed
+  - External APIs all use HTTPS/REST - standard integration pattern
+  - Email uses SMTP/API - transactional messaging pattern
+
+**Dependency Analysis**:
+- **Critical Path**: Customer → E-Commerce → Payment is the revenue-generating flow - must be highly available
+- **Failure Modes**:
+  - If Payment Gateway is down → cannot process orders (need fallback provider?)
+  - If Shipping Provider is down → cannot fulfill orders (need multi-carrier support?)
+  - If Email Service is down → silent failures (need retry queue and monitoring)
+- **Vendor Lock-in**: All three external systems are vendor-specific - consider abstraction layers for easier migration
+- **Data Flow**: The diagram reveals that customer data flows to three external parties (Payment, Shipping, Email) - compliance implications for GDPR, PCI-DSS
+
+**Architecture Decisions**:
+- **Microservices**: E-Commerce Platform and Inventory Service are separate systems - suggests service-oriented architecture
+- **Technology Choices**: gRPC for internal, REST for external - indicates performance optimization for internal calls
+- **Security Boundaries**: Admin has different access path - likely separate authentication/authorization mechanism
+
+**Scaling Considerations**:
+- External systems (Payment, Shipping, Email) have their own rate limits and SLAs - need circuit breakers
+- Inventory Service is separate from E-Commerce Platform - can scale independently based on read/write patterns
+- No database shown at this level - Context diagrams focus on system boundaries, not implementation details
+
+**Next Steps with C4**:
+- **Container Diagram**: Drill down into E-Commerce Platform to show web app, API, database
+- **Component Diagram**: Detail the internal structure of critical containers
+- **Code Diagram**: Show class/module relationships for specific components
+
+---
+
 ## User Experience
 
 Map produces visual structure records:
