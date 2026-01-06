@@ -117,6 +117,79 @@ export class ReflectServer {
     this.monitoringSessions[data.monitoringId].push(data);
   }
 
+  /**
+   * Get the full history of assessments for a monitoring session
+   * @param monitoringId - The unique identifier for the monitoring session
+   * @returns Array of all MetacognitiveMonitoringData entries for this session
+   */
+  public getMonitoringHistory(monitoringId: string): MetacognitiveMonitoringData[] {
+    return this.monitoringSessions[monitoringId] || [];
+  }
+
+  /**
+   * Get confidence progression over time for a monitoring session
+   * @param monitoringId - The unique identifier for the monitoring session
+   * @returns Array showing how confidence changed across iterations
+   */
+  public getConfidenceProgression(monitoringId: string): {
+    monitoringId: string;
+    totalAssessments: number;
+    confidenceChanges: Array<{
+      iteration: number;
+      stage: string;
+      overallConfidence: number;
+    }>;
+    averageConfidence: number | null;
+    confidenceTrend: 'increasing' | 'decreasing' | 'stable' | null;
+  } {
+    const history = this.monitoringSessions[monitoringId] || [];
+
+    if (history.length === 0) {
+      return {
+        monitoringId,
+        totalAssessments: 0,
+        confidenceChanges: [],
+        averageConfidence: null,
+        confidenceTrend: null
+      };
+    }
+
+    // Extract confidence values for each iteration
+    const confidenceChanges = history.map(entry => ({
+      iteration: entry.iteration,
+      stage: entry.stage,
+      overallConfidence: entry.overallConfidence
+    }));
+
+    // Calculate average confidence
+    const totalConfidence = history.reduce((sum, entry) => sum + entry.overallConfidence, 0);
+    const averageConfidence = totalConfidence / history.length;
+
+    // Determine trend (compare first half to second half)
+    let confidenceTrend: 'increasing' | 'decreasing' | 'stable' | null = null;
+    if (history.length >= 2) {
+      const firstConfidence = history[0].overallConfidence;
+      const lastConfidence = history[history.length - 1].overallConfidence;
+      const difference = lastConfidence - firstConfidence;
+
+      if (difference > 0.05) {
+        confidenceTrend = 'increasing';
+      } else if (difference < -0.05) {
+        confidenceTrend = 'decreasing';
+      } else {
+        confidenceTrend = 'stable';
+      }
+    }
+
+    return {
+      monitoringId,
+      totalAssessments: history.length,
+      confidenceChanges,
+      averageConfidence,
+      confidenceTrend
+    };
+  }
+
   public processMetacognitiveMonitoring(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
     try {
       const validatedData = this.validateInputData(input);
