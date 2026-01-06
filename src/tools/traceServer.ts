@@ -151,6 +151,72 @@ export class TraceServer {
     return output;
   }
 
+  /**
+   * Finds the indices of a completed thought chain ending at the given position
+   * A completed chain is a sequence of thoughts where the last one has nextThoughtNeeded: false
+   * @param endIndex - The index of the last thought in the chain (must have nextThoughtNeeded: false)
+   * @returns Array of indices that form the complete chain
+   */
+  private findCompletedChainIndices(endIndex: number): number[] {
+    const endThought = this.thoughtHistory[endIndex];
+    if (!endThought || endThought.nextThoughtNeeded !== false) {
+      return [];
+    }
+
+    const chainIndices: number[] = [endIndex];
+
+    // Walk backwards to find the start of the chain
+    // A chain starts after the previous completed thought or at the beginning
+    for (let i = endIndex - 1; i >= 0; i--) {
+      const thought = this.thoughtHistory[i];
+
+      // If we hit a thought that ended a previous chain, stop
+      if (thought.nextThoughtNeeded === false) {
+        break;
+      }
+
+      // This thought is part of our chain
+      chainIndices.unshift(i);
+    }
+
+    return chainIndices;
+  }
+
+  /**
+   * Enforces the maxThoughtHistory limit by evicting thoughts
+   * Prioritizes evicting completed thought chains (oldest first)
+   * Falls back to pure FIFO if no completed chains available
+   */
+  private enforceThoughtHistoryLimit(): void {
+    while (this.thoughtHistory.length > this.config.maxThoughtHistory) {
+      // First, try to find completed chains to evict (oldest first)
+      let evictedCompletedChain = false;
+
+      for (let i = 0; i < this.thoughtHistory.length; i++) {
+        const thought = this.thoughtHistory[i];
+
+        // Found a completed chain ending at index i
+        if (thought.nextThoughtNeeded === false) {
+          const chainIndices = this.findCompletedChainIndices(i);
+
+          if (chainIndices.length > 0) {
+            // Remove the chain (from end to start to preserve indices)
+            for (let j = chainIndices.length - 1; j >= 0; j--) {
+              this.thoughtHistory.splice(chainIndices[j], 1);
+            }
+            evictedCompletedChain = true;
+            break; // Re-check the loop condition
+          }
+        }
+      }
+
+      // If no completed chain found/evicted, use pure FIFO (remove oldest thought)
+      if (!evictedCompletedChain) {
+        this.thoughtHistory.shift();
+      }
+    }
+  }
+
   private storeThought(thought: ThoughtData): void {
     // If this is a branch, store in the appropriate branch collection
     if (thought.branchId) {
@@ -161,6 +227,9 @@ export class TraceServer {
     } else {
       // Otherwise store in main thought history
       this.thoughtHistory.push(thought);
+
+      // Enforce memory bounds
+      this.enforceThoughtHistoryLimit();
     }
   }
 
