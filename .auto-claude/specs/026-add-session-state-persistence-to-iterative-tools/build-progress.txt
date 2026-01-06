@@ -148,5 +148,49 @@ All subtasks for DecideServer state persistence have been completed successfully
 
 ---
 
+## Phase 3: Add State Persistence to ReflectServer
+
+### ✅ Subtask 3.1: Add monitoring state storage to ReflectServer (COMPLETED)
+- Added private monitoringSessions: Record<string, MetacognitiveMonitoringData[]> storage
+- Implemented storeAssessment() method that stores data by monitoringId
+- Integrated storeAssessment() call in processMetacognitiveMonitoring()
+- Followed the exact pattern from traceServer, councilServer, and decideServer
+- Commit: 088444b
+
+**Pattern Applied:**
+- Private storage field initialized as empty object
+- Private store method checks if monitoringId exists, creates array if not, then pushes data
+- Public process method calls store after validation, before output formatting
+
+**Files Modified:**
+- src/tools/reflectServer.ts
+
+---
+
+### ✅ Subtask 3.2: Add history retrieval methods to ReflectServer (COMPLETED)
+- Added public getMonitoringHistory(monitoringId) method
+  - Returns all MetacognitiveMonitoringData entries for a monitoring session
+  - Returns empty array if session doesn't exist
+- Added public getConfidenceProgression(monitoringId) method
+  - Returns confidence changes over time with detailed metrics
+  - Handles non-existent sessions gracefully with null values
+- Commit: 22df039
+
+**Implementation Details:**
+- getMonitoringHistory: Simple retrieval with fallback to empty array
+- getConfidenceProgression: Tracks confidence changes across iterations with:
+  - totalAssessments: Count of all assessments
+  - confidenceChanges: Array of {iteration, stage, overallConfidence} for each assessment
+  - averageConfidence: Mean confidence across all assessments
+  - confidenceTrend: Analysis of trend (increasing/decreasing/stable)
+    * Uses 5% threshold to determine trend direction
+    * Compares first to last assessment
+
+**Files Modified:**
+- src/tools/reflectServer.ts
+
+---
+
 ## Next Steps
-- Phase 3: Add State Persistence to ReflectServer
+- Subtask 3.3: Add tests for ReflectServer state persistence
+- Phase 4: Add State Persistence to HypothesisServer
