@@ -177,6 +177,120 @@ export class HypothesisServer {
     this.inquiries[data.inquiryId].push(data);
   }
 
+  /**
+   * Get the full history of stages for an inquiry
+   * @param inquiryId - The unique identifier for the inquiry
+   * @returns Array of all ScientificInquiryData entries for this inquiry
+   */
+  public getInquiryHistory(inquiryId: string): ScientificInquiryData[] {
+    return this.inquiries[inquiryId] || [];
+  }
+
+  /**
+   * Get hypothesis evolution over time for an inquiry
+   * @param inquiryId - The unique identifier for the inquiry
+   * @returns Object showing how hypotheses changed across iterations
+   */
+  public getHypothesisEvolution(inquiryId: string): {
+    inquiryId: string;
+    totalStages: number;
+    stages: string[];
+    hypothesesGenerated: number;
+    hypothesisChanges: Array<{
+      iteration: number;
+      stage: string;
+      status: string | null;
+      confidence: number | null;
+      statement: string | null;
+    }>;
+    currentHypothesis: {
+      statement: string | null;
+      status: string | null;
+      confidence: number | null;
+    };
+    statusProgression: string[];
+  } {
+    const history = this.inquiries[inquiryId] || [];
+
+    if (history.length === 0) {
+      return {
+        inquiryId,
+        totalStages: 0,
+        stages: [],
+        hypothesesGenerated: 0,
+        hypothesisChanges: [],
+        currentHypothesis: {
+          statement: null,
+          status: null,
+          confidence: null
+        },
+        statusProgression: []
+      };
+    }
+
+    // Extract unique stages
+    const stagesSet = new Set<string>();
+    history.forEach(entry => stagesSet.add(entry.stage));
+    const stages = Array.from(stagesSet);
+
+    // Track hypothesis changes over iterations
+    const hypothesisChanges = history
+      .filter(entry => entry.hypothesis)
+      .map(entry => ({
+        iteration: entry.iteration,
+        stage: entry.stage,
+        status: entry.hypothesis?.status || null,
+        confidence: entry.hypothesis?.confidence || null,
+        statement: entry.hypothesis?.statement || null
+      }));
+
+    // Count unique hypotheses generated (by statement)
+    const uniqueHypotheses = new Set(
+      hypothesisChanges
+        .filter(h => h.statement)
+        .map(h => h.statement)
+    );
+    const hypothesesGenerated = uniqueHypotheses.size;
+
+    // Get current hypothesis (last one with hypothesis data)
+    const lastHypothesisEntry = history
+      .slice()
+      .reverse()
+      .find(entry => entry.hypothesis);
+
+    const currentHypothesis = lastHypothesisEntry?.hypothesis
+      ? {
+          statement: lastHypothesisEntry.hypothesis.statement,
+          status: lastHypothesisEntry.hypothesis.status,
+          confidence: lastHypothesisEntry.hypothesis.confidence
+        }
+      : {
+          statement: null,
+          status: null,
+          confidence: null
+        };
+
+    // Track status progression (unique statuses in order they appeared)
+    const statusProgression: string[] = [];
+    const seenStatuses = new Set<string>();
+    hypothesisChanges.forEach(change => {
+      if (change.status && !seenStatuses.has(change.status)) {
+        seenStatuses.add(change.status);
+        statusProgression.push(change.status);
+      }
+    });
+
+    return {
+      inquiryId,
+      totalStages: history.length,
+      stages,
+      hypothesesGenerated,
+      hypothesisChanges,
+      currentHypothesis,
+      statusProgression
+    };
+  }
+
   public processScientificMethod(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
     try {
       const validatedData = this.validateInputData(input);
