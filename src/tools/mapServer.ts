@@ -19,11 +19,28 @@ export class MapServer {
 
   private formatOutput(data: VisualOperationData): string {
     const { operation, diagramId, diagramType, iteration, nextOperationNeeded } = data;
-    
+
+    // Visual indicators for diagram types
+    const diagramIcons: Record<string, string> = {
+      sequenceDiagram: '🔄',
+      stateMachine: '⚙️',
+      erDiagram: '🗃️',
+      mindMap: '🧠',
+      contextDiagram: '🏛️',
+      graph: '📊',
+      flowchart: '➡️',
+      stateDiagram: '🔀',
+      conceptMap: '💡',
+      treeDiagram: '🌳',
+      custom: '✨'
+    };
+
+    const diagramIcon = diagramIcons[diagramType] || '📐';
+
     let output = `\n${chalk.bold.blue('Visual Reasoning')}\n`;
     output += `${chalk.bold.green('Operation:')} ${operation}\n`;
     output += `${chalk.bold.yellow('Diagram ID:')} ${diagramId}\n`;
-    output += `${chalk.bold.magenta('Diagram Type:')} ${diagramType}\n`;
+    output += `${chalk.bold.magenta('Diagram Type:')} ${diagramIcon}  ${diagramType}\n`;
     output += `${chalk.bold.cyan('Iteration:')} ${iteration}\n`;
     
     // Elements
@@ -56,7 +73,17 @@ export class MapServer {
         }
       });
     }
-    
+
+    // Mermaid Preview
+    if (data.mermaidOutput) {
+      output += `\n${chalk.bold.blue('━'.repeat(60))}\n`;
+      output += `${chalk.bold.green('Mermaid Diagram Preview:')}\n`;
+      output += `${chalk.bold.blue('━'.repeat(60))}\n`;
+      output += `${chalk.gray(data.mermaidOutput)}\n`;
+      output += `${chalk.bold.blue('━'.repeat(60))}\n`;
+      output += `${chalk.dim('💡 Tip: Copy the above to render at https://mermaid.live or in your Markdown editor')}\n`;
+    }
+
     // Transform Type
     if (data.transformationType) {
       output += `\n${chalk.bold('Transform Type:')} ${data.transformationType}\n`;
