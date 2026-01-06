@@ -179,6 +179,9 @@ export async function handleMap(args: MapInput) {
     // Elements array (for diagram reconstruction)
     elements: elements.length > 0 ? elements : undefined,
 
+    // Mermaid diagram output (for visualization)
+    mermaidOutput: mermaidOutput || undefined,
+
     // Transform type (when applicable)
     ...(transformationType && { transformationType }),
 
@@ -186,8 +189,5 @@ export async function handleMap(args: MapInput) {
     ...(observation && { observation }),
     ...(insight && { insight }),
     ...(hypothesis && { hypothesis }),
-
-    // Mermaid diagram output (when provided)
-    ...(mermaidOutput && { mermaidOutput }),
   };
 }
