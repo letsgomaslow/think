@@ -152,9 +152,37 @@ Verified implementation of:
 
 ---
 
+### Subtask 3.5: Add Second-Order Effects extended documentation - COMPLETED ✓
+
+**Finding:** Second-Order Effects extended documentation was already fully implemented in web/lib/resources/extended/models.ts (lines 504-571)
+
+**Verification:**
+- ✅ First, second, and third-order effects clearly explained in steps:
+  - Step 2: "Map First-Order Effects: What are the immediate, direct consequences? These are usually obvious and intended."
+  - Step 3: "Map Second-Order Effects: What are the consequences of those consequences? How will people and systems react?"
+  - Step 4: "Map Third-Order Effects (and beyond): Continue the chain - what happens as the ripples spread further through the system?"
+- ✅ example: Comprehensive systems thinking scenario demonstrating unintended consequences
+  - Context: City government considering rent control to make housing affordable
+  - Application: Full cascade analysis showing how well-intentioned policy creates worse outcomes
+    - First-Order Effects (positive): Existing tenants save money, predictable costs, political win
+    - Second-Order Effects (negative reactions): Reduced maintenance, construction drops, conversions to condos, reduced mobility, black markets, aggressive screening
+    - Third-Order Effects (systemic failure): Housing supply shrinks, shortage intensifies, non-controlled prices skyrocket, city becomes MORE unaffordable, economic growth slows, inequality increases
+  - System-Level Insight: Shows how first-order benefits trigger second/third-order effects that create worse version of original problem
+  - Real-world evidence: References San Francisco, New York, Stockholm where rent control led to housing shortages
+  - Alternative approach: Suggests supply-side interventions with positive second-order effects (upzoning, streamlining permits)
+- ✅ relatedModels: Linked to inversion_thinking, swot_analysis, and pre_mortem
+- ✅ toolParameters: Properly structured with modelName, problem, and comprehensive steps array
+- ✅ whenToUse: 5 scenarios including policy decisions, strategic changes, complex systems, unintended consequences, long-term ripple effects
+
+**Commit:** 20a49e5 - "auto-claude: 3.5 - Add Second-Order Effects to EXTENDED_MODELS with systems thinking example"
+
+**Action Taken:** Updated implementation_plan.json to mark subtask 3.5 as completed.
+
+---
+
 ## Next Steps
 
-Phase 3 subtasks 3.1, 3.2, 3.3, and 3.4 are complete. Ready to proceed with:
-- Phase 3 remaining: Extended Model Documentation (subtasks 3.5-3.7)
+Phase 3 subtasks 3.1, 3.2, 3.3, 3.4, and 3.5 are complete. Ready to proceed with:
+- Phase 3 remaining: Extended Model Documentation (subtasks 3.6-3.7)
 - Phase 4: Unit Tests (subtasks 4.1-4.2)
 - Phase 5: Verification and Integration (subtasks 5.1-5.2)

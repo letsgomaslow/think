@@ -185,7 +185,7 @@
           "title": "Add Second-Order Effects extended documentation",
           "description": "Add Second-Order Effects to EXTENDED_MODELS with systems thinking example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "First, second, third order effects explained",
             "Unintended consequences example",
