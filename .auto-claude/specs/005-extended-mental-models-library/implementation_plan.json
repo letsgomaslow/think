@@ -3,7 +3,7 @@
   "title": "Extended Mental Models Library",
   "description": "Expand the model tool with 7 additional proven mental models: SWOT Analysis, Six Thinking Hats, MECE, Inversion Thinking, Second-Order Effects, Pre-Mortem Analysis, and 5 Whys root cause analysis.",
   "created_at": "2026-01-05",
-  "updated_at": "2026-01-06T07:30:00.000Z",
+  "updated_at": "2026-01-06T11:30:00.000Z",
   "status": "in_progress",
   "phases": [
     {
@@ -21,7 +21,9 @@
             "MODEL_TOOL enum includes all 7 new model names",
             "Description updated to list new models",
             "TypeScript compiles without errors"
-          ]
+          ],
+          "completed_at": "2026-01-06T11:30:00.000Z",
+          "notes": "All 7 new mental model names added to modelName enum. Committed in 9fafd88."
         },
         {
           "subtask_id": "1.2",
@@ -32,7 +34,9 @@
           "acceptance_criteria": [
             "Description lists all 13 mental models (6 existing + 7 new)",
             "Clear categorization of model types"
-          ]
+          ],
+          "completed_at": "2026-01-06T11:30:00.000Z",
+          "notes": "MODEL_TOOL description updated with all 13 models organized into 4 categories. Committed in 96d919f."
         }
       ]
     },
@@ -46,7 +50,7 @@
           "title": "Add SWOT Analysis to catalog",
           "description": "Add SWOT Analysis mental model with name, title, description, useCases, and steps to MENTAL_MODELS array",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "SWOT model defined with proper structure",
             "Includes 4+ use cases",
@@ -58,7 +62,7 @@
           "title": "Add Six Thinking Hats to catalog",
           "description": "Add Six Thinking Hats (De Bono) mental model with all hat colors explained",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Six Hats model defined with proper structure",
             "Description explains all 6 hat colors",
@@ -70,7 +74,7 @@
           "title": "Add MECE to catalog",
           "description": "Add MECE (Mutually Exclusive Collectively Exhaustive) mental model for comprehensive analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "MECE model defined with proper structure",
             "Clear explanation of ME and CE concepts",
@@ -82,7 +86,7 @@
           "title": "Add Inversion Thinking to catalog",
           "description": "Add Inversion Thinking mental model for reverse problem-solving",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Inversion model defined with proper structure",
             "Explains working backwards from failure",
@@ -94,7 +98,7 @@
           "title": "Add Second-Order Effects to catalog",
           "description": "Add Second-Order Effects mental model for consequence chain analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Second-Order model defined with proper structure",
             "Explains cascading effects concept",
@@ -106,7 +110,7 @@
           "title": "Add Pre-Mortem Analysis to catalog",
           "description": "Add Pre-Mortem Analysis mental model for prospective failure analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Pre-Mortem model defined with proper structure",
             "Explains prospective hindsight concept",
@@ -118,7 +122,7 @@
           "title": "Add Five Whys to catalog",
           "description": "Add Five Whys mental model for root cause analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Five Whys model defined with proper structure",
             "Explains iterative questioning technique",
@@ -137,7 +141,7 @@
           "title": "Add SWOT Analysis extended documentation",
           "description": "Add SWOT to EXTENDED_MODELS with whenToUse, detailed steps, example with context and application, relatedModels, and toolParameters",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Complete ExtendedModel structure",
             "Real-world example included",
@@ -149,7 +153,7 @@
           "title": "Add Six Thinking Hats extended documentation",
           "description": "Add Six Thinking Hats to EXTENDED_MODELS with detailed hat-by-hat explanation and group problem-solving example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "All 6 hats explained in steps",
             "Creative problem-solving example",
@@ -161,7 +165,7 @@
           "title": "Add MECE extended documentation",
           "description": "Add MECE to EXTENDED_MODELS with consulting-style example and clear ME/CE explanation",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "ME and CE concepts clearly explained",
             "Business analysis example",
@@ -173,7 +177,7 @@
           "title": "Add Inversion Thinking extended documentation",
           "description": "Add Inversion Thinking to EXTENDED_MODELS with Charlie Munger-style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Inversion concept clearly explained",
             "Practical avoidance example",
@@ -185,7 +189,7 @@
           "title": "Add Second-Order Effects extended documentation",
           "description": "Add Second-Order Effects to EXTENDED_MODELS with systems thinking example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "First, second, third order effects explained",
             "Unintended consequences example",
@@ -197,7 +201,7 @@
           "title": "Add Pre-Mortem extended documentation",
           "description": "Add Pre-Mortem to EXTENDED_MODELS with project planning example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Prospective hindsight concept explained",
             "Project failure prevention example",
@@ -209,7 +213,7 @@
           "title": "Add Five Whys extended documentation",
           "description": "Add Five Whys to EXTENDED_MODELS with Toyota Production System style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Iterative root cause technique explained",
             "Manufacturing/process example",
@@ -228,7 +232,7 @@
           "title": "Add unit tests for all new models",
           "description": "Add test cases in modelServer.test.ts to verify all 7 new models can be processed successfully with example scenarios",
           "file_path": "src/tools/modelServer.test.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Test for each new model with valid input",
             "All tests pass",
@@ -240,7 +244,7 @@
           "title": "Update models array test",
           "description": "Update the 'should process all mental model types' test to include all 13 models",
           "file_path": "src/tools/modelServer.test.ts",
-          "status": "completed",
+          "status": "pending",
           "acceptance_criteria": [
             "Test covers all 13 model names",
             "Test passes successfully"
@@ -258,27 +262,23 @@
           "title": "Run full test suite",
           "description": "Run npm test to verify all existing tests still pass and new tests pass",
           "file_path": null,
-          "status": "blocked",
-          "blocker": "npm/npx commands not allowed in auto-claude environment - requires manual verification",
+          "status": "pending",
           "acceptance_criteria": [
             "All existing tests pass (backward compatibility)",
             "All new tests pass",
             "No TypeScript compilation errors"
-          ],
-          "notes": "Test files verified as complete and properly structured. All 7 new model tests present in modelServer.test.ts. Manual execution of 'npm test' required to verify all tests pass."
+          ]
         },
         {
           "subtask_id": "5.2",
           "title": "Build verification",
           "description": "Run npm run build to ensure the project compiles successfully",
           "file_path": null,
-          "status": "blocked",
-          "blocker": "npm/tsc commands not allowed in auto-claude environment - requires manual verification",
+          "status": "pending",
           "acceptance_criteria": [
             "TypeScript compilation succeeds",
             "No build errors or warnings"
-          ],
-          "notes": "TypeScript code manually verified for syntax correctness. tsconfig.json properly configured. All source files follow correct patterns. Manual execution of 'npm run build' required to verify compilation succeeds."
+          ]
         }
       ]
     }
@@ -291,5 +291,6 @@
   "dependencies": [],
   "estimated_complexity": "medium",
   "notes": "This spec extends the existing MODEL_TOOL by adding 7 new mental model types. The existing modelServer.ts doesn't need modification since it handles modelName generically - it just validates and formats the data. The main work is adding the new enum values and comprehensive documentation.",
-  "planStatus": "in_progress"
+  "planStatus": "in_progress",
+  "recoveryNote": "Task recovered from stuck state at 2026-01-06T11:25:21.311Z"
 }
