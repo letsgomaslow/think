@@ -20,6 +20,11 @@ export const diagramTypeEnum = z.enum([
   'conceptMap',
   'treeDiagram',
   'custom',
+  'sequenceDiagram',
+  'stateMachine',
+  'erDiagram',
+  'mindMap',
+  'contextDiagram',
 ]);
 
 /**
