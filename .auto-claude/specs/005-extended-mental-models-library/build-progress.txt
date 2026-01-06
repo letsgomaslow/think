@@ -295,3 +295,47 @@
 **Status:** Subtask 3.2 verified and marked as completed in implementation plan.
 
 **Next:** Phase 3 - Continue with subtasks 3.3-3.7 (MECE, Inversion, Second-Order, Pre-Mortem, Five Whys extended documentation)
+
+---
+
+### Latest Update: 2026-01-06 15:00:00
+
+**Subtask 3.3 - Add MECE extended documentation: COMPLETED**
+
+✅ Verified MECE extended model in web/lib/resources/extended/models.ts (lines 366-433):
+  - name: 'mece' ✓
+  - title: 'MECE (Mutually Exclusive, Collectively Exhaustive)' ✓
+  - description: Clear framework for structuring problems without overlap and complete coverage ✓
+  - whenToUse: 5 scenarios provided ✓
+    1. When breaking down complex problems that need comprehensive analysis
+    2. When creating frameworks, segmentations, or categorizations
+    3. When you need to ensure nothing is missed and nothing is double-counted
+    4. When presenting to executives or clients who need clear, complete structures
+    5. When organizing data, issues, or options into logical groupings
+  - steps: 6 detailed implementation steps with clear ME/CE explanations ✓
+    1. Define the problem or universe you're analyzing clearly
+    2. Identify the most logical dimension or criterion to segment by
+    3. Create categories that are Mutually Exclusive (ME): No overlap - each item fits into only one category
+    4. Ensure categories are Collectively Exhaustive (CE): Complete coverage - every possible item has a category
+    5. Test your structure: Can you place every element into exactly one bucket?
+    6. Refine if needed: If items overlap or don't fit, adjust your categories
+  - example: Comprehensive consulting-style business analysis included ✓
+    * Context: Consulting firm analyzing why a retail company's revenue declined 15% YoY
+    * Application: Shows non-MECE approach and its problems, then demonstrates proper MECE framework
+    * Framework: Revenue = Number of Customers × Average Transaction Value × Purchase Frequency
+    * Breakdown: Customer count dropped 12%, Transaction value dropped 8%, Frequency unchanged
+    * Combined effect: ~15% revenue decline (mathematically validates the framework)
+    * Explicit ME/CE callouts explaining why the framework is MECE
+    * Outcome: Targeted fixes (digital ad spending, out-of-stock issues) vs scattered efforts
+  - relatedModels: 3 related models linked ✓
+    * first_principles, swot_analysis, five_whys
+  - toolParameters: Complete parameter structure ✓
+
+✅ All acceptance criteria met:
+  - ME and CE concepts clearly explained ✓
+  - Business analysis/consulting-style example ✓
+  - Related models linked ✓
+
+**Status:** Subtask 3.3 verified and marked as completed in implementation plan.
+
+**Next:** Phase 3 - Continue with subtasks 3.4-3.7 (Inversion, Second-Order, Pre-Mortem, Five Whys extended documentation)
