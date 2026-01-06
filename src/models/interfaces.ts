@@ -229,6 +229,19 @@ export interface RiskItem {
     mitigation?: string[];
 }
 
+// Reversibility Analysis types
+export type DoorType = "one-way" | "two-way";
+
+export interface ReversibilityData {
+    optionId: string;
+    reversibilityScore: number;
+    undoCost: number;
+    timeToReverse: number;
+    doorType: DoorType;
+    undoComplexity?: string;
+    reversibilityNotes?: string;
+}
+
 // reflect tool
 export interface KnowledgeAssessment {
     domain: string;
