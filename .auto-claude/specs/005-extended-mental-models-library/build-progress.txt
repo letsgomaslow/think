@@ -1,0 +1,109 @@
+# Extended Mental Models Library - Build Progress
+
+## Overview
+Spec ID: 005-extended-mental-models-library
+Created: 2026-01-05
+Status: Planned
+
+## Summary
+Adding 7 new mental models to the existing MODEL_TOOL:
+1. SWOT Analysis - Strategic evaluation framework
+2. Six Thinking Hats - De Bono's creative problem-solving
+3. MECE - Mutually Exclusive Collectively Exhaustive analysis
+4. Inversion Thinking - Reverse problem-solving
+5. Second-Order Effects - Consequence chain analysis
+6. Pre-Mortem Analysis - Prospective failure analysis
+7. Five Whys - Root cause analysis
+
+## Phases
+
+### Phase 1: Core Tool Schema Updates (2/2 subtasks) ✅ COMPLETE
+- [x] 1.1: Add new model names to MODEL_TOOL enum
+- [x] 1.2: Update MODEL_TOOL description
+
+### Phase 2: Resource Catalog Updates (6/7 subtasks)
+- [x] 2.1: Add SWOT Analysis to catalog
+- [x] 2.2: Add Six Thinking Hats to catalog
+- [x] 2.3: Add MECE to catalog
+- [x] 2.4: Add Inversion Thinking to catalog
+- [x] 2.5: Add Second-Order Effects to catalog
+- [x] 2.6: Add Pre-Mortem Analysis to catalog
+- [ ] 2.7: Add Five Whys to catalog
+
+### Phase 3: Extended Model Documentation (0/7 subtasks)
+- [ ] 3.1: Add SWOT Analysis extended documentation
+- [ ] 3.2: Add Six Thinking Hats extended documentation
+- [ ] 3.3: Add MECE extended documentation
+- [ ] 3.4: Add Inversion Thinking extended documentation
+- [ ] 3.5: Add Second-Order Effects extended documentation
+- [ ] 3.6: Add Pre-Mortem extended documentation
+- [ ] 3.7: Add Five Whys extended documentation
+
+### Phase 4: Unit Tests (0/2 subtasks)
+- [ ] 4.1: Add unit tests for all new models
+- [ ] 4.2: Update models array test
+
+### Phase 5: Verification and Integration (0/2 subtasks)
+- [ ] 5.1: Run full test suite
+- [ ] 5.2: Build verification
+
+## Notes
+- Existing modelServer.ts handles model names generically
+- No backend logic changes needed - only enum/schema updates
+- Focus on comprehensive documentation with real examples
+- Backward compatibility is automatic (existing models unchanged)
+
+## Session Log
+[2026-01-05] Implementation plan created with 5 phases, 20 subtasks
+[2026-01-05] ✅ Completed subtask 1.1: Added all 7 new mental model names to modelName enum in src/index.ts
+             - Added: swot_analysis, six_thinking_hats, mece, inversion_thinking, second_order_effects, pre_mortem, five_whys
+             - Committed: 9fafd88
+[2026-01-05] ✅ Completed subtask 1.2: Updated MODEL_TOOL description to include all 13 mental models
+             - Organized into 4 categories: Analytical, Strategic, Creative & Problem-Solving, Decision & Prioritization
+             - All 13 models (6 existing + 7 new) now documented in tool description
+             - Committed: 78e5048
+             - Phase 1 (Core Tool Schema Updates) now COMPLETE!
+[2026-01-05] ✅ Completed subtask 2.1: Added SWOT Analysis mental model to web/lib/resources/models.ts
+             - Added name: swot_analysis
+             - Added title: SWOT Analysis
+             - Added description covering Strengths, Weaknesses, Opportunities, and Threats
+             - Added 4 use cases: strategic planning, competitive analysis, project planning, personal development
+             - Added 4 detailed steps explaining each component of SWOT
+             - Updated file comment from 6 to 7 mental models
+             - Committed: 8988367
+[2026-01-05] ✅ Completed subtask 2.2: Added Six Thinking Hats (De Bono) mental model to web/lib/resources/models.ts
+             - Added name: six_thinking_hats
+             - Added title: Six Thinking Hats (De Bono)
+             - Description includes all 6 hat colors: White (facts), Red (emotions), Black (caution), Yellow (optimism), Green (creativity), Blue (process control)
+             - Added 4 use cases: group problem-solving, decision-making, creative brainstorming, conflict resolution
+             - Added 6 detailed steps, one for each hat color explaining its perspective
+             - Committed: 9099f5c
+[2026-01-05] ✅ Completed subtask 2.3: Added MECE mental model to web/lib/resources/models.ts
+             - Added name: mece
+             - Added title: MECE (Mutually Exclusive Collectively Exhaustive)
+             - Description clearly explains ME (no overlap) and CE (complete coverage) concepts
+             - Added 4 analytical use cases: problem structuring, data organization, business strategies, comprehensive research
+             - Added 4 implementation steps focusing on defining, creating, ensuring exclusivity, and validating
+             - Committed: ebf42c3
+[2026-01-05] ✅ Completed subtask 2.4: Added Inversion Thinking mental model to web/lib/resources/models.ts
+             - Added name: inversion_thinking
+             - Added title: Inversion Thinking
+             - Description explains working backwards from failure to identify what to avoid, popularized by Charlie Munger
+             - Added 4 use cases: risk identification, avoiding pitfalls, pre-emptive problem-solving, strategic planning
+             - Added 4 implementation steps: define goal, invert the problem, list ways things could fail, work backwards to avoid
+             - Committed: 582ea3d
+[2026-01-05] ✅ Completed subtask 2.5: Added Second-Order Effects mental model to web/lib/resources/models.ts
+             - Added name: second_order_effects
+             - Added title: Second-Order Effects
+             - Description explains cascading consequence chains: first-order (direct), second-order (consequences of consequences), third-order and beyond
+             - Added 4 use cases: strategic planning, policy analysis, systems thinking, risk management
+             - Added 4 implementation steps: identify first-order effects, analyze second-order effects, consider third-order ripples, evaluate cascading consequences
+             - Committed: 363b4c2
+[2026-01-05] ✅ Completed subtask 2.6: Added Pre-Mortem Analysis mental model to web/lib/resources/models.ts
+             - Added name: pre_mortem
+             - Added title: Pre-Mortem Analysis
+             - Description explains prospective hindsight technique: imagine project has failed and work backwards to identify potential causes
+             - Added 4 use cases: project planning and risk identification, team alignment on obstacles, proactive failure prevention, strategic initiative evaluation
+             - Added 4 implementation steps: imagine complete failure, generate failure reasons, identify likely/impactful causes, develop preventive measures
+             - Updated file comment from 7 to 12 mental models (accounting for all models added so far)
+             - Committed: a58061d
