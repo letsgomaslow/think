@@ -1,4 +1,4 @@
-import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis, RiskItem, ReversibilityData } from '../models/interfaces.js';
+import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis, RiskItem, ReversibilityData, RegretMinimizationData } from '../models/interfaces.js';
 import chalk from 'chalk';
 
 export class DecideServer {
@@ -369,6 +369,90 @@ export class DecideServer {
     return output;
   }
 
+  private formatRegretMinimization(data: DecisionFrameworkData): string {
+    if (!data.regretMinimizationAnalysis || data.regretMinimizationAnalysis.length === 0) {
+      return '';
+    }
+
+    const analyses = data.regretMinimizationAnalysis;
+    const options = data.options;
+
+    let output = `\n${chalk.bold.blue('Regret Minimization Framework')}\n`;
+    output += `${chalk.dim('━'.repeat(60))}\n`;
+    output += `${chalk.dim('10/10/10 Analysis: How will you feel about this decision in...')}\n`;
+
+    analyses.forEach(analysis => {
+      const option = options.find(opt => opt.id === analysis.optionId);
+      if (!option) return;
+
+      output += `\n${chalk.bold.cyan(`Option: ${option.name}`)}\n`;
+      output += `${chalk.dim(option.description)}\n\n`;
+
+      // Future self perspective
+      output += `  ${chalk.bold.magenta('Future Self Perspective:')}\n`;
+      output += `     ${analysis.futureSelfPerspective}\n`;
+
+      // 10/10/10 Framework
+      output += `\n  ${chalk.bold.yellow('10/10/10 Framework - Projected Regrets:')}\n`;
+
+      // 10 Minutes from now
+      output += `\n  ${chalk.bold.cyan('⏱️  In 10 Minutes:')}\n`;
+      if (analysis.potentialRegrets.tenMinutes) {
+        output += `     ${analysis.potentialRegrets.tenMinutes}\n`;
+      } else {
+        output += `     ${chalk.dim('No immediate regrets anticipated')}\n`;
+      }
+
+      // 10 Months from now
+      output += `\n  ${chalk.bold.green('📅 In 10 Months:')}\n`;
+      if (analysis.potentialRegrets.tenMonths) {
+        output += `     ${analysis.potentialRegrets.tenMonths}\n`;
+      } else {
+        output += `     ${chalk.dim('No medium-term regrets anticipated')}\n`;
+      }
+
+      // 10 Years from now
+      output += `\n  ${chalk.bold.blue('🔮 In 10 Years:')}\n`;
+      if (analysis.potentialRegrets.tenYears) {
+        output += `     ${analysis.potentialRegrets.tenYears}\n`;
+      } else {
+        output += `     ${chalk.dim('No long-term regrets anticipated')}\n`;
+      }
+
+      // Regret Score (if provided)
+      if (analysis.regretScore !== undefined) {
+        const scoreColor = analysis.regretScore <= 3 ? chalk.green :
+                          analysis.regretScore <= 6 ? chalk.yellow : chalk.red;
+        output += `\n  ${chalk.bold('Overall Regret Score:')} ${scoreColor(`${analysis.regretScore.toFixed(1)}/10`)}\n`;
+
+        if (analysis.regretScore <= 3) {
+          output += `     ${chalk.green('✓ Low regret potential - decision aligns with long-term values')}\n`;
+        } else if (analysis.regretScore <= 6) {
+          output += `     ${chalk.yellow('⚠ Moderate regret potential - consider implications carefully')}\n`;
+        } else {
+          output += `     ${chalk.red('⚠ High regret potential - reconsider this option')}\n`;
+        }
+      }
+
+      // Time Horizon Analysis (if provided)
+      if (analysis.timeHorizonAnalysis) {
+        output += `\n  ${chalk.bold.cyan('Time Horizon Analysis:')}\n`;
+        output += `     ${analysis.timeHorizonAnalysis}\n`;
+      }
+
+      output += `\n${chalk.dim('─'.repeat(60))}\n`;
+    });
+
+    // Framework guidance
+    output += `\n${chalk.bold.blue('Regret Minimization Guidance:')}\n`;
+    output += `${chalk.dim('Ask yourself:')} "Will I regret not taking this action when I'm 80?"\n`;
+    output += `${chalk.dim('Short-term concerns')} often fade, while ${chalk.bold('long-term regrets')} tend to stick\n`;
+    output += `${chalk.dim('Focus on decisions that align with your future self\'s values and priorities')}\n`;
+    output += `\n`;
+
+    return output;
+  }
+
   private formatOutput(data: DecisionFrameworkData): string {
     const { decisionStatement, options, analysisType, stage, iteration } = data;
 
@@ -386,6 +470,8 @@ export class DecideServer {
       output += this.formatRiskAssessment(data);
     } else if (analysisType === 'reversibility') {
       output += this.formatReversibilityAnalysis(data);
+    } else if (analysisType === 'regret-minimization') {
+      output += this.formatRegretMinimization(data);
     } else {
       // Options
       if (options.length > 0) {

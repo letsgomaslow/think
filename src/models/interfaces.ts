@@ -182,6 +182,7 @@ export interface DecisionFrameworkData {
     costBenefitAnalysis?: CostBenefitAnalysis[];
     riskAssessment?: RiskItem[];
     reversibilityAnalysis?: ReversibilityData[];
+    regretMinimizationAnalysis?: RegretMinimizationData[];
 }
 
 // Eisenhower Matrix types

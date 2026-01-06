@@ -130,11 +130,13 @@
           "id": "2.4",
           "title": "Implement Reversibility Analysis formatting",
           "description": "Add formatReversibilityAnalysis method showing one-way/two-way door classification, undo costs, and decision speed recommendations",
-          "status": "pending",
+          "status": "completed",
           "estimatedMinutes": 20,
           "files": [
             "src/tools/decideServer.ts"
-          ]
+          ],
+          "notes": "Successfully implemented formatReversibilityAnalysis method in DecideServer:\n- Added reversibilityAnalysis field to DecisionFrameworkData interface for storing reversibility data\n- Imported ReversibilityData type in decideServer.ts\n- Created formatReversibilityAnalysis method that displays:\n  * One-way/two-way door classification with color-coded labels and emojis (\ud83d\udeaa\u2194\ufe0f for two-way, \ud83d\udeaa\u2192 for one-way)\n  * Reversibility metrics: reversibility score (0-100%), undo cost ($), and time to reverse (days)\n  * Color-coded metrics: green for favorable values, yellow for moderate, red for unfavorable\n  * Decision speed recommendations based on door type and reversibility score:\n    - \u26a1 MOVE FAST for two-way doors with high reversibility (\u226570%)\n    - \u2696\ufe0f MODERATE PACE for two-way doors with moderate reversibility\n    - \ud83d\udc0c MOVE SLOW for one-way doors with low reversibility (<30%)\n    - \ud83e\udd14 PROCEED WITH CAUTION for one-way doors with moderate reversibility\n  * Optional undo complexity and reversibility notes fields\n  * Bezos's Two-Way Door Framework explanation at the end\n- Updated formatOutput to route 'reversibility' analysis type to the new formatter\n- Follows existing DecideServer patterns with chalk-based formatting and consistent structure",
+          "updated_at": "2026-01-06T03:57:08.985793+00:00"
         },
         {
           "id": "2.5",
@@ -365,5 +367,5 @@
     "issues": "",
     "testsPassed": ""
   },
-  "last_updated": "2026-01-06T03:54:49.596365+00:00"
+  "last_updated": "2026-01-06T03:57:08.985802+00:00"
 }
