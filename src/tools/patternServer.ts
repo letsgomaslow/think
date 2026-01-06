@@ -1,26 +1,19 @@
 import { DesignPatternData } from '../models/interfaces.js';
+import { designPatternDataSchema } from '../schemas/pattern.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class PatternServer {
   private validatePatternData(input: unknown): DesignPatternData {
-    const data = input as Record<string, unknown>;
-
-    if (!data.patternName || typeof data.patternName !== 'string') {
-      throw new Error('Invalid patternName: must be a string');
+    try {
+      return designPatternDataSchema.parse(input);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid pattern data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (!data.context || typeof data.context !== 'string') {
-      throw new Error('Invalid context: must be a string');
-    }
-
-    return {
-      patternName: data.patternName as string,
-      context: data.context as string,
-      implementation: Array.isArray(data.implementation) ? data.implementation.map(String) : [],
-      benefits: Array.isArray(data.benefits) ? data.benefits.map(String) : [],
-      tradeoffs: Array.isArray(data.tradeoffs) ? data.tradeoffs.map(String) : [],
-      codeExample: typeof data.codeExample === 'string' ? data.codeExample as string : undefined,
-      languages: Array.isArray(data.languages) ? data.languages.map(String) : undefined
-    };
   }
 
   private formatPatternOutput(data: DesignPatternData): string {
