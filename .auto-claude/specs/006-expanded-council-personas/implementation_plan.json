@@ -333,8 +333,8 @@
           "files": [
             "src/personas/registry.test.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Comprehensive unit tests for PersonaRegistry class implemented in src/personas/registry.test.ts. Tests cover: initialization, category registration, persona registration (single and bulk), persona lookup by ID/category/expertise/tags/keywords, query and search functionality with relevance scoring, utility methods (counts, existence checks, library export), clear functionality, and error handling. Includes 100+ test cases using vitest framework following existing codebase patterns. Committed in 594e65f."
         },
         {
           "subtask_id": "8.2",

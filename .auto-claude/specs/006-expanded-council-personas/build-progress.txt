@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (25/33 subtasks completed - 76%)
+## Current Status: In Progress (26/33 subtasks completed - 79%)
 
 ### Completed Subtasks
 
@@ -145,9 +145,15 @@
 
 #### Phase 7: Update Council Tool Integration ✅ COMPLETE
 
+#### Phase 8: Testing (In Progress)
+- [x] 8.1 - Write unit tests for persona registry
+  - File: src/personas/registry.test.ts
+  - Status: Committed (commit: 594e65f)
+  - Notes: Comprehensive unit tests for PersonaRegistry class with 100+ test cases covering initialization, registration, lookup, query, search, and utility methods
+
 ### Next Steps
 - [ ] Continue with Phase 8: Testing
-  - 8.1 - Write unit tests for persona registry
+  - 8.2 - Write unit tests for persona factory
 
 ### Build Notes
 - Phase 1, 2, 3, 4, 5, & 6 complete! 🎉
