@@ -20,7 +20,7 @@
 - ✅ 3.4: Add Inversion Thinking extended documentation (commit c6c377f) - VERIFIED
 - ✅ 3.5: Add Second-Order Effects extended documentation (commit 376f46b) - VERIFIED
 - ✅ 3.6: Add Pre-Mortem extended documentation - VERIFIED
-- ✅ 3.7: Add Five Whys extended documentation
+- ✅ 3.7: Add Five Whys extended documentation (commit 1524b6a) - VERIFIED
 
 ### Phase 4: Unit Tests ✅ COMPLETED
 - ✅ 4.1: Add unit tests for all new models (commit 7fae96e)
@@ -31,13 +31,14 @@
 - ⏳ 5.2: Build verification
 
 ### Current Status
-Subtask 3.6 (Pre-Mortem extended documentation) has been verified and marked as completed. The implementation was already present in the codebase and meets all acceptance criteria:
-- ✓ Prospective hindsight concept clearly explained ("Use prospective hindsight to prevent failures before they happen")
-- ✓ Project failure prevention example (comprehensive startup mobile app marketplace example with 5 stakeholder failure narratives, categorized failure modes, and concrete preventive actions)
-- ✓ Related models properly linked (inversion_thinking, second_order_effects, swot_analysis)
-- ✓ Complete implementation in web/lib/resources/extended/models.ts lines 572-693
+Subtask 3.7 (Five Whys extended documentation) has been verified and marked as completed. The implementation was already present in the codebase (added in commit 1524b6a) and meets all acceptance criteria:
+- ✓ Iterative root cause technique clearly explained (6 detailed steps showing the "Why?" iteration process)
+- ✓ Manufacturing/process example (comprehensive Toyota Production System example: robot welding machine with oil filter root cause analysis)
+- ✓ Bonus software example included (database query performance issue with migration checklist root cause)
+- ✓ Related models properly linked (first_principles, error_propagation, mece)
+- ✓ Complete implementation in web/lib/resources/extended/models.ts lines 694-790
 
-All implementation work for Phases 1-4 is complete.
+All implementation work for Phases 1-4 is complete. Phase 3 (Extended Model Documentation) fully verified.
 
 ### Next Steps
 - Verify all tests pass

@@ -239,12 +239,14 @@
           "title": "Add Five Whys extended documentation",
           "description": "Add Five Whys to EXTENDED_MODELS with Toyota Production System style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Iterative root cause technique explained",
             "Manufacturing/process example",
             "Related models linked"
-          ]
+          ],
+          "completed_at": "2026-01-06T20:00:00.000Z",
+          "notes": "Five Whys fully implemented in EXTENDED_MODELS with complete structure including whenToUse (5 cases), detailed steps (6 steps explaining iterative root cause analysis), comprehensive Toyota Production System example (robot welding machine with oil filter root cause analysis) plus bonus software example (database query performance), relatedModels linked (first_principles, error_propagation, mece), and toolParameters. Implementation verified in web/lib/resources/extended/models.ts lines 694-790. Previous commit: 1524b6a."
         }
       ]
     },
