@@ -523,6 +523,29 @@ It supports multiple decision frameworks, probability estimates, and value judgm
                 type: "boolean",
                 description: "Whether another stage is needed in the process",
             },
+            eisenhowerClassification: {
+                type: "array",
+                description: "Urgency and importance ratings for Eisenhower Matrix analysis",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        urgency: {
+                            type: "number",
+                            minimum: 1,
+                            maximum: 5,
+                            description: "Urgency rating from 1 (low) to 5 (high)"
+                        },
+                        importance: {
+                            type: "number",
+                            minimum: 1,
+                            maximum: 5,
+                            description: "Importance rating from 1 (low) to 5 (high)"
+                        },
+                    },
+                    required: ["optionId", "urgency", "importance"],
+                },
+            },
         },
         required: [
             "decisionStatement",
