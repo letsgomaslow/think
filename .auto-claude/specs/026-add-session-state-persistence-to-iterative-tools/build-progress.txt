@@ -110,5 +110,43 @@ All subtasks for CouncilServer state persistence have been completed successfull
 
 ---
 
+### ✅ Subtask 2.3: Add tests for DecideServer state persistence (COMPLETED)
+- Added comprehensive state persistence test suite to decideServer.test.ts
+- Tests verify multiple iterations stored for same decision across stages
+- Tests verify different decisions maintain separate state
+- Tests verify getDecisionHistory returns all iterations for a decision
+- Tests verify getDecisionSummary returns correct statistics
+- Tests verify stage progression tracking
+- Tests verify data preservation across all fields
+- Commit: 65e1dcb
+
+**Test Coverage:**
+1. **Multiple iterations per decision**: Verifies 3 iterations stored with correct iteration numbers and different stages
+2. **Decision isolation**: Verifies separate decisions maintain independent state
+3. **Non-existent decision handling**: Verifies empty array returned for missing decisions
+4. **getDecisionSummary accuracy**:
+   - Verifies totalIterations, stages array, currentStage, currentAnalysisType, lastIteration
+   - Verifies nextStageNeeded flag for workflow tracking
+   - Verifies null values for non-existent decisions
+5. **Stage progression tracking**: Verifies stages are tracked across multiple iterations
+   - Tests progression through: problem-definition → options-generation → evaluation → decision
+   - Tests unique stage identification (no duplicates even when stages repeat)
+6. **Analysis type tracking**: Verifies current analysis type reflects latest iteration
+7. **Data preservation**: Verifies all fields are preserved including:
+   - decisionStatement, stage, analysisType
+   - criteria, stakeholders, constraints
+   - recommendation, rationale, nextStageNeeded
+8. **Complex analysis data**: Verifies complex structures like eisenhowerClassification are preserved
+
+**Files Modified:**
+- src/tools/decideServer.test.ts
+
+---
+
+## Phase 2 Status: COMPLETED ✅
+All subtasks for DecideServer state persistence have been completed successfully.
+
+---
+
 ## Next Steps
-- Subtask 2.3: Add tests for DecideServer state persistence
+- Phase 3: Add State Persistence to ReflectServer
