@@ -155,7 +155,12 @@ export interface DecisionFrameworkData {
         | "weighted-criteria"
         | "decision-tree"
         | "expected-value"
-        | "scenario-analysis";
+        | "scenario-analysis"
+        | "eisenhower-matrix"
+        | "cost-benefit"
+        | "risk-assessment"
+        | "reversibility"
+        | "regret-minimization";
     stage:
         | "problem-definition"
         | "options-generation"
