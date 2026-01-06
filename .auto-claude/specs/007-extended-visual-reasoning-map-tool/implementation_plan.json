@@ -262,8 +262,8 @@
           "file_paths": [
             "docs/tools/map.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Added comprehensive Scenario 5 to docs/tools/map.md showing order lifecycle state machine. Includes JSON input with 6 states (Pending as start state, Delivered and Cancelled as end states) and 7 transitions with descriptive labels (Payment confirmed, Order queued, etc.). Shows JSON output with mermaidOutput field containing stateDiagram-v2 syntax. Includes rendered Mermaid diagram visualization and detailed explanation covering start/end states, happy path, cancellation windows, and business logic insights (e.g., no cancellation after shipping). Follows existing documentation pattern from Scenario 4. Committed in a0e9e69 with 73 lines added."
         },
         {
           "subtask_id": "6.4",
