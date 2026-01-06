@@ -1,341 +1,44 @@
-## Build Progress for 005-extended-mental-models-library
+## Build Progress - Extended Mental Models Library
 
-### Latest Update: 2026-01-06 12:30:00
+### Phase 1: Core Tool Schema Updates ✓
+**Status:** COMPLETED
 
-**Subtask 1.2 - Update MODEL_TOOL description: COMPLETED**
+#### Subtask 1.1: Add new model names to MODEL_TOOL enum ✓
+- Status: Completed (2026-01-06)
+- All 7 new mental model names verified in modelName enum (lines 69-75)
+- Code implemented in previous session (commit 5a8ecb0)
 
-✅ Verified MODEL_TOOL description in src/index.ts includes all 13 mental models:
-   - 6 existing models: first_principles, opportunity_cost, error_propagation, rubber_duck, pareto_principle, occams_razor
-   - 7 new models: swot_analysis, six_thinking_hats, mece, inversion_thinking, second_order_effects, pre_mortem, five_whys
+#### Subtask 1.2: Update MODEL_TOOL description ✓
+- Status: Completed (2026-01-06)
+- MODEL_TOOL description verified to include all 13 mental models
+- Models organized into 4 clear categories:
+  * Analytical Models: First Principles, MECE, Five Whys, Occam's Razor
+  * Strategic Models: SWOT, Second-Order Effects, Opportunity Cost, Pre-Mortem
+  * Creative & Problem-Solving Models: Six Thinking Hats, Inversion Thinking, Rubber Duck
+  * Decision & Prioritization Models: Pareto Principle, Error Propagation
+- Code implemented in previous session (commit 5a8ecb0)
 
-✅ Models properly categorized into 4 clear categories:
-   - Analytical Models (4): First Principles, MECE, Five Whys, Occam's Razor
-   - Strategic Models (4): SWOT, Second-Order Effects, Opportunity Cost, Pre-Mortem
-   - Creative & Problem-Solving Models (3): Six Thinking Hats, Inversion, Rubber Duck
-   - Decision & Prioritization Models (2): Pareto Principle, Error Propagation
+### Phase 2: Resource Catalog Updates (IN PROGRESS)
+**Status:** IN PROGRESS
 
-✅ All acceptance criteria met:
-   - Description lists all 13 mental models (6 existing + 7 new) ✓
-   - Clear categorization of model types ✓
+#### Subtask 2.1: Add SWOT Analysis to catalog ✓
+- Status: Completed (2026-01-06)
+- SWOT Analysis model verified in web/lib/resources/models.ts (lines 117-132)
+- Proper structure with name, title, description
+- 4 use cases: strategic planning, competitive analysis, project planning, personal development
+- 4 implementation steps: Strengths, Weaknesses, Opportunities, Threats
+- Code implemented in previous session (commit 8988367)
 
-**Status:** Phase 1 (Core Tool Schema Updates) is now COMPLETE (2/2 subtasks done).
-
-**Next:** Phase 2 - Resource Catalog Updates (subtasks 2.1-2.7)
-
----
-
-### Latest Update: 2026-01-06 12:45:00
-
-**Subtask 2.1 - Add SWOT Analysis to catalog: COMPLETED**
-
-✅ Verified SWOT Analysis mental model in web/lib/resources/models.ts (previously added in commit 8988367):
-   - name: 'swot_analysis' ✓
-   - title: 'SWOT Analysis' ✓
-   - description: Comprehensive description of the SWOT framework ✓
-   - useCases: 4 use cases provided ✓
-     1. Strategic planning and business evaluation
-     2. Competitive analysis and market positioning
-     3. Project planning and risk assessment
-     4. Personal development and career planning
-   - steps: 4 implementation steps provided ✓
-     1. Identify internal Strengths
-     2. Identify internal Weaknesses
-     3. Identify external Opportunities
-     4. Identify external Threats
-
-✅ All acceptance criteria met:
-   - SWOT model defined with proper structure ✓
-   - Includes 4+ use cases ✓
-   - Includes 4+ implementation steps ✓
-
-**Status:** Subtask 2.1 verified and marked as completed in implementation plan.
-
-**Next:** Phase 2 - Continue with subtasks 2.3-2.7
+### Next Steps
+- Phase 2: Continue Resource Catalog Updates
+  - Add remaining 6 mental models to web/lib/resources/models.ts
+  - Subtask 2.2: Six Thinking Hats
+  - Subtask 2.3: MECE
+  - Subtask 2.4: Inversion Thinking
+  - Subtask 2.5: Second-Order Effects
+  - Subtask 2.6: Pre-Mortem Analysis
+  - Subtask 2.7: Five Whys
 
 ---
-
-### Latest Update: 2026-01-06 13:00:00
-
-**Subtask 2.2 - Add Six Thinking Hats to catalog: COMPLETED**
-
-✅ Verified Six Thinking Hats (De Bono) mental model in web/lib/resources/models.ts:
-   - name: 'six_thinking_hats' ✓
-   - title: 'Six Thinking Hats (De Bono)' ✓
-   - description: Comprehensive description explaining all 6 hat colors ✓
-     * White Hat - facts, data, objective information
-     * Red Hat - emotions, intuitions, gut feelings
-     * Black Hat - risks, weaknesses, potential problems
-     * Yellow Hat - benefits, optimism, positive outcomes
-     * Green Hat - creative ideas, alternatives, possibilities
-     * Blue Hat - process control, summarize, next steps
-   - useCases: 4 use cases provided ✓
-     1. Group problem-solving and team discussions
-     2. Decision-making with multiple perspectives
-     3. Creative brainstorming and innovation
-     4. Conflict resolution and balanced analysis
-   - steps: 6 implementation steps provided (one for each hat) ✓
-
-✅ All acceptance criteria met:
-   - Six Hats model defined with proper structure ✓
-   - Description explains all 6 hat colors ✓
-   - Includes creative problem-solving use cases ✓
-
-**Status:** Subtask 2.2 verified and marked as completed in implementation plan.
-
-**Next:** Phase 2 - Continue with subtasks 2.3-2.7 (MECE, Inversion, Second-Order, Pre-Mortem, Five Whys already implemented, need verification)
-
----
-
-### Latest Update: 2026-01-06 13:15:00
-
-**Subtask 2.3 - Add MECE to catalog: COMPLETED**
-
-✅ Verified MECE (Mutually Exclusive Collectively Exhaustive) mental model in web/lib/resources/models.ts:
-   - name: 'mece' ✓
-   - title: 'MECE (Mutually Exclusive Collectively Exhaustive)' ✓
-   - description: Clear explanation of ME and CE concepts ✓
-     * Mutually Exclusive (no overlap between categories)
-     * Collectively Exhaustive (complete coverage of all possibilities)
-   - useCases: 4 analytical use cases provided ✓
-     1. Structuring complex problem analysis and frameworks
-     2. Organizing data and information into clear categories
-     3. Creating comprehensive business strategies
-     4. Ensuring complete coverage in research and analysis
-   - steps: 4 implementation steps provided ✓
-     1. Define the problem or domain to analyze
-     2. Create categories that cover all possibilities (Collectively Exhaustive)
-     3. Ensure no overlap between categories (Mutually Exclusive)
-     4. Validate completeness and test for gaps or duplications
-
-✅ All acceptance criteria met:
-   - MECE model defined with proper structure ✓
-   - Clear explanation of ME and CE concepts ✓
-   - Includes analytical use cases ✓
-
-**Status:** Subtask 2.3 verified and marked as completed in implementation plan.
-
-**Next:** Phase 2 - Continue with subtasks 2.5-2.7 (Second-Order, Pre-Mortem, Five Whys already implemented, need verification)
-
----
-
-### Latest Update: 2026-01-06 13:30:00
-
-**Subtask 2.4 - Add Inversion Thinking to catalog: COMPLETED**
-
-✅ Verified Inversion Thinking mental model in web/lib/resources/models.ts:
-  - name: 'inversion_thinking' ✓
-  - title: 'Inversion Thinking' ✓
-  - description: Clear explanation of working backwards from failure, references Charlie Munger ✓
-  - useCases: 4 use cases provided ✓
-    1. Risk identification and mitigation planning
-    2. Avoiding common pitfalls in projects and decisions
-    3. Pre-emptive problem-solving and failure prevention
-    4. Strategic planning by identifying what not to do
-  - steps: 4 implementation steps provided ✓
-    1. Define your goal or desired outcome
-    2. Invert the problem: imagine complete failure or disaster
-    3. List all the ways things could go wrong
-    4. Work backwards to identify what to avoid and prevent
-
-✅ All acceptance criteria met:
-  - Inversion model defined with proper structure ✓
-  - Explains working backwards from failure ✓
-  - Includes risk identification use cases ✓
-
-**Status:** Subtask 2.4 verified and marked as completed in implementation plan.
-
-**Next:** Phase 2 - Continue with subtasks 2.5-2.7 (Second-Order, Pre-Mortem, Five Whys)
-
----
-
-### Latest Update: 2026-01-06 14:15:00
-
-**Subtask 2.6 - Add Pre-Mortem Analysis to catalog: COMPLETED**
-
-✅ Verified Pre-Mortem Analysis mental model in web/lib/resources/models.ts (lines 204-218):
-  - name: 'pre_mortem' ✓
-  - title: 'Pre-Mortem Analysis' ✓
-  - description: Clear explanation of prospective hindsight concept ✓
-    "Imagine your project has failed in the future and work backwards to identify potential causes. This prospective hindsight technique helps uncover risks and failure modes before they occur."
-  - useCases: 4 project management use cases provided ✓
-    1. Project planning and risk identification
-    2. Team alignment on potential obstacles
-    3. Proactive failure prevention and mitigation
-    4. Strategic initiative evaluation and preparation
-  - steps: 4 implementation steps provided ✓
-    1. Imagine the project has completely failed at a future point
-    2. Generate reasons explaining why the failure occurred
-    3. Identify the most likely and impactful failure causes
-    4. Develop preventive measures and contingency plans for each risk
-
-✅ All acceptance criteria met:
-  - Pre-Mortem model defined with proper structure ✓
-  - Explains prospective hindsight concept ✓
-  - Includes project management use cases ✓
-
-**Status:** Subtask 2.6 verified and marked as completed in implementation plan.
-
-**Next:** Phase 2 - Complete subtask 2.7 (Five Whys)
-
----
-
-### Latest Update: 2026-01-06 14:20:00
-
-**Subtask 2.7 - Add Five Whys to catalog: COMPLETED**
-
-✅ Verified Five Whys mental model in web/lib/resources/models.ts (lines 221-237):
-  - name: 'five_whys' ✓
-  - title: 'Five Whys' ✓
-  - description: Clear explanation of iterative questioning technique with Toyota Production System reference ✓
-    "Iteratively ask 'why' (typically five times) to drill down from symptoms to the root cause. Developed as part of the Toyota Production System..."
-  - useCases: 4+ use cases including debugging and quality control ✓
-    1. Root cause analysis for bugs and system failures
-    2. Quality control and defect investigation
-    3. Process improvement and efficiency optimization
-    4. Problem-solving in manufacturing and operations
-  - steps: 5 implementation steps provided ✓
-    1. State the problem clearly and specifically
-    2. Ask "Why did this happen?" and document the answer
-    3. Ask "Why?" again for each subsequent answer (typically 5 iterations)
-    4. Continue until you reach the fundamental root cause
-    5. Implement solutions that address the root cause, not just symptoms
-
-✅ All acceptance criteria met:
-  - Five Whys model defined with proper structure ✓
-  - Explains iterative questioning technique ✓
-  - Includes debugging and quality use cases ✓
-
-**Status:** Subtask 2.7 verified and marked as completed in implementation plan.
-
-**Phase 2 Status:** COMPLETE (7/7 subtasks done). All 7 new mental models successfully added to the resource catalog.
-
-**Next:** Phase 3 - Extended Model Documentation (subtasks 3.1-3.7)
-
----
-
-### Latest Update: 2026-01-06 14:30:00
-
-**Subtask 3.1 - Add SWOT Analysis extended documentation: COMPLETED**
-
-✅ Verified SWOT Analysis extended model in web/lib/resources/extended/models.ts (lines 238-291):
-  - name: 'swot_analysis' ✓
-  - title: 'SWOT Analysis' ✓
-  - description: Clear strategic decision-making framework ✓
-  - whenToUse: 5 scenarios provided ✓
-    1. When evaluating a business strategy or market position
-    2. When making major strategic decisions or pivots
-    3. When assessing competitive advantages and vulnerabilities
-    4. When planning product launches or entering new markets
-    5. When conducting annual strategic planning or reviews
-  - steps: 5 detailed implementation steps provided ✓
-    1. Identify Strengths (internal positive attributes)
-    2. Identify Weaknesses (internal limitations)
-    3. Identify Opportunities (external favorable conditions)
-    4. Identify Threats (external risks)
-    5. Analyze intersections for strategic insights
-  - example: Comprehensive real-world example included ✓
-    * Context: Small independent coffee shop evaluating delivery service expansion
-    * Application: Full SWOT quadrants with 4 items each
-    * Strategic Insight: Leveraging strengths with opportunities to create premium subscription model
-  - relatedModels: 3 related models linked ✓
-    * opportunity_cost, second_order_effects, pre_mortem
-  - toolParameters: Complete parameter structure ✓
-
-✅ All acceptance criteria met:
-  - Complete ExtendedModel structure ✓
-  - Real-world example included ✓
-  - Related models linked ✓
-
-**Status:** Subtask 3.1 verified and marked as completed in implementation plan.
-
-**Next:** Phase 3 - Continue with subtask 3.2 (Six Thinking Hats extended documentation)
-
----
-
-### Latest Update: 2026-01-06 14:45:00
-
-**Subtask 3.2 - Add Six Thinking Hats extended documentation: COMPLETED**
-
-✅ Verified Six Thinking Hats extended model in web/lib/resources/extended/models.ts (lines 292-365):
-  - name: 'six_thinking_hats' ✓
-  - title: 'Six Thinking Hats (De Bono)' ✓
-  - description: Clear explanation of systematic perspective exploration ✓
-  - whenToUse: 5 scenarios provided ✓
-    1. When group discussions become argumentative or stuck in one perspective
-    2. When you need creative solutions and diverse viewpoints
-    3. When making complex decisions that benefit from multiple angles
-    4. When facilitating productive meetings with conflicting stakeholders
-    5. When you want to separate emotion from logic in problem-solving
-  - steps: 6 detailed implementation steps (one for each hat) ✓
-    1. White Hat (Facts & Information): Focus on data and information
-    2. Red Hat (Emotions & Intuition): Express feelings and hunches
-    3. Black Hat (Caution & Risks): Identify problems and weaknesses
-    4. Yellow Hat (Optimism & Benefits): Explore positive aspects
-    5. Green Hat (Creativity & Alternatives): Generate new ideas
-    6. Blue Hat (Process Control & Summary): Manage the thinking process
-  - example: Comprehensive real-world example included ✓
-    * Context: Product team debating AI-powered chatbot for SaaS support
-    * Application: All 6 hats demonstrated with specific perspectives from team members
-    * Blue Hat facilitates process with 5 minutes per hat
-    * White Hat: Facts and data (1,200 tickets/month, 40% repetitive, etc.)
-    * Red Hat: Team emotions (Sarah excited, Mike anxious, Lisa nervous)
-    * Black Hat: Risks identified (30-40% need human intervention, UX concerns)
-    * Yellow Hat: Benefits explored (24/7 availability, instant responses, scalability)
-    * Green Hat: Creative solutions (hybrid approach, pilot testing, brand voice)
-    * Blue Hat Summary: Final decision with metrics and ownership
-  - relatedModels: 3 related models linked ✓
-    * swot_analysis, pre_mortem, first_principles
-  - toolParameters: Complete parameter structure ✓
-
-✅ All acceptance criteria met:
-  - All 6 hats explained in steps ✓
-  - Creative problem-solving example ✓
-  - Related models linked ✓
-
-**Status:** Subtask 3.2 verified and marked as completed in implementation plan.
-
-**Next:** Phase 3 - Continue with subtasks 3.3-3.7 (MECE, Inversion, Second-Order, Pre-Mortem, Five Whys extended documentation)
-
----
-
-### Latest Update: 2026-01-06 15:00:00
-
-**Subtask 3.3 - Add MECE extended documentation: COMPLETED**
-
-✅ Verified MECE extended model in web/lib/resources/extended/models.ts (lines 366-433):
-  - name: 'mece' ✓
-  - title: 'MECE (Mutually Exclusive, Collectively Exhaustive)' ✓
-  - description: Clear framework for structuring problems without overlap and complete coverage ✓
-  - whenToUse: 5 scenarios provided ✓
-    1. When breaking down complex problems that need comprehensive analysis
-    2. When creating frameworks, segmentations, or categorizations
-    3. When you need to ensure nothing is missed and nothing is double-counted
-    4. When presenting to executives or clients who need clear, complete structures
-    5. When organizing data, issues, or options into logical groupings
-  - steps: 6 detailed implementation steps with clear ME/CE explanations ✓
-    1. Define the problem or universe you're analyzing clearly
-    2. Identify the most logical dimension or criterion to segment by
-    3. Create categories that are Mutually Exclusive (ME): No overlap - each item fits into only one category
-    4. Ensure categories are Collectively Exhaustive (CE): Complete coverage - every possible item has a category
-    5. Test your structure: Can you place every element into exactly one bucket?
-    6. Refine if needed: If items overlap or don't fit, adjust your categories
-  - example: Comprehensive consulting-style business analysis included ✓
-    * Context: Consulting firm analyzing why a retail company's revenue declined 15% YoY
-    * Application: Shows non-MECE approach and its problems, then demonstrates proper MECE framework
-    * Framework: Revenue = Number of Customers × Average Transaction Value × Purchase Frequency
-    * Breakdown: Customer count dropped 12%, Transaction value dropped 8%, Frequency unchanged
-    * Combined effect: ~15% revenue decline (mathematically validates the framework)
-    * Explicit ME/CE callouts explaining why the framework is MECE
-    * Outcome: Targeted fixes (digital ad spending, out-of-stock issues) vs scattered efforts
-  - relatedModels: 3 related models linked ✓
-    * first_principles, swot_analysis, five_whys
-  - toolParameters: Complete parameter structure ✓
-
-✅ All acceptance criteria met:
-  - ME and CE concepts clearly explained ✓
-  - Business analysis/consulting-style example ✓
-  - Related models linked ✓
-
-**Status:** Subtask 3.3 verified and marked as completed in implementation plan.
-
-**Next:** Phase 3 - Continue with subtasks 3.4-3.7 (Inversion, Second-Order, Pre-Mortem, Five Whys extended documentation)
+Last Updated: 2026-01-06
+Current Phase: 2 (IN PROGRESS)
