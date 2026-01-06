@@ -289,6 +289,80 @@ Instead of competing on speed with chain competitors, leverage Strengths (qualit
       steps: ['Strengths, Weaknesses, Opportunities, Threats analysis'],
     },
   },
+  six_thinking_hats: {
+    name: 'six_thinking_hats',
+    title: 'Six Thinking Hats (De Bono)',
+    description: 'Explore different perspectives systematically by wearing six metaphorical "hats" representing different thinking modes.',
+    whenToUse: [
+      'When group discussions become argumentative or stuck in one perspective',
+      'When you need creative solutions and diverse viewpoints',
+      'When making complex decisions that benefit from multiple angles',
+      'When facilitating productive meetings with conflicting stakeholders',
+      'When you want to separate emotion from logic in problem-solving',
+    ],
+    steps: [
+      'White Hat (Facts & Information): Focus purely on available data, facts, and information. What do we know? What data is missing? Be objective and neutral, like a computer presenting facts.',
+      'Red Hat (Emotions & Intuition): Express feelings, hunches, and gut reactions without justification. How do we feel about this? Trust intuition. No need to explain or defend emotional responses.',
+      'Black Hat (Caution & Risks): Identify potential problems, risks, and weaknesses. What could go wrong? Play devil\'s advocate. Be critical and cautious, highlighting dangers and downsides.',
+      'Yellow Hat (Optimism & Benefits): Explore positive aspects, benefits, and opportunities. What are the best-case scenarios? Be constructive and optimistic, finding value and advantages.',
+      'Green Hat (Creativity & Alternatives): Generate new ideas, possibilities, and creative solutions. Think outside the box. Brainstorm alternatives without judgment. Embrace lateral thinking.',
+      'Blue Hat (Process Control & Summary): Manage the thinking process itself. Set the agenda, ensure all hats are used, summarize insights, and facilitate decision-making. The "conductor" of the thinking orchestra.',
+    ],
+    example: {
+      context: 'A product team debating whether to add AI-powered chatbot support to their SaaS application',
+      application: `Blue Hat (Process): "Let's examine this chatbot proposal systematically. We'll spend 5 minutes on each hat."
+
+White Hat (Facts):
+- Current support volume: 1,200 tickets/month, 40% are repetitive questions
+- Average response time: 4 hours
+- Support team: 3 people, costs $180K/year
+- Chatbot implementation estimate: $50K initial + $15K/year maintenance
+- Industry data: Chatbots resolve 60-70% of common queries
+
+Red Hat (Emotions):
+- Sarah (Product): "I'm excited! This feels innovative and customer-friendly."
+- Mike (Support): "I'm anxious. What if customers hate talking to a bot? I feel protective of our personal touch."
+- Lisa (Finance): "My gut says this is smart, but I'm nervous about upfront costs."
+
+Black Hat (Risks):
+- 30-40% of queries may still need human intervention
+- Poor chatbot UX could frustrate customers and damage brand
+- Initial implementation might have bugs, creating more work short-term
+- Team might resist, fearing job security
+- Could feel impersonal, losing our "high-touch service" differentiator
+
+Yellow Hat (Benefits):
+- 24/7 support availability (huge for international customers!)
+- Instant responses to common questions
+- Support team can focus on complex, high-value interactions
+- Scalable: handles volume spikes without hiring
+- Data collection: chatbot logs reveal common pain points
+- Competitive advantage if done well
+
+Green Hat (Creativity):
+- Hybrid approach: Chatbot handles tier-1, seamless handoff to humans for tier-2
+- Train chatbot on our unique brand voice to maintain personality
+- Use chatbot data to create a "smart FAQ" that learns
+- Offer both options: "Chat with AI (instant)" vs "Talk to human (4-hour wait)"
+- Start with a 3-month pilot on 50% of users, A/B test satisfaction
+
+Blue Hat (Summary & Decision):
+Based on our exploration:
+- Facts support potential ROI and efficiency gains (White)
+- Team has mixed emotions, need to address Mike's concerns (Red)
+- Real risks exist around UX and brand perception (Black)
+- Significant upside if implemented well (Yellow)
+- Hybrid pilot approach mitigates risks while testing value (Green)
+
+Decision: Proceed with 3-month hybrid pilot. Success metrics: response time, customer satisfaction scores, support team workload. Mike leads UX design to ensure brand alignment.`,
+    },
+    relatedModels: ['swot_analysis', 'pre_mortem', 'first_principles'],
+    toolParameters: {
+      modelName: 'six_thinking_hats',
+      problem: 'Your decision or problem requiring multiple perspectives',
+      steps: ['White (facts), Red (feelings), Black (risks), Yellow (benefits), Green (ideas), Blue (process)'],
+    },
+  },
 };
 
 /**
