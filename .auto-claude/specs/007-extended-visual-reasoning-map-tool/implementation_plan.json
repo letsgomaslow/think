@@ -49,8 +49,8 @@
           "file_paths": [
             "web/lib/tools/map.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Web tool schema successfully updated with all 5 new diagram types (sequenceDiagram, stateMachine, erDiagram, mindMap, contextDiagram) in the diagramTypeEnum. Changes verified in commit 8ea5894. The enum now includes all 11 diagram types (6 existing + 5 new) and aligns with the backend interfaces."
         }
       ]
     },
