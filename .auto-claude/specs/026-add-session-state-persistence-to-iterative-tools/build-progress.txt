@@ -345,8 +345,79 @@ All subtasks for HypothesisServer state persistence have been completed successf
 
 ---
 
+### ✅ Subtask 5.2: Add history retrieval methods to DebateServer (COMPLETED)
+- Added public getDebateHistory(rootArgumentId) method
+  - Returns all ArgumentData entries for a debate chain
+  - Returns empty array if chain doesn't exist
+- Added public getArgumentTree(rootArgumentId) method
+  - Returns tree structure showing argument relationships
+  - Handles non-existent debate chains gracefully with empty values
+- Commit: e2d1f8a
+
+**Implementation Details:**
+- getDebateHistory: Simple retrieval with fallback to empty array
+- getArgumentTree: Builds comprehensive tree structure with:
+  - totalArguments: Count of all arguments in the debate chain
+  - argumentTypes: Array of unique argument types (thesis, antithesis, synthesis, objection, rebuttal)
+  - tree: Array of argument nodes with:
+    * Basic info: argumentId, argumentType, claim, confidence
+    * Relationships: respondsTo, supports, contradicts arrays
+    * Children: All related arguments with relationship types (response, support, contradiction)
+  - Tree building logic:
+    * Finds all responses (arguments that respondsTo this one)
+    * Finds all supporting arguments (this argument supports)
+    * Finds all contradicting arguments (this argument contradicts)
+    * Combines into children array with relationship type labels
+
+**Files Modified:**
+- src/tools/debateServer.ts
+
+---
+
+### ✅ Subtask 5.3: Add tests for DebateServer state persistence (COMPLETED)
+- Added comprehensive state persistence test suite to debateServer.test.ts
+- Tests verify multiple arguments stored in thesis-antithesis-synthesis chains
+- Tests verify different debate chains maintain separate state
+- Tests verify argument relationships (respondsTo, supports, contradicts)
+- Tests verify getArgumentTree structure with relationship types
+- Tests verify full argument data preservation
+- Commit: 55ecaed
+
+**Test Coverage:**
+1. **Argument Chain Storage**:
+   - Verifies thesis-antithesis-synthesis chains are stored correctly
+   - Verifies multiple arguments stored for same debate chain
+   - Verifies different chains maintain independent state
+   - Verifies empty array returned for non-existent chains
+2. **Argument Relationships**:
+   - Verifies respondsTo relationships tracked across arguments
+   - Verifies supports relationships tracked (arguments supporting other arguments)
+   - Verifies contradicts relationships tracked (arguments contradicting other arguments)
+3. **getArgumentTree functionality**:
+   - Verifies tree structure with argument hierarchy
+   - Verifies totalArguments count
+   - Verifies argumentTypes array (thesis, antithesis, synthesis, objection, rebuttal)
+   - Verifies parent-child relationships with relationship types (response, support, contradiction)
+   - Verifies root node has objection/rebuttal children
+   - Verifies complex debate trees with multiple levels
+   - Verifies empty tree for non-existent debates
+4. **Data Preservation**: Verifies all fields are preserved including:
+   - argumentId, claim, premises, conclusion
+   - argumentType, confidence
+   - respondsTo, supports, contradicts
+   - strengths, weaknesses
+   - nextArgumentNeeded, suggestedNextTypes
+
+**Files Modified:**
+- src/tools/debateServer.test.ts
+
+---
+
+## Phase 5 Status: COMPLETED ✅
+All subtasks for DebateServer state persistence have been completed successfully.
+
+---
+
 ## Next Steps
-- Subtask 5.2: Add history retrieval methods to DebateServer
-- Subtask 5.3: Add tests for DebateServer state persistence
 - Phase 6: Add State Persistence to MapServer
 - Phase 7: Integration and Verification
