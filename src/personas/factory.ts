@@ -122,9 +122,10 @@ export class PersonaFactory {
 
     /**
      * Convert EnhancedPersonaData to base PersonaData format
-     * Useful for backward compatibility with existing council tool
+     * Now includes optional enhanced fields (category, tags, concerns, typicalQuestions)
+     * since PersonaData interface has been updated to support them
      * @param enhancedPersona - Enhanced persona data with category and metadata
-     * @returns Base PersonaData without enhanced fields
+     * @returns Base PersonaData with enhanced fields preserved
      */
     public toBasePersonaData(enhancedPersona: EnhancedPersonaData): PersonaData {
         return {
@@ -134,7 +135,11 @@ export class PersonaFactory {
             background: enhancedPersona.background,
             perspective: enhancedPersona.perspective,
             biases: [...enhancedPersona.biases],
-            communication: { ...enhancedPersona.communication }
+            communication: { ...enhancedPersona.communication },
+            category: enhancedPersona.category,
+            tags: [...enhancedPersona.tags],
+            concerns: [...enhancedPersona.concerns],
+            typicalQuestions: [...enhancedPersona.typicalQuestions]
         };
     }
 
