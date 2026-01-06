@@ -569,6 +569,128 @@ Key lesson: Always ask "And then what happens?" The most obvious solution often 
       steps: ['First-order effects', 'Second-order effects', 'Third-order effects', 'Feedback loops', 'Net impact evaluation'],
     },
   },
+  pre_mortem: {
+    name: 'pre_mortem',
+    title: 'Pre-Mortem Analysis',
+    description: 'Imagine your project has failed spectacularly, then work backwards to identify what went wrong. Use prospective hindsight to prevent failures before they happen.',
+    whenToUse: [
+      'Before launching major projects or initiatives',
+      'When planning complex endeavors with many moving parts',
+      'When stakeholder buy-in and risk mitigation are critical',
+      'When you want to surface concerns people are hesitant to voice',
+      'When past projects have failed due to overlooked risks',
+    ],
+    steps: [
+      'Set the scene: Imagine it is 6-12 months in the future and your project has failed catastrophically. It\'s a complete disaster.',
+      'Write the obituary: Take 5-10 minutes and write down all the reasons why the project failed. Be specific. What went wrong? Why did it fail?',
+      'Share failure stories: If in a group, have each person share their failure narrative. This surfaces diverse concerns and risks that individuals might not voice in normal planning.',
+      'Categorize failure modes: Group the identified failures into categories (e.g., technical risks, organizational issues, market factors, resource constraints).',
+      'Prioritize high-probability, high-impact failures: Which failure modes are most likely? Which would be most damaging?',
+      'Develop mitigations: For each major failure mode, create concrete preventive actions, early warning indicators, and contingency plans.',
+      'Update the project plan: Incorporate mitigations into your timeline, budget, and risk management process.',
+    ],
+    example: {
+      context: 'A startup planning to launch a new mobile app marketplace in 6 months',
+      application: `The Setup:
+It's 6 months from now. The app marketplace launch was a complete disaster. The company burned through $2M, laid off half the team, and the product was shut down after 3 months. What happened?
+
+Pre-Mortem Failure Narratives:
+
+Sarah (Product Lead):
+"We launched with only 12 vendors on the platform instead of the 100 we promised. Turns out recruiting vendors took 3x longer than expected because our commission structure wasn't competitive. Users downloaded the app, found nothing to buy, and never came back. Chicken-and-egg problem killed us."
+
+Mike (Engineering):
+"We completely underestimated the payment processing integration. Stripe looked simple in the demo, but handling refunds, disputes, multi-currency, and vendor payouts took 4 months instead of 4 weeks. We launched without a working payment system and had to go dark for fixes. Lost all our early momentum."
+
+Lisa (Marketing):
+"Our acquisition cost was $45 per user but lifetime value was only $12. The unit economics never worked. We spent the entire marketing budget in month 1 on Facebook ads that brought low-intent users who churned immediately. We had no organic growth strategy or retention plan."
+
+David (Operations):
+"Customer support was a nightmare. We launched with one part-time support person for thousands of users across vendors, buyers, and payment issues. Response time was 3-5 days. Social media filled with angry complaints. App Store rating dropped to 2.1 stars. Death spiral."
+
+Jennifer (Legal/Compliance):
+"We didn't realize we needed money transmitter licenses in 47 states to operate the marketplace legally. Got a cease-and-desist from New York State DFS 6 weeks after launch. Had to shut down in major markets while we scrambled for licenses that take 6-12 months to obtain. Competitors took our market share."
+
+Analysis - Failure Mode Categories:
+
+1. **Marketplace Dynamics (High Probability, High Impact)**
+   - Cold start problem: Not enough vendors to attract buyers
+   - Commission structure not competitive with alternatives
+   - No critical mass at launch
+
+2. **Technical Complexity (High Probability, High Impact)**
+   - Payment processing more complex than anticipated
+   - Underestimated integration effort by 10x
+   - Launched with broken core functionality
+
+3. **Unit Economics (High Probability, Fatal)**
+   - CAC > LTV by 4x
+   - No sustainable growth model
+   - Marketing spend inefficient
+
+4. **Operational Readiness (Medium Probability, High Impact)**
+   - Customer support understaffed
+   - No escalation process
+   - Brand damage from poor service
+
+5. **Legal/Regulatory (Low Probability, Fatal)**
+   - Money transmitter licenses not obtained
+   - Forced shutdown in major markets
+   - Competitive disadvantage during downtime
+
+Preventive Actions Created:
+
+✓ **For Marketplace Problem:**
+  - Launch vendor recruitment 3 months earlier (start now!)
+  - Benchmark commission structure against competitors before finalizing
+  - Set success criteria: 50 vendors minimum before public launch
+  - Consider "invite-only" beta to build supply before marketing
+
+✓ **For Technical Complexity:**
+  - Allocate 3 months for payment integration (not 1 month)
+  - Build test environment with all payment scenarios (refunds, disputes, multi-currency)
+  - Hire a payments consultant for 2-week technical review
+  - Add 50% buffer to all integration estimates
+
+✓ **For Unit Economics:**
+  - Run small test campaigns ($5K budget) before committing marketing spend
+  - Build retention features (push notifications, favorites, deals) before launch
+  - Set hard rule: No massive marketing spend until LTV > CAC demonstrated
+  - Develop organic/viral growth features (referral program, social sharing)
+
+✓ **For Operations:**
+  - Hire 2 full-time support people before launch (not after)
+  - Implement helpdesk software (Zendesk) and chatbot for common questions
+  - Create vendor + buyer FAQ and tutorial videos
+  - Set SLA: respond to all inquiries within 24 hours
+
+✓ **For Legal/Regulatory:**
+  - Consult fintech lawyer NOW (before building anything)
+  - Research money transmitter license requirements in top 10 states
+  - Budget $200K and 6 months for license acquisition if needed
+  - Consider alternative payment structures that avoid licensing (escrow partner?)
+
+Outcome:
+The pre-mortem surfaced 5 major failure modes, 3 of which (marketplace dynamics, payment complexity, unit economics) would have killed the project if not addressed. By imagining failure vividly, the team identified concrete risks that weren't obvious in optimistic planning sessions.
+
+The revised project plan:
+- Delayed public launch by 3 months to build vendor base
+- Hired payments specialist and legal counsel
+- Ran small marketing tests before committing budget
+- Staffed operations properly from day one
+
+Key Insight:
+Pre-mortem works because it gives permission to be pessimistic. In normal planning, people are afraid to voice doubts ("I don't want to seem negative"). By explicitly asking "How will this fail?", you unlock valuable concerns that might otherwise stay hidden until it's too late.
+
+The exercise transforms vague worries into concrete, addressable risks. It's easier to prevent a failure you've imagined than one you never considered.`,
+    },
+    relatedModels: ['inversion_thinking', 'second_order_effects', 'swot_analysis'],
+    toolParameters: {
+      modelName: 'pre_mortem',
+      problem: 'Your project or initiative to analyze',
+      steps: ['Imagine future failure', 'Write failure narratives', 'Categorize failure modes', 'Develop preventive actions'],
+    },
+  },
 };
 
 /**
