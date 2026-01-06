@@ -16,8 +16,8 @@
 ### Phase 3: Extended Model Documentation ✅ COMPLETED
 - ✅ 3.1: Add SWOT Analysis extended documentation (commit 78cb7e8)
 - ✅ 3.2: Add Six Thinking Hats extended documentation (commit 4802e41) - VERIFIED
-- ✅ 3.3: Add MECE extended documentation
-- ✅ 3.4: Add Inversion Thinking extended documentation
+- ✅ 3.3: Add MECE extended documentation (commit 6c09853) - VERIFIED
+- ✅ 3.4: Add Inversion Thinking extended documentation (commit c6c377f) - VERIFIED
 - ✅ 3.5: Add Second-Order Effects extended documentation
 - ✅ 3.6: Add Pre-Mortem extended documentation
 - ✅ 3.7: Add Five Whys extended documentation
@@ -31,11 +31,11 @@
 - ⏳ 5.2: Build verification
 
 ### Current Status
-Subtask 3.3 (MECE extended documentation) has been verified and marked as completed. The implementation was already present in the codebase (commit 6c09853) and meets all acceptance criteria:
-- ✓ ME and CE concepts clearly explained (Step 3: Mutually Exclusive - no overlap, each item in only one category; Step 4: Collectively Exhaustive - complete coverage, every item has a category)
-- ✓ Consulting-style business analysis example (consulting firm analyzing retail revenue decline using Revenue = Customers × Transaction × Frequency framework)
-- ✓ Related models properly linked (first_principles, swot_analysis, five_whys)
-- ✓ Complete implementation in web/lib/resources/extended/models.ts lines 366-433
+Subtask 3.4 (Inversion Thinking extended documentation) has been verified and marked as completed. The implementation was already present in the codebase (commit c6c377f) and meets all acceptance criteria:
+- ✓ Inversion concept clearly explained (lines 437-452 explain inverting problems to identify failure modes)
+- ✓ Practical avoidance example (Charlie Munger investment portfolio example with his famous quote about "being consistently not stupid")
+- ✓ Related models properly linked (pre_mortem, second_order_effects, first_principles)
+- ✓ Complete implementation in web/lib/resources/extended/models.ts lines 434-503
 
 All implementation work for Phases 1-4 is complete.
 

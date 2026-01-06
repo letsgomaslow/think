@@ -197,12 +197,14 @@
           "title": "Add Inversion Thinking extended documentation",
           "description": "Add Inversion Thinking to EXTENDED_MODELS with Charlie Munger-style example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Inversion concept clearly explained",
             "Practical avoidance example",
             "Related models linked"
-          ]
+          ],
+          "completed_at": "2026-01-06T07:19:00.000Z",
+          "notes": "Inversion Thinking fully implemented in EXTENDED_MODELS with complete structure including whenToUse (5 cases), detailed steps (6 steps explaining the inversion approach), comprehensive Charlie Munger-style investment example demonstrating avoidance of failure modes with his famous quote about 'being consistently not stupid,' relatedModels linked (pre_mortem, second_order_effects, first_principles), and toolParameters. Implementation verified in web/lib/resources/extended/models.ts lines 434-503. Previous commit: c6c377f."
         },
         {
           "subtask_id": "3.5",
