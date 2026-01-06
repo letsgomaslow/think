@@ -218,12 +218,182 @@ problem-definition → ideation → critique → integration → decision → re
 - **Track disagreements** - Unresolved disagreements are signals, not failures
 - **Chain with Decide** - After Council consensus, use Decide for formal decision analysis
 
+## Predefined Persona Library
+
+Council comes with a library of **14 expert personas** across 4 categories. These personas have been carefully crafted with distinct expertise, communication styles, and perspectives.
+
+### Categories
+
+#### ⚙️ Technical Experts
+
+Specialized technical personas for engineering decisions:
+
+| Persona ID | Name | Expertise Focus |
+|-----------|------|-----------------|
+| `security-specialist` | Security Specialist | Threat modeling, vulnerability assessment, secure architecture, compliance (GDPR, SOC2, HIPAA) |
+| `performance-engineer` | Performance Engineer | Optimization, profiling, scalability, resource management |
+| `ux-researcher` | UX Researcher | User research, usability testing, accessibility (WCAG), human-centered design |
+| `devops-expert` | DevOps Expert | CI/CD, infrastructure as code, observability, SRE practices |
+
+**When to use**: Architecture decisions, technical tradeoffs, security reviews, performance optimization, user experience design.
+
+---
+
+#### 💼 Business Experts
+
+Strategic business personas for product and growth decisions:
+
+| Persona ID | Name | Expertise Focus |
+|-----------|------|-----------------|
+| `product-manager` | Product Manager | Roadmapping, prioritization (RICE, MoSCoW), stakeholder management, product strategy |
+| `growth-hacker` | Growth Hacker | AARRR metrics, viral mechanics, conversion optimization, product-led growth |
+| `customer-success` | Customer Success Manager | Onboarding, churn prevention, customer health scoring, value realization |
+| `business-analyst` | Business Analyst | Requirements gathering, process optimization, data analysis, ROI modeling |
+
+**When to use**: Product strategy, feature prioritization, go-to-market planning, growth initiatives, customer retention.
+
+---
+
+#### 🎨 Creative Experts
+
+Creative personas for innovation and brand decisions:
+
+| Persona ID | Name | Expertise Focus |
+|-----------|------|-----------------|
+| `design-thinker` | Design Thinker | Design thinking methodology, empathy building, rapid prototyping, human-centered innovation |
+| `storyteller` | Storyteller | Narrative structure, emotional resonance, persuasive communication, brand storytelling |
+| `brand-strategist` | Brand Strategist | Brand positioning, identity systems, messaging, market differentiation |
+| `innovation-catalyst` | Innovation Catalyst | Disruptive innovation, blue ocean strategy, emerging trends, business model innovation |
+
+**When to use**: Brand development, creative problem-solving, innovation initiatives, customer experience design, storytelling.
+
+---
+
+#### 🔍 General Experts
+
+General-purpose personas for critical analysis:
+
+| Persona ID | Name | Expertise Focus |
+|-----------|------|-----------------|
+| `devils-advocate` | Devil's Advocate | Critical thinking, assumption testing, risk analysis, pre-mortem analysis |
+| `systems-thinker` | Systems Thinker | Interconnections, feedback loops, unintended consequences, holistic analysis |
+
+**When to use**: Stress-testing ideas, challenging assumptions, understanding system dynamics, risk assessment.
+
+---
+
+### Using Predefined Personas
+
+#### Option 1: Select Entire Category
+
+Use `personaCategory` to instantly assemble an expert panel from a category:
+
+```json
+{
+  "topic": "Should we rebuild our frontend in React?",
+  "personaCategory": "technical",
+  "stage": "problem-definition",
+  "sessionId": "frontend-rebuild-001",
+  "iteration": 1,
+  "nextContributionNeeded": true
+}
+```
+
+This will bring in Security Specialist, Performance Engineer, UX Researcher, and DevOps Expert.
+
+---
+
+#### Option 2: Select Specific Predefined Personas
+
+Use `predefinedPersonas` to handpick specific experts by their IDs:
+
+```json
+{
+  "topic": "How should we price our new premium tier?",
+  "predefinedPersonas": [
+    "product-manager",
+    "growth-hacker",
+    "customer-success",
+    "devils-advocate"
+  ],
+  "stage": "ideation",
+  "sessionId": "pricing-strategy-001",
+  "iteration": 1,
+  "nextContributionNeeded": true
+}
+```
+
+This creates a council with Product Manager, Growth Hacker, Customer Success Manager, and Devil's Advocate.
+
+---
+
+#### Option 3: Mix Predefined with Custom Personas
+
+Combine predefined personas with your own custom experts:
+
+```json
+{
+  "topic": "Evaluating our brand redesign proposal",
+  "predefinedPersonas": [
+    "brand-strategist",
+    "design-thinker",
+    "ux-researcher"
+  ],
+  "personas": [
+    {
+      "id": "ceo",
+      "name": "Sarah Chen",
+      "expertise": ["Company Vision", "Strategic Alignment"],
+      "background": "Founder and CEO with 20 years industry experience",
+      "perspective": "Brand must reflect our mission and resonate with enterprise customers",
+      "biases": ["Strong attachment to legacy brand elements"],
+      "communication": {
+        "style": "Visionary and values-driven",
+        "tone": "Inspiring but practical"
+      }
+    }
+  ],
+  "stage": "critique",
+  "sessionId": "brand-redesign-001",
+  "iteration": 3,
+  "nextContributionNeeded": true
+}
+```
+
+The predefined personas (Brand Strategist, Design Thinker, UX Researcher) will be enriched with their full expertise, while your custom CEO persona adds company-specific context.
+
+---
+
+### Category Selection Guide
+
+| Your Goal | Recommended Category | Example Use Cases |
+|-----------|---------------------|-------------------|
+| Technical architecture decisions | **Technical** | API design, database selection, security architecture, performance optimization |
+| Product & business strategy | **Business** | Feature prioritization, go-to-market strategy, pricing models, growth experiments |
+| Brand, creative, innovation | **Creative** | Brand positioning, storytelling, design challenges, disruptive innovation |
+| Critical analysis & systems thinking | **General** | Risk assessment, assumption testing, complex problem analysis, pre-mortem sessions |
+| Multi-dimensional decisions | **Mix categories** | Platform redesign (technical + business + creative), company strategy (business + creative + general) |
+
+---
+
+### Benefits of Predefined Personas
+
+✅ **Ready to Use** - No need to craft detailed persona profiles
+✅ **Distinct Voices** - Each persona has unique expertise, biases, and communication styles
+✅ **Complementary Perspectives** - Designed to work well together
+✅ **Rich Metadata** - Includes expertise areas, typical questions, concerns, and use cases
+✅ **Fully Compatible** - Mix with custom personas or use standalone
+
+---
+
 ## Quick Reference
 
 | Parameter | Type | Required | Description |
 |-----------|------|----------|-------------|
 | `topic` | string | Yes | What the council is discussing |
-| `personas` | array | Yes | Expert personas with id, name, expertise, background, perspective, biases, communication |
+| `personaCategory` | enum | No | Use entire category: `technical`, `business`, `creative`, `general` |
+| `predefinedPersonas` | string[] | No | Array of predefined persona IDs to include |
+| `personas` | array | No* | Custom expert personas with id, name, expertise, background, perspective, biases, communication |
 | `contributions` | array | Yes | Array of contributions with personaId, content, type, confidence |
 | `stage` | enum | Yes | problem-definition, ideation, critique, integration, decision, reflection |
 | `activePersonaId` | string | Yes | Currently active persona |
@@ -234,3 +404,5 @@ problem-definition → ideation → critique → integration → decision → re
 | `disagreements` | array | No | Structured disagreements |
 | `keyInsights` | string[] | No | Key insights discovered |
 | `finalRecommendation` | string | No | Council's recommendation |
+
+\* At least one of `personaCategory`, `predefinedPersonas`, or `personas` must be provided.
