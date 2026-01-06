@@ -169,12 +169,14 @@
           "title": "Add Six Thinking Hats extended documentation",
           "description": "Add Six Thinking Hats to EXTENDED_MODELS with detailed hat-by-hat explanation and group problem-solving example",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "All 6 hats explained in steps",
             "Creative problem-solving example",
             "Related models linked"
-          ]
+          ],
+          "completed_at": "2026-01-06T12:00:00.000Z",
+          "notes": "Six Thinking Hats fully implemented in EXTENDED_MODELS with complete structure including whenToUse (5 cases), detailed steps explaining all 6 hats (White-Facts, Red-Emotions, Black-Risks, Yellow-Benefits, Green-Creativity, Blue-Process), comprehensive group problem-solving example (AI chatbot decision with all perspectives), relatedModels linked (swot_analysis, pre_mortem, first_principles), and toolParameters. Implementation verified in web/lib/resources/extended/models.ts lines 292-365. Previous commit: 4802e41."
         },
         {
           "subtask_id": "3.3",
