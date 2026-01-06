@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (27/33 subtasks completed - 82%)
+## Current Status: In Progress (28/33 subtasks completed - 85%)
 
 ### Completed Subtasks
 
@@ -156,9 +156,14 @@
   - Status: Committed (commit: 723115f)
   - Notes: Comprehensive unit tests for PersonaFactory class with 60+ test cases covering all public methods including createFromPredefined (with merge/replace strategies), createFromOptions, createCustom (with validation), toBasePersonaData, createMultipleFromPredefined, createFromCategory, clonePersona, and helper methods. Tests error handling, deep copying, and edge cases.
 
+- [x] 8.3 - Write unit tests for all predefined personas
+  - File: src/personas/personas.test.ts
+  - Status: Committed (commit: c60c67e)
+  - Notes: Comprehensive unit tests for all predefined personas with 50+ test cases covering library completeness, structure validation, distinct voice characteristics, expertise validation, category-specific validation, quality metrics, and cross-persona relationships
+
 ### Next Steps
 - [ ] Continue with Phase 8: Testing
-  - 8.3 - Write unit tests for all predefined personas
+  - 8.4 - Write integration tests for council with predefined personas
 
 ### Build Notes
 - Phase 1, 2, 3, 4, 5, & 6 complete! 🎉
