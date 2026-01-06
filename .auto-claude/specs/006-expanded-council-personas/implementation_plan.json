@@ -127,8 +127,8 @@
           "files": [
             "src/personas/business/growth-hacker.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Growth Hacker persona fully implemented in src/personas/business/growth-hacker.ts. Includes comprehensive expertise in AARRR metrics (Acquisition, Activation, Retention, Referral, Revenue), growth experimentation, viral mechanics, conversion optimization, and product-led growth. Features data-driven communication style focused on rapid testing and experimentation. Includes typical concerns about CAC/LTV, funnel optimization, and growth loops. Committed in 97ded04."
         },
         {
           "subtask_id": "3.3",
@@ -137,8 +137,8 @@
           "files": [
             "src/personas/business/customer-success.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Customer Success Manager persona fully implemented in src/personas/business/customer-success.ts. Includes comprehensive expertise in customer onboarding, adoption, churn prevention, customer health scoring, value realization, lifecycle management, and expansion strategies. Features empathetic, outcome-focused communication style centered on customer outcomes. Covers 14 areas of expertise, extensive concerns about churn and adoption, typical questions about health scores and retention, and use cases spanning the full customer journey from onboarding to advocacy. Committed in 0874e70."
         },
         {
           "subtask_id": "3.4",

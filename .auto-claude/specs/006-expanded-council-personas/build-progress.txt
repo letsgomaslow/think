@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (9/33 subtasks completed - 27%)
+## Current Status: In Progress (11/33 subtasks completed - 33%)
 
 ### Completed Subtasks
 
@@ -52,19 +52,29 @@
   - Status: Committed (commit: 7df3eb8)
   - Notes: Product strategy expert with expertise in roadmapping, prioritization, stakeholder management, and metrics
 
+- [x] 3.2 - Growth Hacker persona
+  - File: src/personas/business/growth-hacker.ts
+  - Status: Committed (commit: 97ded04)
+  - Notes: Growth expert with expertise in AARRR metrics, viral mechanics, conversion optimization, and product-led growth
+
+- [x] 3.3 - Customer Success persona
+  - File: src/personas/business/customer-success.ts
+  - Status: Committed (commit: 0874e70)
+  - Notes: Customer success expert with expertise in onboarding, churn prevention, health scoring, and value realization
+
 ### Next Steps
 - [ ] Continue with Phase 3: Business Expert Personas
-  - 3.2 - Growth Hacker persona
-  - 3.3 - Customer Success persona
   - 3.4 - Business Analyst persona
   - 3.5 - Business Experts category index
 
 ### Build Notes
 - Phase 1 & 2 complete! 🎉
-- Phase 3 in progress - Business Expert Personas
+- Phase 3 in progress - Business Expert Personas (3/5 complete)
 - Persona library architecture fully implemented with registry and factory patterns
 - 4 technical expert personas implemented with distinct voices and expertise
 - Product Manager persona complete - strategic focus on roadmapping, prioritization, and stakeholder alignment
+- Growth Hacker persona complete - data-driven focus on AARRR metrics, viral loops, and experimentation
+- Customer Success persona complete - empathetic focus on onboarding, retention, health scoring, and value realization
 - All personas include: expertise, background, perspective, biases, communication style, concerns, typical questions, use cases, and complementary personas
 - Auto-registration system ensures personas are available in global registry
 - Search and query capabilities with relevance scoring
