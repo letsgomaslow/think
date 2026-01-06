@@ -46,7 +46,7 @@
           "title": "Add SWOT Analysis to catalog",
           "description": "Add SWOT Analysis mental model with name, title, description, useCases, and steps to MENTAL_MODELS array",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "SWOT model defined with proper structure",
             "Includes 4+ use cases",
@@ -58,7 +58,7 @@
           "title": "Add Six Thinking Hats to catalog",
           "description": "Add Six Thinking Hats (De Bono) mental model with all hat colors explained",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Six Hats model defined with proper structure",
             "Description explains all 6 hat colors",
@@ -70,7 +70,7 @@
           "title": "Add MECE to catalog",
           "description": "Add MECE (Mutually Exclusive Collectively Exhaustive) mental model for comprehensive analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "MECE model defined with proper structure",
             "Clear explanation of ME and CE concepts",
@@ -82,7 +82,7 @@
           "title": "Add Inversion Thinking to catalog",
           "description": "Add Inversion Thinking mental model for reverse problem-solving",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Inversion model defined with proper structure",
             "Explains working backwards from failure",
@@ -94,7 +94,7 @@
           "title": "Add Second-Order Effects to catalog",
           "description": "Add Second-Order Effects mental model for consequence chain analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Second-Order model defined with proper structure",
             "Explains cascading effects concept",
@@ -106,7 +106,7 @@
           "title": "Add Pre-Mortem Analysis to catalog",
           "description": "Add Pre-Mortem Analysis mental model for prospective failure analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Pre-Mortem model defined with proper structure",
             "Explains prospective hindsight concept",
@@ -118,7 +118,7 @@
           "title": "Add Five Whys to catalog",
           "description": "Add Five Whys mental model for root cause analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Five Whys model defined with proper structure",
             "Explains iterative questioning technique",
