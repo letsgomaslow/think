@@ -1,10 +1,10 @@
 {
   "discovered_files": {
     "src/models/interfaces.ts": {
-      "description": "Added ReversibilityData interface with DoorType enum for one-way/two-way door classification, following the pattern of other decision framework interfaces (RiskItem, CostBenefitAnalysis, etc.)",
-      "category": "data-model",
-      "discovered_at": "2026-01-06T03:47:09.138357+00:00"
+      "description": "Added RegretMinimizationData interface with TimeHorizonRegret helper interface for the 10/10/10 framework (10 minutes, 10 months, 10 years). Includes futureSelfPerspective, potentialRegrets, and optional regretScore and timeHorizonAnalysis fields.",
+      "category": "decision-framework",
+      "discovered_at": "2026-01-06T03:48:52.331562+00:00"
     }
   },
-  "last_updated": "2026-01-06T03:47:09.138372+00:00"
+  "last_updated": "2026-01-06T03:48:52.331576+00:00"
 }

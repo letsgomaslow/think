@@ -75,11 +75,13 @@
           "id": "1.6",
           "title": "Create Regret Minimization data structures",
           "description": "Add RegretMinimizationData interface with future self perspective, potential regrets at 10 min/10 months/10 years, and time-horizon analysis",
-          "status": "pending",
+          "status": "completed",
           "estimatedMinutes": 15,
           "files": [
             "src/models/interfaces.ts"
-          ]
+          ],
+          "notes": "Successfully added RegretMinimizationData interface to src/models/interfaces.ts with all required fields:\n- TimeHorizonRegret interface with tenMinutes, tenMonths, and tenYears properties for the 10/10/10 framework\n- RegretMinimizationData interface with optionId, futureSelfPerspective, potentialRegrets (TimeHorizonRegret), and optional regretScore and timeHorizonAnalysis fields\nFollows existing code patterns and integrates cleanly with other decision framework types.",
+          "updated_at": "2026-01-06T03:48:46.840949+00:00"
         }
       ]
     },
@@ -357,5 +359,5 @@
     "issues": "",
     "testsPassed": ""
   },
-  "last_updated": "2026-01-06T03:47:04.388487+00:00"
+  "last_updated": "2026-01-06T03:48:46.840961+00:00"
 }

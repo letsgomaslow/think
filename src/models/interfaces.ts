@@ -178,6 +178,7 @@ export interface DecisionFrameworkData {
     decisionId: string;
     iteration: number;
     nextStageNeeded: boolean;
+    eisenhowerClassification?: EisenhowerClassification[];
 }
 
 // Eisenhower Matrix types
