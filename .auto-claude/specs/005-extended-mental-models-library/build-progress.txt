@@ -1,6 +1,6 @@
 # Build Progress: Extended Mental Models Library
 
-## Status: Phase 3 In Progress (5/7 subtasks completed)
+## Status: Phase 3 In Progress (6/7 subtasks completed)
 
 ### Phase 1: Core Tool Schema Updates ✅
 - **Subtask 1.1**: Add new model names to MODEL_TOOL enum - COMPLETED
@@ -76,7 +76,16 @@
   - Key lesson: "Always ask 'And then what happens?'"
   - Related models linked: inversion_thinking, swot_analysis, pre_mortem
 
-- **Subtask 3.6**: Add Pre-Mortem extended documentation - PENDING
+- **Subtask 3.6**: Add Pre-Mortem extended documentation - COMPLETED
+  - Fully implemented in EXTENDED_MODELS (lines 572-693)
+  - Prospective hindsight concept clearly explained in description and steps
+  - Comprehensive startup mobile app marketplace example with project failure prevention
+  - Failure narratives from 5 team members: Sarah (Product), Mike (Engineering), Lisa (Marketing), David (Operations), Jennifer (Legal)
+  - 5 categorized failure modes: Marketplace Dynamics, Technical Complexity, Unit Economics, Operational Readiness, Legal/Regulatory
+  - Concrete preventive actions for each failure category
+  - Key insight: "Pre-mortem works because it gives permission to be pessimistic"
+  - Related models linked: inversion_thinking, second_order_effects, swot_analysis
+
 - **Subtask 3.7**: Add Five Whys extended documentation - PENDING
 
 ### Phase 4: Unit Tests - PENDING
