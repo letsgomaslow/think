@@ -232,5 +232,121 @@ All subtasks for ReflectServer state persistence have been completed successfull
 
 ---
 
+## Phase 4: Add State Persistence to HypothesisServer
+
+### ✅ Subtask 4.1: Add inquiry state storage to HypothesisServer (COMPLETED)
+- Added private inquiries: Record<string, ScientificInquiryData[]> storage
+- Implemented storeInquiryStage() method that stores data by inquiryId
+- Integrated storeInquiryStage() call in processScientificMethod()
+- Followed the exact pattern from traceServer, councilServer, decideServer, and reflectServer
+- Commit: 5fddb7b
+
+**Pattern Applied:**
+- Private storage field initialized as empty object
+- Private store method checks if inquiryId exists, creates array if not, then pushes data
+- Public process method calls store after validation, before output formatting
+
+**Files Modified:**
+- src/tools/hypothesisServer.ts
+
+---
+
+### ✅ Subtask 4.2: Add history retrieval methods to HypothesisServer (COMPLETED)
+- Added public getInquiryHistory(inquiryId) method
+  - Returns all ScientificInquiryData entries for an inquiry
+  - Returns empty array if inquiry doesn't exist
+- Added public getHypothesisEvolution(inquiryId) method
+  - Returns hypothesis evolution tracking with detailed metrics
+  - Handles non-existent inquiries gracefully with null values
+- Commit: c455d37
+
+**Implementation Details:**
+- getInquiryHistory: Simple retrieval with fallback to empty array
+- getHypothesisEvolution: Tracks hypothesis changes across iterations with:
+  - totalStages: Count of all stages in the inquiry
+  - stages: Array of unique stages completed
+  - hypothesesGenerated: Count of unique hypotheses by statement
+  - hypothesisChanges: Array of {iteration, stage, status, confidence, statement} for each hypothesis
+  - currentHypothesis: Latest hypothesis data
+  - statusProgression: Unique statuses in order they appeared (e.g., proposed → testing → confirmed)
+
+**Files Modified:**
+- src/tools/hypothesisServer.ts
+
+---
+
+### ✅ Subtask 4.3: Add tests for HypothesisServer state persistence (COMPLETED)
+- Added comprehensive state persistence test suite to hypothesisServer.test.ts
+- Tests verify multiple stages stored for same inquiry across different scientific method stages
+- Tests verify different inquiries maintain separate state
+- Tests verify getInquiryHistory returns all stages for an inquiry
+- Tests verify getHypothesisEvolution tracks hypothesis changes over time
+- Tests verify hypothesis status progression tracking
+- Tests verify data preservation across all fields
+- Commit: 9169d70
+
+**Test Coverage:**
+1. **Multiple stages per inquiry**: Verifies 6 stages stored with correct iteration numbers across different scientific method stages (observation → question → hypothesis → experiment → analysis → conclusion)
+2. **Inquiry isolation**: Verifies separate inquiries maintain independent state
+3. **Non-existent inquiry handling**: Verifies empty array returned for missing inquiries
+4. **getHypothesisEvolution functionality**:
+   - Verifies hypothesis changes tracked across iterations (iteration, stage, status, confidence, statement)
+   - Verifies unique hypothesis counting by statement
+   - Verifies current hypothesis reflects latest entry
+   - Verifies status progression tracking (proposed → testing → confirmed)
+   - Verifies null values for non-existent inquiries
+5. **Stage progression tracking**: Verifies complete scientific method workflow
+6. **Data preservation**: Verifies all fields are preserved including:
+   - observation, question
+   - hypothesis (statement, domain, status, confidence, variables, assumptions, alternativeTo, refinementOf)
+   - experiment (experimentId, design, methodology, predictions, controlMeasures, results, outcomeMatched, unexpectedObservations, limitations, nextSteps)
+   - analysis, conclusion
+
+**Files Modified:**
+- src/tools/hypothesisServer.test.ts
+
+---
+
+## Phase 4 Status: COMPLETED ✅
+All subtasks for HypothesisServer state persistence have been completed successfully.
+
+---
+
+## Phase 5: Add State Persistence to DebateServer
+
+### ✅ Subtask 5.1: Add argument chain storage to DebateServer (COMPLETED)
+- Added private argumentChains: Record<string, ArgumentData[]> storage
+- Added private argumentToRoot: Record<string, string> mapping for efficient chain lookup
+- Implemented storeArgument() method that chains arguments using respondsTo references
+- Root arguments (no respondsTo) are stored under their own argumentId
+- Response arguments are stored under the root of the chain they respond to
+- Integrated storeArgument() call in processStructuredArgumentation()
+- Commit: ef1e28a
+
+**Pattern Applied:**
+- Dual-record approach for argument chain storage:
+  - argumentChains: Stores actual ArgumentData by root argumentId
+  - argumentToRoot: Maps any argumentId to its root for O(1) lookup
+- storeArgument() logic:
+  - If no respondsTo: Create/append to chain under own argumentId, map self to self as root
+  - If respondsTo: Find root via argumentToRoot mapping, append to root's chain, map self to root
+- Public process method calls store after validation, before output formatting
+- Ensured argumentId is assigned before storage for proper chain tracking
+
+**Files Modified:**
+- src/tools/debateServer.ts
+
+**Implementation Notes:**
+- This implementation enables tracking of complex argument relationships:
+  - Thesis-antithesis-synthesis chains
+  - Objections and rebuttals
+  - Supporting and contradicting arguments
+- The dual-record approach efficiently handles arbitrary chain depths without recursive lookups
+
+---
+
 ## Next Steps
-- Phase 4: Add State Persistence to HypothesisServer
+- Subtask 5.2: Add history retrieval methods to DebateServer
+- Subtask 5.3: Add tests for DebateServer state persistence
+- Phase 6: Add State Persistence to MapServer
+- Phase 7: Integration and Verification
