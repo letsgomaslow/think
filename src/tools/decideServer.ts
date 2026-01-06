@@ -1,4 +1,4 @@
-import { DecisionFrameworkData, EisenhowerClassification, OptionData } from '../models/interfaces.js';
+import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis } from '../models/interfaces.js';
 import chalk from 'chalk';
 
 export class DecideServer {
@@ -95,6 +95,94 @@ export class DecideServer {
     return output;
   }
 
+  private formatCostBenefitAnalysis(data: DecisionFrameworkData): string {
+    if (!data.costBenefitAnalysis || data.costBenefitAnalysis.length === 0) {
+      return '';
+    }
+
+    const analyses = data.costBenefitAnalysis;
+    const options = data.options;
+
+    let output = `\n${chalk.bold.blue('Cost-Benefit Analysis')}\n`;
+    output += `${chalk.dim('━'.repeat(60))}\n`;
+
+    analyses.forEach(analysis => {
+      const option = options.find(opt => opt.id === analysis.optionId);
+      if (!option) return;
+
+      output += `\n${chalk.bold.cyan(`Option: ${option.name}`)}\n`;
+      output += `${chalk.dim(option.description)}\n`;
+
+      // Costs section
+      output += `\n${chalk.bold.red('Costs:')}\n`;
+      if (analysis.costs && analysis.costs.length > 0) {
+        let totalCosts = 0;
+        analysis.costs.forEach(cost => {
+          const typeLabel = cost.type === 'monetary' ? '💵' : '⚖️';
+          const categoryLabel = cost.category ? ` [${cost.category}]` : '';
+          const timeframeLabel = cost.timeframe ? ` (${cost.timeframe})` : '';
+          output += `  ${typeLabel} ${cost.description}${categoryLabel}${timeframeLabel}\n`;
+          output += `     ${chalk.red(`-$${cost.amount.toLocaleString()}`)}\n`;
+          totalCosts += cost.amount;
+        });
+        output += `  ${chalk.bold.red(`Total Costs: -$${totalCosts.toLocaleString()}`)}\n`;
+      } else {
+        output += `  ${chalk.dim('No costs identified')}\n`;
+      }
+
+      // Benefits section
+      output += `\n${chalk.bold.green('Benefits:')}\n`;
+      if (analysis.benefits && analysis.benefits.length > 0) {
+        let totalBenefits = 0;
+        analysis.benefits.forEach(benefit => {
+          const typeLabel = benefit.type === 'monetary' ? '💵' : '⚖️';
+          const categoryLabel = benefit.category ? ` [${benefit.category}]` : '';
+          const timeframeLabel = benefit.timeframe ? ` (${benefit.timeframe})` : '';
+          output += `  ${typeLabel} ${benefit.description}${categoryLabel}${timeframeLabel}\n`;
+          output += `     ${chalk.green(`+$${benefit.amount.toLocaleString()}`)}\n`;
+          totalBenefits += benefit.amount;
+        });
+        output += `  ${chalk.bold.green(`Total Benefits: +$${totalBenefits.toLocaleString()}`)}\n`;
+      } else {
+        output += `  ${chalk.dim('No benefits identified')}\n`;
+      }
+
+      // Summary metrics
+      output += `\n${chalk.bold.yellow('Summary Metrics:')}\n`;
+
+      // Net Value
+      const netValueColor = analysis.netValue >= 0 ? chalk.green : chalk.red;
+      const netValueSign = analysis.netValue >= 0 ? '+' : '';
+      output += `  ${chalk.bold('Net Value:')} ${netValueColor(`${netValueSign}$${analysis.netValue.toLocaleString()}`)}\n`;
+
+      // Benefit-Cost Ratio
+      if (analysis.benefitCostRatio !== undefined) {
+        const ratioColor = analysis.benefitCostRatio >= 1 ? chalk.green : chalk.red;
+        output += `  ${chalk.bold('Benefit-Cost Ratio:')} ${ratioColor(analysis.benefitCostRatio.toFixed(2))}\n`;
+      }
+
+      // ROI
+      if (analysis.roi !== undefined) {
+        const roiColor = analysis.roi >= 0 ? chalk.green : chalk.red;
+        const roiSign = analysis.roi >= 0 ? '+' : '';
+        output += `  ${chalk.bold('ROI:')} ${roiColor(`${roiSign}${analysis.roi.toFixed(1)}%`)}\n`;
+      }
+
+      // NPV (if discount rate and time period are provided)
+      if (analysis.npv !== undefined && analysis.discountRate !== undefined && analysis.timePeriodYears !== undefined) {
+        const npvColor = analysis.npv >= 0 ? chalk.green : chalk.red;
+        const npvSign = analysis.npv >= 0 ? '+' : '';
+        output += `  ${chalk.bold('NPV:')} ${npvColor(`${npvSign}$${analysis.npv.toLocaleString()}`)} `;
+        output += chalk.dim(`(discount rate: ${(analysis.discountRate * 100).toFixed(1)}%, period: ${analysis.timePeriodYears} years)`);
+        output += '\n';
+      }
+
+      output += `\n${chalk.dim('─'.repeat(60))}\n`;
+    });
+
+    return output;
+  }
+
   private formatOutput(data: DecisionFrameworkData): string {
     const { decisionStatement, options, analysisType, stage, iteration } = data;
 
@@ -106,6 +194,8 @@ export class DecideServer {
     // Framework-specific formatting
     if (analysisType === 'eisenhower-matrix') {
       output += this.formatEisenhowerMatrix(data);
+    } else if (analysisType === 'cost-benefit') {
+      output += this.formatCostBenefitAnalysis(data);
     } else {
       // Options
       if (options.length > 0) {

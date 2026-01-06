@@ -179,6 +179,7 @@ export interface DecisionFrameworkData {
     iteration: number;
     nextStageNeeded: boolean;
     eisenhowerClassification?: EisenhowerClassification[];
+    costBenefitAnalysis?: CostBenefitAnalysis[];
 }
 
 // Eisenhower Matrix types
