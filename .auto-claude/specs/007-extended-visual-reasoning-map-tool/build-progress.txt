@@ -9,7 +9,7 @@
 ## Implementation Plan Summary
 
 ### Phase 1: Core Schema & Type Updates
-- [ ] 1.1 Update VisualOperationData with new diagram types
+- [x] 1.1 Update VisualOperationData with new diagram types
 - [ ] 1.2 Update MAP_TOOL schema in index.ts
 - [ ] 1.3 Update web tool schemas
 

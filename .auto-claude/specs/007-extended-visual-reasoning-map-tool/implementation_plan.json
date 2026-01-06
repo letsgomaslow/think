@@ -27,8 +27,8 @@
           "title": "Update VisualOperationData interface with new diagram types",
           "description": "Add sequenceDiagram, stateMachine, erDiagram, mindMap, and contextDiagram to the diagramType enum in src/models/interfaces.ts. Add optional mermaidOutput field for Mermaid string output.",
           "file_paths": ["src/models/interfaces.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Successfully added 5 new diagram types (sequenceDiagram, stateMachine, erDiagram, mindMap, contextDiagram) to the diagramType enum and added optional mermaidOutput field to VisualOperationData interface"
         },
         {
           "subtask_id": "1.2",
