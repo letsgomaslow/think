@@ -1,0 +1,177 @@
+{
+  "subtasks": {
+    "3.3": {
+      "attempts": [
+        {
+          "session": 1,
+          "timestamp": "2026-01-06T02:02:23.969002",
+          "approach": "Implemented: Add costBenefitAnalysis property with costs array (item, amount, type), benefits array, discount rat",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.4": {
+      "attempts": [
+        {
+          "session": 2,
+          "timestamp": "2026-01-06T02:04:08.881181",
+          "approach": "Implemented: Add riskAssessment property with risks array containing probability (0-1), impact (1-10), category, ",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.5": {
+      "attempts": [
+        {
+          "session": 3,
+          "timestamp": "2026-01-06T02:06:06.794416",
+          "approach": "Implemented: Add reversibilityAnalysis property with reversibilityScore (0-1), undoCost, timeToReverse, and doorT",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.6": {
+      "attempts": [
+        {
+          "session": 4,
+          "timestamp": "2026-01-06T02:08:24.504274",
+          "approach": "Implemented: Add regretAnalysis property with timeHorizons (10min, 10months, 10years), projectedRegrets, and futu",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.7": {
+      "attempts": [
+        {
+          "session": 5,
+          "timestamp": "2026-01-06T02:10:05.646198",
+          "approach": "Implemented: Expand DECIDE_TOOL description to document when each of the 10 frameworks is most appropriate with u",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "4.1": {
+      "attempts": [
+        {
+          "session": 6,
+          "timestamp": "2026-01-06T02:12:31.140278",
+          "approach": "Implemented: Add tests for Eisenhower Matrix with task prioritization scenarios - verify 4 quadrant classificatio",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "4.2": {
+      "attempts": [
+        {
+          "session": 7,
+          "timestamp": "2026-01-06T02:15:02.570349",
+          "approach": "Implemented: Add tests for CBA with quantitative inputs - verify cost/benefit calculations, NPV, and ROI computat",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "4.3": {
+      "attempts": [
+        {
+          "session": 8,
+          "timestamp": "2026-01-06T02:18:09.971317",
+          "approach": "Implemented: Add tests for risk assessment - verify probability x impact scoring and risk level categorization",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "4.4": {
+      "attempts": [
+        {
+          "session": 9,
+          "timestamp": "2026-01-06T02:21:25.061743",
+          "approach": "Implemented: Add tests for reversibility with one-way and two-way door decision scenarios",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "4.5": {
+      "attempts": [
+        {
+          "session": 10,
+          "timestamp": "2026-01-06T02:24:46.347042",
+          "approach": "Implemented: Add tests for regret minimization with future perspective scenarios and 10/10/10 analysis",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "4.6": {
+      "attempts": [
+        {
+          "session": 11,
+          "timestamp": "2026-01-06T02:28:54.309025",
+          "approach": "Implemented: Execute npm test and ensure all existing and new tests pass without regression",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "5.1": {
+      "attempts": [
+        {
+          "session": 12,
+          "timestamp": "2026-01-06T02:32:11.007967",
+          "approach": "Implemented: Extend analysisTypeEnum with 5 new types and add Zod schemas for framework-specific optional propert",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "5.2": {
+      "attempts": [
+        {
+          "session": 13,
+          "timestamp": "2026-01-06T02:34:05.021154",
+          "approach": "Implemented: Extend AnalysisType union and add TypeScript interfaces for each framework's specific data in demo",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "6.1": {
+      "attempts": [
+        {
+          "session": 14,
+          "timestamp": "2026-01-06T02:36:56.286376",
+          "approach": "Implemented: Run npm run build to ensure TypeScript compiles without errors",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    }
+  },
+  "stuck_subtasks": [],
+  "metadata": {
+    "created_at": "2026-01-06T02:00:39.635918",
+    "last_updated": "2026-01-06T02:36:56.286401"
+  }
+}

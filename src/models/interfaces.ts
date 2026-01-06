@@ -171,7 +171,12 @@ export interface DecisionFrameworkData {
         | "weighted-criteria"
         | "decision-tree"
         | "expected-value"
-        | "scenario-analysis";
+        | "scenario-analysis"
+        | "eisenhower-matrix"
+        | "cost-benefit"
+        | "risk-assessment"
+        | "reversibility"
+        | "regret-minimization";
     stage:
         | "problem-definition"
         | "options-generation"
@@ -189,6 +194,88 @@ export interface DecisionFrameworkData {
     decisionId: string;
     iteration: number;
     nextStageNeeded: boolean;
+    eisenhowerClassification?: EisenhowerClassification[];
+    costBenefitAnalysis?: CostBenefitAnalysis[];
+    riskAssessment?: RiskItem[];
+    reversibilityAnalysis?: ReversibilityData[];
+    regretMinimizationAnalysis?: RegretMinimizationData[];
+}
+
+// Eisenhower Matrix types
+export type EisenhowerQuadrant =
+    | "do-first"
+    | "schedule"
+    | "delegate"
+    | "eliminate";
+
+export interface EisenhowerClassification {
+    optionId: string;
+    urgency: number;
+    importance: number;
+    quadrant: EisenhowerQuadrant;
+}
+
+// Cost-Benefit Analysis types
+export type CostBenefitType = "monetary" | "non-monetary";
+
+export interface CostBenefitItem {
+    optionId: string;
+    description: string;
+    amount: number;
+    type: CostBenefitType;
+    category?: string;
+    timeframe?: string;
+}
+
+export interface CostBenefitAnalysis {
+    optionId: string;
+    costs: CostBenefitItem[];
+    benefits: CostBenefitItem[];
+    netValue: number;
+    benefitCostRatio?: number;
+    roi?: number;
+    discountRate?: number;
+    timePeriodYears?: number;
+    npv?: number;
+}
+
+// Risk Assessment Matrix types
+export interface RiskItem {
+    optionId: string;
+    description: string;
+    probability: number;
+    impact: number;
+    riskScore: number;
+    category?: string;
+    mitigation?: string[];
+}
+
+// Reversibility Analysis types
+export type DoorType = "one-way" | "two-way";
+
+export interface ReversibilityData {
+    optionId: string;
+    reversibilityScore: number;
+    undoCost: number;
+    timeToReverse: number;
+    doorType: DoorType;
+    undoComplexity?: string;
+    reversibilityNotes?: string;
+}
+
+// Regret Minimization Framework types
+export interface TimeHorizonRegret {
+    tenMinutes: string;
+    tenMonths: string;
+    tenYears: string;
+}
+
+export interface RegretMinimizationData {
+    optionId: string;
+    futureSelfPerspective: string;
+    potentialRegrets: TimeHorizonRegret;
+    regretScore?: number;
+    timeHorizonAnalysis?: string;
 }
 
 // reflect tool

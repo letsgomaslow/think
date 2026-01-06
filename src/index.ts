@@ -438,3 +438,963 @@ You can use 'predefinedPersonas' to easily select expert personas by ID, or 'per
         ],
     },
 };
+
+const DECIDE_TOOL: Tool = {
+    name: TOOL_NAMES.DECIDE,
+    description: `A detailed tool for structured decision analysis and rational choice.
+This tool helps models systematically evaluate options, criteria, and outcomes using 10 proven decision frameworks.
+
+Framework Selection Guide:
+
+1. PROS-CONS
+   When to use: Simple decisions with qualitative factors, quick evaluations
+   Example: "Should I accept this job offer?" - List advantages (higher salary, better commute) vs disadvantages (different team culture, longer hours)
+   Best for: Binary choices, initial exploration, brainstorming phase
+
+2. WEIGHTED-CRITERIA
+   When to use: Complex decisions with multiple measurable factors of varying importance
+   Example: "Which vendor should we choose?" - Evaluate cost (30%), reliability (40%), features (20%), support (10%)
+   Best for: Multi-criteria decisions, procurement, hiring, tool selection
+
+3. DECISION-TREE
+   When to use: Sequential decisions with multiple stages and branching paths
+   Example: "Should we build, buy, or partner?" - Map out different paths and their downstream implications
+   Best for: Strategic planning, investment decisions, project pathways
+
+4. EXPECTED-VALUE
+   When to use: Decisions with quantifiable outcomes and probability estimates
+   Example: "Should we invest in this project?" - Calculate EV = (0.6 × $100K profit) + (0.4 × -$20K loss) = $52K
+   Best for: Financial decisions, risk-reward analysis, portfolio optimization
+
+5. SCENARIO-ANALYSIS
+   When to use: Decisions under uncertainty with multiple possible future states
+   Example: "How should we plan for market changes?" - Explore best-case, worst-case, and likely scenarios
+   Best for: Strategic planning, contingency planning, risk management
+
+6. EISENHOWER-MATRIX
+   When to use: Prioritizing tasks or options by urgency and importance
+   Example: "How should I prioritize my tasks?" - Categorize into Do First (urgent+important), Schedule (important), Delegate (urgent), Eliminate (neither)
+   Best for: Time management, task prioritization, workload optimization
+
+7. COST-BENEFIT
+   When to use: Decisions requiring detailed quantitative justification
+   Example: "Should we implement this system?" - Quantify costs ($50K implementation + $10K/year) vs benefits ($30K/year savings + efficiency gains), calculate NPV and ROI
+   Best for: Business cases, investment justification, policy decisions
+
+8. RISK-ASSESSMENT
+   When to use: Decisions where potential downsides need systematic evaluation
+   Example: "Should we launch in this market?" - Identify risks (regulatory 0.3×8=2.4, competition 0.7×6=4.2) and mitigation strategies
+   Best for: Project planning, compliance, security decisions, new ventures
+
+9. REVERSIBILITY
+   When to use: Decisions where reversibility affects decision speed and thoroughness
+   Example: "Should we migrate to this new architecture?" - One-way door (high cost to reverse) = slow, careful decision vs two-way door (easy to reverse) = fast decision
+   Best for: Architecture decisions, commitments, resource allocation, strategic choices
+   Framework: Bezos's Two-Way Door Framework
+
+10. REGRET-MINIMIZATION
+    When to use: Important life/career decisions viewed from future perspective
+    Example: "Should I start this business?" - Consider: In 10 minutes (excited?), 10 months (still engaged?), 10 years (proud of trying?)
+    Best for: Career changes, major commitments, values-based decisions, life choices
+    Framework: 10/10/10 Framework (10 minutes, 10 months, 10 years)
+
+General Guidelines:
+- Use PROS-CONS or WEIGHTED-CRITERIA for most everyday decisions
+- Use EXPECTED-VALUE or COST-BENEFIT when numbers matter
+- Use RISK-ASSESSMENT when downsides are critical
+- Use EISENHOWER-MATRIX for prioritization and time management
+- Use REVERSIBILITY for strategic decisions (guides decision speed)
+- Use REGRET-MINIMIZATION for important life/career decisions
+- Use DECISION-TREE for multi-stage decisions
+- Use SCENARIO-ANALYSIS when facing high uncertainty
+- Combine multiple frameworks for complex, high-stakes decisions`,
+    inputSchema: {
+        type: "object",
+        properties: {
+            decisionStatement: { type: "string" },
+            options: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        id: { type: "string" },
+                        name: { type: "string" },
+                        description: { type: "string" },
+                    },
+                    required: ["name", "description"],
+                },
+            },
+            criteria: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        id: { type: "string" },
+                        name: { type: "string" },
+                        description: { type: "string" },
+                        weight: { type: "number", minimum: 0, maximum: 1 },
+                    },
+                    required: ["name", "description", "weight"],
+                },
+            },
+            analysisType: {
+                type: "string",
+                enum: [
+                    "pros-cons",
+                    "weighted-criteria",
+                    "decision-tree",
+                    "expected-value",
+                    "scenario-analysis",
+                    "eisenhower-matrix",
+                    "cost-benefit",
+                    "risk-assessment",
+                    "reversibility",
+                    "regret-minimization",
+                ],
+            },
+            stage: {
+                type: "string",
+                enum: [
+                    "problem-definition",
+                    "options-generation",
+                    "criteria-definition",
+                    "evaluation",
+                    "sensitivity-analysis",
+                    "decision",
+                ],
+            },
+            stakeholders: { type: "array", items: { type: "string" } },
+            constraints: { type: "array", items: { type: "string" } },
+            timeHorizon: { type: "string" },
+            riskTolerance: {
+                type: "string",
+                enum: ["risk-averse", "risk-neutral", "risk-seeking"],
+            },
+            possibleOutcomes: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        id: { type: "string" },
+                        description: { type: "string" },
+                        probability: { type: "number", minimum: 0, maximum: 1 },
+                        value: { type: "number" },
+                        optionId: { type: "string" },
+                        confidenceInEstimate: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 1,
+                        },
+                    },
+                    required: [
+                        "description",
+                        "probability",
+                        "optionId",
+                        "value",
+                        "confidenceInEstimate",
+                    ],
+                },
+            },
+            recommendation: { type: "string" },
+            rationale: { type: "string" },
+            decisionId: {
+                type: "string",
+                description: "Unique identifier for this decision analysis",
+            },
+            iteration: {
+                type: "number",
+                minimum: 0,
+                description: "Current iteration of the decision process",
+            },
+            nextStageNeeded: {
+                type: "boolean",
+                description: "Whether another stage is needed in the process",
+            },
+            eisenhowerClassification: {
+                type: "array",
+                description: "Urgency and importance ratings for Eisenhower Matrix analysis",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        urgency: {
+                            type: "number",
+                            minimum: 1,
+                            maximum: 5,
+                            description: "Urgency rating from 1 (low) to 5 (high)"
+                        },
+                        importance: {
+                            type: "number",
+                            minimum: 1,
+                            maximum: 5,
+                            description: "Importance rating from 1 (low) to 5 (high)"
+                        },
+                    },
+                    required: ["optionId", "urgency", "importance"],
+                },
+            },
+            costBenefitAnalysis: {
+                type: "array",
+                description: "Cost-benefit analysis data with quantified costs, benefits, and financial metrics",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        costs: {
+                            type: "array",
+                            description: "Array of cost items",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    optionId: { type: "string" },
+                                    description: { type: "string" },
+                                    amount: {
+                                        type: "number",
+                                        description: "Monetary value or quantified amount"
+                                    },
+                                    type: {
+                                        type: "string",
+                                        enum: ["monetary", "non-monetary"],
+                                        description: "Type of cost"
+                                    },
+                                    category: {
+                                        type: "string",
+                                        description: "Optional category for grouping"
+                                    },
+                                    timeframe: {
+                                        type: "string",
+                                        description: "Optional time period"
+                                    },
+                                },
+                                required: ["optionId", "description", "amount", "type"],
+                            },
+                        },
+                        benefits: {
+                            type: "array",
+                            description: "Array of benefit items",
+                            items: {
+                                type: "object",
+                                properties: {
+                                    optionId: { type: "string" },
+                                    description: { type: "string" },
+                                    amount: {
+                                        type: "number",
+                                        description: "Monetary value or quantified amount"
+                                    },
+                                    type: {
+                                        type: "string",
+                                        enum: ["monetary", "non-monetary"],
+                                        description: "Type of benefit"
+                                    },
+                                    category: {
+                                        type: "string",
+                                        description: "Optional category for grouping"
+                                    },
+                                    timeframe: {
+                                        type: "string",
+                                        description: "Optional time period"
+                                    },
+                                },
+                                required: ["optionId", "description", "amount", "type"],
+                            },
+                        },
+                        netValue: {
+                            type: "number",
+                            description: "Total benefits minus total costs"
+                        },
+                        benefitCostRatio: {
+                            type: "number",
+                            description: "Ratio of total benefits to total costs"
+                        },
+                        roi: {
+                            type: "number",
+                            description: "Return on investment percentage"
+                        },
+                        discountRate: {
+                            type: "number",
+                            description: "Discount rate for NPV calculation (e.g., 0.05 for 5%)"
+                        },
+                        timePeriodYears: {
+                            type: "number",
+                            description: "Time period in years for the analysis"
+                        },
+                        npv: {
+                            type: "number",
+                            description: "Net present value with discounting"
+                        },
+                    },
+                    required: ["optionId", "costs", "benefits", "netValue"],
+                },
+            },
+            riskAssessment: {
+                type: "array",
+                description: "Risk assessment data with probability, impact, and mitigation strategies for each risk",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        description: {
+                            type: "string",
+                            description: "Description of the risk"
+                        },
+                        probability: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 1,
+                            description: "Probability of the risk occurring (0.0 to 1.0)"
+                        },
+                        impact: {
+                            type: "number",
+                            minimum: 1,
+                            maximum: 10,
+                            description: "Impact severity if risk occurs (1 to 10 scale)"
+                        },
+                        riskScore: {
+                            type: "number",
+                            description: "Risk score calculated as probability × impact"
+                        },
+                        category: {
+                            type: "string",
+                            description: "Optional category for grouping risks (e.g., 'financial', 'operational', 'technical')"
+                        },
+                        mitigation: {
+                            type: "array",
+                            description: "Optional array of mitigation strategies",
+                            items: { type: "string" }
+                        },
+                    },
+                    required: ["optionId", "description", "probability", "impact", "riskScore"],
+                },
+            },
+            reversibilityAnalysis: {
+                type: "array",
+                description: "Reversibility analysis for Bezos's Two-Way Door Framework - evaluates how easily a decision can be reversed",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        reversibilityScore: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 1,
+                            description: "Reversibility score from 0.0 (irreversible) to 1.0 (easily reversible)"
+                        },
+                        undoCost: {
+                            type: "number",
+                            description: "Estimated cost to reverse the decision (in monetary units)"
+                        },
+                        timeToReverse: {
+                            type: "number",
+                            description: "Estimated time to reverse the decision (in days)"
+                        },
+                        doorType: {
+                            type: "string",
+                            enum: ["one-way", "two-way"],
+                            description: "Type of door: 'one-way' for irreversible/hard-to-reverse decisions, 'two-way' for easily reversible decisions"
+                        },
+                        undoComplexity: {
+                            type: "string",
+                            description: "Optional description of the complexity involved in reversing the decision"
+                        },
+                        reversibilityNotes: {
+                            type: "string",
+                            description: "Optional notes about reversibility considerations"
+                        },
+                    },
+                    required: ["optionId", "reversibilityScore", "undoCost", "timeToReverse", "doorType"],
+                },
+            },
+            regretMinimizationAnalysis: {
+                type: "array",
+                description: "Regret minimization analysis using the 10/10/10 Framework - evaluates decisions from future self perspective across multiple time horizons",
+                items: {
+                    type: "object",
+                    properties: {
+                        optionId: { type: "string" },
+                        futureSelfPerspective: {
+                            type: "string",
+                            description: "Analysis from the perspective of your future self looking back at this decision"
+                        },
+                        potentialRegrets: {
+                            type: "object",
+                            description: "Potential regrets at different time horizons (10 minutes, 10 months, 10 years)",
+                            properties: {
+                                tenMinutes: {
+                                    type: "string",
+                                    description: "How will you feel about this decision in 10 minutes?"
+                                },
+                                tenMonths: {
+                                    type: "string",
+                                    description: "How will you feel about this decision in 10 months?"
+                                },
+                                tenYears: {
+                                    type: "string",
+                                    description: "How will you feel about this decision in 10 years?"
+                                },
+                            },
+                            required: ["tenMinutes", "tenMonths", "tenYears"],
+                        },
+                        regretScore: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 10,
+                            description: "Optional overall regret score from 0 (no regret) to 10 (maximum regret)"
+                        },
+                        timeHorizonAnalysis: {
+                            type: "string",
+                            description: "Optional analysis of how the decision looks across different time horizons"
+                        },
+                    },
+                    required: ["optionId", "futureSelfPerspective", "potentialRegrets"],
+                },
+            },
+        },
+        required: [
+            "decisionStatement",
+            "options",
+            "analysisType",
+            "stage",
+            "decisionId",
+            "iteration",
+            "nextStageNeeded",
+        ],
+    },
+};
+
+const REFLECT_TOOL: Tool = {
+    name: TOOL_NAMES.REFLECT,
+    description: `A detailed tool for systematic self-monitoring of knowledge and reasoning quality.
+This tool helps models track knowledge boundaries, claim certainty, and reasoning biases.
+It provides a framework for metacognitive assessment across various domains and reasoning tasks.`,
+    inputSchema: {
+        type: "object",
+        properties: {
+            task: { type: "string" },
+            stage: {
+                type: "string",
+                enum: [
+                    "knowledge-assessment",
+                    "planning",
+                    "execution",
+                    "monitoring",
+                    "evaluation",
+                    "reflection",
+                ],
+            },
+            knowledgeAssessment: {
+                type: "object",
+                properties: {
+                    domain: { type: "string" },
+                    knowledgeLevel: {
+                        type: "string",
+                        enum: [
+                            "expert",
+                            "proficient",
+                            "familiar",
+                            "basic",
+                            "minimal",
+                            "none",
+                        ],
+                    },
+                    confidenceScore: { type: "number", minimum: 0, maximum: 1 },
+                    supportingEvidence: { type: "string" },
+                    knownLimitations: {
+                        type: "array",
+                        items: { type: "string" },
+                    },
+                    relevantTrainingCutoff: { type: "string" },
+                },
+                required: [
+                    "domain",
+                    "knowledgeLevel",
+                    "confidenceScore",
+                    "supportingEvidence",
+                    "knownLimitations",
+                ],
+            },
+            claims: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        claim: { type: "string" },
+                        status: {
+                            type: "string",
+                            enum: [
+                                "fact",
+                                "inference",
+                                "speculation",
+                                "uncertain",
+                            ],
+                        },
+                        confidenceScore: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 1,
+                        },
+                        evidenceBasis: { type: "string" },
+                        falsifiabilityCriteria: { type: "string" },
+                        alternativeInterpretations: {
+                            type: "array",
+                            items: { type: "string" },
+                        },
+                    },
+                    required: [
+                        "claim",
+                        "status",
+                        "confidenceScore",
+                        "evidenceBasis",
+                    ],
+                },
+            },
+            reasoningSteps: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        step: { type: "string" },
+                        potentialBiases: {
+                            type: "array",
+                            items: { type: "string" },
+                        },
+                        assumptions: {
+                            type: "array",
+                            items: { type: "string" },
+                        },
+                        logicalValidity: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 1,
+                        },
+                        inferenceStrength: {
+                            type: "number",
+                            minimum: 0,
+                            maximum: 1,
+                        },
+                    },
+                    required: [
+                        "step",
+                        "potentialBiases",
+                        "assumptions",
+                        "logicalValidity",
+                        "inferenceStrength",
+                    ],
+                },
+            },
+            overallConfidence: { type: "number", minimum: 0, maximum: 1 },
+            uncertaintyAreas: { type: "array", items: { type: "string" } },
+            recommendedApproach: { type: "string" },
+            monitoringId: {
+                type: "string",
+                description: "Unique identifier for this monitoring session",
+            },
+            iteration: {
+                type: "number",
+                minimum: 0,
+                description: "Current iteration of the monitoring process",
+            },
+            suggestedAssessments: {
+                type: "array",
+                items: {
+                    type: "string",
+                    enum: ["knowledge", "claim", "reasoning", "overall"],
+                },
+            },
+            nextAssessmentNeeded: {
+                type: "boolean",
+                description: "Whether further assessment is needed",
+            },
+        },
+        required: [
+            "task",
+            "stage",
+            "overallConfidence",
+            "uncertaintyAreas",
+            "recommendedApproach",
+            "monitoringId",
+            "iteration",
+            "nextAssessmentNeeded",
+        ],
+    },
+};
+
+const HYPOTHESIS_TOOL: Tool = {
+    name: TOOL_NAMES.HYPOTHESIS,
+    description: `A detailed tool for applying formal scientific reasoning to questions and problems.
+This tool guides models through the scientific method with structured hypothesis testing.
+It enforces explicit variable identification, prediction making, and evidence evaluation.`,
+    inputSchema: {
+        type: "object",
+        properties: {
+            stage: {
+                type: "string",
+                enum: [
+                    "observation",
+                    "question",
+                    "hypothesis",
+                    "experiment",
+                    "analysis",
+                    "conclusion",
+                    "iteration",
+                ],
+            },
+            observation: { type: "string" },
+            question: { type: "string" },
+            hypothesis: {
+                type: "object",
+                properties: {
+                    statement: { type: "string" },
+                    variables: {
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                name: { type: "string" },
+                                type: {
+                                    type: "string",
+                                    enum: [
+                                        "independent",
+                                        "dependent",
+                                        "controlled",
+                                        "confounding",
+                                    ],
+                                },
+                                operationalization: { type: "string" },
+                            },
+                            required: ["name", "type"],
+                        },
+                    },
+                    assumptions: { type: "array", items: { type: "string" } },
+                    hypothesisId: { type: "string" },
+                    confidence: { type: "number", minimum: 0, maximum: 1 },
+                    domain: { type: "string" },
+                    iteration: { type: "number", minimum: 0 },
+                    alternativeTo: { type: "array", items: { type: "string" } },
+                    refinementOf: { type: "string" },
+                    status: {
+                        type: "string",
+                        enum: [
+                            "proposed",
+                            "testing",
+                            "supported",
+                            "refuted",
+                            "refined",
+                        ],
+                    },
+                },
+                required: [
+                    "statement",
+                    "variables",
+                    "assumptions",
+                    "hypothesisId",
+                    "confidence",
+                    "domain",
+                    "iteration",
+                    "status",
+                ],
+            },
+            experiment: {
+                type: "object",
+                properties: {
+                    design: { type: "string" },
+                    methodology: { type: "string" },
+                    predictions: {
+                        type: "array",
+                        items: {
+                            type: "object",
+                            properties: {
+                                if: { type: "string" },
+                                then: { type: "string" },
+                                else: { type: "string" },
+                            },
+                            required: ["if", "then"],
+                        },
+                    },
+                    experimentId: { type: "string" },
+                    hypothesisId: { type: "string" },
+                    controlMeasures: {
+                        type: "array",
+                        items: { type: "string" },
+                    },
+                    results: { type: "string" },
+                    outcomeMatched: { type: "boolean" },
+                    unexpectedObservations: {
+                        type: "array",
+                        items: { type: "string" },
+                    },
+                    limitations: { type: "array", items: { type: "string" } },
+                    nextSteps: { type: "array", items: { type: "string" } },
+                },
+                required: [
+                    "design",
+                    "methodology",
+                    "predictions",
+                    "experimentId",
+                    "hypothesisId",
+                    "controlMeasures",
+                ],
+            },
+            analysis: { type: "string" },
+            conclusion: { type: "string" },
+            inquiryId: {
+                type: "string",
+                description: "Unique identifier for this scientific inquiry",
+            },
+            iteration: {
+                type: "number",
+                minimum: 0,
+                description: "Current iteration of the scientific process",
+            },
+            nextStageNeeded: {
+                type: "boolean",
+                description: "Whether another stage is needed in the process",
+            },
+        },
+        required: ["stage", "inquiryId", "iteration", "nextStageNeeded"],
+    },
+};
+
+const DEBATE_TOOL: Tool = {
+    name: TOOL_NAMES.DEBATE,
+    description: `A detailed tool for systematic dialectical reasoning and argument analysis.
+This tool helps analyze complex questions through formal argumentation structures.
+It facilitates the creation, critique, and synthesis of competing arguments.`,
+    inputSchema: {
+        type: "object",
+        properties: {
+            claim: { type: "string" },
+            premises: { type: "array", items: { type: "string" } },
+            conclusion: { type: "string" },
+            argumentId: {
+                type: "string",
+                description: "Optional unique identifier for this argument",
+            },
+            argumentType: {
+                type: "string",
+                enum: [
+                    "thesis",
+                    "antithesis",
+                    "synthesis",
+                    "objection",
+                    "rebuttal",
+                ],
+            },
+            confidence: {
+                type: "number",
+                minimum: 0,
+                maximum: 1,
+                description: "Confidence level in this argument (0.0-1.0)",
+            },
+            respondsTo: {
+                type: "string",
+                description: "ID of the argument this directly responds to",
+            },
+            supports: {
+                type: "array",
+                items: { type: "string" },
+                description: "IDs of arguments this supports",
+            },
+            contradicts: {
+                type: "array",
+                items: { type: "string" },
+                description: "IDs of arguments this contradicts",
+            },
+            strengths: {
+                type: "array",
+                items: { type: "string" },
+                description: "Notable strong points of the argument",
+            },
+            weaknesses: {
+                type: "array",
+                items: { type: "string" },
+                description: "Notable weak points of the argument",
+            },
+            nextArgumentNeeded: {
+                type: "boolean",
+                description:
+                    "Whether another argument is needed in the dialectic",
+            },
+            suggestedNextTypes: {
+                type: "array",
+                items: {
+                    type: "string",
+                    enum: [
+                        "thesis",
+                        "antithesis",
+                        "synthesis",
+                        "objection",
+                        "rebuttal",
+                    ],
+                },
+                description: "Suggested types for the next argument",
+            },
+        },
+        required: [
+            "claim",
+            "premises",
+            "conclusion",
+            "argumentType",
+            "confidence",
+            "nextArgumentNeeded",
+        ],
+    },
+};
+
+const MAP_TOOL: Tool = {
+    name: TOOL_NAMES.MAP,
+    description: `A tool for visual thinking, problem-solving, and communication.
+This tool enables models to create, manipulate, and interpret diagrams, graphs, and other visual representations.
+It supports various visual elements and operations to facilitate insight generation and hypothesis testing.`,
+    inputSchema: {
+        type: "object",
+        properties: {
+            operation: {
+                type: "string",
+                enum: ["create", "update", "delete", "transform", "observe"],
+            },
+            elements: {
+                type: "array",
+                items: {
+                    type: "object",
+                    properties: {
+                        id: { type: "string" },
+                        type: {
+                            type: "string",
+                            enum: ["node", "edge", "container", "annotation"],
+                        },
+                        label: { type: "string" },
+                        properties: {
+                            type: "object",
+                            additionalProperties: true,
+                        },
+                        source: { type: "string" },
+                        target: { type: "string" },
+                        contains: { type: "array", items: { type: "string" } },
+                    },
+                    required: ["id", "type", "properties"],
+                },
+            },
+            transformationType: {
+                type: "string",
+                enum: ["rotate", "move", "resize", "recolor", "regroup"],
+            },
+            diagramId: { type: "string" },
+            diagramType: {
+                type: "string",
+                enum: [
+                    "graph",
+                    "flowchart",
+                    "stateDiagram",
+                    "conceptMap",
+                    "treeDiagram",
+                    "custom",
+                ],
+            },
+            iteration: { type: "number", minimum: 0 },
+            observation: { type: "string" },
+            insight: { type: "string" },
+            hypothesis: { type: "string" },
+            nextOperationNeeded: { type: "boolean" },
+        },
+        required: [
+            "operation",
+            "diagramId",
+            "diagramType",
+            "iteration",
+            "nextOperationNeeded",
+        ],
+    },
+};
+
+// Server Instances
+const traceServer = new TraceServer();
+const modelServer = new ModelServer();
+const patternServer = new PatternServer();
+const paradigmServer = new ParadigmServer();
+const debugServer = new DebugServer();
+const councilServer = new CouncilServer();
+const decideServer = new DecideServer();
+const reflectServer = new ReflectServer();
+const hypothesisServer = new HypothesisServer();
+const debateServer = new DebateServer();
+const mapServer = new MapServer();
+
+const server = new Server(
+    {
+        name: "think-mcp",
+        version: "2.0.0",
+    },
+    {
+        capabilities: {
+            tools: {},
+        },
+    }
+);
+
+// Request Handlers
+server.setRequestHandler(ListToolsRequestSchema, async () => ({
+    tools: [
+        TRACE_TOOL,
+        MODEL_TOOL,
+        PATTERN_TOOL,
+        PARADIGM_TOOL,
+        DEBUG_TOOL,
+        COUNCIL_TOOL,
+        DECIDE_TOOL,
+        REFLECT_TOOL,
+        HYPOTHESIS_TOOL,
+        DEBATE_TOOL,
+        MAP_TOOL,
+    ],
+}));
+
+server.setRequestHandler(CallToolRequestSchema, async (request) => {
+    const { name } = request.params;
+    const args = request.params.arguments;
+
+    const formatResponse = (result: unknown) => ({
+        content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
+    });
+
+    switch (name) {
+        case TOOL_NAMES.TRACE:
+            return formatResponse(traceServer.processThought(args));
+        case TOOL_NAMES.MODEL:
+            return formatResponse(modelServer.processModel(args));
+        case TOOL_NAMES.PATTERN:
+            return formatResponse(patternServer.processPattern(args));
+        case TOOL_NAMES.PARADIGM:
+            return formatResponse(paradigmServer.processParadigm(args));
+        case TOOL_NAMES.DEBUG:
+            return formatResponse(debugServer.processApproach(args));
+        case TOOL_NAMES.COUNCIL:
+            return formatResponse(councilServer.processCollaborativeReasoning(args));
+        case TOOL_NAMES.DECIDE:
+            return formatResponse(decideServer.processDecisionFramework(args));
+        case TOOL_NAMES.REFLECT:
+            return formatResponse(reflectServer.processMetacognitiveMonitoring(args));
+        case TOOL_NAMES.HYPOTHESIS:
+            return formatResponse(hypothesisServer.processScientificMethod(args));
+        case TOOL_NAMES.DEBATE:
+            return formatResponse(debateServer.processStructuredArgumentation(args));
+        case TOOL_NAMES.MAP:
+            return formatResponse(mapServer.processVisualReasoning(args));
+        default:
+            throw new McpError(
+                ErrorCode.MethodNotFound,
+                `Tool '${name}' not found. Available: ${Object.values(TOOL_NAMES).join(', ')}`
+            );
+    }
+});
+
+async function runServer() {
+    const transport = new StdioServerTransport();
+    await server.connect(transport);
+    console.error(chalk.green("think-mcp v2.0.0 running on stdio"));
+    console.error(chalk.blue(`Tools: ${Object.values(TOOL_NAMES).join(', ')}`));
+}
+
+runServer().catch((error) => {
+    console.error(chalk.red("Fatal error:"), error);
+    process.exit(1);
+});
