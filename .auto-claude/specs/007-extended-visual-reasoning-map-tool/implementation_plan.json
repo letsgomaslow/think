@@ -49,8 +49,8 @@
           "file_paths": [
             "web/lib/tools/map.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Updated web/lib/tools/map.ts with mermaidOutput support. Added mermaidOutput field to mapSchema, MapInput interface, and handleMap function. The diagramTypeEnum already included all 11 diagram types (6 existing + 5 new). Changes follow existing patterns for optional output fields."
         }
       ]
     },
@@ -66,8 +66,8 @@
           "file_paths": [
             "src/tools/mermaidGenerator.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "MermaidGenerator utility class fully implemented with all 11 diagram types. The class includes a main generate() method that dispatches to type-specific private methods: generateSequenceDiagram, generateStateMachine, generateERDiagram, generateMindMap, generateContextDiagram, generateGraph, generateFlowchart, generateStateDiagram, generateConceptMap, generateTreeDiagram, and generateCustom. Also includes helper methods sanitizeId() and getNodeShape(). Implementation verified with 1225 lines of comprehensive tests in mermaidGenerator.test.ts covering all diagram types, edge cases, and complex scenarios. Already committed in a3de7f6."
         },
         {
           "subtask_id": "2.2",
@@ -76,8 +76,8 @@
           "file_paths": [
             "src/tools/mermaidGenerator.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented generateSequenceDiagram() method. Nodes are filtered and added as participants with 'participant X as Label' syntax. Edges become messages with configurable arrow types (->>, -->>). Supports custom arrow types via properties.arrowType. Comprehensive tests verify correct participant declaration and message syntax."
         },
         {
           "subtask_id": "2.3",
@@ -86,8 +86,8 @@
           "file_paths": [
             "src/tools/mermaidGenerator.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented generateStateMachine() method. Uses stateDiagram-v2 syntax. Supports start states via properties.isStart generating '[*] --> state', end states via properties.isEnd generating 'state --> [*]', and state descriptions. Transitions support optional labels. Tests verify start/end state markers and transition syntax."
         },
         {
           "subtask_id": "2.4",
@@ -96,8 +96,8 @@
           "file_paths": [
             "src/tools/mermaidGenerator.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented generateERDiagram() method. Entities are defined with attributes from properties.attributes array. Supports complex attribute objects {name, type, key} and simple string arrays. Primary keys marked with PK suffix when key:true. Relationships use configurable cardinality (||--o{, }o--o{, etc.) via properties.cardinality with default '||--o{'. Tests verify entity blocks, attribute types, primary keys, and relationship syntax."
         },
         {
           "subtask_id": "2.5",
@@ -106,8 +106,8 @@
           "file_paths": [
             "src/tools/mermaidGenerator.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented generateMindMap() method with recursive hierarchy traversal. Root node identified via properties.isRoot or defaults to first node. Children determined by contains array. Supports shapes: circle ((label)), square [label], cloud )label(, and plain text. Uses indentation to represent hierarchy levels. Includes circular reference protection. Tests verify root selection, hierarchy traversal, shape rendering, and circular reference handling."
         },
         {
           "subtask_id": "2.6",
@@ -116,8 +116,8 @@
           "file_paths": [
             "src/tools/mermaidGenerator.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented generateContextDiagram() method using C4Context syntax. Supports node types: Person, System, SystemDb, and System_Ext via properties.nodeType with default 'System'. Nodes include description from properties.description. Relationships use Rel(from, to, label, technology) syntax with optional technology from properties.technology. Tests verify all node types, relationships with and without technology, and proper C4 syntax."
         },
         {
           "subtask_id": "2.7",
@@ -126,8 +126,8 @@
           "file_paths": [
             "src/tools/mermaidGenerator.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented all 6 existing diagram types: generateGraph() with configurable direction (TD for graph/treeDiagram), generateFlowchart() using LR direction, generateStateDiagram() delegating to generateStateMachine(), generateConceptMap() and generateCustom() using graph LR. All support 9 node shapes (circle, round, stadium, subroutine, cylindrical, diamond, hexagon, parallelogram, trapezoid) via getNodeShape() helper. Edges support custom arrow types and labels. Comprehensive tests cover all shapes, directions, and edge variations."
         }
       ]
     },
