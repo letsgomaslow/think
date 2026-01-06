@@ -50,84 +50,98 @@
           "title": "Add SWOT Analysis to catalog",
           "description": "Add SWOT Analysis mental model with name, title, description, useCases, and steps to MENTAL_MODELS array",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "SWOT model defined with proper structure",
             "Includes 4+ use cases",
             "Includes 4+ implementation steps"
-          ]
+          ],
+          "completed_at": "2026-01-05T22:47:36.000Z",
+          "notes": "SWOT Analysis mental model added in commit 8988367 with name, title, description, 4 use cases, and 4 steps."
         },
         {
           "subtask_id": "2.2",
           "title": "Add Six Thinking Hats to catalog",
           "description": "Add Six Thinking Hats (De Bono) mental model with all hat colors explained",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Six Hats model defined with proper structure",
             "Description explains all 6 hat colors",
             "Includes creative problem-solving use cases"
-          ]
+          ],
+          "completed_at": "2026-01-05T22:48:00.000Z",
+          "notes": "Six Thinking Hats mental model added in commit 9099f5c with all 6 hat colors explained."
         },
         {
           "subtask_id": "2.3",
           "title": "Add MECE to catalog",
           "description": "Add MECE (Mutually Exclusive Collectively Exhaustive) mental model for comprehensive analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "MECE model defined with proper structure",
             "Clear explanation of ME and CE concepts",
             "Includes analytical use cases"
-          ]
+          ],
+          "completed_at": "2026-01-05T22:49:00.000Z",
+          "notes": "MECE mental model added in commit ebf42c3 with clear ME and CE explanation."
         },
         {
           "subtask_id": "2.4",
           "title": "Add Inversion Thinking to catalog",
           "description": "Add Inversion Thinking mental model for reverse problem-solving",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Inversion model defined with proper structure",
             "Explains working backwards from failure",
             "Includes risk identification use cases"
-          ]
+          ],
+          "completed_at": "2026-01-05T22:50:00.000Z",
+          "notes": "Inversion Thinking mental model added in commit 582ea3d with reverse problem-solving approach."
         },
         {
           "subtask_id": "2.5",
           "title": "Add Second-Order Effects to catalog",
           "description": "Add Second-Order Effects mental model for consequence chain analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Second-Order model defined with proper structure",
             "Explains cascading effects concept",
             "Includes strategic planning use cases"
-          ]
+          ],
+          "completed_at": "2026-01-05T22:51:00.000Z",
+          "notes": "Second-Order Effects mental model added in commit 363b4c2 with cascading consequence analysis."
         },
         {
           "subtask_id": "2.6",
           "title": "Add Pre-Mortem Analysis to catalog",
           "description": "Add Pre-Mortem Analysis mental model for prospective failure analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Pre-Mortem model defined with proper structure",
             "Explains prospective hindsight concept",
             "Includes project management use cases"
-          ]
+          ],
+          "completed_at": "2026-01-05T22:52:00.000Z",
+          "notes": "Pre-Mortem Analysis mental model added in commit a58061d with prospective failure analysis."
         },
         {
           "subtask_id": "2.7",
           "title": "Add Five Whys to catalog",
           "description": "Add Five Whys mental model for root cause analysis",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Five Whys model defined with proper structure",
             "Explains iterative questioning technique",
             "Includes debugging and quality use cases"
-          ]
+          ],
+          "completed_at": "2026-01-05T22:53:00.000Z",
+          "notes": "Five Whys mental model added in commit 83063db with iterative root cause analysis."
         }
       ]
     },
