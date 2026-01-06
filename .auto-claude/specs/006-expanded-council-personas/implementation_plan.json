@@ -296,8 +296,8 @@
             "src/index.ts",
             "web/lib/tools/council.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Extended council tool schema with optional persona library integration fields. Added 'personaCategory' enum field (technical, business, creative, general) and 'predefinedPersonas' array field for persona IDs. Updated both src/index.ts and web/lib/tools/council.ts schemas, TypeScript interfaces, and function signatures. Maintained backward compatibility by making both fields optional. Enhanced tool description to explain new persona library features. Committed in 91b16f1."
         },
         {
           "subtask_id": "7.2",
