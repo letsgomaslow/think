@@ -242,6 +242,21 @@ export interface ReversibilityData {
     reversibilityNotes?: string;
 }
 
+// Regret Minimization Framework types
+export interface TimeHorizonRegret {
+    tenMinutes: string;
+    tenMonths: string;
+    tenYears: string;
+}
+
+export interface RegretMinimizationData {
+    optionId: string;
+    futureSelfPerspective: string;
+    potentialRegrets: TimeHorizonRegret;
+    regretScore?: number;
+    timeHorizonAnalysis?: string;
+}
+
 // reflect tool
 export interface KnowledgeAssessment {
     domain: string;

@@ -47,11 +47,23 @@
         }
       ],
       "status": "completed"
+    },
+    "1.5": {
+      "attempts": [
+        {
+          "session": 6,
+          "timestamp": "2026-01-05T22:47:20.407165",
+          "approach": "Implemented: Add ReversibilityData interface with reversibility score, undo cost, time to reverse, and one-way/tw",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
     }
   },
   "stuck_subtasks": [],
   "metadata": {
     "created_at": "2026-01-05T22:38:22.452619",
-    "last_updated": "2026-01-05T22:46:02.406630"
+    "last_updated": "2026-01-05T22:47:20.407186"
   }
 }
