@@ -35,16 +35,16 @@
           "title": "Update MAP_TOOL schema in index.ts",
           "description": "Extend the diagramType enum in the MAP_TOOL definition to include the 5 new diagram types. Add mermaidOutput as an optional output field in the schema.",
           "file_paths": ["src/index.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Successfully extended the diagramType enum in MAP_TOOL to include the 5 new diagram types (sequenceDiagram, stateMachine, erDiagram, mindMap, contextDiagram) and added mermaidOutput as an optional field in the schema."
         },
         {
           "subtask_id": "1.3",
           "title": "Update web tool schemas",
           "description": "Update diagramTypeEnum in web/lib/tools/map.ts to include the new diagram types and Mermaid output support.",
           "file_paths": ["web/lib/tools/map.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Successfully updated diagramTypeEnum in web/lib/tools/map.ts to include the 5 new diagram types (sequenceDiagram, stateMachine, erDiagram, mindMap, contextDiagram). Web schema now aligns with backend changes from subtasks 1.1 and 1.2."
         }
       ]
     },
