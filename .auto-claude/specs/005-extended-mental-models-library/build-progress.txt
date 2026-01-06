@@ -195,5 +195,49 @@ Acceptance criteria met:
 ✓ Creative problem-solving example (chatbot implementation decision)
 ✓ Related models linked
 
+**Subtask 3.3: Add MECE extended documentation**
+**Status: COMPLETE**
+**Commit: 6c09853** (Note: Commit message was incorrect, said "3.1 - SWOT" but actually added MECE)
+
+Successfully added MECE (Mutually Exclusive, Collectively Exhaustive) to EXTENDED_MODELS in web/lib/resources/extended/models.ts (lines 366-433):
+
+✓ Complete ExtendedModel structure with all required fields:
+  - name: 'mece'
+  - title: 'MECE (Mutually Exclusive, Collectively Exhaustive)'
+  - description: Structure problems into categories that don't overlap (ME) while covering all possibilities (CE)
+
+✓ whenToUse: 5 scenarios including:
+  - Breaking down complex problems needing comprehensive analysis
+  - Creating frameworks, segmentations, or categorizations
+  - Ensuring nothing is missed and nothing is double-counted
+  - Presenting to executives or clients who need clear, complete structures
+  - Organizing data, issues, or options into logical groupings
+
+✓ steps: 6 detailed steps with clear ME and CE explanations:
+  - Define the problem or universe clearly
+  - Identify logical dimension/criterion for segmentation
+  - **Create Mutually Exclusive (ME) categories**: No overlap - each item fits into only one category
+  - **Ensure Collectively Exhaustive (CE)**: Complete coverage - every item has a category
+  - Test structure: Can every element fit into exactly one bucket?
+  - Refine if needed based on overlaps or gaps
+
+✓ Consulting-style business analysis example:
+  - Context: Consulting firm analyzing retail company's 15% YoY revenue decline
+  - Shows both incorrect (non-MECE) and correct (MECE) approaches
+  - Application: Revenue framework breakdown (Customers × Transaction Value × Frequency)
+  - Demonstrates clear ME principle: Dollar of lost revenue comes from ONE factor, not multiple
+  - Demonstrates clear CE principle: Revenue MUST equal the three factors, no fourth factor exists
+  - Detailed analysis with specific percentages and outcomes
+  - Practical business outcome: Targeted fixes vs scattered efforts
+
+✓ relatedModels: ['first_principles', 'swot_analysis', 'five_whys']
+
+✓ toolParameters: Proper structure following established pattern
+
+Acceptance criteria met:
+✓ ME and CE concepts clearly explained (Steps 3 & 4 with detailed definitions)
+✓ Business analysis example (Retail revenue decline consulting case)
+✓ Related models linked
+
 **Next Steps:**
-- Continue with Subtask 3.3: Add MECE extended documentation
+- Continue with Subtask 3.4: Add Inversion Thinking extended documentation
