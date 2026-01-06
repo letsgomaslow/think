@@ -114,4 +114,34 @@
 
 **Status:** Subtask 2.3 verified and marked as completed in implementation plan.
 
-**Next:** Phase 2 - Continue with subtasks 2.4-2.7 (Inversion, Second-Order, Pre-Mortem, Five Whys already implemented, need verification)
+**Next:** Phase 2 - Continue with subtasks 2.5-2.7 (Second-Order, Pre-Mortem, Five Whys already implemented, need verification)
+
+---
+
+### Latest Update: 2026-01-06 13:30:00
+
+**Subtask 2.4 - Add Inversion Thinking to catalog: COMPLETED**
+
+✅ Verified Inversion Thinking mental model in web/lib/resources/models.ts:
+  - name: 'inversion_thinking' ✓
+  - title: 'Inversion Thinking' ✓
+  - description: Clear explanation of working backwards from failure, references Charlie Munger ✓
+  - useCases: 4 use cases provided ✓
+    1. Risk identification and mitigation planning
+    2. Avoiding common pitfalls in projects and decisions
+    3. Pre-emptive problem-solving and failure prevention
+    4. Strategic planning by identifying what not to do
+  - steps: 4 implementation steps provided ✓
+    1. Define your goal or desired outcome
+    2. Invert the problem: imagine complete failure or disaster
+    3. List all the ways things could go wrong
+    4. Work backwards to identify what to avoid and prevent
+
+✅ All acceptance criteria met:
+  - Inversion model defined with proper structure ✓
+  - Explains working backwards from failure ✓
+  - Includes risk identification use cases ✓
+
+**Status:** Subtask 2.4 verified and marked as completed in implementation plan.
+
+**Next:** Phase 2 - Continue with subtasks 2.5-2.7 (Second-Order, Pre-Mortem, Five Whys)

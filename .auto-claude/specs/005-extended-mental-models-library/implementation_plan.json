@@ -92,12 +92,14 @@
           "title": "Add Inversion Thinking to catalog",
           "description": "Add Inversion Thinking mental model for reverse problem-solving",
           "file_path": "web/lib/resources/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Inversion model defined with proper structure",
             "Explains working backwards from failure",
             "Includes risk identification use cases"
-          ]
+          ],
+          "completed_at": "2026-01-06T13:30:00.000Z",
+          "notes": "Verified Inversion Thinking mental model in web/lib/resources/models.ts. All acceptance criteria met: proper structure with name 'inversion_thinking', title 'Inversion Thinking', clear explanation of working backwards from failure (referencing Charlie Munger), 4 use cases including risk identification and mitigation planning, and 4 implementation steps (define goal, invert problem, list failure modes, identify what to avoid). Code is in correct state."
         },
         {
           "subtask_id": "2.5",
