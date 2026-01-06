@@ -212,51 +212,61 @@
           "id": "3.3",
           "title": "Update debugServer.ts to use Zod",
           "description": "Replace validateApproachData method with Zod schema.parse()",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/tools/debugServer.ts"
           ],
-          "estimatedMinutes": 15
+          "estimatedMinutes": 15,
+          "notes": "Replaced validateApproachData method with Zod schema validation. Imported debuggingApproachDataSchema from schemas/debug.ts and replaced 16 lines of manual validation with 10 lines using schema.parse(). Added comprehensive ZodError handling that formats validation errors into readable messages. The implementation maintains all existing functionality while providing better type safety and more detailed error messages. Follows the exact pattern established in traceServer.ts and modelServer.ts.",
+          "updated_at": "2026-01-06T20:16:35.043874+00:00"
         },
         {
           "id": "3.4",
           "title": "Update patternServer.ts to use Zod",
           "description": "Replace validatePatternData method with Zod schema.parse()",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/tools/patternServer.ts"
           ],
-          "estimatedMinutes": 15
+          "estimatedMinutes": 15,
+          "notes": "Replaced validatePatternData method with Zod schema validation. Imported designPatternDataSchema from schemas/pattern.ts and replaced 20 lines of manual validation with 10 lines using schema.parse(). Added comprehensive ZodError handling that formats validation errors into readable messages. The implementation maintains all existing functionality while providing better type safety and more detailed error messages. Follows the exact pattern established in traceServer.ts, modelServer.ts, and debugServer.ts.",
+          "updated_at": "2026-01-06T20:17:50.021923+00:00"
         },
         {
           "id": "3.5",
           "title": "Update paradigmServer.ts to use Zod",
           "description": "Replace validateParadigmData method with Zod schema.parse()",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/tools/paradigmServer.ts"
           ],
-          "estimatedMinutes": 15
+          "estimatedMinutes": 15,
+          "notes": "Replaced validateParadigmData method with Zod schema validation. Imported programmingParadigmDataSchema from schemas/paradigm.ts and replaced 20 lines of manual validation with 10 lines using schema.parse(). Added comprehensive ZodError handling that formats validation errors into readable messages. The implementation maintains all existing functionality while providing better type safety and more detailed error messages. Follows the exact pattern established in traceServer.ts, modelServer.ts, debugServer.ts, and patternServer.ts.",
+          "updated_at": "2026-01-06T20:19:05.963326+00:00"
         },
         {
           "id": "3.6",
           "title": "Update councilServer.ts to use Zod",
           "description": "Replace validateInputData method with Zod schema.parse(), preserve persona resolution logic",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/tools/councilServer.ts"
           ],
-          "estimatedMinutes": 20
+          "estimatedMinutes": 20,
+          "notes": "Replaced validateInputData method with Zod schema validation. Imported collaborativeReasoningDataSchema from schemas/council.ts and replaced 12 lines of manual validation with comprehensive Zod validation. Added ZodError handling that formats validation errors into readable messages. Preserved the critical persona resolution logic (resolvePersonas) which runs before schema validation to handle predefinedPersonas, personaCategory, and custom personas. The implementation maintains all existing functionality while providing better type safety and more detailed error messages. Follows the exact pattern established in traceServer.ts, modelServer.ts, debugServer.ts, patternServer.ts, and paradigmServer.ts.",
+          "updated_at": "2026-01-06T20:21:05.304142+00:00"
         },
         {
           "id": "3.7",
           "title": "Update decideServer.ts to use Zod",
           "description": "Replace validateInputData method with Zod schema.parse()",
-          "status": "pending",
+          "status": "completed",
           "files": [
             "src/tools/decideServer.ts"
           ],
-          "estimatedMinutes": 15
+          "estimatedMinutes": 15,
+          "notes": "Replaced validateInputData method with Zod schema validation. Imported decisionFrameworkDataSchema from schemas/decide.ts and replaced 12 lines of manual validation with 10 lines using schema.parse(). Added comprehensive ZodError handling that formats validation errors into readable messages. The implementation maintains all existing functionality while providing better type safety and more detailed error messages. Follows the exact pattern established in traceServer.ts, modelServer.ts, debugServer.ts, patternServer.ts, paradigmServer.ts, and councilServer.ts.",
+          "updated_at": "2026-01-06T20:22:48.255257+00:00"
         },
         {
           "id": "3.8",
@@ -361,5 +371,5 @@
     "testsPassed": ""
   },
   "final_acceptance": [],
-  "last_updated": "2026-01-06T20:14:58.803648+00:00"
+  "last_updated": "2026-01-06T20:22:48.255270+00:00"
 }
