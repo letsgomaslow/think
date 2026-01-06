@@ -220,6 +220,28 @@ Phase 6: Documentation
   - Commit: 3b9b138
   - Status: COMPLETED
 
+✓ Subtask 6.2: Add Sequence Diagram example
+  - Added comprehensive Scenario 4 to docs/tools/map.md
+  - Shows API authentication flow with 4 participants: Client App, API Gateway, Auth Service, Database
+  - Includes complete JSON input structure with:
+    * 4 participant nodes (type: "node")
+    * 7 message edges (type: "edge") showing request/response flow
+    * Arrow type properties (->> for synchronous, -->> for asynchronous)
+  - Shows JSON output with mermaidOutput field containing generated Mermaid syntax
+  - Includes rendered Mermaid diagram visualization for clarity
+  - Detailed "What This Means" section explaining:
+    * How nodes become participants
+    * Message flow representation (top to bottom)
+    * Arrow type differences (solid vs dashed)
+    * Network hop insights (3 hops revealed by visualization)
+    * Self-message pattern (client-to-client interaction)
+  - Follows existing documentation pattern (Context → Input → Output → Mermaid → Explanation)
+  - Real-world scenario: API authentication flow
+  - File: docs/tools/map.md
+  - Commit: 1a928b8
+  - Added: 72 lines
+  - Status: COMPLETED
+
 Next Steps:
-- Phase 6: Documentation (7 remaining subtasks)
+- Phase 6: Documentation (6 remaining subtasks)
 - Phase 7: Final Validation & Build (3 subtasks)

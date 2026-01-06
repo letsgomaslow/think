@@ -252,8 +252,8 @@
           "file_paths": [
             "docs/tools/map.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Added comprehensive Scenario 4 to docs/tools/map.md showing API authentication flow sequence diagram. Includes JSON input with 4 participant nodes (Client App, API Gateway, Auth Service, Database) and 7 message edges demonstrating request/response pattern. Shows JSON output with mermaidOutput field containing generated Mermaid syntax. Includes rendered Mermaid diagram visualization and detailed explanation of participants, message flow, arrow types (->> for synchronous, -->> for asynchronous), insights about network hops, and self-message patterns. Follows existing documentation pattern and demonstrates real-world API interaction scenario. Committed in 1a928b8 with 72 lines added."
         },
         {
           "subtask_id": "6.3",
