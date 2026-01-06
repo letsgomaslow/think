@@ -235,6 +235,60 @@ The complex hypotheses were possible but unlikely. Starting simple saved hours.`
       steps: ['Hypothesis complexity ranking'],
     },
   },
+  swot_analysis: {
+    name: 'swot_analysis',
+    title: 'SWOT Analysis',
+    description: 'Evaluate Strengths, Weaknesses, Opportunities, and Threats to make strategic decisions.',
+    whenToUse: [
+      'When evaluating a business strategy or market position',
+      'When making major strategic decisions or pivots',
+      'When assessing competitive advantages and vulnerabilities',
+      'When planning product launches or entering new markets',
+      'When conducting annual strategic planning or reviews',
+    ],
+    steps: [
+      'Identify Strengths: Internal positive attributes, resources, capabilities, and competitive advantages you currently possess',
+      'Identify Weaknesses: Internal limitations, resource gaps, skill deficits, and areas where competitors outperform you',
+      'Identify Opportunities: External favorable conditions, market trends, emerging technologies, or environmental factors you can leverage',
+      'Identify Threats: External risks, competitive pressures, market shifts, regulatory changes, or trends that could harm your position',
+      'Analyze intersections: Match Strengths with Opportunities (growth strategies), shore up Weaknesses against Threats (defensive strategies)',
+    ],
+    example: {
+      context: 'A small independent coffee shop evaluating whether to expand delivery services',
+      application: `Strengths (Internal Positive):
+- Loyal local customer base with 4.8-star reviews
+- High-quality artisanal coffee and unique blends
+- Experienced baristas who know regular customers
+- Strong Instagram presence with 12K local followers
+
+Weaknesses (Internal Negative):
+- Limited capital for technology investment
+- No existing delivery infrastructure or partnerships
+- Small team already at capacity during peak hours
+- Higher prices than chain competitors
+
+Opportunities (External Positive):
+- 40% increase in local delivery app usage post-pandemic
+- New residential developments opening nearby (500+ units)
+- Competitors have poor delivery ratings (slow, cold coffee)
+- Local food delivery co-op forming to compete with DoorDash
+
+Threats (External Negative):
+- Starbucks launching aggressive delivery promotions
+- Rising ingredient costs affecting margins
+- Delivery apps taking 25-30% commission
+- Customer expectations for 30-minute delivery windows
+
+Strategic Insight:
+Instead of competing on speed with chain competitors, leverage Strengths (quality, loyal customers) with Opportunity (delivery co-op) to create a premium "coffee subscription" delivery service. Partner with the local co-op to avoid high fees, focus on scheduled morning deliveries where quality matters more than instant gratification. This plays to strengths while avoiding the cash-intensive competition with chains.`,
+    },
+    relatedModels: ['opportunity_cost', 'second_order_effects', 'pre_mortem'],
+    toolParameters: {
+      modelName: 'swot_analysis',
+      problem: 'Your strategic decision or evaluation',
+      steps: ['Strengths, Weaknesses, Opportunities, Threats analysis'],
+    },
+  },
 };
 
 /**

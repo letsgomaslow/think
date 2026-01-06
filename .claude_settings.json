@@ -1,0 +1,34 @@
+{
+  "sandbox": {
+    "enabled": true,
+    "autoAllowBashIfSandboxed": true
+  },
+  "permissions": {
+    "defaultMode": "acceptEdits",
+    "allow": [
+      "Read(./**)",
+      "Write(./**)",
+      "Edit(./**)",
+      "Glob(./**)",
+      "Grep(./**)",
+      "Read(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/005-extended-mental-models-library/**)",
+      "Write(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/005-extended-mental-models-library/**)",
+      "Edit(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/005-extended-mental-models-library/**)",
+      "Glob(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/005-extended-mental-models-library/**)",
+      "Grep(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/005-extended-mental-models-library/**)",
+      "Read(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/005-extended-mental-models-library/.auto-claude/specs/005-extended-mental-models-library/**)",
+      "Write(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/005-extended-mental-models-library/.auto-claude/specs/005-extended-mental-models-library/**)",
+      "Edit(/Users/kesh/Documents/Github -Local/Mental Models MCPs/think-mcp/.worktrees/005-extended-mental-models-library/.auto-claude/specs/005-extended-mental-models-library/**)",
+      "Bash(*)",
+      "WebFetch(*)",
+      "WebSearch(*)",
+      "mcp__context7__resolve-library-id(*)",
+      "mcp__context7__get-library-docs(*)",
+      "mcp__graphiti-memory__search_nodes(*)",
+      "mcp__graphiti-memory__search_facts(*)",
+      "mcp__graphiti-memory__add_episode(*)",
+      "mcp__graphiti-memory__get_episodes(*)",
+      "mcp__graphiti-memory__get_entity_edge(*)"
+    ]
+  }
+}

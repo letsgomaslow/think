@@ -1,0 +1,10 @@
+{
+  "discovered_files": {
+    "src/index.ts": {
+      "description": "MODEL_TOOL schema with modelName enum at lines 46-55. Adding new models requires updating this enum and the tool description. ModelServer processes model names generically without model-specific logic.",
+      "category": "architecture",
+      "discovered_at": "2026-01-06T03:43:28.906037+00:00"
+    }
+  },
+  "last_updated": "2026-01-06T03:43:28.906057+00:00"
+}
