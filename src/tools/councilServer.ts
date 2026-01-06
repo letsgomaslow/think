@@ -178,6 +178,54 @@ export class CouncilServer {
     this.sessions[data.sessionId].push(data);
   }
 
+  /**
+   * Get the full history of contributions for a session
+   * @param sessionId - The unique identifier for the session
+   * @returns Array of all CollaborativeReasoningData entries for this session
+   */
+  public getSessionHistory(sessionId: string): CollaborativeReasoningData[] {
+    return this.sessions[sessionId] || [];
+  }
+
+  /**
+   * Get a summary of a session including iteration count and last contribution info
+   * @param sessionId - The unique identifier for the session
+   * @returns Summary object with iteration count, last stage, and last contribution details
+   */
+  public getSessionSummary(sessionId: string): {
+    sessionId: string;
+    totalIterations: number;
+    lastStage: string | null;
+    lastActivePersonaId: string | null;
+    lastIteration: number | null;
+    totalContributions: number;
+  } {
+    const history = this.sessions[sessionId] || [];
+
+    if (history.length === 0) {
+      return {
+        sessionId,
+        totalIterations: 0,
+        lastStage: null,
+        lastActivePersonaId: null,
+        lastIteration: null,
+        totalContributions: 0
+      };
+    }
+
+    const lastEntry = history[history.length - 1];
+    const totalContributions = history.reduce((sum, entry) => sum + entry.contributions.length, 0);
+
+    return {
+      sessionId,
+      totalIterations: history.length,
+      lastStage: lastEntry.stage,
+      lastActivePersonaId: lastEntry.activePersonaId,
+      lastIteration: lastEntry.iteration,
+      totalContributions
+    };
+  }
+
   public processCollaborativeReasoning(input: unknown): CollaborativeReasoningData {
     const validatedData = this.validateInputData(input);
 
