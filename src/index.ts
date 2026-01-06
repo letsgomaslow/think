@@ -30,13 +30,28 @@ import { TOOL_NAMES } from "./toolNames.js";
 const MODEL_TOOL: Tool = {
     name: TOOL_NAMES.MODEL,
     description: `A tool for applying structured mental models to problem-solving.
-Supports various mental models including:
+Supports 13 mental models across analytical, strategic, and creative categories:
+
+Analytical Models:
 - First Principles Thinking
-- Opportunity Cost Analysis
-- Error Propagation Understanding
-- Rubber Duck Debugging
-- Pareto Principle
+- MECE (Mutually Exclusive Collectively Exhaustive)
+- Five Whys (root cause analysis)
 - Occam's Razor
+
+Strategic Models:
+- SWOT Analysis
+- Second-Order Effects
+- Opportunity Cost Analysis
+- Pre-Mortem Analysis
+
+Creative & Problem-Solving Models:
+- Six Thinking Hats (De Bono)
+- Inversion Thinking
+- Rubber Duck Debugging
+
+Decision & Prioritization Models:
+- Pareto Principle
+- Error Propagation Understanding
 
 Each model provides a systematic approach to breaking down and solving problems.`,
     inputSchema: {
