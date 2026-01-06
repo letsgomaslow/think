@@ -39,8 +39,8 @@
           "file_paths": [
             "src/index.ts"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "MAP_TOOL schema successfully updated with all 5 new diagram types (sequenceDiagram, stateMachine, erDiagram, mindMap, contextDiagram) in the diagramType enum. Added mermaidOutput as an optional string field in the schema. Changes verified in commit 168246d."
         },
         {
           "subtask_id": "1.3",
