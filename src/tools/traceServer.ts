@@ -56,6 +56,18 @@ export const DEFAULT_TRACE_SERVER_CONFIG: Readonly<TraceServerConfig> = {
 export class TraceServer {
   private thoughtHistory: ThoughtData[] = [];
   private branches: Record<string, ThoughtData[]> = {};
+  private readonly config: Readonly<TraceServerConfig>;
+
+  /**
+   * Creates a new TraceServer instance
+   * @param config - Optional partial configuration to override defaults
+   */
+  constructor(config?: Partial<TraceServerConfig>) {
+    this.config = {
+      ...DEFAULT_TRACE_SERVER_CONFIG,
+      ...config
+    };
+  }
 
   private validateThoughtData(input: unknown): ThoughtData {
     const data = input as Record<string, unknown>;
