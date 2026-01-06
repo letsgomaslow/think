@@ -123,6 +123,12 @@ export const councilSchema = {
   topic: z.string()
     .min(1, 'Topic cannot be empty')
     .describe('The main topic or problem the council is addressing'),
+  personaCategory: z.enum(['technical', 'business', 'creative', 'general'])
+    .optional()
+    .describe('Optional: Select personas from a specific category (technical, business, creative, general)'),
+  predefinedPersonas: z.array(z.string())
+    .optional()
+    .describe('Optional: Array of predefined persona IDs to use from the persona library (e.g., ["security-specialist", "performance-engineer"])'),
   personas: z.array(personaSchema)
     .min(2, 'At least two personas are required for a council')
     .describe('List of expert personas participating in the council'),
@@ -175,6 +181,8 @@ export const councilSchema = {
 
 interface CouncilInput {
   topic: string;
+  personaCategory?: 'technical' | 'business' | 'creative' | 'general';
+  predefinedPersonas?: string[];
   personas: Array<{
     id: string;
     name: string;
@@ -215,6 +223,8 @@ interface CouncilInput {
 export async function handleCouncil(args: CouncilInput) {
   const {
     topic,
+    personaCategory,
+    predefinedPersonas,
     personas,
     contributions,
     stage,

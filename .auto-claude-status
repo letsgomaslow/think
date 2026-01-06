@@ -1,25 +1,25 @@
 {
   "active": true,
-  "spec": "015-enhanced-decision-frameworks",
-  "state": "building",
+  "spec": "006-expanded-council-personas",
+  "state": "complete",
   "subtasks": {
-    "completed": 28,
-    "total": 29,
+    "completed": 0,
+    "total": 33,
     "in_progress": 1,
     "failed": 0
   },
   "phase": {
-    "current": "Build and Verification",
+    "current": "Documentation",
     "id": null,
-    "total": 2
+    "total": 3
   },
   "workers": {
     "active": 0,
     "max": 1
   },
   "session": {
-    "number": 15,
-    "started_at": "2026-01-06T02:00:39.636455"
+    "number": 29,
+    "started_at": "2026-01-06T02:01:06.566893"
   },
-  "last_update": "2026-01-06T02:37:02.936346"
+  "last_update": "2026-01-06T03:36:38.266449"
 }

@@ -1,0 +1,12 @@
+{
+  "sourceType": "ideation",
+  "ideationType": "ui_ux_improvements",
+  "ideaId": "uiux-005",
+  "rationale": "The checkbox label mentions 'privacy policy' but it's plain text. Users who want to review the privacy policy before agreeing must manually navigate elsewhere. This creates friction and may reduce trust/conversion.",
+  "category": "ui_ux",
+  "uiuxCategory": "usability",
+  "affectedFiles": [
+    "web/components/sections/waitlist-form.tsx"
+  ],
+  "problemSolved": "FormLabel contains plain text: 'I agree to receive updates and understand my data will be processed according to the privacy policy.' The phrase 'privacy policy' is not linked."
+}

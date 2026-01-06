@@ -1,7 +1,7 @@
 /**
  * Debugging Approaches Resource Catalog
  *
- * Exposes the 6 debugging approaches available in think-mcp
+ * Exposes the 11 debugging approaches available in think-mcp
  * as a browsable MCP resource.
  */
 
@@ -111,6 +111,91 @@ const DEBUGGING_APPROACHES: ResourceCatalogItem[] = [
       'Trace all statements that affect it',
       'Create a minimal program slice',
       'Debug within the reduced scope',
+    ],
+  },
+  {
+    name: 'wolf_fence',
+    title: 'Wolf Fence Algorithm',
+    description: 'Use binary isolation to systematically narrow down the location of a bug.',
+    useCases: [
+      'Isolating intermittent bugs',
+      'Finding bugs in large codebases',
+      'Debugging when exact location is unknown',
+      'Performance regression hunting',
+    ],
+    steps: [
+      'Place checkpoints at strategic boundaries',
+      'Test to determine which section contains the bug',
+      'Subdivide the problematic section',
+      'Repeat until the bug location is isolated',
+    ],
+  },
+  {
+    name: 'rubber_duck',
+    title: 'Rubber Duck Debugging',
+    description: 'Explain code and problem step-by-step to reveal overlooked assumptions.',
+    useCases: [
+      'Understanding complex logic',
+      'Finding assumption errors',
+      'Debugging as a novice',
+      'Clarifying problem statements',
+    ],
+    steps: [
+      'Explain what the code should do',
+      'Walk through what it actually does',
+      'Articulate assumptions and expectations',
+      'Identify discrepancies revealed through explanation',
+    ],
+  },
+  {
+    name: 'delta_debugging',
+    title: 'Delta Debugging',
+    description: 'Systematically minimize test cases to find the minimal failing scenario.',
+    useCases: [
+      'Simplifying complex bug reports',
+      'Identifying minimal reproduction steps',
+      'Reducing test case complexity',
+      'Isolating specific failure conditions',
+    ],
+    steps: [
+      'Start with a failing test case',
+      'Remove portions while keeping failure',
+      'Binary search to find minimal set',
+      'Verify the minimal case still reproduces the bug',
+    ],
+  },
+  {
+    name: 'fault_tree',
+    title: 'Fault Tree Analysis',
+    description: 'Map all possible failure paths to systematically analyze root causes.',
+    useCases: [
+      'Complex system failures',
+      'Multi-factor bug analysis',
+      'Risk assessment in debugging',
+      'Understanding cascading failures',
+    ],
+    steps: [
+      'Identify the top-level failure event',
+      'Map all possible contributing causes',
+      'Analyze logical relationships (AND/OR)',
+      'Trace paths to find root causes',
+    ],
+  },
+  {
+    name: 'time_travel',
+    title: 'Time Travel Debugging',
+    description: 'Record execution state to step backward and forward through program history.',
+    useCases: [
+      'Understanding state transitions',
+      'Debugging race conditions',
+      'Analyzing event sequences',
+      'Reproducing hard-to-catch bugs',
+    ],
+    steps: [
+      'Record program execution with snapshots',
+      'Navigate backward to before the bug',
+      'Step forward observing state changes',
+      'Identify the exact point where state corrupts',
     ],
   },
 ];

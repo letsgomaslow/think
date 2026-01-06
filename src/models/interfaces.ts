@@ -65,6 +65,22 @@ export interface PersonaData {
         style: string;
         tone: string;
     };
+    /**
+     * Optional category for predefined personas from the persona library
+     */
+    category?: 'technical' | 'business' | 'creative' | 'general';
+    /**
+     * Optional tags for discovery and search (from persona library)
+     */
+    tags?: string[];
+    /**
+     * Optional typical concerns this persona raises (from persona library)
+     */
+    concerns?: string[];
+    /**
+     * Optional example questions this persona typically asks (from persona library)
+     */
+    typicalQuestions?: string[];
 }
 
 export interface ContributionData {
