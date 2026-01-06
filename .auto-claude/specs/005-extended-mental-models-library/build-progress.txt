@@ -377,5 +377,103 @@ Acceptance criteria met:
 ✓ Project failure prevention example (Startup app marketplace with 5 team member narratives)
 ✓ Related models linked
 
+**Subtask 3.7: Add Five Whys extended documentation**
+**Status: COMPLETE**
+**Commit: (previously completed)**
+
+Successfully added Five Whys to EXTENDED_MODELS in web/lib/resources/extended/models.ts (lines 694-791).
+
+Acceptance criteria met:
+✓ Iterative root cause technique explained
+✓ Manufacturing/process example (Toyota Production System)
+✓ Related models linked
+
+**Phase 3 (Extended Model Documentation): COMPLETE**
+
 **Next Steps:**
-- Continue with Subtask 3.7: Add Five Whys extended documentation
+- Continue with Phase 4: Unit Tests
+
+---
+
+### 2026-01-06 - Phase 4: Unit Tests
+
+**Subtask 4.1: Add unit tests for all new models**
+**Status: COMPLETE**
+**Commit: 7fae96e**
+
+Successfully added comprehensive test cases in src/tools/modelServer.test.ts for all 7 new mental models:
+
+✓ **SWOT Analysis test** (lines 56-74)
+  - Scenario: Coffee shop evaluating delivery service expansion
+  - Steps include: Strengths (loyal customers, quality coffee), Weaknesses (limited capital, no infrastructure), Opportunities (delivery market growth), Threats (chain competitors)
+  - Reasoning: Partner with local co-op strategy
+  - Conclusion: Premium subscription delivery service
+  - Verifies: status='success', modelName, hasSteps=true, hasConclusion=true
+
+✓ **Six Thinking Hats test** (lines 76-96)
+  - Scenario: Adding AI chatbot support to SaaS app
+  - Steps cover all 6 hats: White (facts/data), Red (emotions), Black (risks), Yellow (benefits), Green (creativity), Blue (process/summary)
+  - Reasoning: Multiple perspectives reveal hybrid approach
+  - Conclusion: Launch 3-month pilot
+  - Verifies: status='success', modelName, hasSteps=true, hasConclusion=true
+
+✓ **MECE test** (lines 98-117)
+  - Scenario: Analyzing 15% YoY revenue decline
+  - Steps: Revenue formula (Customers × Transaction × Frequency), breakdown of each component
+  - Reasoning: MECE framework ensures complete coverage without overlap
+  - Conclusion: Focus on customer acquisition and basket optimization
+  - Verifies: status='success', modelName, hasSteps=true, hasConclusion=true
+
+✓ **Inversion Thinking test** (lines 119-139)
+  - Scenario: Building successful investment portfolio
+  - Steps: Invert problem to "how to guarantee failure", list failure modes (chase tips, use leverage, panic sell, high fees, no diversification)
+  - Reasoning: Avoid stupid mistakes vs being brilliant
+  - Conclusion: Never invest without understanding, minimize fees, maintain discipline
+  - Verifies: status='success', modelName, hasSteps=true, hasConclusion=true
+
+✓ **Second-Order Effects test** (lines 141-159)
+  - Scenario: City implementing rent control for affordability
+  - Steps: First-order (tenant savings), Second-order (reduced maintenance, construction drops), Third-order (supply shrinks, prices skyrocket), System impact
+  - Reasoning: Solution creates worse version of problem through cascading effects
+  - Conclusion: Focus on increasing supply through upzoning
+  - Verifies: status='success', modelName, hasSteps=true, hasConclusion=true
+
+✓ **Pre-Mortem test** (lines 161-180)
+  - Scenario: Mobile app marketplace launch
+  - Steps: Imagine future disaster, multiple failure narratives (vendor recruitment, payment issues, unit economics, licensing)
+  - Reasoning: Prospective hindsight reveals hidden risks
+  - Conclusion: Delay launch, recruit vendors early, hire payments specialist
+  - Verifies: status='success', modelName, hasSteps=true, hasConclusion=true
+
+✓ **Five Whys test** (lines 182-201)
+  - Scenario: Robot welding machine stopped on assembly line
+  - Steps: 5 iterations of "why" from symptom (fuse blew) to root cause (no filter on pump)
+  - Reasoning: Each "why" peels back layer from symptom to root
+  - Conclusion: Install filter and implement maintenance checklist
+  - Verifies: status='success', modelName, hasSteps=true, hasConclusion=true
+
+Acceptance criteria met:
+✓ Test for each new model with valid input (7 comprehensive tests added)
+✓ Example scenarios demonstrate realistic model usage matching extended documentation
+✓ All tests follow existing pattern (same assertion structure as first_principles test)
+
+**Subtask 4.2: Update models array test**
+**Status: COMPLETE**
+**Commit: 7fae96e**
+
+Successfully updated the 'should process all mental model types' test in src/tools/modelServer.test.ts (lines 203-228):
+
+✓ Models array now includes all 13 mental models:
+  - Existing 6: first_principles, opportunity_cost, error_propagation, rubber_duck, pareto_principle, occams_razor
+  - New 7: swot_analysis, six_thinking_hats, mece, inversion_thinking, second_order_effects, pre_mortem, five_whys
+
+✓ Test iterates through all 13 models and verifies each processes successfully
+
+Acceptance criteria met:
+✓ Test covers all 13 model names (6 existing + 7 new)
+✓ Test structure ensures each model returns status='success' and correct modelName
+
+**Phase 4 (Unit Tests): COMPLETE**
+
+**Next Steps:**
+- Continue with Phase 5: Verification and Integration (Run test suite and build)
