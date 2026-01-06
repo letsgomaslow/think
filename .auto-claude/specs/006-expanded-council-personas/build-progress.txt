@@ -1,6 +1,6 @@
 # Build Progress for 006-expanded-council-personas
 
-## Current Status: In Progress (14/33 subtasks completed - 42%)
+## Current Status: In Progress (15/33 subtasks completed - 45%)
 
 ### Completed Subtasks
 
@@ -78,16 +78,20 @@
   - Status: Committed (commit: ff8d89f)
   - Notes: Design thinking expert with expertise in empathy, ideation, prototyping, and human-centered innovation
 
+- [x] 4.2 - Storyteller persona
+  - File: src/personas/creative/storyteller.ts
+  - Status: Committed (commit: 9b7b29e)
+  - Notes: Narrative expert with expertise in storytelling, emotional resonance, persuasive communication, and brand messaging
+
 ### Next Steps
 - [ ] Continue with Phase 4: Creative Expert Personas
-  - 4.2 - Storyteller persona
   - 4.3 - Brand Strategist persona
   - 4.4 - Innovation Catalyst persona
   - 4.5 - Creative Experts category index
 
 ### Build Notes
 - Phase 1, 2, & 3 complete! 🎉
-- Phase 4 in progress - Creative Expert Personas (1/5 complete)
+- Phase 4 in progress - Creative Expert Personas (2/5 complete)
 - Persona library architecture fully implemented with registry and factory patterns
 - 4 technical expert personas implemented with distinct voices and expertise
 - Product Manager persona complete - strategic focus on roadmapping, prioritization, and stakeholder alignment
@@ -98,3 +102,4 @@
 - Auto-registration system ensures personas are available in global registry
 - Search and query capabilities with relevance scoring
 - Design Thinker persona complete - empathetic focus on human-centered design, ideation, prototyping, and creative problem-solving with "How might we...?" framework
+- Storyteller persona complete - narrative-driven focus on story arcs, emotional resonance, persuasive communication, brand storytelling, and content strategy across multiple mediums
