@@ -1132,4 +1132,514 @@ describe('DecideServer', () => {
       expect(output).toContain('High: 2');
     });
   });
+
+  describe('Reversibility Analysis', () => {
+    it('should classify two-way door decisions with MOVE FAST recommendation', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Should we change our homepage design?',
+        options: [
+          { id: 'newdesign', name: 'New Homepage Design', description: 'Update homepage with modern layout' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'homepage-design-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'newdesign',
+            reversibilityScore: 0.9,
+            undoCost: 500,
+            timeToReverse: 2,
+            doorType: 'two-way' as const,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.analysisType).toBe('reversibility');
+      expect(result.reversibilityAnalysis).toHaveLength(1);
+      expect(result.reversibilityAnalysis![0].doorType).toBe('two-way');
+      expect(result.reversibilityAnalysis![0].reversibilityScore).toBe(0.9);
+      expect(output).toContain('Reversibility Analysis');
+      expect(output).toContain('TWO-WAY DOOR');
+      expect(output).toContain('easily reversed');
+      expect(output).toContain('90%');
+      expect(output).toContain('$500');
+      expect(output).toContain('2 days');
+      expect(output).toContain('MOVE FAST');
+      expect(output).toContain('Low risk, easily reversible');
+    });
+
+    it('should classify one-way door decisions with MOVE SLOW recommendation', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Should we merge with competitor company?',
+        options: [
+          { id: 'merge', name: 'Merge with Competitor', description: 'Full company merger and integration' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'merger-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'merge',
+            reversibilityScore: 0.1,
+            undoCost: 50000000,
+            timeToReverse: 730,
+            doorType: 'one-way' as const,
+            undoComplexity: 'Extremely complex: legal entanglements, employee impact, brand damage',
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis![0].doorType).toBe('one-way');
+      expect(result.reversibilityAnalysis![0].reversibilityScore).toBe(0.1);
+      expect(output).toContain('ONE-WAY DOOR');
+      expect(output).toContain('difficult or costly to reverse');
+      expect(output).toContain('10%');
+      expect(output).toContain('$50,000,000');
+      expect(output).toContain('730 days');
+      expect(output).toContain('MOVE SLOW');
+      expect(output).toContain('High stakes, difficult to reverse');
+      expect(output).toContain('one-way door. Invest significant time');
+      expect(output).toContain('Extremely complex');
+    });
+
+    it('should show MODERATE PACE for two-way doors with moderate reversibility', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Should we switch to a new project management tool?',
+        options: [
+          { id: 'newtool', name: 'Switch to New PM Tool', description: 'Migrate to modern project management platform' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'pm-tool-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'newtool',
+            reversibilityScore: 0.6,
+            undoCost: 8000,
+            timeToReverse: 14,
+            doorType: 'two-way' as const,
+            undoComplexity: 'Moderate: data migration, team retraining',
+            reversibilityNotes: 'Can export data and switch back, but will lose some custom workflows',
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis![0].reversibilityScore).toBe(0.6);
+      expect(output).toContain('TWO-WAY DOOR');
+      expect(output).toContain('60%');
+      expect(output).toContain('$8,000');
+      expect(output).toContain('14 days');
+      expect(output).toContain('MODERATE PACE');
+      expect(output).toContain('Reversible but with some cost');
+      expect(output).toContain('Moderate: data migration, team retraining');
+      expect(output).toContain('Can export data and switch back');
+    });
+
+    it('should show PROCEED WITH CAUTION for one-way doors with moderate reversibility', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Should we rewrite the application in a new programming language?',
+        options: [
+          { id: 'rewrite', name: 'Rewrite in Rust', description: 'Complete rewrite from Node.js to Rust' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'language-rewrite-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'rewrite',
+            reversibilityScore: 0.4,
+            undoCost: 250000,
+            timeToReverse: 180,
+            doorType: 'one-way' as const,
+            undoComplexity: 'High: complete code rewrite, team skill changes',
+            reversibilityNotes: 'Technically possible to revert, but wasteful investment and team morale impact',
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis![0].doorType).toBe('one-way');
+      expect(result.reversibilityAnalysis![0].reversibilityScore).toBe(0.4);
+      expect(output).toContain('ONE-WAY DOOR');
+      expect(output).toContain('40%');
+      expect(output).toContain('$250,000');
+      expect(output).toContain('180 days');
+      expect(output).toContain('PROCEED WITH CAUTION');
+      expect(output).toContain('One-way door with moderate reversibility');
+      expect(output).toContain('Careful consideration needed');
+      expect(output).toContain('High: complete code rewrite');
+      expect(output).toContain('Technically possible to revert');
+    });
+
+    it('should compare multiple options with different door types and reversibility', () => {
+      const reversibilityInput = {
+        decisionStatement: 'How should we scale our infrastructure?',
+        options: [
+          { id: 'vertical', name: 'Vertical Scaling', description: 'Upgrade existing servers' },
+          { id: 'horizontal', name: 'Horizontal Scaling', description: 'Add more servers with load balancing' },
+          { id: 'serverless', name: 'Serverless Architecture', description: 'Complete migration to serverless' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'scaling-strategy-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'vertical',
+            reversibilityScore: 0.8,
+            undoCost: 2000,
+            timeToReverse: 3,
+            doorType: 'two-way' as const,
+            reversibilityNotes: 'Can easily downgrade or switch to different hardware',
+          },
+          {
+            optionId: 'horizontal',
+            reversibilityScore: 0.7,
+            undoCost: 5000,
+            timeToReverse: 7,
+            doorType: 'two-way' as const,
+            undoComplexity: 'Low: remove servers and reconfigure load balancer',
+          },
+          {
+            optionId: 'serverless',
+            reversibilityScore: 0.3,
+            undoCost: 100000,
+            timeToReverse: 90,
+            doorType: 'one-way' as const,
+            undoComplexity: 'High: architecture redesign, code refactoring, stateful services',
+            reversibilityNotes: 'Major vendor lock-in and architectural changes make reversal expensive',
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis).toHaveLength(3);
+      expect(output).toContain('Vertical Scaling');
+      expect(output).toContain('Horizontal Scaling');
+      expect(output).toContain('Serverless Architecture');
+      expect(output).toContain('80%');
+      expect(output).toContain('70%');
+      expect(output).toContain('30%');
+
+      // Verify different recommendations
+      expect(output).toContain('MOVE FAST');
+      expect(output).toContain('PROCEED WITH CAUTION');
+    });
+
+    it('should display reversibility metrics with correct color coding thresholds', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Test reversibility metric thresholds',
+        options: [
+          { id: 'high', name: 'High Reversibility', description: 'Easy to reverse' },
+          { id: 'medium', name: 'Medium Reversibility', description: 'Moderate to reverse' },
+          { id: 'low', name: 'Low Reversibility', description: 'Hard to reverse' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'metrics-test-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'high',
+            reversibilityScore: 0.75, // Green (≥0.7)
+            undoCost: 800,             // Green (<1000)
+            timeToReverse: 5,          // Green (<7)
+            doorType: 'two-way' as const,
+          },
+          {
+            optionId: 'medium',
+            reversibilityScore: 0.5,   // Yellow (≥0.4, <0.7)
+            undoCost: 5000,            // Yellow (≥1000, <10000)
+            timeToReverse: 15,         // Yellow (≥7, <30)
+            doorType: 'two-way' as const,
+          },
+          {
+            optionId: 'low',
+            reversibilityScore: 0.2,   // Red (<0.4)
+            undoCost: 50000,           // Red (≥10000)
+            timeToReverse: 60,         // Red (≥30)
+            doorType: 'one-way' as const,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis![0].reversibilityScore).toBe(0.75);
+      expect(result.reversibilityAnalysis![1].reversibilityScore).toBe(0.5);
+      expect(result.reversibilityAnalysis![2].reversibilityScore).toBe(0.2);
+      expect(output).toContain('75%');
+      expect(output).toContain('50%');
+      expect(output).toContain('20%');
+      expect(output).toContain('$800');
+      expect(output).toContain('$5,000');
+      expect(output).toContain('$50,000');
+    });
+
+    it('should handle edge case with 1 day timeToReverse showing singular "day"', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Quick reversible decision',
+        options: [
+          { id: 'quick', name: 'Quick Change', description: 'Very fast to reverse' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'quick-reverse-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'quick',
+            reversibilityScore: 0.95,
+            undoCost: 100,
+            timeToReverse: 1,
+            doorType: 'two-way' as const,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis![0].timeToReverse).toBe(1);
+      expect(output).toContain('1 day');
+      expect(output).not.toContain('1 days');
+    });
+
+    it('should handle empty reversibilityAnalysis array', () => {
+      const reversibilityInput = {
+        decisionStatement: 'No reversibility data',
+        options: [
+          { id: 'option', name: 'Some Option', description: 'No reversibility analysis' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'no-data-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis).toHaveLength(0);
+      expect(output).toBe('');
+    });
+
+    it('should display Bezos Two-Way Door Framework guidance', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Test framework guidance',
+        options: [
+          { id: 'test', name: 'Test Option', description: 'Test description' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'guidance-test-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'test',
+            reversibilityScore: 0.5,
+            undoCost: 1000,
+            timeToReverse: 10,
+            doorType: 'two-way' as const,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(output).toContain('Bezos\'s Two-Way Door Framework');
+      expect(output).toContain('One-way doors');
+      expect(output).toContain('Irreversible decisions requiring careful deliberation');
+      expect(output).toContain('Two-way doors');
+      expect(output).toContain('Reversible decisions where speed matters more than perfection');
+    });
+
+    it('should handle reversibility without optional fields', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Minimal reversibility data',
+        options: [
+          { id: 'minimal', name: 'Minimal Data', description: 'Only required fields' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'minimal-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'minimal',
+            reversibilityScore: 0.5,
+            undoCost: 5000,
+            timeToReverse: 10,
+            doorType: 'two-way' as const,
+            // No undoComplexity or reversibilityNotes
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis![0].undoComplexity).toBeUndefined();
+      expect(result.reversibilityAnalysis![0].reversibilityNotes).toBeUndefined();
+      expect(output).toContain('50%');
+      expect(output).toContain('$5,000');
+      expect(output).toContain('10 days');
+      // Should not contain complexity or notes sections
+      expect(output).not.toContain('Complexity:');
+      expect(output).not.toContain('Notes:');
+    });
+
+    it('should verify decision speed recommendations for exact boundary values', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Test boundary values for recommendations',
+        options: [
+          { id: 'boundary1', name: 'Two-way 70% (boundary)', description: 'Exactly 70% reversibility' },
+          { id: 'boundary2', name: 'Two-way 69% (below)', description: 'Just below 70%' },
+          { id: 'boundary3', name: 'One-way 30% (boundary)', description: 'Exactly 30% reversibility' },
+          { id: 'boundary4', name: 'One-way 29% (below)', description: 'Just below 30%' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'boundary-recommendations-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'boundary1',
+            reversibilityScore: 0.7,
+            undoCost: 1000,
+            timeToReverse: 5,
+            doorType: 'two-way' as const,
+          },
+          {
+            optionId: 'boundary2',
+            reversibilityScore: 0.69,
+            undoCost: 1000,
+            timeToReverse: 5,
+            doorType: 'two-way' as const,
+          },
+          {
+            optionId: 'boundary3',
+            reversibilityScore: 0.3,
+            undoCost: 10000,
+            timeToReverse: 30,
+            doorType: 'one-way' as const,
+          },
+          {
+            optionId: 'boundary4',
+            reversibilityScore: 0.29,
+            undoCost: 10000,
+            timeToReverse: 30,
+            doorType: 'one-way' as const,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      // Extract positions of recommendations in output
+      const moveFastIndex = output.indexOf('MOVE FAST');
+      const moderatePaceIndex = output.indexOf('MODERATE PACE');
+      const proceedCautionIndex = output.indexOf('PROCEED WITH CAUTION');
+      const moveSlowIndex = output.indexOf('MOVE SLOW');
+
+      // Two-way 70% should get MOVE FAST
+      expect(moveFastIndex).toBeGreaterThan(-1);
+      // Two-way 69% should get MODERATE PACE
+      expect(moderatePaceIndex).toBeGreaterThan(-1);
+      // One-way 30% should get PROCEED WITH CAUTION
+      expect(proceedCautionIndex).toBeGreaterThan(-1);
+      // One-way 29% should get MOVE SLOW
+      expect(moveSlowIndex).toBeGreaterThan(-1);
+
+      // Verify exact percentages
+      expect(output).toContain('70%');
+      expect(output).toContain('69%');
+      expect(output).toContain('30%');
+      expect(output).toContain('29%');
+    });
+
+    it('should handle real-world scenario: hiring decision', () => {
+      const reversibilityInput = {
+        decisionStatement: 'Should we hire this candidate for a permanent position?',
+        options: [
+          { id: 'permanent', name: 'Permanent Hire', description: 'Full-time employee with benefits' },
+          { id: 'contract', name: 'Contract Hire', description: '6-month contract with option to extend' },
+        ],
+        analysisType: 'reversibility' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'hiring-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        reversibilityAnalysis: [
+          {
+            optionId: 'permanent',
+            reversibilityScore: 0.3,
+            undoCost: 75000,
+            timeToReverse: 90,
+            doorType: 'one-way' as const,
+            undoComplexity: 'High: severance, legal, morale impact, reputation damage',
+            reversibilityNotes: 'Letting someone go is costly and difficult. Consider probation period to mitigate.',
+          },
+          {
+            optionId: 'contract',
+            reversibilityScore: 0.85,
+            undoCost: 5000,
+            timeToReverse: 14,
+            doorType: 'two-way' as const,
+            undoComplexity: 'Low: contract ends naturally or can be terminated with notice',
+            reversibilityNotes: 'Easy to convert to permanent or part ways at contract end',
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(reversibilityInput);
+      const output = server.formatOutput(result);
+
+      expect(result.reversibilityAnalysis).toHaveLength(2);
+      expect(output).toContain('Permanent Hire');
+      expect(output).toContain('Contract Hire');
+      expect(output).toContain('ONE-WAY DOOR');
+      expect(output).toContain('TWO-WAY DOOR');
+      expect(output).toContain('30%');
+      expect(output).toContain('85%');
+      expect(output).toContain('$75,000');
+      expect(output).toContain('$5,000');
+      expect(output).toContain('PROCEED WITH CAUTION');
+      expect(output).toContain('MOVE FAST');
+      expect(output).toContain('severance, legal, morale impact');
+      expect(output).toContain('Easy to convert to permanent');
+    });
+  });
 });
