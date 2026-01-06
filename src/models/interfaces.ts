@@ -218,6 +218,17 @@ export interface CostBenefitAnalysis {
     npv?: number;
 }
 
+// Risk Assessment Matrix types
+export interface RiskItem {
+    optionId: string;
+    description: string;
+    probability: number;
+    impact: number;
+    riskScore: number;
+    category?: string;
+    mitigation?: string[];
+}
+
 // reflect tool
 export interface KnowledgeAssessment {
     domain: string;
