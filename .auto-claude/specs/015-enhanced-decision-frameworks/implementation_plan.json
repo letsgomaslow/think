@@ -142,11 +142,13 @@
           "id": "2.5",
           "title": "Implement Regret Minimization formatting",
           "description": "Add formatRegretMinimization method showing 10/10/10 analysis (10 min, 10 months, 10 years) and projected regrets from future self perspective",
-          "status": "pending",
+          "status": "completed",
           "estimatedMinutes": 20,
           "files": [
             "src/tools/decideServer.ts"
-          ]
+          ],
+          "notes": "Successfully implemented formatRegretMinimization method in DecideServer:\n- Added regretMinimizationAnalysis field to DecisionFrameworkData interface for storing regret minimization data\n- Imported RegretMinimizationData type in decideServer.ts\n- Created formatRegretMinimization method that displays:\n  * Future self perspective analysis\n  * 10/10/10 Framework display with time horizons (10 minutes, 10 months, 10 years)\n  * Emoji indicators for each time horizon (\u23f1\ufe0f for minutes, \ud83d\udcc5 for months, \ud83d\udd2e for years)\n  * Color-coded regret score (0-10 scale): green for low regret (\u22643), yellow for moderate (\u22646), red for high (>6)\n  * Optional time horizon analysis field\n  * Regret minimization guidance at the end\n- Updated formatOutput to route 'regret-minimization' analysis type to the new formatter\n- Follows existing DecideServer patterns with chalk-based formatting and consistent structure\n- Committed changes with descriptive message",
+          "updated_at": "2026-01-06T03:59:27.117096+00:00"
         },
         {
           "id": "2.6",
@@ -367,5 +369,5 @@
     "issues": "",
     "testsPassed": ""
   },
-  "last_updated": "2026-01-06T03:57:08.985802+00:00"
+  "last_updated": "2026-01-06T03:59:27.117105+00:00"
 }

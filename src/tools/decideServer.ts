@@ -461,7 +461,8 @@ export class DecideServer {
     output += `${chalk.bold.yellow('Analysis Type:')} ${analysisType}\n`;
     output += `${chalk.bold.magenta('Stage:')} ${stage} (Iteration: ${iteration})\n`;
 
-    // Framework-specific formatting
+    // Framework-specific formatting - route to appropriate formatter based on analysis type
+    // Enhanced decision frameworks (5 new frameworks)
     if (analysisType === 'eisenhower-matrix') {
       output += this.formatEisenhowerMatrix(data);
     } else if (analysisType === 'cost-benefit') {
@@ -473,7 +474,7 @@ export class DecideServer {
     } else if (analysisType === 'regret-minimization') {
       output += this.formatRegretMinimization(data);
     } else {
-      // Options
+      // Default formatting for original analysis types (weighted-matrix, pros-cons, etc.)
       if (options.length > 0) {
         output += `\n${chalk.bold.cyan('Options:')}\n`;
         options.forEach((option, i) => {
