@@ -292,8 +292,8 @@
           "file_paths": [
             "docs/tools/map.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Added comprehensive Scenario 8 to docs/tools/map.md showing E-Commerce System Context using C4 model. Includes JSON input with 7 nodes (2 Person nodes: Customer and Admin; 2 System nodes: E-Commerce Platform and Inventory Service; 3 System_Ext nodes: Payment Gateway, Shipping Provider, Email Service) and 6 Rel() relationships with technology details. Shows JSON output with mermaidOutput field containing C4Context syntax. Includes rendered Mermaid diagram visualization and detailed explanations covering: C4 context level concepts, node type distinctions (Person vs System vs System_Ext), system boundaries, external dependencies, integration patterns, dependency analysis (critical paths, failure modes, vendor lock-in, compliance), architecture decisions (microservices, technology choices, security), scaling considerations (rate limits, circuit breakers), and next steps with C4 model (Container, Component, Code diagrams). Follows existing documentation pattern from Scenarios 4-7. Committed in 13f655d with 114 lines added."
         },
         {
           "subtask_id": "6.7",
@@ -302,8 +302,8 @@
           "file_paths": [
             "docs/tools/map.md"
           ],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Added comprehensive Rendering Mermaid Diagrams section to docs/tools/map.md covering 7 rendering methods: (1) Online editors (mermaid.live, Mermaid Chart, Kroki) with quickstart guide, (2) GitHub/GitLab markdown with native rendering examples, (3) VS Code extensions (Mermaid Editor and Markdown Preview) with installation/usage instructions, (4) Command-line tools (mermaid-cli) with comprehensive examples including installation, basic usage, advanced options, and CI/CD GitHub Actions integration, (5) Jupyter Notebooks with IPython magic and py-mermaid-js, (6) Documentation sites (MkDocs, Docusaurus, Sphinx) with configuration examples, (7) Other tools (Notion, Confluence, Obsidian). Includes complete workflow example from Map tool output to rendered diagram and troubleshooting section for common issues. Added 311 lines to documentation. Committed in 73dffbb."
         },
         {
           "subtask_id": "6.8",

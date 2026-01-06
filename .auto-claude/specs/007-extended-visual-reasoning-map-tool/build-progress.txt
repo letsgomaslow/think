@@ -328,6 +328,59 @@ Phase 6: Documentation
   - Added: 94 lines
   - Status: COMPLETED
 
+✓ Subtask 6.6: Add System Context example
+  - Added comprehensive Scenario 8 showing E-Commerce System Context using C4 model
+  - Includes JSON input with 7 nodes:
+    * 2 Person nodes (Customer, Admin)
+    * 2 System nodes (E-Commerce Platform, Inventory Service)
+    * 3 System_Ext nodes (Payment Gateway, Shipping Provider, Email Service)
+  - Shows 6 Rel() relationships with technology details (HTTPS/REST, gRPC, SMTP/API)
+  - Shows JSON output with mermaidOutput field containing C4Context syntax
+  - Includes rendered Mermaid diagram visualization
+  - Detailed explanations covering:
+    * C4 context level concepts
+    * Node type distinctions (Person vs System vs System_Ext)
+    * System boundaries and external dependencies
+    * Integration patterns and technology choices
+    * Dependency analysis (critical paths, failure modes, vendor lock-in, compliance)
+    * Architecture decisions (microservices, security)
+    * Scaling considerations (rate limits, circuit breakers)
+    * Next steps with C4 model (Container, Component, Code diagrams)
+  - Follows existing documentation pattern from Scenarios 4-7
+  - Real-world scenario: e-commerce system architecture
+  - File: docs/tools/map.md
+  - Commit: 13f655d
+  - Added: 114 lines
+  - Status: COMPLETED
+
+✓ Subtask 6.7: Add Mermaid rendering guide
+  - Added comprehensive Rendering Mermaid Diagrams section to docs/tools/map.md
+  - Covers 7 rendering methods with detailed examples:
+    1. Online Editors (mermaid.live, Mermaid Chart, Kroki) - quickstart guide
+    2. GitHub/GitLab Markdown - native rendering with code block examples
+    3. VS Code Extensions - Mermaid Editor and Markdown Preview with installation/usage
+    4. Command-line (mermaid-cli) - comprehensive examples:
+       * Installation via npm/yarn/Docker
+       * Basic usage (PNG/SVG/PDF generation)
+       * Advanced options (themes, sizing, custom CSS)
+       * CI/CD integration with GitHub Actions
+    5. Jupyter Notebooks - IPython magic and py-mermaid-js
+    6. Documentation Sites - MkDocs, Docusaurus, Sphinx configuration
+    7. Other Tools - Notion, Confluence, Obsidian
+  - Complete workflow example from Map tool output to rendered diagram
+  - Troubleshooting section covering:
+    * Syntax errors and validation
+    * Styling and theme configuration
+    * Performance with large diagrams
+    * Browser compatibility
+  - File: docs/tools/map.md
+  - Commit: 73dffbb
+  - Added: 311 lines
+  - Status: COMPLETED
+
+Phase 6 Status: 7 of 8 subtasks completed (87.5%)
+- Remaining: 6.8 (Update README.md with visualization section)
+
 Next Steps:
-- Phase 6: Documentation (3 remaining subtasks: 6.6, 6.7, 6.8)
+- Phase 6: Documentation (1 remaining subtask: 6.8)
 - Phase 7: Final Validation & Build (3 subtasks)
