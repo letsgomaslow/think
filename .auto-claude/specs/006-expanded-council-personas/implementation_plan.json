@@ -29,8 +29,8 @@
           "title": "Create persona registry system",
           "description": "Implement PersonaRegistry class to store, retrieve, and query predefined personas by category, ID, or expertise",
           "files": ["src/personas/registry.ts"],
-          "status": "pending",
-          "notes": ""
+          "status": "completed",
+          "notes": "Implemented PersonaRegistry class with comprehensive features: persona and category registration, retrieval by ID/category/expertise/tags/keywords, flexible querying, search with relevance scoring, category-based indexing, and global singleton instance. File: src/personas/registry.ts"
         },
         {
           "subtask_id": "1.3",
