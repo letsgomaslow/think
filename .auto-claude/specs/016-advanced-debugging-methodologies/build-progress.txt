@@ -1,0 +1,43 @@
+# Build Progress: Advanced Debugging Methodologies
+
+## Status: Planning Complete
+
+## Implementation Plan Summary
+
+### Phase 1: Core Implementation
+- [ ] 1.1 Update debug tool enum and schema in src/index.ts
+- [ ] 1.2 Add debug resource catalog entries in web/lib/resources/debug-approaches.ts
+- [ ] 1.3 Add extended debug approach details in web/lib/resources/extended/debug.ts
+
+### Phase 2: Testing
+- [ ] 2.1 Add unit tests for new approaches in src/tools/debugServer.test.ts
+- [ ] 2.2 Run tests and verify build
+
+### Phase 3: Documentation & Polish
+- [ ] 3.1 Review and update debug prompts
+- [ ] 3.2 Final integration verification
+
+## New Debugging Methodologies to Implement
+
+1. **Wolf Fence Algorithm** - Binary isolation debugging, similar to git bisect but for runtime debugging
+2. **Rubber Duck Debugging** - Structured walkthrough by explaining the problem step-by-step
+3. **Delta Debugging** - Systematically minimizing a failing test case to find root cause
+4. **Fault Tree Analysis** - Top-down deductive failure analysis using tree structure
+5. **Time Travel Debugging** - Conceptual approach using state snapshots and replay
+
+## Files to Modify
+
+- `src/index.ts` - Add new approaches to DEBUG_TOOL enum
+- `web/lib/resources/debug-approaches.ts` - Add catalog entries
+- `web/lib/resources/extended/debug.ts` - Add extended approach definitions
+- `src/tools/debugServer.test.ts` - Add test coverage
+- `web/lib/prompts/debug-issue.ts` - Review for updates
+
+## Current Codebase Context
+
+- Existing debug approaches: binary_search, reverse_engineering, divide_conquer, backtracking, cause_elimination, program_slicing
+- Debug server: src/tools/debugServer.ts - generic approach processor (no approach-specific logic)
+- Total approaches after implementation: 11
+
+---
+Last Updated: 2026-01-06

@@ -1,0 +1,25 @@
+{
+  "active": true,
+  "spec": "016-advanced-debugging-methodologies",
+  "state": "building",
+  "subtasks": {
+    "completed": 2,
+    "total": 7,
+    "in_progress": 1,
+    "failed": 0
+  },
+  "phase": {
+    "current": "Core Implementation",
+    "id": null,
+    "total": 3
+  },
+  "workers": {
+    "active": 0,
+    "max": 1
+  },
+  "session": {
+    "number": 4,
+    "started_at": "2026-01-05T22:39:07.806586"
+  },
+  "last_update": "2026-01-05T22:43:49.269866"
+}

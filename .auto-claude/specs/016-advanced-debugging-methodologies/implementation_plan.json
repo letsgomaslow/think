@@ -1,0 +1,156 @@
+{
+  "feature": "Advanced Debugging Methodologies",
+  "description": "Expand the debug tool with 5 new debugging approaches: Wolf Fence Algorithm, Rubber Duck Debugging, Delta Debugging, Fault Tree Analysis, and Time Travel Debugging concepts.",
+  "created_at": "2026-01-06T03:39:01.193Z",
+  "updated_at": "2026-01-06T03:39:06.323Z",
+  "status": "in_progress",
+  "planStatus": "complete",
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Core Implementation",
+      "description": "Add the 5 new debugging methodologies to the core debug server and resources",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Update debug tool enum and schema",
+          "description": "Add the 5 new methodology names to the DEBUG_TOOL enum in src/index.ts: wolf_fence, rubber_duck, delta_debugging, fault_tree, time_travel. Update the tool description to include the new methods.",
+          "status": "completed",
+          "files": [
+            "src/index.ts"
+          ],
+          "acceptance_criteria": [
+            "wolf_fence added to approachName enum",
+            "rubber_duck added to approachName enum",
+            "delta_debugging added to approachName enum",
+            "fault_tree added to approachName enum",
+            "time_travel added to approachName enum",
+            "Tool description updated to list new methods"
+          ],
+          "notes": "Successfully added all 5 new debugging methodologies (wolf_fence, rubber_duck, delta_debugging, fault_tree, time_travel) to the DEBUG_TOOL enum and updated the tool description to list all new methods.",
+          "updated_at": "2026-01-06T03:41:58.641512+00:00"
+        },
+        {
+          "id": "1.2",
+          "title": "Add debug resource catalog entries",
+          "description": "Add the 5 new debugging approaches to the DEBUGGING_APPROACHES array in web/lib/resources/debug-approaches.ts with name, title, description, useCases, and steps for each methodology.",
+          "status": "completed",
+          "files": [
+            "web/lib/resources/debug-approaches.ts"
+          ],
+          "acceptance_criteria": [
+            "Wolf Fence Algorithm entry with 4+ use cases and 4+ steps",
+            "Rubber Duck Debugging entry with 4+ use cases and 4+ steps",
+            "Delta Debugging entry with 4+ use cases and 4+ steps",
+            "Fault Tree Analysis entry with 4+ use cases and 4+ steps",
+            "Time Travel Debugging entry with 4+ use cases and 4+ steps",
+            "All entries follow existing catalog format"
+          ],
+          "notes": "Successfully added all 5 new debugging approaches to DEBUGGING_APPROACHES array: wolf_fence (Wolf Fence Algorithm), rubber_duck (Rubber Duck Debugging), delta_debugging (Delta Debugging), fault_tree (Fault Tree Analysis), and time_travel (Time Travel Debugging). Each entry includes 4 use cases and 4 steps following the existing catalog format. Updated file header comment to reflect 11 total approaches.",
+          "updated_at": "2026-01-06T03:43:31.200117+00:00"
+        },
+        {
+          "id": "1.3",
+          "title": "Add extended debug approach details",
+          "description": "Add comprehensive extended definitions for all 5 new approaches to web/lib/resources/extended/debug.ts including whenToUse, technique (with steps and key principles), example (with scenario, walkthrough, and insight), and commonMistakes.",
+          "status": "pending",
+          "files": [
+            "web/lib/resources/extended/debug.ts"
+          ],
+          "acceptance_criteria": [
+            "Wolf Fence entry with complete example walkthrough",
+            "Rubber Duck entry with structured walkthrough template",
+            "Delta Debugging entry with minimal test case example",
+            "Fault Tree entry with failure analysis tree example",
+            "Time Travel entry with state snapshot example",
+            "Each entry includes 3+ common mistakes",
+            "Each entry includes real-world scenario"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Testing",
+      "description": "Add comprehensive test coverage for new debugging methodologies",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Add unit tests for new approaches",
+          "description": "Extend src/tools/debugServer.test.ts with test cases for all 5 new debugging methodologies. Include tests for successful processing, optional fields, and error handling.",
+          "status": "pending",
+          "files": [
+            "src/tools/debugServer.test.ts"
+          ],
+          "acceptance_criteria": [
+            "Test case for wolf_fence approach processing",
+            "Test case for rubber_duck approach processing",
+            "Test case for delta_debugging approach processing",
+            "Test case for fault_tree approach processing",
+            "Test case for time_travel approach processing",
+            "All new approaches added to bulk test array",
+            "Tests verify correct status and approachName in response"
+          ]
+        },
+        {
+          "id": "2.2",
+          "title": "Run tests and verify build",
+          "description": "Execute npm run test:run to verify all tests pass, then npm run build to ensure TypeScript compilation succeeds with no errors.",
+          "status": "pending",
+          "files": [],
+          "acceptance_criteria": [
+            "All existing tests continue to pass",
+            "All new tests pass",
+            "Build completes without TypeScript errors",
+            "No runtime errors when starting server"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Documentation & Polish",
+      "description": "Ensure documentation is clear and integration is seamless",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Review and update debug prompts",
+          "description": "Review web/lib/prompts/debug-issue.ts and update if needed to reference new debugging methodologies in the prompt guidance.",
+          "status": "pending",
+          "files": [
+            "web/lib/prompts/debug-issue.ts"
+          ],
+          "acceptance_criteria": [
+            "New methodologies referenced in debug prompt if applicable",
+            "Guidance explains when each new method is most effective"
+          ]
+        },
+        {
+          "id": "3.2",
+          "title": "Final integration verification",
+          "description": "Verify the debug tool works end-to-end with all 11 approaches (6 existing + 5 new). Ensure enum values match across all files and resource catalogs are consistent.",
+          "status": "pending",
+          "files": [
+            "src/index.ts",
+            "web/lib/resources/debug-approaches.ts",
+            "web/lib/resources/extended/debug.ts"
+          ],
+          "acceptance_criteria": [
+            "All 11 approaches work in debug tool",
+            "Enum values consistent across files",
+            "Resource catalog count correctly reflects 11 approaches",
+            "Extended resources available for all 11 approaches"
+          ]
+        }
+      ]
+    }
+  ],
+  "estimated_effort": "Medium",
+  "dependencies": [],
+  "qa_status": {
+    "status": "pending",
+    "tests_passed": "",
+    "issues": ""
+  },
+  "last_updated": "2026-01-06T03:43:31.200131+00:00"
+}
