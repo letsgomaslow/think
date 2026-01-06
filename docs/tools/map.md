@@ -647,6 +647,317 @@ C4Context
 
 ---
 
+## Rendering Mermaid Diagrams
+
+All Map tool diagrams output **Mermaid syntax** in the `mermaidOutput` field. Mermaid is a text-based diagramming format that can be rendered in many tools and platforms. Here's how to visualize your diagrams:
+
+### 1. Online Editors (Quickest)
+
+**Mermaid Live Editor** - [https://mermaid.live](https://mermaid.live)
+
+The fastest way to see your diagram. Simply copy the `mermaidOutput` value and paste it into the editor.
+
+**Example**:
+1. Run the Map tool and get the `mermaidOutput` value
+2. Visit [mermaid.live](https://mermaid.live)
+3. Paste the Mermaid syntax into the code editor
+4. View the rendered diagram instantly
+5. Export as SVG/PNG if needed
+
+**Other online options**:
+- [Mermaid Chart](https://www.mermaidchart.com/) - Professional diagramming with collaboration features
+- [Kroki](https://kroki.io/) - Supports Mermaid and many other formats
+
+---
+
+### 2. GitHub Markdown (Native Rendering)
+
+GitHub automatically renders Mermaid diagrams in markdown files, issues, pull requests, and discussions. Just wrap the syntax in a mermaid code block:
+
+**Example**:
+````markdown
+```mermaid
+sequenceDiagram
+    participant client as Client App
+    participant api as API Gateway
+    client->>api: POST /login
+    api-->>client: 200 OK + token
+```
+````
+
+**Renders as**:
+```mermaid
+sequenceDiagram
+    participant client as Client App
+    participant api as API Gateway
+    client->>api: POST /login
+    api-->>client: 200 OK + token
+```
+
+**Supported in**:
+- GitHub README.md files
+- GitHub Issues and Pull Requests
+- GitHub Discussions
+- GitHub Wiki
+- GitLab (also supports Mermaid)
+
+---
+
+### 3. VS Code Extensions (Interactive Development)
+
+**Recommended Extensions**:
+
+**Mermaid Editor** (tomoyukim.vscode-mermaid-editor)
+- Live preview as you type
+- Export to SVG/PNG
+- Syntax highlighting
+
+**Installation**:
+1. Open VS Code
+2. Go to Extensions (Cmd+Shift+X / Ctrl+Shift+X)
+3. Search for "Mermaid Editor"
+4. Click Install
+
+**Usage**:
+1. Create a `.mmd` file or markdown file
+2. Paste your Mermaid syntax
+3. Right-click → "Open Mermaid Preview"
+4. View live preview side-by-side
+
+**Markdown Preview Mermaid Support** (bierner.markdown-mermaid)
+- Renders Mermaid in markdown preview
+- Works with existing markdown workflow
+- No separate preview command needed
+
+---
+
+### 4. Command-Line (mermaid-cli)
+
+For automated workflows, CI/CD pipelines, or batch processing, use **mermaid-cli** to generate images from the command line.
+
+**Installation**:
+```bash
+# Using npm
+npm install -g @mermaid-js/mermaid-cli
+
+# Using yarn
+yarn global add @mermaid-js/mermaid-cli
+
+# Using Docker
+docker pull minlag/mermaid-cli
+```
+
+**Usage**:
+```bash
+# Save Mermaid syntax to a file
+echo 'sequenceDiagram
+    participant A
+    participant B
+    A->>B: Hello' > diagram.mmd
+
+# Generate PNG
+mmdc -i diagram.mmd -o diagram.png
+
+# Generate SVG (better for scaling)
+mmdc -i diagram.mmd -o diagram.svg
+
+# Generate PDF
+mmdc -i diagram.mmd -o diagram.pdf
+
+# With custom theme
+mmdc -i diagram.mmd -o diagram.svg -t dark
+
+# Set background color
+mmdc -i diagram.mmd -o diagram.png -b transparent
+```
+
+**Advanced Options**:
+```bash
+# Set width/height
+mmdc -i diagram.mmd -o diagram.png -w 1200 -H 800
+
+# Custom CSS
+mmdc -i diagram.mmd -o diagram.svg -C custom.css
+
+# Configuration file
+mmdc -i diagram.mmd -o diagram.svg -c config.json
+```
+
+**CI/CD Integration** (GitHub Actions):
+```yaml
+name: Generate Diagrams
+on: [push]
+jobs:
+  diagrams:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - name: Generate diagrams
+        uses: neenjaw/compile-mermaid-markdown-action@v0.3.0
+        with:
+          files: 'docs/**/*.md'
+          output: 'diagrams'
+```
+
+---
+
+### 5. Jupyter Notebooks
+
+For data science and research workflows, render Mermaid in Jupyter notebooks:
+
+**Using IPython magic**:
+```python
+from IPython.display import display, Markdown
+
+mermaid_code = """
+```mermaid
+graph TD
+    A[Start] --> B[Process]
+    B --> C[End]
+```
+"""
+
+display(Markdown(mermaid_code))
+```
+
+**Using py-mermaid-js**:
+```python
+# Install: pip install py-mermaid-js
+from mermaid import Mermaid
+
+diagram = """
+graph TD
+    A[Start] --> B[Process]
+"""
+
+Mermaid(diagram)
+```
+
+---
+
+### 6. Documentation Sites
+
+**MkDocs** (with pymdown-extensions):
+```yaml
+# mkdocs.yml
+markdown_extensions:
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
+```
+
+**Docusaurus**:
+```bash
+# Install plugin
+npm install --save @docusaurus/theme-mermaid
+
+# Add to docusaurus.config.js
+module.exports = {
+  themes: ['@docusaurus/theme-mermaid'],
+  markdown: {
+    mermaid: true,
+  },
+};
+```
+
+**Sphinx** (using sphinxcontrib-mermaid):
+```bash
+# Install
+pip install sphinxcontrib-mermaid
+
+# Add to conf.py
+extensions = ['sphinxcontrib.mermaid']
+```
+
+---
+
+### 7. Notion, Confluence, and Other Tools
+
+**Notion**:
+- Create a Code block
+- Set language to "Mermaid"
+- Paste your Mermaid syntax
+- Notion renders it automatically
+
+**Confluence**:
+- Install "Mermaid Diagrams for Confluence" app from Marketplace
+- Use the `/mermaid` macro
+- Paste syntax and save
+
+**Obsidian**:
+- Native Mermaid support
+- Use code blocks with `mermaid` language
+- Renders in preview mode
+
+---
+
+### Rendering Example Workflow
+
+Here's a complete workflow from Map tool output to rendered diagram:
+
+**Step 1: Get Mermaid Output**
+```json
+{
+  "operation": "create",
+  "diagramType": "sequenceDiagram",
+  "status": "success",
+  "mermaidOutput": "sequenceDiagram\n    participant client as Client App\n    participant api as API Gateway\n    client->>api: POST /login\n    api-->>client: 200 OK"
+}
+```
+
+**Step 2: Extract the mermaidOutput**
+```
+sequenceDiagram
+    participant client as Client App
+    participant api as API Gateway
+    client->>api: POST /login
+    api-->>client: 200 OK
+```
+
+**Step 3: Choose your rendering method**:
+- **Quick preview**: Paste into [mermaid.live](https://mermaid.live)
+- **Documentation**: Add to GitHub markdown in README.md
+- **Development**: Open in VS Code with Mermaid extension
+- **Production**: Generate SVG/PNG with `mmdc -i diagram.mmd -o diagram.svg`
+- **Presentation**: Export from mermaid.live as PNG or SVG
+
+**Step 4: Customize (optional)**
+```mermaid
+%%{init: {'theme':'dark', 'themeVariables': { 'primaryColor':'#ff0000'}}}%%
+sequenceDiagram
+    participant client as Client App
+    participant api as API Gateway
+    client->>api: POST /login
+    api-->>client: 200 OK
+```
+
+---
+
+### Troubleshooting
+
+**Diagram doesn't render**:
+- Check for syntax errors (missing semicolons, incorrect node IDs)
+- Validate at [mermaid.live](https://mermaid.live)
+- Ensure the Mermaid version supports your diagram type (e.g., mindmap requires v9.3+)
+
+**Styling issues**:
+- Use `%%{init: {}}%%` header for theme configuration
+- Custom CSS with mermaid-cli: `mmdc -C custom.css`
+- GitHub uses default theme (limited customization)
+
+**Performance with large diagrams**:
+- SVG format is better for complex diagrams than PNG
+- Consider splitting large diagrams into smaller components
+- Use containers/subgraphs to organize complex relationships
+
+**Browser compatibility**:
+- Modern browsers (Chrome, Firefox, Safari, Edge) fully support Mermaid
+- IE11 not supported (use static images instead)
+
+---
+
 ## User Experience
 
 Map produces visual structure records:
