@@ -109,6 +109,10 @@ export const mapSchema = {
     .min(1, 'Hypothesis cannot be empty')
     .optional()
     .describe('Hypothesis generated from visual patterns'),
+  mermaidOutput: z.string()
+    .min(1, 'Mermaid output cannot be empty')
+    .optional()
+    .describe('Mermaid diagram syntax for rendering the visual diagram'),
   nextOperationNeeded: z.boolean()
     .describe('Whether another operation is needed on the diagram'),
 };
@@ -131,6 +135,7 @@ interface MapInput {
   observation?: string;
   insight?: string;
   hypothesis?: string;
+  mermaidOutput?: string;
   nextOperationNeeded: boolean;
 }
 
@@ -145,6 +150,7 @@ export async function handleMap(args: MapInput) {
     observation = '',
     insight = '',
     hypothesis = '',
+    mermaidOutput = '',
     nextOperationNeeded,
   } = args;
 
@@ -180,5 +186,8 @@ export async function handleMap(args: MapInput) {
     ...(observation && { observation }),
     ...(insight && { insight }),
     ...(hypothesis && { hypothesis }),
+
+    // Mermaid diagram output (when provided)
+    ...(mermaidOutput && { mermaidOutput }),
   };
 }
