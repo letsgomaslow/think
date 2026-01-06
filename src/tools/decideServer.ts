@@ -527,6 +527,61 @@ export class DecideServer {
     this.decisions[data.decisionId].push(data);
   }
 
+  /**
+   * Get the full history of iterations for a decision
+   * @param decisionId - The unique identifier for the decision
+   * @returns Array of all DecisionFrameworkData entries for this decision
+   */
+  public getDecisionHistory(decisionId: string): DecisionFrameworkData[] {
+    return this.decisions[decisionId] || [];
+  }
+
+  /**
+   * Get a summary of a decision including stage progression and current state
+   * @param decisionId - The unique identifier for the decision
+   * @returns Summary object with iteration count, stage progression, and current state
+   */
+  public getDecisionSummary(decisionId: string): {
+    decisionId: string;
+    totalIterations: number;
+    stages: string[];
+    currentStage: string | null;
+    currentAnalysisType: string | null;
+    lastIteration: number | null;
+    nextStageNeeded: boolean | null;
+  } {
+    const history = this.decisions[decisionId] || [];
+
+    if (history.length === 0) {
+      return {
+        decisionId,
+        totalIterations: 0,
+        stages: [],
+        currentStage: null,
+        currentAnalysisType: null,
+        lastIteration: null,
+        nextStageNeeded: null
+      };
+    }
+
+    const lastEntry = history[history.length - 1];
+
+    // Track unique stages that have been completed
+    const stagesSet = new Set<string>();
+    history.forEach(entry => stagesSet.add(entry.stage));
+    const stages = Array.from(stagesSet);
+
+    return {
+      decisionId,
+      totalIterations: history.length,
+      stages,
+      currentStage: lastEntry.stage,
+      currentAnalysisType: lastEntry.analysisType,
+      lastIteration: lastEntry.iteration,
+      nextStageNeeded: lastEntry.nextStageNeeded
+    };
+  }
+
   public processDecisionFramework(input: unknown): DecisionFrameworkData {
     const validatedData = this.validateInputData(input);
 
