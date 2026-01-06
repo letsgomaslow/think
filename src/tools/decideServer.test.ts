@@ -329,4 +329,376 @@ describe('DecideServer', () => {
       expect(delegateIndex).toBeLessThan(eliminateIndex);
     });
   });
+
+  describe('Cost-Benefit Analysis', () => {
+    it('should calculate costs, benefits, and net value correctly', () => {
+      const cbaInput = {
+        decisionStatement: 'Should we migrate to cloud infrastructure?',
+        options: [
+          { id: 'cloud', name: 'Migrate to Cloud', description: 'Move infrastructure to AWS/Azure' },
+          { id: 'onprem', name: 'Keep On-Premise', description: 'Maintain current infrastructure' },
+        ],
+        analysisType: 'cost-benefit' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'cloud-migration-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        costBenefitAnalysis: [
+          {
+            optionId: 'cloud',
+            costs: [
+              { optionId: 'cloud', description: 'Migration costs', amount: 50000, type: 'monetary' as const, category: 'Setup', timeframe: 'Year 1' },
+              { optionId: 'cloud', description: 'Monthly hosting', amount: 120000, type: 'monetary' as const, category: 'Operating', timeframe: 'Years 1-3' },
+              { optionId: 'cloud', description: 'Training time', amount: 10000, type: 'non-monetary' as const, category: 'Learning', timeframe: 'Year 1' },
+            ],
+            benefits: [
+              { optionId: 'cloud', description: 'Reduced maintenance', amount: 80000, type: 'monetary' as const, category: 'Savings', timeframe: 'Years 1-3' },
+              { optionId: 'cloud', description: 'Scalability', amount: 100000, type: 'monetary' as const, category: 'Revenue', timeframe: 'Years 2-3' },
+              { optionId: 'cloud', description: 'Developer productivity', amount: 40000, type: 'non-monetary' as const, category: 'Efficiency', timeframe: 'Years 1-3' },
+            ],
+            netValue: 40000,
+            benefitCostRatio: 1.22,
+            roi: 22.2,
+          },
+          {
+            optionId: 'onprem',
+            costs: [
+              { optionId: 'onprem', description: 'Hardware maintenance', amount: 60000, type: 'monetary' as const, category: 'Operating', timeframe: 'Years 1-3' },
+              { optionId: 'onprem', description: 'Staff time', amount: 80000, type: 'monetary' as const, category: 'Operating', timeframe: 'Years 1-3' },
+            ],
+            benefits: [
+              { optionId: 'onprem', description: 'Data control', amount: 30000, type: 'non-monetary' as const, category: 'Security', timeframe: 'Years 1-3' },
+            ],
+            netValue: -110000,
+            benefitCostRatio: 0.21,
+            roi: -78.6,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(cbaInput);
+      const output = server.formatOutput(result);
+
+      expect(result.analysisType).toBe('cost-benefit');
+      expect(result.costBenefitAnalysis).toHaveLength(2);
+      expect(result.costBenefitAnalysis![0].netValue).toBe(40000);
+      expect(result.costBenefitAnalysis![0].benefitCostRatio).toBe(1.22);
+      expect(result.costBenefitAnalysis![0].roi).toBe(22.2);
+      expect(output).toContain('Cost-Benefit Analysis');
+      expect(output).toContain('Migrate to Cloud');
+      expect(output).toContain('Migration costs');
+      expect(output).toContain('Reduced maintenance');
+      expect(output).toContain('Net Value');
+      expect(output).toContain('Benefit-Cost Ratio');
+      expect(output).toContain('ROI');
+    });
+
+    it('should calculate and display NPV with discount rate correctly', () => {
+      const cbaInput = {
+        decisionStatement: 'Should we invest in automated testing infrastructure?',
+        options: [
+          { id: 'autotest', name: 'Automated Testing', description: 'Implement comprehensive test automation' },
+        ],
+        analysisType: 'cost-benefit' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'test-automation-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        costBenefitAnalysis: [
+          {
+            optionId: 'autotest',
+            costs: [
+              { optionId: 'autotest', description: 'Initial setup', amount: 100000, type: 'monetary' as const, category: 'Setup', timeframe: 'Year 0' },
+              { optionId: 'autotest', description: 'Maintenance', amount: 20000, type: 'monetary' as const, category: 'Operating', timeframe: 'Per Year' },
+            ],
+            benefits: [
+              { optionId: 'autotest', description: 'Reduced bug fixes', amount: 80000, type: 'monetary' as const, category: 'Savings', timeframe: 'Per Year' },
+              { optionId: 'autotest', description: 'Faster releases', amount: 60000, type: 'monetary' as const, category: 'Revenue', timeframe: 'Per Year' },
+            ],
+            netValue: 120000,
+            benefitCostRatio: 1.86,
+            roi: 85.7,
+            discountRate: 0.08,
+            timePeriodYears: 3,
+            npv: 205847,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(cbaInput);
+      const output = server.formatOutput(result);
+
+      expect(result.costBenefitAnalysis![0].npv).toBe(205847);
+      expect(result.costBenefitAnalysis![0].discountRate).toBe(0.08);
+      expect(result.costBenefitAnalysis![0].timePeriodYears).toBe(3);
+      expect(output).toContain('NPV');
+      expect(output).toContain('$205,847');
+      expect(output).toContain('8%');
+      expect(output).toContain('3 years');
+    });
+
+    it('should handle monetary and non-monetary items separately', () => {
+      const cbaInput = {
+        decisionStatement: 'Should we implement remote work policy?',
+        options: [
+          { id: 'remote', name: 'Remote Work', description: 'Allow full remote work' },
+        ],
+        analysisType: 'cost-benefit' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'remote-work-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        costBenefitAnalysis: [
+          {
+            optionId: 'remote',
+            costs: [
+              { optionId: 'remote', description: 'Home office stipends', amount: 50000, type: 'monetary' as const },
+              { optionId: 'remote', description: 'Communication overhead', amount: 20000, type: 'non-monetary' as const },
+              { optionId: 'remote', description: 'Collaboration tools', amount: 30000, type: 'monetary' as const },
+            ],
+            benefits: [
+              { optionId: 'remote', description: 'Office space savings', amount: 200000, type: 'monetary' as const },
+              { optionId: 'remote', description: 'Employee satisfaction', amount: 80000, type: 'non-monetary' as const },
+              { optionId: 'remote', description: 'Recruitment advantage', amount: 60000, type: 'non-monetary' as const },
+              { optionId: 'remote', description: 'Reduced commute costs', amount: 40000, type: 'monetary' as const },
+            ],
+            netValue: 160000,
+            benefitCostRatio: 3.8,
+            roi: 280,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(cbaInput);
+      const output = server.formatOutput(result);
+
+      // Check that monetary and non-monetary items are displayed
+      expect(output).toContain('💵');  // monetary emoji
+      expect(output).toContain('⚖️');  // non-monetary emoji
+      expect(output).toContain('Home office stipends');
+      expect(output).toContain('Communication overhead');
+      expect(output).toContain('Employee satisfaction');
+      expect(output).toContain('Office space savings');
+    });
+
+    it('should display cost and benefit categories when provided', () => {
+      const cbaInput = {
+        decisionStatement: 'Should we upgrade our development tools?',
+        options: [
+          { id: 'upgrade', name: 'Upgrade Tools', description: 'Purchase premium development tools' },
+        ],
+        analysisType: 'cost-benefit' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'tool-upgrade-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        costBenefitAnalysis: [
+          {
+            optionId: 'upgrade',
+            costs: [
+              { optionId: 'upgrade', description: 'License fees', amount: 10000, type: 'monetary' as const, category: 'Software' },
+              { optionId: 'upgrade', description: 'Training', amount: 5000, type: 'monetary' as const, category: 'Education' },
+            ],
+            benefits: [
+              { optionId: 'upgrade', description: 'Faster development', amount: 30000, type: 'monetary' as const, category: 'Productivity' },
+              { optionId: 'upgrade', description: 'Better debugging', amount: 15000, type: 'monetary' as const, category: 'Quality' },
+            ],
+            netValue: 30000,
+            benefitCostRatio: 3.0,
+            roi: 200,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(cbaInput);
+      const output = server.formatOutput(result);
+
+      expect(output).toContain('Software');
+      expect(output).toContain('Education');
+      expect(output).toContain('Productivity');
+      expect(output).toContain('Quality');
+    });
+
+    it('should display timeframes when provided', () => {
+      const cbaInput = {
+        decisionStatement: 'Should we invest in AI/ML capabilities?',
+        options: [
+          { id: 'ai', name: 'AI Investment', description: 'Build ML infrastructure' },
+        ],
+        analysisType: 'cost-benefit' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'ai-invest-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        costBenefitAnalysis: [
+          {
+            optionId: 'ai',
+            costs: [
+              { optionId: 'ai', description: 'Infrastructure', amount: 150000, type: 'monetary' as const, timeframe: 'Q1 2024' },
+              { optionId: 'ai', description: 'Hiring ML engineers', amount: 300000, type: 'monetary' as const, timeframe: 'Q1-Q2 2024' },
+            ],
+            benefits: [
+              { optionId: 'ai', description: 'Automated insights', amount: 200000, type: 'monetary' as const, timeframe: 'Q3-Q4 2024' },
+              { optionId: 'ai', description: 'Competitive advantage', amount: 500000, type: 'monetary' as const, timeframe: '2025-2026' },
+            ],
+            netValue: 250000,
+            benefitCostRatio: 1.56,
+            roi: 55.6,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(cbaInput);
+      const output = server.formatOutput(result);
+
+      expect(output).toContain('Q1 2024');
+      expect(output).toContain('Q1-Q2 2024');
+      expect(output).toContain('Q3-Q4 2024');
+      expect(output).toContain('2025-2026');
+    });
+
+    it('should handle negative net value correctly', () => {
+      const cbaInput = {
+        decisionStatement: 'Should we pursue this unprofitable project?',
+        options: [
+          { id: 'proj', name: 'Unprofitable Project', description: 'High cost, low return' },
+        ],
+        analysisType: 'cost-benefit' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'bad-project-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        costBenefitAnalysis: [
+          {
+            optionId: 'proj',
+            costs: [
+              { optionId: 'proj', description: 'Development', amount: 500000, type: 'monetary' as const },
+              { optionId: 'proj', description: 'Marketing', amount: 200000, type: 'monetary' as const },
+            ],
+            benefits: [
+              { optionId: 'proj', description: 'Revenue', amount: 100000, type: 'monetary' as const },
+              { optionId: 'proj', description: 'Brand awareness', amount: 50000, type: 'non-monetary' as const },
+            ],
+            netValue: -550000,
+            benefitCostRatio: 0.21,
+            roi: -78.6,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(cbaInput);
+      const output = server.formatOutput(result);
+
+      expect(result.costBenefitAnalysis![0].netValue).toBe(-550000);
+      expect(result.costBenefitAnalysis![0].roi).toBeLessThan(0);
+      expect(output).toContain('-$550,000');
+      expect(output).toContain('-78.6%');
+    });
+
+    it('should compare multiple options with different financial metrics', () => {
+      const cbaInput = {
+        decisionStatement: 'Which marketing strategy should we choose?',
+        options: [
+          { id: 'digital', name: 'Digital Marketing', description: 'Online advertising and SEO' },
+          { id: 'traditional', name: 'Traditional Marketing', description: 'TV, radio, print ads' },
+          { id: 'hybrid', name: 'Hybrid Approach', description: 'Combination of both' },
+        ],
+        analysisType: 'cost-benefit' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'marketing-strategy-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        costBenefitAnalysis: [
+          {
+            optionId: 'digital',
+            costs: [
+              { optionId: 'digital', description: 'Ad spend', amount: 100000, type: 'monetary' as const },
+            ],
+            benefits: [
+              { optionId: 'digital', description: 'Revenue', amount: 300000, type: 'monetary' as const },
+            ],
+            netValue: 200000,
+            benefitCostRatio: 3.0,
+            roi: 200,
+          },
+          {
+            optionId: 'traditional',
+            costs: [
+              { optionId: 'traditional', description: 'Ad spend', amount: 500000, type: 'monetary' as const },
+            ],
+            benefits: [
+              { optionId: 'traditional', description: 'Revenue', amount: 600000, type: 'monetary' as const },
+            ],
+            netValue: 100000,
+            benefitCostRatio: 1.2,
+            roi: 20,
+          },
+          {
+            optionId: 'hybrid',
+            costs: [
+              { optionId: 'hybrid', description: 'Ad spend', amount: 250000, type: 'monetary' as const },
+            ],
+            benefits: [
+              { optionId: 'hybrid', description: 'Revenue', amount: 550000, type: 'monetary' as const },
+            ],
+            netValue: 300000,
+            benefitCostRatio: 2.2,
+            roi: 120,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(cbaInput);
+      const output = server.formatOutput(result);
+
+      expect(result.costBenefitAnalysis).toHaveLength(3);
+      expect(output).toContain('Digital Marketing');
+      expect(output).toContain('Traditional Marketing');
+      expect(output).toContain('Hybrid Approach');
+
+      // Verify all three have different net values
+      expect(result.costBenefitAnalysis![0].netValue).toBe(200000);
+      expect(result.costBenefitAnalysis![1].netValue).toBe(100000);
+      expect(result.costBenefitAnalysis![2].netValue).toBe(300000);
+
+      // Verify ROI calculations
+      expect(result.costBenefitAnalysis![0].roi).toBe(200);
+      expect(result.costBenefitAnalysis![1].roi).toBe(20);
+      expect(result.costBenefitAnalysis![2].roi).toBe(120);
+    });
+
+    it('should handle empty costs or benefits arrays', () => {
+      const cbaInput = {
+        decisionStatement: 'Should we pursue this free opportunity?',
+        options: [
+          { id: 'free', name: 'Free Opportunity', description: 'All benefits, no costs' },
+        ],
+        analysisType: 'cost-benefit' as const,
+        stage: 'evaluation' as const,
+        decisionId: 'free-opp-1',
+        iteration: 0,
+        nextStageNeeded: true,
+        costBenefitAnalysis: [
+          {
+            optionId: 'free',
+            costs: [],
+            benefits: [
+              { optionId: 'free', description: 'Free publicity', amount: 50000, type: 'non-monetary' as const },
+            ],
+            netValue: 50000,
+            benefitCostRatio: 0,
+            roi: 0,
+          },
+        ],
+      };
+
+      const result = server.processDecisionFramework(cbaInput);
+      const output = server.formatOutput(result);
+
+      expect(result.costBenefitAnalysis![0].costs).toHaveLength(0);
+      expect(result.costBenefitAnalysis![0].benefits).toHaveLength(1);
+      expect(result.costBenefitAnalysis![0].netValue).toBe(50000);
+      expect(output).toContain('Cost-Benefit Analysis');
+    });
+  });
 });
