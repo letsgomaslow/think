@@ -1,7 +1,7 @@
 /**
  * Mental Models Resource Catalog
  *
- * Exposes the 6 mental models available in think-mcp
+ * Exposes the 7 mental models available in think-mcp
  * as a browsable MCP resource.
  */
 
@@ -111,6 +111,23 @@ const MENTAL_MODELS: ResourceCatalogItem[] = [
       'Evaluate complexity of each',
       'Check which fit the evidence',
       'Prefer simpler explanations',
+    ],
+  },
+  {
+    name: 'swot_analysis',
+    title: 'SWOT Analysis',
+    description: 'Evaluate Strengths, Weaknesses, Opportunities, and Threats to make strategic decisions.',
+    useCases: [
+      'Strategic planning and business evaluation',
+      'Competitive analysis and market positioning',
+      'Project planning and risk assessment',
+      'Personal development and career planning',
+    ],
+    steps: [
+      'Identify internal Strengths (positive attributes and resources)',
+      'Identify internal Weaknesses (limitations and areas for improvement)',
+      'Identify external Opportunities (favorable conditions and trends)',
+      'Identify external Threats (risks and competitive challenges)',
     ],
   },
 ];
