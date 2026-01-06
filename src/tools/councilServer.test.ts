@@ -497,4 +497,227 @@ describe('CouncilServer', () => {
       });
     });
   });
+
+  describe('State Persistence', () => {
+    it('should persist multiple contributions for the same session', () => {
+      const sessionId = 'persistent-session-1';
+
+      // First contribution
+      server.processCollaborativeReasoning({
+        ...validInput,
+        sessionId,
+        iteration: 0,
+      });
+
+      // Second contribution
+      server.processCollaborativeReasoning({
+        ...validInput,
+        sessionId,
+        iteration: 1,
+      });
+
+      // Third contribution
+      server.processCollaborativeReasoning({
+        ...validInput,
+        sessionId,
+        iteration: 2,
+      });
+
+      const history = server.getSessionHistory(sessionId);
+      expect(history).toHaveLength(3);
+      expect(history[0].iteration).toBe(0);
+      expect(history[1].iteration).toBe(1);
+      expect(history[2].iteration).toBe(2);
+    });
+
+    it('should maintain separate state for different sessions', () => {
+      const session1 = 'session-alpha';
+      const session2 = 'session-beta';
+
+      // Add contributions to session 1
+      server.processCollaborativeReasoning({
+        ...validInput,
+        sessionId: session1,
+        iteration: 0,
+      });
+      server.processCollaborativeReasoning({
+        ...validInput,
+        sessionId: session1,
+        iteration: 1,
+      });
+
+      // Add contributions to session 2
+      server.processCollaborativeReasoning({
+        ...validInput,
+        sessionId: session2,
+        iteration: 0,
+      });
+
+      const history1 = server.getSessionHistory(session1);
+      const history2 = server.getSessionHistory(session2);
+
+      expect(history1).toHaveLength(2);
+      expect(history2).toHaveLength(1);
+      expect(history1[0].sessionId).toBe(session1);
+      expect(history2[0].sessionId).toBe(session2);
+    });
+
+    it('should return empty array for non-existent session', () => {
+      const history = server.getSessionHistory('non-existent-session');
+      expect(history).toEqual([]);
+    });
+
+    describe('getSessionSummary', () => {
+      it('should return correct summary for session with contributions', () => {
+        const sessionId = 'summary-test-session';
+
+        // Add multiple contributions with different stages
+        server.processCollaborativeReasoning({
+          ...validInput,
+          sessionId,
+          iteration: 0,
+          stage: 'ideation' as const,
+          activePersonaId: 'security-expert',
+          contributions: [
+            {
+              personaId: 'security-expert',
+              content: 'First contribution',
+              type: 'suggestion' as const,
+              confidence: 0.9,
+            },
+          ],
+        });
+
+        server.processCollaborativeReasoning({
+          ...validInput,
+          sessionId,
+          iteration: 1,
+          stage: 'critique' as const,
+          activePersonaId: 'security-expert',
+          contributions: [
+            {
+              personaId: 'security-expert',
+              content: 'Second contribution',
+              type: 'critique' as const,
+              confidence: 0.8,
+            },
+            {
+              personaId: 'security-expert',
+              content: 'Third contribution',
+              type: 'suggestion' as const,
+              confidence: 0.7,
+            },
+          ],
+        });
+
+        const summary = server.getSessionSummary(sessionId);
+
+        expect(summary.sessionId).toBe(sessionId);
+        expect(summary.totalIterations).toBe(2);
+        expect(summary.lastStage).toBe('critique');
+        expect(summary.lastActivePersonaId).toBe('security-expert');
+        expect(summary.lastIteration).toBe(1);
+        expect(summary.totalContributions).toBe(3);
+      });
+
+      it('should return null values for non-existent session', () => {
+        const summary = server.getSessionSummary('non-existent');
+
+        expect(summary.sessionId).toBe('non-existent');
+        expect(summary.totalIterations).toBe(0);
+        expect(summary.lastStage).toBeNull();
+        expect(summary.lastActivePersonaId).toBeNull();
+        expect(summary.lastIteration).toBeNull();
+        expect(summary.totalContributions).toBe(0);
+      });
+
+      it('should correctly count total contributions across all iterations', () => {
+        const sessionId = 'contribution-count-test';
+
+        // Iteration 0: 1 contribution
+        server.processCollaborativeReasoning({
+          ...validInput,
+          sessionId,
+          iteration: 0,
+          contributions: [
+            {
+              personaId: 'security-expert',
+              content: 'Single contribution',
+              type: 'suggestion' as const,
+              confidence: 0.9,
+            },
+          ],
+        });
+
+        // Iteration 1: 3 contributions
+        server.processCollaborativeReasoning({
+          ...validInput,
+          sessionId,
+          iteration: 1,
+          contributions: [
+            {
+              personaId: 'security-expert',
+              content: 'First',
+              type: 'suggestion' as const,
+              confidence: 0.9,
+            },
+            {
+              personaId: 'security-expert',
+              content: 'Second',
+              type: 'critique' as const,
+              confidence: 0.8,
+            },
+            {
+              personaId: 'security-expert',
+              content: 'Third',
+              type: 'question' as const,
+              confidence: 0.7,
+            },
+          ],
+        });
+
+        const summary = server.getSessionSummary(sessionId);
+        expect(summary.totalContributions).toBe(4);
+      });
+    });
+
+    it('should preserve all contribution data in session history', () => {
+      const sessionId = 'data-preservation-test';
+
+      const contributionData = {
+        ...validInput,
+        sessionId,
+        iteration: 0,
+        stage: 'ideation' as const,
+        activePersonaId: 'security-expert',
+        nextPersonaId: 'test-persona',
+        consensusPoints: ['Point 1', 'Point 2'],
+        keyInsights: ['Insight 1'],
+        openQuestions: ['Question 1'],
+        contributions: [
+          {
+            personaId: 'security-expert',
+            content: 'Test contribution',
+            type: 'suggestion' as const,
+            confidence: 0.9,
+          },
+        ],
+      };
+
+      server.processCollaborativeReasoning(contributionData);
+
+      const history = server.getSessionHistory(sessionId);
+      expect(history).toHaveLength(1);
+
+      const stored = history[0];
+      expect(stored.topic).toBe(contributionData.topic);
+      expect(stored.stage).toBe(contributionData.stage);
+      expect(stored.activePersonaId).toBe(contributionData.activePersonaId);
+      expect(stored.nextPersonaId).toBe(contributionData.nextPersonaId);
+      expect(stored.consensusPoints).toEqual(contributionData.consensusPoints);
+      expect(stored.keyInsights).toEqual(contributionData.keyInsights);
+      expect(stored.openQuestions).toEqual(contributionData.openQuestions);
+      expect(stored.contributions).toEqual(contributionData.contributions);
+    });
+  });
 });
