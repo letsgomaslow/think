@@ -1,0 +1,317 @@
+{
+  "spec_id": "007-extended-visual-reasoning-map-tool",
+  "feature": "Extended Visual Reasoning (Map Tool)",
+  "title": "Extended Visual Reasoning (Map Tool) - 5 New Diagram Types with Mermaid Output",
+  "description": "Expand the map tool to support additional diagram types: Sequence Diagrams, State Machine Diagrams, Entity-Relationship Diagrams, Mind Maps, and System Context Diagrams. Output in Mermaid format for easy rendering.",
+  "summary": "Expand the map tool to support Sequence Diagrams, State Machine Diagrams, Entity-Relationship Diagrams, Mind Maps, and System Context Diagrams with Mermaid-compatible output for easy rendering.",
+  "acceptance_criteria": [
+    "5 new diagram types supported (sequenceDiagram, stateMachine, erDiagram, mindMap, contextDiagram)",
+    "Mermaid-compatible output for all diagram types",
+    "Clear input schema for each diagram type",
+    "Preview capability in playground (feature-2)",
+    "Documentation with diagram type selection guidance",
+    "Examples for each diagram type in documentation"
+  ],
+  "status": "in_progress",
+  "planStatus": "in_progress",
+  "created_at": "2026-01-06T03:32:22.956Z",
+  "updated_at": "2026-01-06T03:42:07.215Z",
+  "phases": [
+    {
+      "phase_id": "phase-1",
+      "title": "Core Schema & Interface Updates",
+      "description": "Extend TypeScript interfaces and tool schemas to support 5 new diagram types",
+      "subtasks": [
+        {
+          "subtask_id": "1.1",
+          "title": "Update VisualOperationData interface with new diagram types",
+          "description": "Add sequenceDiagram, stateMachine, erDiagram, mindMap, and contextDiagram to the diagramType enum in src/models/interfaces.ts. Add optional mermaidOutput field for Mermaid string output.",
+          "file_paths": ["src/models/interfaces.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "1.2",
+          "title": "Update MAP_TOOL schema in index.ts",
+          "description": "Extend the diagramType enum in the MAP_TOOL definition to include the 5 new diagram types. Add mermaidOutput as an optional output field in the schema.",
+          "file_paths": ["src/index.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "1.3",
+          "title": "Update web tool schemas",
+          "description": "Update diagramTypeEnum in web/lib/tools/map.ts to include the new diagram types and Mermaid output support.",
+          "file_paths": ["web/lib/tools/map.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-2",
+      "title": "Mermaid Generation Engine",
+      "description": "Implement Mermaid syntax generation for all diagram types",
+      "subtasks": [
+        {
+          "subtask_id": "2.1",
+          "title": "Create MermaidGenerator utility class",
+          "description": "Create a new utility class that converts VisualElement arrays to Mermaid syntax strings. Support all 11 diagram types (6 existing + 5 new). Each diagram type has specific Mermaid syntax requirements.",
+          "file_paths": ["src/tools/mermaidGenerator.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.2",
+          "title": "Implement Sequence Diagram generation",
+          "description": "Generate Mermaid sequenceDiagram syntax. Nodes become participants, edges become messages with arrow notation (->>, -->>). Support message labels and activation/deactivation.",
+          "file_paths": ["src/tools/mermaidGenerator.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.3",
+          "title": "Implement State Machine Diagram generation",
+          "description": "Generate Mermaid stateDiagram-v2 syntax. Nodes become states, edges become transitions. Support [*] for start/end states, state descriptions, and composite states via containers.",
+          "file_paths": ["src/tools/mermaidGenerator.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.4",
+          "title": "Implement Entity-Relationship Diagram generation",
+          "description": "Generate Mermaid erDiagram syntax. Nodes with entity type become entities with attributes from properties. Edges become relationships with cardinality (||--o{, etc.).",
+          "file_paths": ["src/tools/mermaidGenerator.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.5",
+          "title": "Implement Mind Map generation",
+          "description": "Generate Mermaid mindmap syntax. Root node at center, child nodes branch out. Support multiple levels via contains relationships. Use shapes like ((), [], ()) for different node types.",
+          "file_paths": ["src/tools/mermaidGenerator.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.6",
+          "title": "Implement System Context Diagram generation",
+          "description": "Generate Mermaid C4Context syntax from C4 model. Nodes become Person, System, or SystemDb based on type property. Edges become Rel() calls with descriptions.",
+          "file_paths": ["src/tools/mermaidGenerator.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "2.7",
+          "title": "Add Mermaid generation for existing diagram types",
+          "description": "Implement Mermaid generation for the 6 existing types: graph (graph TD), flowchart (flowchart LR), stateDiagram (stateDiagram-v2), conceptMap (graph LR), treeDiagram (graph TD), custom (graph LR).",
+          "file_paths": ["src/tools/mermaidGenerator.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-3",
+      "title": "MapServer Integration",
+      "description": "Integrate Mermaid generation into MapServer response",
+      "subtasks": [
+        {
+          "subtask_id": "3.1",
+          "title": "Update MapServer to use MermaidGenerator",
+          "description": "Import MermaidGenerator and call it during processVisualReasoning. Include mermaidOutput in the JSON response when elements are provided.",
+          "file_paths": ["src/tools/mapServer.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "3.2",
+          "title": "Update formatOutput for new diagram types",
+          "description": "Extend formatOutput to display Mermaid preview in console output. Add visual indicators for new diagram types.",
+          "file_paths": ["src/tools/mapServer.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-4",
+      "title": "Comprehensive Testing",
+      "description": "Add tests for all new functionality",
+      "subtasks": [
+        {
+          "subtask_id": "4.1",
+          "title": "Create MermaidGenerator tests",
+          "description": "Write comprehensive unit tests for MermaidGenerator covering all 11 diagram types. Verify output is valid Mermaid syntax.",
+          "file_paths": ["src/tools/mermaidGenerator.test.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "4.2",
+          "title": "Update MapServer tests for new diagram types",
+          "description": "Extend mapServer.test.ts to cover all 5 new diagram types. Verify mermaidOutput is included in responses.",
+          "file_paths": ["src/tools/mapServer.test.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "4.3",
+          "title": "Run test suite and verify all pass",
+          "description": "Execute npm test to ensure all existing and new tests pass. Fix any regressions.",
+          "file_paths": [],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-5",
+      "title": "Web Playground Integration",
+      "description": "Update web components for diagram preview capability",
+      "subtasks": [
+        {
+          "subtask_id": "5.1",
+          "title": "Update map-demo-data with new diagram examples",
+          "description": "Add demo scenarios for each new diagram type: Sequence (API flow), State Machine (order lifecycle), ER (user schema), Mind Map (feature brainstorm), Context (system overview).",
+          "file_paths": ["web/components/demos/map-demo-data.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "5.2",
+          "title": "Add diagram type labels and icons",
+          "description": "Update diagramTypeLabels in map-demo-data.ts to include display names for the 5 new types. Consider adding appropriate icons.",
+          "file_paths": ["web/components/demos/map-demo-data.ts"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "5.3",
+          "title": "Update handleMap for Mermaid output",
+          "description": "Modify web/lib/tools/map.ts handleMap function to return mermaidOutput in the response object.",
+          "file_paths": ["web/lib/tools/map.ts"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-6",
+      "title": "Documentation",
+      "description": "Comprehensive documentation for all diagram types",
+      "subtasks": [
+        {
+          "subtask_id": "6.1",
+          "title": "Update map.md with new diagram types",
+          "description": "Add Diagram Types section with table showing all 11 types. Include when-to-use guidance for each new type: Sequence (interactions), State Machine (behavior), ER (data), Mind Map (brainstorm), Context (C4).",
+          "file_paths": ["docs/tools/map.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "6.2",
+          "title": "Add Sequence Diagram example",
+          "description": "Create interactive example showing API request/response flow. Include JSON input with participant nodes and message edges, and show Mermaid output.",
+          "file_paths": ["docs/tools/map.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "6.3",
+          "title": "Add State Machine example",
+          "description": "Create example showing order lifecycle (Pending → Paid → Shipped → Delivered). Include start/end states and transitions with labels.",
+          "file_paths": ["docs/tools/map.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "6.4",
+          "title": "Add Entity-Relationship example",
+          "description": "Create example showing User-Order-Product schema with attributes and relationships. Show one-to-many and many-to-many cardinalities.",
+          "file_paths": ["docs/tools/map.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "6.5",
+          "title": "Add Mind Map example",
+          "description": "Create example showing feature brainstorming with central topic and branching subtopics. Show hierarchical structure via contains.",
+          "file_paths": ["docs/tools/map.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "6.6",
+          "title": "Add System Context example",
+          "description": "Create C4 Context diagram example with external users, internal systems, and external services. Show Rel() relationships.",
+          "file_paths": ["docs/tools/map.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "6.7",
+          "title": "Add Mermaid rendering guide",
+          "description": "Add section explaining how to render Mermaid output: using mermaid-cli, GitHub markdown, VS Code extensions, and online editors. Include rendering examples.",
+          "file_paths": ["docs/tools/map.md"],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "6.8",
+          "title": "Update README.md with visualization section",
+          "description": "Update docs/tools/README.md to highlight the 5 new diagram types in the Visualization category. Add selection guidance table.",
+          "file_paths": ["docs/tools/README.md"],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    },
+    {
+      "phase_id": "phase-7",
+      "title": "Final Validation & Build",
+      "description": "Ensure everything works end-to-end",
+      "subtasks": [
+        {
+          "subtask_id": "7.1",
+          "title": "Build and verify no TypeScript errors",
+          "description": "Run npm run build and ensure no compilation errors. Verify all imports and exports are correct.",
+          "file_paths": [],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "7.2",
+          "title": "Integration test with MCP client",
+          "description": "Test the map tool with actual MCP client calls for each new diagram type. Verify Mermaid output renders correctly.",
+          "file_paths": [],
+          "status": "pending",
+          "notes": ""
+        },
+        {
+          "subtask_id": "7.3",
+          "title": "Verify web playground renders diagrams",
+          "description": "Test the web playground with new diagram types. Ensure demo data displays correctly and Mermaid previews work.",
+          "file_paths": [],
+          "status": "pending",
+          "notes": ""
+        }
+      ]
+    }
+  ],
+  "qa_signoff": {
+    "status": "pending",
+    "tests_passed": "",
+    "issues": ""
+  },
+  "estimated_effort": "6-8 hours",
+  "dependencies": [],
+  "technical_notes": [
+    "Mermaid syntax reference: https://mermaid.js.org/syntax/",
+    "New diagram types extend existing VisualElement structure - no breaking changes",
+    "MermaidGenerator is a pure utility with no side effects - easy to test",
+    "C4Context requires %%{init: {'theme': 'base', 'themeVariables': {...}}}%% for proper rendering",
+    "Mind maps in Mermaid are relatively new (v9.3+) - document browser compatibility",
+    "Existing tests must continue to pass - no regression allowed"
+  ]
+}

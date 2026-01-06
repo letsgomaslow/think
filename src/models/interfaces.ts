@@ -339,10 +339,16 @@ export interface VisualOperationData {
         | "stateDiagram"
         | "conceptMap"
         | "treeDiagram"
-        | "custom";
+        | "custom"
+        | "sequenceDiagram"
+        | "stateMachine"
+        | "erDiagram"
+        | "mindMap"
+        | "contextDiagram";
     iteration: number;
     observation?: string;
     insight?: string;
     hypothesis?: string;
+    mermaidOutput?: string;
     nextOperationNeeded: boolean;
 }
