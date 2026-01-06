@@ -3,7 +3,7 @@
   "title": "Extended Mental Models Library",
   "description": "Expand the model tool with 7 additional proven mental models: SWOT Analysis, Six Thinking Hats, MECE, Inversion Thinking, Second-Order Effects, Pre-Mortem Analysis, and 5 Whys root cause analysis.",
   "created_at": "2026-01-05",
-  "updated_at": "2026-01-06T15:07:43.733Z",
+  "updated_at": "2026-01-06T15:30:00.000Z",
   "status": "in_progress",
   "phases": [
     {
@@ -137,7 +137,7 @@
           "title": "Add SWOT Analysis extended documentation",
           "description": "Add SWOT to EXTENDED_MODELS with whenToUse, detailed steps, example with context and application, relatedModels, and toolParameters",
           "file_path": "web/lib/resources/extended/models.ts",
-          "status": "pending",
+          "status": "completed",
           "acceptance_criteria": [
             "Complete ExtendedModel structure",
             "Real-world example included",
