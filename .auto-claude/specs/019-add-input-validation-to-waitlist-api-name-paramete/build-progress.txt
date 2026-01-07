@@ -1,0 +1,40 @@
+# Build Progress: Add input validation to waitlist API name parameter
+
+## Status: In Progress
+
+## Completed Tasks
+- ✅ **1.1** Created validation utility module (web/lib/validation.ts)
+  - Implemented escapeHtml() with HTML entity escaping for <, >, &, ", '
+  - Implemented sanitizeName() with trim, length validation (1-100 chars), HTML escaping
+  - Created Zod schema (nameSchema) for name validation
+  - Committed: dae4928
+
+## Implementation Plan Summary
+
+### Phase 1: Create Validation Utilities
+- ✅ **1.1** Create validation utility module (web/lib/validation.ts)
+- **1.2** Add unit tests (web/lib/validation.test.ts)
+
+### Phase 2: Integrate Validation into Waitlist API
+- **2.1** Update POST handler (web/app/api/waitlist/route.ts)
+  - Validate name with Zod schema
+  - Sanitize before Redis storage
+  - Escape HTML in email content
+  - Return 400 for invalid names
+
+### Phase 3: Testing and Verification
+- **3.1** Add API integration tests (web/app/api/waitlist/route.test.ts)
+- **3.2** Verify build and existing tests pass
+
+## Technical Approach
+- Two-layer defense: input validation (Zod) + output encoding (HTML escaping)
+- Uses existing zod dependency, no new packages
+- Backwards compatible: empty names still allowed
+
+## Key Files
+- Target: web/app/api/waitlist/route.ts (lines 124, 156, 203 have XSS vulnerability)
+- New: web/lib/validation.ts
+- Tests: web/lib/validation.test.ts, web/app/api/waitlist/route.test.ts
+
+---
+Last Updated: 2026-01-07
