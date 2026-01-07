@@ -29,7 +29,22 @@
       "description": "Feedback dashboard page uses Next.js App Router pattern with server component (page.tsx) wrapping client component (feedback-dashboard-content.tsx) in Suspense for streaming. Layout follows tools layout pattern with Footer and pt-20 spacing for navbar. Loading state uses Skeleton component from ui library. Client component fetches from /api/feedback and /api/feedback/summary endpoints with filtering, pagination, and error handling.",
       "category": "pattern",
       "discovered_at": "2026-01-07T03:55:07.797865+00:00"
+    },
+    "web/components/feedback/feedback-list.tsx": {
+      "description": "FeedbackList component is a reusable list display with sub-components: FeedbackFilters (tool/rating/date filters + sort), FeedbackListItem (individual entry with RatingIcon), FeedbackListItemSkeleton (loading state), FeedbackPagination (page navigation), FeedbackEmptyState (no results). All components accept props for callbacks and state, designed to be controlled by parent. Uses @/lib/feedback utilities and @/components/ui/card, @/components/ui/skeleton.",
+      "category": "component",
+      "discovered_at": "2026-01-07T03:58:03.010048+00:00"
+    },
+    "web/components/feedback/feedback-stats.tsx": {
+      "description": "FeedbackStats component provides comprehensive feedback statistics visualization: StatCard for individual stats with color schemes, RatioBar for positive/negative feedback visualization, SatisfactionGauge as a circular progress indicator, ToolBreakdownChart with horizontal stacked bars for per-tool feedback breakdown, TrendChart for daily/weekly activity trends. All components support loading skeletons and are composable for reuse.",
+      "category": "component",
+      "discovered_at": "2026-01-07T04:00:31.117639+00:00"
+    },
+    "web/components/feedback/feedback-detail.tsx": {
+      "description": "FeedbackDetail component provides detailed view of single feedback entry. Main component (FeedbackDetail) accepts entry, isLoading, onBack, className props. Includes sub-components: FeedbackDetailHeader (navigation with back button), FeedbackDetailSkeleton (loading state), FeedbackDetailEmpty (no selection state), RatingIconLarge (12x12 rating icon), MetadataRow (key-value display with copy support), ToolContextSection (tool input/output context display). Exports all sub-components for composition.",
+      "category": "component",
+      "discovered_at": "2026-01-07T04:03:14.332905+00:00"
     }
   },
-  "last_updated": "2026-01-07T03:55:07.797879+00:00"
+  "last_updated": "2026-01-07T04:03:14.332918+00:00"
 }
