@@ -11,6 +11,7 @@ export const TOOL_NAMES = {
   HYPOTHESIS: 'hypothesis',
   DEBATE: 'debate',
   MAP: 'map',
+  FEEDBACK: 'feedback',
 } as const;
 
 export type ToolName = typeof TOOL_NAMES[keyof typeof TOOL_NAMES];

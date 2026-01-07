@@ -1,0 +1,380 @@
+{
+  "specId": "011-user-feedback-collection",
+  "title": "User Feedback Collection",
+  "overview": "Add in-tool feedback mechanism allowing users to rate tool outputs, suggest improvements, and report issues directly from their workflow. Feedback links to specific tool invocations for context.",
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Core Feedback Infrastructure",
+      "description": "Build the foundational feedback data models, storage, and MCP tool",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Create feedback data interfaces",
+          "description": "Define TypeScript interfaces for feedback data including FeedbackData, FeedbackType (thumbs-up/down), and FeedbackEntry with tool invocation context",
+          "files": [
+            "src/models/interfaces.ts"
+          ],
+          "status": "completed",
+          "acceptanceCriteria": [
+            "FeedbackData interface with rating, comment, toolName, timestamp, invocationId",
+            "FeedbackType enum/union type for thumbs-up/thumbs-down/issue-report",
+            "FeedbackEntry interface with all context fields"
+          ],
+          "notes": "Added FeedbackType union type, FeedbackData interface for input, and FeedbackEntry interface for stored entries with full context. All interfaces include JSDoc documentation and follow existing codebase patterns.",
+          "updated_at": "2026-01-07T03:35:33.353565+00:00"
+        },
+        {
+          "id": "1.2",
+          "title": "Add FEEDBACK to tool names registry",
+          "description": "Register the feedback tool name in the TOOL_NAMES constant",
+          "files": [
+            "src/toolNames.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "FEEDBACK constant added to TOOL_NAMES object",
+            "Type is properly exported"
+          ]
+        },
+        {
+          "id": "1.3",
+          "title": "Create FeedbackServer class",
+          "description": "Implement the feedback server that handles feedback submission, validation, and storage",
+          "files": [
+            "src/tools/feedbackServer.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "FeedbackServer class with processFeedback method",
+            "Validation for required fields (rating, toolName)",
+            "Local file-based storage for feedback entries",
+            "Unique invocation ID tracking",
+            "Formatted console output for visibility"
+          ]
+        },
+        {
+          "id": "1.4",
+          "title": "Create FeedbackServer tests",
+          "description": "Unit tests for the FeedbackServer class covering all feedback types and edge cases",
+          "files": [
+            "src/tools/feedbackServer.test.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Test thumbs-up rating submission",
+            "Test thumbs-down rating submission",
+            "Test optional text comment",
+            "Test issue report submission",
+            "Test invalid input handling",
+            "Test feedback storage and retrieval"
+          ]
+        },
+        {
+          "id": "1.5",
+          "title": "Integrate feedback tool into main server",
+          "description": "Register the feedback tool in the main MCP server index.ts",
+          "files": [
+            "src/index.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "FEEDBACK_TOOL definition with proper schema",
+            "FeedbackServer instance created",
+            "Tool registered in ListToolsRequest handler",
+            "CallToolRequest handler routes to feedbackServer"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Feedback Dashboard API",
+      "description": "Create API endpoints to retrieve and manage feedback data",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Create feedback API route",
+          "description": "Add Next.js API route to retrieve feedback entries with filtering options",
+          "files": [
+            "web/app/api/feedback/route.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "GET endpoint to retrieve feedback entries",
+            "Query params for filtering by tool, date range, rating type",
+            "Pagination support",
+            "Proper error handling"
+          ]
+        },
+        {
+          "id": "2.2",
+          "title": "Create feedback summary endpoint",
+          "description": "API endpoint to get aggregated feedback statistics",
+          "files": [
+            "web/app/api/feedback/summary/route.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "GET endpoint returning feedback statistics",
+            "Total counts by rating type",
+            "Breakdown by tool",
+            "Trend data over time"
+          ]
+        },
+        {
+          "id": "2.3",
+          "title": "Add feedback lib utilities",
+          "description": "Create utility functions for feedback data processing in the web lib",
+          "files": [
+            "web/lib/feedback/index.ts",
+            "web/lib/feedback/types.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Type definitions for API responses",
+            "Utility functions for data aggregation",
+            "Helper functions for date formatting"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Feedback Dashboard UI",
+      "description": "Build the maintainer feedback dashboard component",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Create feedback dashboard page",
+          "description": "Next.js page for the feedback dashboard with routing",
+          "files": [
+            "web/app/feedback/page.tsx",
+            "web/app/feedback/layout.tsx"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Dashboard page with proper layout",
+            "Meta tags and SEO setup",
+            "Loading states"
+          ]
+        },
+        {
+          "id": "3.2",
+          "title": "Create feedback list component",
+          "description": "Component to display list of feedback entries with filtering and sorting",
+          "files": [
+            "web/components/feedback/feedback-list.tsx"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Displays feedback entries in a list/table format",
+            "Shows rating (thumbs up/down icon), tool name, timestamp",
+            "Shows optional comment text",
+            "Filter by tool, rating type, date range",
+            "Sort by date, rating"
+          ]
+        },
+        {
+          "id": "3.3",
+          "title": "Create feedback stats component",
+          "description": "Component showing aggregated feedback statistics and charts",
+          "files": [
+            "web/components/feedback/feedback-stats.tsx"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Total feedback count display",
+            "Thumbs up/down ratio visualization",
+            "Per-tool breakdown chart",
+            "Recent trend indicator"
+          ]
+        },
+        {
+          "id": "3.4",
+          "title": "Create feedback detail component",
+          "description": "Component for viewing detailed feedback with full context",
+          "files": [
+            "web/components/feedback/feedback-detail.tsx"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Full feedback text display",
+            "Tool invocation context",
+            "Timestamp and metadata",
+            "Navigation back to list"
+          ]
+        },
+        {
+          "id": "3.5",
+          "title": "Create feedback components index",
+          "description": "Export all feedback components from a single index file",
+          "files": [
+            "web/components/feedback/index.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "All feedback components exported",
+            "Clean import paths"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Privacy Policy & Documentation",
+      "description": "Add privacy policy for feedback data handling and update documentation",
+      "subtasks": [
+        {
+          "id": "4.1",
+          "title": "Create privacy policy page",
+          "description": "Add privacy policy page covering feedback data handling",
+          "files": [
+            "web/app/privacy/page.tsx"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Privacy policy page with feedback data section",
+            "Explains what data is collected",
+            "Explains how data is stored and used",
+            "Contact information for data requests"
+          ]
+        },
+        {
+          "id": "4.2",
+          "title": "Add feedback documentation to README",
+          "description": "Document the feedback tool usage and dashboard in README",
+          "files": [
+            "README.md"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Document the feedback MCP tool",
+            "Explain how to submit feedback",
+            "Link to privacy policy",
+            "Mention feedback dashboard for maintainers"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-5",
+      "name": "Integration Testing & Polish",
+      "description": "End-to-end testing and final polish",
+      "subtasks": [
+        {
+          "id": "5.1",
+          "title": "Add integration tests for feedback flow",
+          "description": "Integration tests covering the full feedback submission flow",
+          "files": [
+            "src/integration.test.ts"
+          ],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "Test feedback tool can be called via MCP",
+            "Test feedback is stored correctly",
+            "Test feedback can be retrieved via API",
+            "Test feedback appears in dashboard"
+          ]
+        },
+        {
+          "id": "5.2",
+          "title": "Run all tests and verify functionality",
+          "description": "Execute the full test suite and manually verify the feature works end-to-end",
+          "files": [],
+          "status": "pending",
+          "acceptanceCriteria": [
+            "All unit tests pass",
+            "All integration tests pass",
+            "Manual testing of feedback submission",
+            "Manual testing of dashboard",
+            "Build succeeds without errors"
+          ]
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "1.1": [],
+    "1.2": [],
+    "1.3": [
+      "1.1",
+      "1.2"
+    ],
+    "1.4": [
+      "1.3"
+    ],
+    "1.5": [
+      "1.3",
+      "1.4"
+    ],
+    "2.1": [
+      "1.5"
+    ],
+    "2.2": [
+      "2.1"
+    ],
+    "2.3": [
+      "2.1"
+    ],
+    "3.1": [
+      "2.1",
+      "2.2",
+      "2.3"
+    ],
+    "3.2": [
+      "3.1"
+    ],
+    "3.3": [
+      "3.1"
+    ],
+    "3.4": [
+      "3.1"
+    ],
+    "3.5": [
+      "3.2",
+      "3.3",
+      "3.4"
+    ],
+    "4.1": [
+      "1.5"
+    ],
+    "4.2": [
+      "1.5",
+      "3.5"
+    ],
+    "5.1": [
+      "1.5",
+      "2.2",
+      "3.5"
+    ],
+    "5.2": [
+      "5.1",
+      "4.1",
+      "4.2"
+    ]
+  },
+  "estimatedEffort": "Medium (8-12 hours)",
+  "risks": [
+    {
+      "risk": "Feedback storage scalability",
+      "mitigation": "Start with local file storage, design for easy migration to database"
+    },
+    {
+      "risk": "Privacy concerns with feedback data",
+      "mitigation": "Clear privacy policy, minimal data collection, no PII required"
+    },
+    {
+      "risk": "MCP tool schema compatibility",
+      "mitigation": "Follow existing tool patterns exactly, test with Claude"
+    }
+  ],
+  "qaSignOff": {
+    "status": "pending",
+    "issues": "",
+    "testsPassed": ""
+  },
+  "createdAt": "2026-01-06T00:00:00Z",
+  "updatedAt": "2026-01-06T00:00:00Z",
+  "last_updated": "2026-01-07T03:35:33.353578+00:00"
+}

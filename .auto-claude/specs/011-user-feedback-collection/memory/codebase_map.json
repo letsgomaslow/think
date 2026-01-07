@@ -1,0 +1,10 @@
+{
+  "discovered_files": {
+    "src/index.ts": {
+      "description": "MCP server structure: Tools are defined as Tool objects with schemas, paired with Server classes in src/tools/ directory. Each tool has a name registered in toolNames.ts. Tools are listed via ListToolsRequestSchema and invoked via CallToolRequestSchema handlers.",
+      "category": "architecture",
+      "discovered_at": "2026-01-07T03:33:42.541871+00:00"
+    }
+  },
+  "last_updated": "2026-01-07T03:33:42.541883+00:00"
+}
