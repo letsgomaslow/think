@@ -8,10 +8,6 @@ describe('ParadigmServer', () => {
     server = new ParadigmServer();
   });
 
-  const parseResult = (result: any) => {
-    return JSON.parse(result.content[0].text);
-  };
-
   it('should process valid paradigm data', () => {
     const result = server.processParadigm({
       paradigmName: 'functional',
@@ -20,33 +16,28 @@ describe('ParadigmServer', () => {
       benefits: ['Testability', 'Predictability'],
       limitations: ['Learning curve', 'Performance in some cases'],
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.paradigmName).toBe('functional');
-    expect(parsed.hasApproach).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.paradigmName).toBe('functional');
+    expect(result.data?.hasApproach).toBe(true);
   });
 
   it('should return failed status for missing paradigmName', () => {
     const result = server.processParadigm({
       problem: 'test problem',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for missing problem', () => {
     const result = server.processParadigm({
       paradigmName: 'functional',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should handle optional fields', () => {
@@ -54,11 +45,10 @@ describe('ParadigmServer', () => {
       paradigmName: 'object_oriented',
       problem: 'Modeling business entities',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.paradigmName).toBe('object_oriented');
-    expect(parsed.hasApproach).toBe(false);
+    expect(result.status).toBe('success');
+    expect(result.data?.paradigmName).toBe('object_oriented');
+    expect(result.data?.hasApproach).toBe(false);
   });
 
   it('should process all paradigm types', () => {
@@ -80,9 +70,8 @@ describe('ParadigmServer', () => {
         paradigmName,
         problem: 'Test problem',
       });
-      const parsed = parseResult(result);
-      expect(parsed.status).toBe('success');
-      expect(parsed.paradigmName).toBe(paradigmName);
+      expect(result.status).toBe('success');
+      expect(result.data?.paradigmName).toBe(paradigmName);
     });
   });
 });

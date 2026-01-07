@@ -18,9 +18,9 @@ describe('ModelServer', () => {
     });
 
     expect(result.status).toBe('success');
-    expect(result.modelName).toBe('first_principles');
-    expect(result.hasSteps).toBe(true);
-    expect(result.hasConclusion).toBe(true);
+    expect(result.data?.modelName).toBe('first_principles');
+    expect(result.data?.hasSteps).toBe(true);
+    expect(result.data?.hasConclusion).toBe(true);
   });
 
   it('should return failed status for missing modelName', () => {
@@ -48,9 +48,9 @@ describe('ModelServer', () => {
     });
 
     expect(result.status).toBe('success');
-    expect(result.modelName).toBe('pareto_principle');
-    expect(result.hasSteps).toBe(false);
-    expect(result.hasConclusion).toBe(false);
+    expect(result.data?.modelName).toBe('pareto_principle');
+    expect(result.data?.hasSteps).toBe(false);
+    expect(result.data?.hasConclusion).toBe(false);
   });
 
   it('should process all mental model types', () => {
@@ -69,7 +69,7 @@ describe('ModelServer', () => {
         problem: 'Test problem',
       });
       expect(result.status).toBe('success');
-      expect(result.modelName).toBe(modelName);
+      expect(result.data?.modelName).toBe(modelName);
     });
   });
 });

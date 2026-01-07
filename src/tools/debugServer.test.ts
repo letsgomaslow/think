@@ -8,10 +8,6 @@ describe('DebugServer', () => {
     server = new DebugServer();
   });
 
-  const parseResult = (result: any) => {
-    return JSON.parse(result.content[0].text);
-  };
-
   it('should process valid debugging approach data', () => {
     const result = server.processApproach({
       approachName: 'binary_search',
@@ -20,34 +16,29 @@ describe('DebugServer', () => {
       findings: 'Found the problematic module',
       resolution: 'Fixed null pointer in auth module',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('binary_search');
-    expect(parsed.hasSteps).toBe(true);
-    expect(parsed.hasResolution).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('binary_search');
+    expect(result.data?.hasSteps).toBe(true);
+    expect(result.data?.hasResolution).toBe(true);
   });
 
   it('should return failed status for missing approachName', () => {
     const result = server.processApproach({
       issue: 'test issue',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for missing issue', () => {
     const result = server.processApproach({
       approachName: 'binary_search',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should handle optional fields', () => {
@@ -55,12 +46,11 @@ describe('DebugServer', () => {
       approachName: 'divide_conquer',
       issue: 'Memory leak detected',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('divide_conquer');
-    expect(parsed.hasSteps).toBe(false);
-    expect(parsed.hasResolution).toBe(false);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('divide_conquer');
+    expect(result.data?.hasSteps).toBe(false);
+    expect(result.data?.hasResolution).toBe(false);
   });
 
   it('should process wolf_fence approach', () => {
@@ -76,12 +66,11 @@ describe('DebugServer', () => {
       findings: 'Issue occurs in data transformation stage',
       resolution: 'Fixed race condition in async transformer',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('wolf_fence');
-    expect(parsed.hasSteps).toBe(true);
-    expect(parsed.hasResolution).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('wolf_fence');
+    expect(result.data?.hasSteps).toBe(true);
+    expect(result.data?.hasResolution).toBe(true);
   });
 
   it('should process rubber_duck approach', () => {
@@ -97,12 +86,11 @@ describe('DebugServer', () => {
       findings: 'Realized token validation logic has incorrect condition',
       resolution: 'Updated conditional to check expiry correctly',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('rubber_duck');
-    expect(parsed.hasSteps).toBe(true);
-    expect(parsed.hasResolution).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('rubber_duck');
+    expect(result.data?.hasSteps).toBe(true);
+    expect(result.data?.hasResolution).toBe(true);
   });
 
   it('should process delta_debugging approach', () => {
@@ -118,12 +106,11 @@ describe('DebugServer', () => {
       findings: 'Bug only occurs when array has duplicate values',
       resolution: 'Added deduplication logic before processing',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('delta_debugging');
-    expect(parsed.hasSteps).toBe(true);
-    expect(parsed.hasResolution).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('delta_debugging');
+    expect(result.data?.hasSteps).toBe(true);
+    expect(result.data?.hasResolution).toBe(true);
   });
 
   it('should process fault_tree approach', () => {
@@ -139,12 +126,11 @@ describe('DebugServer', () => {
       findings: 'Database connection AND cache initialization both failing',
       resolution: 'Fixed network configuration and added retry logic',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('fault_tree');
-    expect(parsed.hasSteps).toBe(true);
-    expect(parsed.hasResolution).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('fault_tree');
+    expect(result.data?.hasSteps).toBe(true);
+    expect(result.data?.hasResolution).toBe(true);
   });
 
   it('should process time_travel approach', () => {
@@ -160,12 +146,11 @@ describe('DebugServer', () => {
       findings: 'State modified incorrectly during concurrent updates',
       resolution: 'Implemented proper state immutability pattern',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('time_travel');
-    expect(parsed.hasSteps).toBe(true);
-    expect(parsed.hasResolution).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('time_travel');
+    expect(result.data?.hasSteps).toBe(true);
+    expect(result.data?.hasResolution).toBe(true);
   });
 
   it('should handle wolf_fence with optional fields', () => {
@@ -173,12 +158,11 @@ describe('DebugServer', () => {
       approachName: 'wolf_fence',
       issue: 'Bug somewhere in request handler chain',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('wolf_fence');
-    expect(parsed.hasSteps).toBe(false);
-    expect(parsed.hasResolution).toBe(false);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('wolf_fence');
+    expect(result.data?.hasSteps).toBe(false);
+    expect(result.data?.hasResolution).toBe(false);
   });
 
   it('should handle rubber_duck with optional fields', () => {
@@ -186,12 +170,11 @@ describe('DebugServer', () => {
       approachName: 'rubber_duck',
       issue: 'Logic error in calculation function',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.approachName).toBe('rubber_duck');
-    expect(parsed.hasSteps).toBe(false);
-    expect(parsed.hasResolution).toBe(false);
+    expect(result.status).toBe('success');
+    expect(result.data?.approachName).toBe('rubber_duck');
+    expect(result.data?.hasSteps).toBe(false);
+    expect(result.data?.hasResolution).toBe(false);
   });
 
   it('should process all debugging approaches', () => {
@@ -214,9 +197,8 @@ describe('DebugServer', () => {
         approachName,
         issue: 'Test issue',
       });
-      const parsed = parseResult(result);
-      expect(parsed.status).toBe('success');
-      expect(parsed.approachName).toBe(approachName);
+      expect(result.status).toBe('success');
+      expect(result.data?.approachName).toBe(approachName);
     });
   });
 });

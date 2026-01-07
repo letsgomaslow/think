@@ -19,28 +19,21 @@ describe('ReflectServer', () => {
     nextAssessmentNeeded: true,
   };
 
-  const parseResult = (result: any) => {
-    return JSON.parse(result.content[0].text);
-  };
-
   it('should process valid metacognitive monitoring data', () => {
     const result = server.processMetacognitiveMonitoring(validInput);
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.task).toBe('Evaluate my understanding of quantum computing');
-    expect(parsed.overallConfidence).toBe(0.6);
+    expect(result.status).toBe('success');
+    expect(result.data?.task).toBe('Evaluate my understanding of quantum computing');
+    expect(result.data?.overallConfidence).toBe(0.6);
   });
 
   it('should return failed status for missing required fields', () => {
     const result = server.processMetacognitiveMonitoring({
       task: 'test',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for invalid confidence score', () => {
@@ -48,11 +41,9 @@ describe('ReflectServer', () => {
       ...validInput,
       overallConfidence: 1.5,
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for negative confidence score', () => {
@@ -60,11 +51,9 @@ describe('ReflectServer', () => {
       ...validInput,
       overallConfidence: -0.1,
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for invalid iteration', () => {
@@ -72,11 +61,9 @@ describe('ReflectServer', () => {
       ...validInput,
       iteration: -1,
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should handle all stage types', () => {
@@ -94,9 +81,8 @@ describe('ReflectServer', () => {
         ...validInput,
         stage,
       });
-      const parsed = parseResult(result);
-      expect(parsed.status).toBe('success');
-      expect(parsed.stage).toBe(stage);
+      expect(result.status).toBe('success');
+      expect(result.data?.stage).toBe(stage);
     });
   });
 });

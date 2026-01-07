@@ -16,25 +16,31 @@ describe('TraceServer', () => {
       nextThoughtNeeded: true,
     });
 
-    expect(result.thought).toBe('Initial analysis of the problem');
-    expect(result.thoughtNumber).toBe(1);
-    expect(result.totalThoughts).toBe(3);
-    expect(result.nextThoughtNeeded).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.thoughtNumber).toBe(1);
+    expect(result.data?.totalThoughts).toBe(3);
+    expect(result.data?.nextThoughtNeeded).toBe(true);
   });
 
-  it('should reject missing required fields', () => {
-    expect(() => server.processThought({
+  it('should return failed status for missing required fields', () => {
+    const result = server.processThought({
       thought: 'test',
-    })).toThrow();
+    });
+
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
-  it('should reject invalid thoughtNumber type', () => {
-    expect(() => server.processThought({
+  it('should return failed status for invalid thoughtNumber type', () => {
+    const result = server.processThought({
       thought: 'test',
       thoughtNumber: 'one',
       totalThoughts: 3,
       nextThoughtNeeded: true,
-    })).toThrow();
+    });
+
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should handle revisions', () => {
@@ -56,8 +62,8 @@ describe('TraceServer', () => {
       revisesThought: 1,
     });
 
-    expect(revision.isRevision).toBe(true);
-    expect(revision.revisesThought).toBe(1);
+    expect(revision.status).toBe('success');
+    expect(revision.data?.isRevision).toBe(true);
   });
 
   it('should handle branches', () => {
@@ -70,8 +76,9 @@ describe('TraceServer', () => {
       branchId: 'alternative-a',
     });
 
-    expect(branch.branchId).toBe('alternative-a');
-    expect(branch.branchFromThought).toBe(1);
+    expect(branch.status).toBe('success');
+    expect(branch.data?.branchId).toBe('alternative-a');
+    expect(branch.data?.isBranch).toBe(true);
   });
 
   it('should handle needsMoreThoughts flag', () => {
@@ -83,7 +90,8 @@ describe('TraceServer', () => {
       needsMoreThoughts: true,
     });
 
-    expect(result.needsMoreThoughts).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.nextThoughtNeeded).toBe(true);
   });
 
   it('should process final thought correctly', () => {
@@ -94,6 +102,7 @@ describe('TraceServer', () => {
       nextThoughtNeeded: false,
     });
 
-    expect(result.nextThoughtNeeded).toBe(false);
+    expect(result.status).toBe('success');
+    expect(result.data?.nextThoughtNeeded).toBe(false);
   });
 });

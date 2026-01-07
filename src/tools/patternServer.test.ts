@@ -8,10 +8,6 @@ describe('PatternServer', () => {
     server = new PatternServer();
   });
 
-  const parseResult = (result: any) => {
-    return JSON.parse(result.content[0].text);
-  };
-
   it('should process valid design pattern data', () => {
     const result = server.processPattern({
       patternName: 'modular_architecture',
@@ -20,33 +16,28 @@ describe('PatternServer', () => {
       benefits: ['Scalability', 'Independent deployment'],
       tradeoffs: ['Increased complexity', 'Network latency'],
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.patternName).toBe('modular_architecture');
-    expect(parsed.hasImplementation).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.patternName).toBe('modular_architecture');
+    expect(result.data?.hasImplementation).toBe(true);
   });
 
   it('should return failed status for missing patternName', () => {
     const result = server.processPattern({
       context: 'test context',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for missing context', () => {
     const result = server.processPattern({
       patternName: 'modular_architecture',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should handle optional fields', () => {
@@ -54,11 +45,10 @@ describe('PatternServer', () => {
       patternName: 'api_integration',
       context: 'Integrating external APIs',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.patternName).toBe('api_integration');
-    expect(parsed.hasImplementation).toBe(false);
+    expect(result.status).toBe('success');
+    expect(result.data?.patternName).toBe('api_integration');
+    expect(result.data?.hasImplementation).toBe(false);
   });
 
   it('should handle code examples', () => {
@@ -68,9 +58,8 @@ describe('PatternServer', () => {
       codeExample: 'const [state, setState] = useState()',
       languages: ['typescript', 'javascript'],
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.hasCodeExample).toBe(true);
+    expect(result.status).toBe('success');
+    expect(result.data?.hasCodeExample).toBe(true);
   });
 });

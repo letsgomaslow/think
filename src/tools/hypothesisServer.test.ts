@@ -17,28 +17,21 @@ describe('HypothesisServer', () => {
     question: 'Why are users not completing purchases?',
   };
 
-  const parseResult = (result: any) => {
-    return JSON.parse(result.content[0].text);
-  };
-
   it('should process valid scientific method data', () => {
     const result = server.processScientificMethod(validInput);
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.stage).toBe('hypothesis');
-    expect(parsed.inquiryId).toBe('inquiry-1');
+    expect(result.status).toBe('success');
+    expect(result.data?.stage).toBe('hypothesis');
+    expect(result.data?.inquiryId).toBe('inquiry-1');
   });
 
   it('should return failed status for missing required fields', () => {
     const result = server.processScientificMethod({
       stage: 'observation',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for invalid iteration', () => {
@@ -46,11 +39,9 @@ describe('HypothesisServer', () => {
       ...validInput,
       iteration: -1,
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for invalid nextStageNeeded type', () => {
@@ -58,11 +49,9 @@ describe('HypothesisServer', () => {
       ...validInput,
       nextStageNeeded: 'yes',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should handle all stage types', () => {
@@ -81,9 +70,8 @@ describe('HypothesisServer', () => {
         ...validInput,
         stage,
       });
-      const parsed = parseResult(result);
-      expect(parsed.status).toBe('success');
-      expect(parsed.stage).toBe(stage);
+      expect(result.status).toBe('success');
+      expect(result.data?.stage).toBe(stage);
     });
   });
 
@@ -104,8 +92,7 @@ describe('HypothesisServer', () => {
         status: 'proposed',
       },
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
+    expect(result.status).toBe('success');
   });
 });
