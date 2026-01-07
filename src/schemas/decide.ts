@@ -14,7 +14,8 @@ import {
   probabilitySchema,
   scoreSchema,
   nonNegativeNumberSchema,
-  positiveNumberSchema
+  positiveNumberSchema,
+  nonNegativeNumberSchema
 } from './common.js';
 
 // ============================================================================
@@ -228,7 +229,7 @@ export const decisionFrameworkDataSchema = z.object({
   analysisType: analysisTypeSchema.describe('Type of analysis being performed'),
   stage: decisionFrameworkStageSchema.describe('Current stage of the decision process'),
   decisionId: idSchema.describe('Unique identifier for this decision'),
-  iteration: positiveNumberSchema.int().describe('Current iteration number'),
+  iteration: nonNegativeNumberSchema.int().describe('Current iteration number'),
   nextStageNeeded: z.boolean().describe('Whether another stage is needed'),
 
   // Optional fields

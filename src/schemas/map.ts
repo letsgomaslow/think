@@ -6,6 +6,7 @@ import {
   visualTransformationTypeSchema,
   diagramTypeSchema,
   positiveNumberSchema,
+  nonNegativeNumberSchema,
   optionalStringArraySchema
 } from './common.js';
 
@@ -45,7 +46,7 @@ export const visualOperationDataSchema = z.object({
   operation: visualOperationTypeSchema.describe('Type of operation (create, update, delete, transform, observe)'),
   diagramId: idSchema.describe('Unique identifier for this diagram'),
   diagramType: diagramTypeSchema.describe('Type of diagram (graph, flowchart, stateDiagram, conceptMap, treeDiagram, custom)'),
-  iteration: positiveNumberSchema.int().describe('Current iteration number'),
+  iteration: nonNegativeNumberSchema.int().describe('Current iteration number'),
   nextOperationNeeded: z.boolean().describe('Whether another operation is needed'),
 
   // Optional fields

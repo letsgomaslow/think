@@ -98,7 +98,7 @@ export const collaborativeReasoningDataSchema = z.object({
   stage: collaborativeReasoningStageSchema.describe('Current stage of the collaborative reasoning'),
   activePersonaId: idSchema.describe('ID of the currently active persona'),
   sessionId: idSchema.describe('Unique identifier for this reasoning session'),
-  iteration: positiveNumberSchema.int().describe('Current iteration number'),
+  iteration: nonNegativeNumberSchema.int().describe('Current iteration number'),
   nextContributionNeeded: z.boolean().describe('Whether another contribution is needed'),
 
   // Optional fields

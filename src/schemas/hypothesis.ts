@@ -64,7 +64,7 @@ export const hypothesisDataSchema = z.object({
   hypothesisId: idSchema.describe('Unique identifier for this hypothesis'),
   confidence: confidenceScoreSchema.describe('Confidence in the hypothesis (0-1)'),
   domain: nonEmptyStringSchema.describe('Domain or field of the hypothesis'),
-  iteration: positiveNumberSchema.int().describe('Current iteration number'),
+  iteration: nonNegativeNumberSchema.int().describe('Current iteration number'),
   status: hypothesisStatusSchema.describe('Status of the hypothesis (proposed, testing, supported, refuted, refined)'),
 
   // Optional fields
@@ -113,7 +113,7 @@ export const scientificInquiryDataSchema = z.object({
   // Required fields
   stage: scientificInquiryStageSchema.describe('Current stage of scientific inquiry'),
   inquiryId: idSchema.describe('Unique identifier for this inquiry session'),
-  iteration: positiveNumberSchema.int().describe('Current iteration number'),
+  iteration: nonNegativeNumberSchema.int().describe('Current iteration number'),
   nextStageNeeded: z.boolean().describe('Whether another stage is needed'),
 
   // Optional fields

@@ -91,7 +91,7 @@ export const metacognitiveMonitoringDataSchema = z.object({
   uncertaintyAreas: z.array(z.string()).describe('Areas of uncertainty'),
   recommendedApproach: nonEmptyStringSchema.describe('Recommended approach for the task'),
   monitoringId: idSchema.describe('Unique identifier for this monitoring session'),
-  iteration: positiveNumberSchema.int().describe('Current iteration number'),
+  iteration: nonNegativeNumberSchema.int().describe('Current iteration number'),
   nextAssessmentNeeded: z.boolean().describe('Whether another assessment is needed'),
 
   // Optional fields
