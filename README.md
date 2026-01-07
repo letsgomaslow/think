@@ -40,6 +40,7 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 | `hypothesis` | Scientific method | Testing ideas systematically |
 | `debate` | Dialectical reasoning | Exploring arguments |
 | `map` | Visual/spatial reasoning | Diagramming concepts |
+| `feedback` | User feedback collection | Rating tool outputs, reporting issues |
 
 ## Examples
 
@@ -71,6 +72,16 @@ Add to `~/Library/Application Support/Claude/claude_desktop_config.json` (macOS)
 
 ```
 "Use decide with weighted-criteria analysis to choose between PostgreSQL and MongoDB"
+```
+
+### Using `feedback` to rate tool outputs
+
+```
+"Use feedback to give a thumbs-up rating for the trace tool - it helped me understand the problem clearly"
+```
+
+```
+"Use feedback to report an issue with the debug tool - the binary_search approach output was confusing"
 ```
 
 ## Tool Details
@@ -139,6 +150,53 @@ Dialectical reasoning with thesis-antithesis-synthesis and argument strength ana
 
 ### map (Visual Reasoning)
 Visual thinking with diagrams, graphs, flowcharts, concept maps, and state diagrams.
+
+### feedback (User Feedback Collection)
+In-tool feedback mechanism for rating outputs and reporting issues:
+- `thumbs-up` - Positive rating for helpful output
+- `thumbs-down` - Negative rating for unhelpful output
+- `issue-report` - Report bugs or problems
+
+Parameters:
+- `rating` (required): One of `thumbs-up`, `thumbs-down`, or `issue-report`
+- `toolName` (required): Name of the tool being rated
+- `comment` (optional): Detailed feedback or issue description
+- `invocationId` (optional): Unique identifier for the tool invocation
+
+Feedback is stored locally at `~/.think-mcp/feedback.json` and can be reviewed through the feedback dashboard. For more information about how feedback data is handled, see our [Privacy Policy](https://think-mcp.vercel.app/privacy).
+
+## Feedback Dashboard
+
+Maintainers can review collected feedback through the web dashboard:
+
+### Accessing the Dashboard
+
+1. **Local Development**: Run `cd web && npm run dev`, then visit `http://localhost:3000/feedback`
+2. **Deployed Version**: Visit `https://your-deployment.vercel.app/feedback`
+
+### Dashboard Features
+
+- **Summary Statistics**: Total feedback count, thumbs up/down ratio, issue reports
+- **Per-Tool Breakdown**: See which tools receive the most feedback
+- **Trend Visualization**: Track feedback patterns over time
+- **Filtering & Sorting**: Filter by tool, rating type, date range
+- **Detailed View**: Expand individual entries to see full comments
+
+### API Endpoints
+
+The dashboard is powered by these API endpoints:
+
+| Endpoint | Description |
+|----------|-------------|
+| `GET /api/feedback` | List feedback entries with filtering and pagination |
+| `GET /api/feedback/summary` | Aggregated statistics and trend data |
+
+Query parameters for `/api/feedback`:
+- `tool` - Filter by tool name
+- `rating` - Filter by rating type
+- `startDate`, `endDate` - Date range filter
+- `page`, `limit` - Pagination (default: page 1, limit 20)
+- `sort` - Sort order (`asc` or `desc` by timestamp)
 
 ## Remote Access (Vercel Deployment)
 
@@ -220,18 +278,28 @@ think-mcp/
 │   │   ├── reflectServer.ts
 │   │   ├── hypothesisServer.ts
 │   │   ├── debateServer.ts
-│   │   └── mapServer.ts
+│   │   ├── mapServer.ts
+│   │   └── feedbackServer.ts  # User feedback collection
 │   ├── toolNames.ts    # Tool name constants
 │   └── index.ts        # Main server entry point
 ├── web/                # Next.js app for Vercel deployment
 │   ├── app/
 │   │   ├── layout.tsx
 │   │   ├── page.tsx    # Landing page
+│   │   ├── privacy/    # Privacy policy page
+│   │   ├── feedback/   # Feedback dashboard
 │   │   └── api/
-│   │       └── [transport]/
-│   │           └── route.ts  # MCP endpoint
+│   │       ├── [transport]/
+│   │       │   └── route.ts  # MCP endpoint
+│   │       └── feedback/     # Feedback API endpoints
+│   │           ├── route.ts
+│   │           └── summary/
+│   │               └── route.ts
+│   ├── components/
+│   │   └── feedback/   # Feedback UI components
 │   └── lib/
 │       ├── mcp-tools.ts      # Tool registration
+│       ├── feedback/         # Feedback utilities
 │       └── tools/            # Tool definitions
 ├── vercel.json         # Vercel deployment config
 ├── package.json
