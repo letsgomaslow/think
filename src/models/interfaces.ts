@@ -449,3 +449,53 @@ export interface VisualOperationData {
     hypothesis?: string;
     nextOperationNeeded: boolean;
 }
+
+// feedback tool
+/**
+ * Type of feedback that can be submitted
+ * - thumbs-up: Positive rating for a tool output
+ * - thumbs-down: Negative rating for a tool output
+ * - issue-report: Report a specific issue or bug
+ */
+export type FeedbackType = "thumbs-up" | "thumbs-down" | "issue-report";
+
+/**
+ * Input data for submitting feedback
+ * This is the structure expected when a user submits feedback
+ */
+export interface FeedbackData {
+    /** The type of feedback being submitted */
+    rating: FeedbackType;
+    /** Optional text comment with detailed feedback or suggestions */
+    comment?: string;
+    /** Name of the tool this feedback is for */
+    toolName: string;
+    /** Optional unique identifier for the specific tool invocation */
+    invocationId?: string;
+}
+
+/**
+ * Complete feedback entry as stored in the system
+ * Extends FeedbackData with system-generated fields
+ */
+export interface FeedbackEntry {
+    /** Unique identifier for this feedback entry */
+    id: string;
+    /** The type of feedback */
+    rating: FeedbackType;
+    /** Optional text comment with detailed feedback */
+    comment?: string;
+    /** Name of the tool this feedback is for */
+    toolName: string;
+    /** ISO 8601 timestamp when feedback was submitted */
+    timestamp: string;
+    /** Unique identifier for the specific tool invocation */
+    invocationId: string;
+    /** Optional tool output context for reference */
+    toolContext?: {
+        /** The input parameters that were passed to the tool */
+        input?: Record<string, unknown>;
+        /** Summary or excerpt of the tool output */
+        outputSummary?: string;
+    };
+}
