@@ -17,7 +17,7 @@ export function generateNonce(): string {
 
   // Convert Uint8Array to base64 string
   // btoa() is available in both browser and Edge Runtime
-  return btoa(String.fromCharCode(...bytes));
+  return btoa(String.fromCharCode(...Array.from(bytes)));
 }
 
 /**
