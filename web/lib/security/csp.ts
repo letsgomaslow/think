@@ -1,7 +1,8 @@
-import { randomBytes } from 'crypto';
-
 /**
  * Generates a cryptographically secure nonce for Content Security Policy
+ *
+ * Uses Web Crypto API for Edge Runtime compatibility (Vercel Edge Runtime).
+ * Node.js crypto module is not available in Edge Runtime.
  *
  * A nonce is a "number used once" that allows specific inline scripts to execute
  * while maintaining CSP protection. Each nonce should be unique per request.
@@ -10,8 +11,13 @@ import { randomBytes } from 'crypto';
  */
 export function generateNonce(): string {
   // Generate 16 bytes (128 bits) of cryptographically secure random data
-  // This provides sufficient entropy for a unique nonce per request
-  return randomBytes(16).toString('base64');
+  // Using Web Crypto API which is available in both Node.js and Edge Runtime
+  const bytes = new Uint8Array(16);
+  crypto.getRandomValues(bytes);
+
+  // Convert Uint8Array to base64 string
+  // btoa() is available in both browser and Edge Runtime
+  return btoa(String.fromCharCode(...bytes));
 }
 
 /**
