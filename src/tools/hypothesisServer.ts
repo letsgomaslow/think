@@ -1,5 +1,15 @@
-import { ScientificInquiryData, HypothesisData, ExperimentData } from '../models/interfaces.js';
+import { ScientificInquiryData, HypothesisData, ExperimentData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for scientific method inquiry results
+ */
+interface ScientificMethodResponse {
+  stage: string;
+  inquiryId: string;
+  iteration: number;
+  nextStageNeeded: boolean;
+}
 
 export class HypothesisServer {
   private validateInputData(input: unknown): ScientificInquiryData {
@@ -168,7 +178,7 @@ export class HypothesisServer {
     };
   }
 
-  public processScientificMethod(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
+  public processScientificMethod(input: unknown): ServerResponse<ScientificMethodResponse> {
     try {
       const validatedData = this.validateInputData(input);
       const processedData: ScientificInquiryData = {
@@ -176,32 +186,23 @@ export class HypothesisServer {
         hypothesis: this.processHypothesis(validatedData.hypothesis),
         experiment: this.processExperiment(validatedData.experiment)
       };
-      
+
       const formattedOutput = this.formatOutput(processedData);
       console.error(formattedOutput);
 
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            stage: processedData.stage,
-            inquiryId: processedData.inquiryId,
-            iteration: processedData.iteration,
-            nextStageNeeded: processedData.nextStageNeeded,
-            status: 'success'
-          }, null, 2)
-        }]
+        status: 'success',
+        data: {
+          stage: processedData.stage,
+          inquiryId: processedData.inquiryId,
+          iteration: processedData.iteration,
+          nextStageNeeded: processedData.nextStageNeeded
+        }
       };
     } catch (error) {
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            error: error instanceof Error ? error.message : String(error),
-            status: 'failed'
-          }, null, 2)
-        }],
-        isError: true
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }

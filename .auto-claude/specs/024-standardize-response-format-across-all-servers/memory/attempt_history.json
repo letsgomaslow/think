@@ -47,11 +47,23 @@
         }
       ],
       "status": "completed"
+    },
+    "2.4": {
+      "attempts": [
+        {
+          "session": 6,
+          "timestamp": "2026-01-06T19:22:40.091216",
+          "approach": "Implemented: Remove MCP content wrapping from processMetacognitiveMonitoring() and return a simple ServerResponse",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
     }
   },
   "stuck_subtasks": [],
   "metadata": {
     "created_at": "2026-01-06T19:12:15.876425",
-    "last_updated": "2026-01-06T19:21:11.760970"
+    "last_updated": "2026-01-06T19:22:40.091248"
   }
 }
