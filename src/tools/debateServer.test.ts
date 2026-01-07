@@ -21,29 +21,22 @@ describe('DebateServer', () => {
     nextArgumentNeeded: true,
   };
 
-  const parseResult = (result: any) => {
-    return JSON.parse(result.content[0].text);
-  };
-
   it('should process valid structured argumentation data', () => {
     const result = server.processStructuredArgumentation(validInput);
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.claim).toBe('Remote work improves productivity');
-    expect(parsed.argumentType).toBe('thesis');
-    expect(parsed.confidence).toBe(0.8);
+    expect(result.status).toBe('success');
+    expect(result.data?.claim).toBe('Remote work improves productivity');
+    expect(result.data?.argumentType).toBe('thesis');
+    expect(result.data?.confidence).toBe(0.8);
   });
 
   it('should return failed status for missing required fields', () => {
     const result = server.processStructuredArgumentation({
       claim: 'test',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for invalid confidence score', () => {
@@ -51,11 +44,9 @@ describe('DebateServer', () => {
       ...validInput,
       confidence: 1.5,
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for negative confidence score', () => {
@@ -63,11 +54,9 @@ describe('DebateServer', () => {
       ...validInput,
       confidence: -0.1,
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for invalid nextArgumentNeeded type', () => {
@@ -75,11 +64,9 @@ describe('DebateServer', () => {
       ...validInput,
       nextArgumentNeeded: 'yes',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should handle all argument types', () => {
@@ -96,9 +83,8 @@ describe('DebateServer', () => {
         ...validInput,
         argumentType,
       });
-      const parsed = parseResult(result);
-      expect(parsed.status).toBe('success');
-      expect(parsed.argumentType).toBe(argumentType);
+      expect(result.status).toBe('success');
+      expect(result.data?.argumentType).toBe(argumentType);
     });
   });
 
@@ -112,9 +98,8 @@ describe('DebateServer', () => {
       strengths: ['Well-supported by data'],
       weaknesses: ['Limited sample size'],
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.argumentId).toBe('arg-1');
+    expect(result.status).toBe('success');
+    expect(result.data?.argumentId).toBe('arg-1');
   });
 });

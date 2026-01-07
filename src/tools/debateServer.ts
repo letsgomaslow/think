@@ -1,5 +1,16 @@
-import { ArgumentData } from '../models/interfaces.js';
+import { ArgumentData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for structured argumentation results
+ */
+interface ArgumentResponse {
+  argumentType: string;
+  claim: string;
+  confidence: number;
+  nextArgumentNeeded: boolean;
+  argumentId: string;
+}
 
 export class DebateServer {
   private validateInputData(input: unknown): ArgumentData {
@@ -81,7 +92,7 @@ export class DebateServer {
     return output;
   }
 
-  public processStructuredArgumentation(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
+  public processStructuredArgumentation(input: unknown): ServerResponse<ArgumentResponse> {
     try {
       const validatedData = this.validateInputData(input);
       const processedData: ArgumentData = {
@@ -92,33 +103,24 @@ export class DebateServer {
         weaknesses: validatedData.weaknesses || [],
         suggestedNextTypes: validatedData.suggestedNextTypes || []
       };
-      
+
       const formattedOutput = this.formatOutput(processedData);
       console.error(formattedOutput);
 
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            argumentType: processedData.argumentType,
-            claim: processedData.claim,
-            confidence: processedData.confidence,
-            nextArgumentNeeded: processedData.nextArgumentNeeded,
-            argumentId: processedData.argumentId || `arg-${Date.now()}`,
-            status: 'success'
-          }, null, 2)
-        }]
+        status: 'success',
+        data: {
+          argumentType: processedData.argumentType,
+          claim: processedData.claim,
+          confidence: processedData.confidence,
+          nextArgumentNeeded: processedData.nextArgumentNeeded,
+          argumentId: processedData.argumentId || `arg-${Date.now()}`
+        }
       };
     } catch (error) {
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            error: error instanceof Error ? error.message : String(error),
-            status: 'failed'
-          }, null, 2)
-        }],
-        isError: true
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
