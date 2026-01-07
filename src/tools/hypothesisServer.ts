@@ -6,7 +6,7 @@ import chalk from 'chalk';
 export class HypothesisServer {
   private validateInputData(input: unknown): ScientificInquiryData {
     try {
-      return scientificInquiryDataSchema.parse(input);
+      return scientificInquiryDataSchema.parse(input) as ScientificInquiryData;
     } catch (error) {
       if (error instanceof ZodError) {
         const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');

@@ -6,7 +6,7 @@ import chalk from 'chalk';
 export class ReflectServer {
   private validateInputData(input: unknown): MetacognitiveMonitoringData {
     try {
-      return metacognitiveMonitoringDataSchema.parse(input);
+      return metacognitiveMonitoringDataSchema.parse(input) as MetacognitiveMonitoringData;
     } catch (error) {
       if (error instanceof ZodError) {
         const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');

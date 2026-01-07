@@ -7,7 +7,7 @@ import {
   confidenceScoreSchema,
   collaborativeReasoningStageSchema,
   personaCategorySchema,
-  positiveNumberSchema
+  nonNegativeNumberSchema
 } from './common.js';
 
 // ============================================================================

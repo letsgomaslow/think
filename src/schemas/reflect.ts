@@ -9,7 +9,7 @@ import {
   assessmentTypeSchema,
   confidenceScoreSchema,
   scoreSchema,
-  positiveNumberSchema
+  nonNegativeNumberSchema
 } from './common.js';
 
 // ============================================================================

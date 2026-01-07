@@ -7,7 +7,7 @@ import {
   hypothesisStatusSchema,
   scientificInquiryStageSchema,
   confidenceScoreSchema,
-  positiveNumberSchema
+  nonNegativeNumberSchema
 } from './common.js';
 
 // ============================================================================

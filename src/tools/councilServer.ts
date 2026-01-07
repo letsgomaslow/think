@@ -111,7 +111,7 @@ export class CouncilServer {
 
     // Validate with Zod schema
     try {
-      return collaborativeReasoningDataSchema.parse(collaborativeReasoningData);
+      return collaborativeReasoningDataSchema.parse(collaborativeReasoningData) as CollaborativeReasoningData;
     } catch (error) {
       if (error instanceof ZodError) {
         const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
