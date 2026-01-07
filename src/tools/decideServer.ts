@@ -1,5 +1,20 @@
-import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis, RiskItem, ReversibilityData, RegretMinimizationData } from '../models/interfaces.js';
+import { DecisionFrameworkData, EisenhowerClassification, OptionData, CostBenefitAnalysis, RiskItem, ReversibilityData, RegretMinimizationData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for decision framework results
+ */
+interface DecisionFrameworkResponse {
+    decisionId: string;
+    decisionStatement: string;
+    analysisType: string;
+    stage: string;
+    iteration: number;
+    optionCount: number;
+    criteriaCount: number;
+    hasRecommendation: boolean;
+    nextStageNeeded: boolean;
+}
 
 export class DecideServer {
   private validateInputData(input: unknown): DecisionFrameworkData {
@@ -518,13 +533,33 @@ export class DecideServer {
     return output;
   }
 
-  public processDecisionFramework(input: unknown): DecisionFrameworkData {
-    const validatedData = this.validateInputData(input);
-    
-    // Log formatted output to console
-    const formattedOutput = this.formatOutput(validatedData);
-    console.error(formattedOutput);
-    
-    return validatedData;
+  public processDecisionFramework(input: unknown): ServerResponse<DecisionFrameworkResponse> {
+    try {
+      const validatedData = this.validateInputData(input);
+
+      // Log formatted output to console
+      const formattedOutput = this.formatOutput(validatedData);
+      console.error(formattedOutput);
+
+      return {
+        status: 'success',
+        data: {
+          decisionId: validatedData.decisionId,
+          decisionStatement: validatedData.decisionStatement,
+          analysisType: validatedData.analysisType,
+          stage: validatedData.stage,
+          iteration: validatedData.iteration,
+          optionCount: validatedData.options.length,
+          criteriaCount: validatedData.criteria?.length ?? 0,
+          hasRecommendation: !!validatedData.recommendation,
+          nextStageNeeded: validatedData.nextStageNeeded
+        }
+      };
+    } catch (error) {
+      return {
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
+      };
+    }
   }
 }
