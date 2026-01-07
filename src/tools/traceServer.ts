@@ -1,5 +1,17 @@
-import { ThoughtData } from '../models/interfaces.js';
+import { ThoughtData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for sequential thinking results
+ */
+interface ThoughtResponse {
+    thoughtNumber: number;
+    totalThoughts: number;
+    isRevision: boolean;
+    isBranch: boolean;
+    branchId?: string;
+    nextThoughtNeeded: boolean;
+}
 
 export class TraceServer {
   private thoughtHistory: ThoughtData[] = [];
@@ -100,16 +112,33 @@ export class TraceServer {
     }
   }
 
-  public processThought(input: unknown): ThoughtData {
-    const validatedInput = this.validateThoughtData(input);
-    
-    // Store the thought for future reference
-    this.storeThought(validatedInput);
-    
-    // Log formatted output to console
-    const formattedOutput = this.formatThoughtOutput(validatedInput);
-    console.error(formattedOutput);
-    
-    return validatedInput;
+  public processThought(input: unknown): ServerResponse<ThoughtResponse> {
+    try {
+      const validatedInput = this.validateThoughtData(input);
+
+      // Store the thought for future reference
+      this.storeThought(validatedInput);
+
+      // Log formatted output to console
+      const formattedOutput = this.formatThoughtOutput(validatedInput);
+      console.error(formattedOutput);
+
+      return {
+        status: 'success',
+        data: {
+          thoughtNumber: validatedInput.thoughtNumber,
+          totalThoughts: validatedInput.totalThoughts,
+          isRevision: !!validatedInput.isRevision,
+          isBranch: !!validatedInput.branchId,
+          branchId: validatedInput.branchId,
+          nextThoughtNeeded: validatedInput.nextThoughtNeeded
+        }
+      };
+    } catch (error) {
+      return {
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
+      };
+    }
   }
 }
