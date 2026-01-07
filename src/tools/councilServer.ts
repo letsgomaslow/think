@@ -1,7 +1,25 @@
-import { CollaborativeReasoningData, PersonaData } from '../models/interfaces.js';
+import { CollaborativeReasoningData, PersonaData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
 import { personaFactory } from '../personas/factory.js';
 import { PersonaCategoryId } from '../personas/types.js';
+
+/**
+ * Response data for collaborative reasoning results
+ */
+interface CollaborativeReasoningResponse {
+    topic: string;
+    stage: string;
+    activePersonaId: string;
+    nextPersonaId?: string;
+    sessionId: string;
+    iteration: number;
+    personaCount: number;
+    contributionCount: number;
+    consensusPointCount: number;
+    hasDisagreements: boolean;
+    hasFinalRecommendation: boolean;
+    nextContributionNeeded: boolean;
+}
 
 interface CouncilInput {
   topic: string;
@@ -169,13 +187,36 @@ export class CouncilServer {
     return output;
   }
 
-  public processCollaborativeReasoning(input: unknown): CollaborativeReasoningData {
-    const validatedData = this.validateInputData(input);
-    
-    // Log formatted output to console
-    const formattedOutput = this.formatOutput(validatedData);
-    console.error(formattedOutput);
-    
-    return validatedData;
+  public processCollaborativeReasoning(input: unknown): ServerResponse<CollaborativeReasoningResponse> {
+    try {
+      const validatedData = this.validateInputData(input);
+
+      // Log formatted output to console
+      const formattedOutput = this.formatOutput(validatedData);
+      console.error(formattedOutput);
+
+      return {
+        status: 'success',
+        data: {
+          topic: validatedData.topic,
+          stage: validatedData.stage,
+          activePersonaId: validatedData.activePersonaId,
+          nextPersonaId: validatedData.nextPersonaId,
+          sessionId: validatedData.sessionId,
+          iteration: validatedData.iteration,
+          personaCount: validatedData.personas.length,
+          contributionCount: validatedData.contributions.length,
+          consensusPointCount: validatedData.consensusPoints?.length ?? 0,
+          hasDisagreements: (validatedData.disagreements?.length ?? 0) > 0,
+          hasFinalRecommendation: !!validatedData.finalRecommendation,
+          nextContributionNeeded: validatedData.nextContributionNeeded
+        }
+      };
+    } catch (error) {
+      return {
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
+      };
+    }
   }
 }
