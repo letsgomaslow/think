@@ -47,7 +47,7 @@ export class MapServer {
         }
         
         const propKeys = Object.keys(element.properties);
-        if (propKeys.length > 0) {
+        if (propKeys && propKeys.length > 0) {
           output += `  ${chalk.bold('Properties:')}\n`;
           propKeys.forEach(key => {
             output += `    ${chalk.bold(`${key}:`)} ${JSON.stringify(element.properties[key])}\n`;

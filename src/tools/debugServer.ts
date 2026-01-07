@@ -1,19 +1,24 @@
 import { DebuggingApproachData } from '../models/interfaces.js';
-import { debuggingApproachDataSchema } from '../schemas/debug.js';
-import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class DebugServer {
   private validateApproachData(input: unknown): DebuggingApproachData {
-    try {
-      return debuggingApproachDataSchema.parse(input);
-    } catch (error) {
-      if (error instanceof ZodError) {
-        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
-        throw new Error(`Invalid approach data: ${errorMessages}`);
-      }
-      throw error;
+    const data = input as Record<string, unknown>;
+
+    if (!data.approachName || typeof data.approachName !== 'string') {
+      throw new Error('Invalid approachName: must be a string');
     }
+    if (!data.issue || typeof data.issue !== 'string') {
+      throw new Error('Invalid issue: must be a string');
+    }
+
+    return {
+      approachName: data.approachName as string,
+      issue: data.issue as string,
+      steps: Array.isArray(data.steps) ? data.steps.map(String) : [],
+      findings: typeof data.findings === 'string' ? data.findings as string : '',
+      resolution: typeof data.resolution === 'string' ? data.resolution as string : ''
+    };
   }
 
   private formatApproachOutput(data: DebuggingApproachData): string {
@@ -22,9 +27,9 @@ export class DebugServer {
     let output = `\n${chalk.bold.blue('Debugging Approach:')} ${chalk.bold(approachName)}\n`;
     output += `${chalk.bold.green('Issue:')} ${issue}\n`;
     
-    if (steps.length > 0) {
+    if (steps && steps.length > 0) {
       output += `\n${chalk.bold.yellow('Steps:')}\n`;
-      steps.forEach((step, index) => {
+      steps?.forEach((step, index) => {
         output += `${chalk.bold(`${index + 1}.`)} ${step}\n`;
       });
     }
@@ -52,7 +57,7 @@ export class DebugServer {
           text: JSON.stringify({
             approachName: validatedInput.approachName,
             status: 'success',
-            hasSteps: validatedInput.steps.length > 0,
+            hasSteps: validatedInput.steps || [].length > 0,
             hasResolution: !!validatedInput.resolution
           }, null, 2)
         }]

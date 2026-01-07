@@ -27,7 +27,7 @@ export class DebateServer {
     output += `\n${chalk.bold.magenta('Claim:')}\n${claim}\n`;
     
     // Premises
-    if (premises.length > 0) {
+    if (premises && premises.length > 0) {
       output += `\n${chalk.bold.cyan('Premises:')}\n`;
       premises.forEach((premise, i) => {
         output += `${chalk.bold(`${i+1}.`)} ${premise}\n`;

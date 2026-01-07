@@ -22,23 +22,23 @@ export class ParadigmServer {
     let output = `\n${chalk.bold.blue('Programming Paradigm:')} ${chalk.bold(paradigmName)}\n`;
     output += `${chalk.bold.green('Problem:')} ${problem}\n`;
     
-    if (approach.length > 0) {
+    if (approach && approach.length > 0) {
       output += `\n${chalk.bold.yellow('Approach:')}\n`;
-      approach.forEach((step, index) => {
+      approach?.forEach((step, index) => {
         output += `${chalk.bold(`${index + 1}.`)} ${step}\n`;
       });
     }
     
-    if (benefits.length > 0) {
+    if (benefits && benefits.length > 0) {
       output += `\n${chalk.bold.magenta('Benefits:')}\n`;
-      benefits.forEach((benefit) => {
+      benefits?.forEach((benefit) => {
         output += `${chalk.bold(`•`)} ${benefit}\n`;
       });
     }
     
-    if (limitations.length > 0) {
+    if (limitations && limitations.length > 0) {
       output += `\n${chalk.bold.red('Limitations:')}\n`;
-      limitations.forEach((limitation) => {
+      limitations?.forEach((limitation) => {
         output += `${chalk.bold(`•`)} ${limitation}\n`;
       });
     }
@@ -66,7 +66,7 @@ export class ParadigmServer {
           text: JSON.stringify({
             paradigmName: validatedInput.paradigmName,
             status: 'success',
-            hasApproach: validatedInput.approach.length > 0,
+            hasApproach: validatedInput.approach || [].length > 0,
             hasCodeExample: !!validatedInput.codeExample
           }, null, 2)
         }]

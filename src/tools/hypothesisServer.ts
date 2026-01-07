@@ -42,7 +42,7 @@ export class HypothesisServer {
       output += `${chalk.bold('Status:')} ${h.status}\n`;
       output += `${chalk.bold('Confidence:')} ${(h.confidence * 100).toFixed(1)}%\n`;
       
-      if (h.variables.length > 0) {
+      if (h.variables && h.variables.length > 0) {
         output += `\n${chalk.bold('Variables:')}\n`;
         h.variables.forEach((variable, i) => {
           output += `  ${chalk.bold(`${i+1}. ${variable.name} (${variable.type})`)}\n`;
@@ -52,7 +52,7 @@ export class HypothesisServer {
         });
       }
       
-      if (h.assumptions.length > 0) {
+      if (h.assumptions && h.assumptions.length > 0) {
         output += `\n${chalk.bold('Assumptions:')}\n`;
         h.assumptions.forEach((assumption, i) => {
           output += `  ${chalk.bold(`${i+1}.`)} ${assumption}\n`;
@@ -76,7 +76,7 @@ export class HypothesisServer {
       output += `${chalk.bold('Design:')} ${e.design}\n`;
       output += `${chalk.bold('Methodology:')} ${e.methodology}\n`;
       
-      if (e.predictions.length > 0) {
+      if (e.predictions && e.predictions.length > 0) {
         output += `\n${chalk.bold('Predictions:')}\n`;
         e.predictions.forEach((prediction, i) => {
           output += `  ${chalk.bold(`${i+1}.`)} If ${prediction.if}, then ${prediction.then}`;
@@ -87,7 +87,7 @@ export class HypothesisServer {
         });
       }
       
-      if (e.controlMeasures.length > 0) {
+      if (e.controlMeasures && e.controlMeasures.length > 0) {
         output += `\n${chalk.bold('Control Measures:')}\n`;
         e.controlMeasures.forEach((measure, i) => {
           output += `  ${chalk.bold(`${i+1}.`)} ${measure}\n`;
@@ -110,7 +110,7 @@ export class HypothesisServer {
       
       if (e.limitations && e.limitations.length > 0) {
         output += `\n${chalk.bold('Limitations:')}\n`;
-        e.limitations.forEach((limitation, i) => {
+        e.limitations?.forEach((limitation, i) => {
           output += `  ${chalk.bold(`${i+1}.`)} ${limitation}\n`;
         });
       }

@@ -14,8 +14,7 @@ import {
   probabilitySchema,
   scoreSchema,
   nonNegativeNumberSchema,
-  positiveNumberSchema,
-  nonNegativeNumberSchema
+  positiveNumberSchema
 } from './common.js';
 
 // ============================================================================

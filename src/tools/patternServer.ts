@@ -22,23 +22,23 @@ export class PatternServer {
     let output = `\n${chalk.bold.blue('Design Pattern:')} ${chalk.bold(patternName)}\n`;
     output += `${chalk.bold.green('Context:')} ${context}\n`;
     
-    if (implementation.length > 0) {
+    if (implementation && implementation.length > 0) {
       output += `\n${chalk.bold.yellow('Implementation Steps:')}\n`;
-      implementation.forEach((step, index) => {
+      implementation?.forEach((step, index) => {
         output += `${chalk.bold(`${index + 1}.`)} ${step}\n`;
       });
     }
     
-    if (benefits.length > 0) {
+    if (benefits && benefits.length > 0) {
       output += `\n${chalk.bold.magenta('Benefits:')}\n`;
-      benefits.forEach((benefit, index) => {
+      benefits?.forEach((benefit, index) => {
         output += `${chalk.bold(`•`)} ${benefit}\n`;
       });
     }
     
-    if (tradeoffs.length > 0) {
+    if (tradeoffs && tradeoffs.length > 0) {
       output += `\n${chalk.bold.red('Trade-offs:')}\n`;
-      tradeoffs.forEach((tradeoff, index) => {
+      tradeoffs?.forEach((tradeoff, index) => {
         output += `${chalk.bold(`•`)} ${tradeoff}\n`;
       });
     }
@@ -66,7 +66,7 @@ export class PatternServer {
           text: JSON.stringify({
             patternName: validatedInput.patternName,
             status: 'success',
-            hasImplementation: validatedInput.implementation.length > 0,
+            hasImplementation: validatedInput.implementation || [].length > 0,
             hasCodeExample: !!validatedInput.codeExample
           }, null, 2)
         }]

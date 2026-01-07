@@ -32,7 +32,7 @@ export class ReflectServer {
       output += `${chalk.bold('Level:')} ${ka.knowledgeLevel} (${(ka.confidenceScore * 100).toFixed(1)}% confidence)\n`;
       output += `${chalk.bold('Evidence:')} ${ka.supportingEvidence}\n`;
       
-      if (ka.knownLimitations.length > 0) {
+      if (ka.knownLimitations && ka.knownLimitations.length > 0) {
         output += `${chalk.bold('Known Limitations:')}\n`;
         ka.knownLimitations.forEach((limitation, i) => {
           output += `  ${chalk.bold(`${i+1}.`)} ${limitation}\n`;
@@ -65,14 +65,14 @@ export class ReflectServer {
         output += `  ${chalk.bold('Logical Validity:')} ${(step.logicalValidity * 100).toFixed(1)}%\n`;
         output += `  ${chalk.bold('Inference Strength:')} ${(step.inferenceStrength * 100).toFixed(1)}%\n`;
         
-        if (step.assumptions.length > 0) {
+        if (step.assumptions && step.assumptions.length > 0) {
           output += `  ${chalk.bold('Assumptions:')}\n`;
           step.assumptions.forEach((assumption, j) => {
             output += `    ${chalk.bold(`${j+1}.`)} ${assumption}\n`;
           });
         }
         
-        if (step.potentialBiases.length > 0) {
+        if (step.potentialBiases && step.potentialBiases.length > 0) {
           output += `  ${chalk.bold('Potential Biases:')}\n`;
           step.potentialBiases.forEach((bias, j) => {
             output += `    ${chalk.bold(`${j+1}.`)} ${bias}\n`;
@@ -82,7 +82,7 @@ export class ReflectServer {
     }
     
     // Uncertainty Areas
-    if (uncertaintyAreas.length > 0) {
+    if (uncertaintyAreas && uncertaintyAreas.length > 0) {
       output += `\n${chalk.bold.red('Uncertainty Areas:')}\n`;
       uncertaintyAreas.forEach((area, i) => {
         output += `${chalk.bold(`${i+1}.`)} ${area}\n`;

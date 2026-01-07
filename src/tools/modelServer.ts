@@ -24,9 +24,9 @@ export class ModelServer {
         )}\n`;
         output += `${chalk.bold.green("Problem:")} ${problem}\n`;
 
-        if (steps.length > 0) {
+        if (steps && steps.length > 0) {
             output += `\n${chalk.bold.yellow("Steps:")}\n`;
-            steps.forEach((step, index) => {
+            steps?.forEach((step, index) => {
                 output += `${chalk.bold(`${index + 1}.`)} ${step}\n`;
             });
         }
@@ -51,7 +51,7 @@ export class ModelServer {
             return {
                 modelName: validatedInput.modelName,
                 status: "success",
-                hasSteps: validatedInput.steps.length > 0,
+                hasSteps: validatedInput.steps || [].length > 0,
                 hasConclusion: !!validatedInput.conclusion,
             };
         } catch (error) {
