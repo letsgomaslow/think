@@ -1,19 +1,19 @@
 import { VisualOperationData } from '../models/interfaces.js';
+import { visualOperationDataSchema } from '../schemas/map.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class MapServer {
   private validateInputData(input: unknown): VisualOperationData {
-    const data = input as VisualOperationData;
-    if (!data.operation || !data.diagramId || !data.diagramType) {
-      throw new Error("Invalid input for VisualReasoning: Missing required fields.");
+    try {
+      return visualOperationDataSchema.parse(input);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid visual operation data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (typeof data.iteration !== 'number' || data.iteration < 0) {
-      throw new Error("Invalid iteration value for VisualOperationData.");
-    }
-    if (typeof data.nextOperationNeeded !== 'boolean') {
-      throw new Error("Invalid nextOperationNeeded value for VisualOperationData.");
-    }
-    return data;
   }
 
   private formatOutput(data: VisualOperationData): string {
@@ -47,7 +47,7 @@ export class MapServer {
         }
         
         const propKeys = Object.keys(element.properties);
-        if (propKeys.length > 0) {
+        if (propKeys && propKeys.length > 0) {
           output += `  ${chalk.bold('Properties:')}\n`;
           propKeys.forEach(key => {
             output += `    ${chalk.bold(`${key}:`)} ${JSON.stringify(element.properties[key])}\n`;

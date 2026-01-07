@@ -1,0 +1,27 @@
+{
+  "sourceType": "ideation",
+  "ideationType": "performance_optimizations",
+  "ideaId": "perf-002",
+  "rationale": "Using multiple icon libraries is a common bundle bloat issue. Each library bundles its entire icon set unless tree-shaking is perfectly configured. Consolidating to one library (recommend lucide-react for best tree-shaking) reduces download size, improves caching, and simplifies maintenance.",
+  "category": "ui_ux",
+  "performanceCategory": "bundle_size",
+  "impact": "medium",
+  "priority": "low",
+  "complexity": "small",
+  "model": "opus",
+  "thinkingLevel": "high",
+  "isAutoProfile": true,
+  "phaseModels": {
+    "spec": "opus",
+    "planning": "opus",
+    "coding": "sonnet",
+    "qa": "haiku"
+  },
+  "phaseThinking": {
+    "spec": "ultrathink",
+    "planning": "high",
+    "coding": "high",
+    "qa": "high"
+  },
+  "requireReviewBeforeCoding": true
+}

@@ -27,9 +27,9 @@ export class DebugServer {
     let output = `\n${chalk.bold.blue('Debugging Approach:')} ${chalk.bold(approachName)}\n`;
     output += `${chalk.bold.green('Issue:')} ${issue}\n`;
     
-    if (steps.length > 0) {
+    if (steps && steps.length > 0) {
       output += `\n${chalk.bold.yellow('Steps:')}\n`;
-      steps.forEach((step, index) => {
+      steps?.forEach((step, index) => {
         output += `${chalk.bold(`${index + 1}.`)} ${step}\n`;
       });
     }
@@ -57,7 +57,7 @@ export class DebugServer {
           text: JSON.stringify({
             approachName: validatedInput.approachName,
             status: 'success',
-            hasSteps: validatedInput.steps.length > 0,
+            hasSteps: validatedInput.steps || [].length > 0,
             hasResolution: !!validatedInput.resolution
           }, null, 2)
         }]

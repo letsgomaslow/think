@@ -1,0 +1,106 @@
+{
+  "feature": "Fix overly permissive CORS configuration",
+  "description": "The vercel.json configuration sets 'Access-Control-Allow-Origin: *' combined with 'Access-Control-Allow-Credentials: true', which is a dangerous combination. This configuration allows any website to make credentialed cross-origin requests to the API.",
+  "created_at": "2026-01-06T16:01:41.439Z",
+  "updated_at": "2026-01-07T03:02:04.936Z",
+  "status": "in_progress",
+  "planStatus": "approved",
+  "workflow_type": "development",
+  "services_involved": [
+    "web/vercel.json",
+    "web/app/api"
+  ],
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Analysis and Configuration",
+      "description": "Analyze API usage patterns and fix CORS configuration",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Remove Access-Control-Allow-Credentials header",
+          "description": "The API endpoints are stateless (MCP transport has no session management, waitlist doesn't use credentials). Remove the 'Access-Control-Allow-Credentials: true' header since it's not needed and creates a security vulnerability when combined with wildcard origin.",
+          "status": "completed",
+          "files": [
+            "web/vercel.json"
+          ],
+          "acceptance_criteria": [
+            "Access-Control-Allow-Credentials header is removed from vercel.json",
+            "Access-Control-Allow-Origin: * is retained for public API access"
+          ],
+          "notes": "Successfully removed Access-Control-Allow-Credentials header from web/vercel.json. The dangerous combination of wildcard origin (*) with credentials is now fixed. The API remains publicly accessible but no longer poses the CSRF-like attack risk.",
+          "updated_at": "2026-01-07T03:04:18.289760+00:00"
+        },
+        {
+          "id": "1.2",
+          "title": "Verify API functionality with updated CORS",
+          "description": "Ensure the API routes still function correctly after CORS changes by testing the endpoints.",
+          "status": "completed",
+          "files": [
+            "web/app/api/[transport]/route.ts",
+            "web/app/api/waitlist/route.ts"
+          ],
+          "acceptance_criteria": [
+            "MCP transport endpoints respond correctly",
+            "Waitlist endpoints respond correctly",
+            "No regression in functionality"
+          ],
+          "notes": "API verification completed. Confirmed both MCP transport and waitlist endpoints are stateless with no credential dependencies. Code review and grep analysis show no usage of authentication, sessions, or cookies. CORS changes have zero functional impact - removing credentials header is a pure security improvement. Detailed verification report created in api-verification.md.",
+          "updated_at": "2026-01-07T03:06:26.259509+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Documentation and Security Review",
+      "description": "Document the security fix and add security notes",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Add security comment to vercel.json",
+          "description": "Add a comment explaining the CORS configuration choice for future maintainers.",
+          "status": "completed",
+          "files": [
+            "web/vercel.json"
+          ],
+          "acceptance_criteria": [
+            "JSON has clear structure explaining CORS headers purpose",
+            "Future maintainers understand why credentials are not included"
+          ],
+          "notes": "Created web/CORS.md documentation file explaining CORS configuration choices. Since JSON doesn't support comments, created a comprehensive markdown document that explains: (1) Current CORS configuration, (2) Why credentials are intentionally excluded for security, (3) API design rationale (stateless/public), (4) Guidance for future maintainers if authentication is needed. This provides clear documentation for future maintainers about the security fix and proper CORS configuration practices.",
+          "updated_at": "2026-01-07T03:08:23.385018+00:00"
+        },
+        {
+          "id": "2.2",
+          "title": "Update build-progress.txt with fix summary",
+          "description": "Document the security fix in the build progress file.",
+          "status": "completed",
+          "files": [
+            ".auto-claude/specs/020-fix-overly-permissive-cors-configuration/build-progress.txt"
+          ],
+          "acceptance_criteria": [
+            "Build progress documents the CORS security fix",
+            "Explains the rationale for the change"
+          ],
+          "notes": "Successfully documented the security fix in build-progress.txt. Added comprehensive documentation including: (1) What was fixed - removal of dangerous Access-Control-Allow-Credentials header, (2) Why the fix is safe - both APIs are stateless/public with no credential dependencies, (3) Documentation created - web/CORS.md for future maintainers, (4) Impact summary - security vulnerability eliminated with zero functional impact. The build-progress.txt now provides a complete audit trail of the CORS security fix.",
+          "updated_at": "2026-01-07T03:09:36.920299+00:00"
+        }
+      ]
+    }
+  ],
+  "final_acceptance": [
+    "CORS configuration no longer includes dangerous Access-Control-Allow-Credentials with wildcard origin",
+    "API endpoints remain functional",
+    "Security vulnerability is resolved"
+  ],
+  "spec_file": "spec.md",
+  "security_context": {
+    "issue": "Access-Control-Allow-Credentials: true combined with Access-Control-Allow-Origin: * violates CORS security best practices",
+    "risk": "Could enable CSRF-like attacks where malicious websites make authenticated requests on behalf of users",
+    "fix_approach": "Remove credentials header since APIs are stateless and don't require credentialed requests",
+    "alternative_if_credentials_needed": "Replace wildcard origin with specific allowed origins list"
+  },
+  "last_updated": "2026-01-07T03:09:36.920308+00:00"
+}

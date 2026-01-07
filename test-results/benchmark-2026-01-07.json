@@ -1,0 +1,582 @@
+{
+  "tools": {
+    "trace": {
+      "name": "trace",
+      "tests": [
+        {
+          "testId": "trace-basic-001",
+          "durationMs": 5038.17,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "trace-edge-001",
+          "durationMs": 113.49,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "trace-edge-002",
+          "durationMs": 19.71,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "trace-edge-003",
+          "durationMs": 16.27,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        }
+      ],
+      "avgMs": 1296.91,
+      "minMs": 16.27,
+      "maxMs": 5038.17,
+      "validationPassed": 3,
+      "validationFailed": 1
+    },
+    "model": {
+      "name": "model",
+      "tests": [
+        {
+          "testId": "model-basic-001",
+          "durationMs": 15.08,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "model-edge-001",
+          "durationMs": 24.62,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "model-edge-002",
+          "durationMs": 19.53,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "model-edge-003",
+          "durationMs": 23.19,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "model-edge-004",
+          "durationMs": 19.63,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "model-edge-005",
+          "durationMs": 16.11,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        }
+      ],
+      "avgMs": 19.69,
+      "minMs": 15.08,
+      "maxMs": 24.62,
+      "validationPassed": 6,
+      "validationFailed": 0
+    },
+    "pattern": {
+      "name": "pattern",
+      "tests": [
+        {
+          "testId": "pattern-basic-001",
+          "durationMs": 23.89,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "pattern-edge-001",
+          "durationMs": 18.78,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "pattern-edge-002",
+          "durationMs": 17.76,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "pattern-edge-003",
+          "durationMs": 20.25,
+          "success": true,
+          "validationPassed": true,
+          "issues": []
+        },
+        {
+          "testId": "pattern-edge-004",
+          "durationMs": 1360.66,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "pattern-edge-005",
+          "durationMs": 242.42,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 280.63,
+      "minMs": 17.76,
+      "maxMs": 1360.66,
+      "validationPassed": 4,
+      "validationFailed": 2
+    },
+    "paradigm": {
+      "name": "paradigm",
+      "tests": [
+        {
+          "testId": "paradigm-basic-001",
+          "durationMs": 198.72,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "paradigm-edge-001",
+          "durationMs": 215.98,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "paradigm-edge-002",
+          "durationMs": 266.53,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "paradigm-edge-003",
+          "durationMs": 231.31,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "paradigm-edge-004",
+          "durationMs": 249.78,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 232.47,
+      "minMs": 198.72,
+      "maxMs": 266.53,
+      "validationPassed": 0,
+      "validationFailed": 5
+    },
+    "debug": {
+      "name": "debug",
+      "tests": [
+        {
+          "testId": "debug-basic-001",
+          "durationMs": 193.34,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "debug-edge-001",
+          "durationMs": 198.47,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "debug-edge-002",
+          "durationMs": 244.97,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "debug-edge-003",
+          "durationMs": 212.08,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "debug-edge-004",
+          "durationMs": 189.86,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 207.74,
+      "minMs": 189.86,
+      "maxMs": 244.97,
+      "validationPassed": 0,
+      "validationFailed": 5
+    },
+    "council": {
+      "name": "council",
+      "tests": [
+        {
+          "testId": "council-basic-001",
+          "durationMs": 208.24,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 208.24,
+      "minMs": 208.24,
+      "maxMs": 208.24,
+      "validationPassed": 0,
+      "validationFailed": 1
+    },
+    "decide": {
+      "name": "decide",
+      "tests": [
+        {
+          "testId": "decide-basic-001",
+          "durationMs": 227.73,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "decide-edge-001",
+          "durationMs": 174.83,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 201.28,
+      "minMs": 174.83,
+      "maxMs": 227.73,
+      "validationPassed": 0,
+      "validationFailed": 2
+    },
+    "reflect": {
+      "name": "reflect",
+      "tests": [
+        {
+          "testId": "reflect-basic-001",
+          "durationMs": 200.51,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 200.51,
+      "minMs": 200.51,
+      "maxMs": 200.51,
+      "validationPassed": 0,
+      "validationFailed": 1
+    },
+    "hypothesis": {
+      "name": "hypothesis",
+      "tests": [
+        {
+          "testId": "hypothesis-basic-001",
+          "durationMs": 199.15,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "hypothesis-edge-001",
+          "durationMs": 182.08,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 190.62,
+      "minMs": 182.08,
+      "maxMs": 199.15,
+      "validationPassed": 0,
+      "validationFailed": 2
+    },
+    "debate": {
+      "name": "debate",
+      "tests": [
+        {
+          "testId": "debate-basic-001",
+          "durationMs": 179.1,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "debate-edge-001",
+          "durationMs": 345.49,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "debate-edge-002",
+          "durationMs": 202.02,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 242.2,
+      "minMs": 179.1,
+      "maxMs": 345.49,
+      "validationPassed": 0,
+      "validationFailed": 3
+    },
+    "map": {
+      "name": "map",
+      "tests": [
+        {
+          "testId": "map-basic-001",
+          "durationMs": 172.38,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        },
+        {
+          "testId": "map-edge-001",
+          "durationMs": 164.84,
+          "success": false,
+          "validationPassed": false,
+          "issues": [
+            "Missing result object"
+          ]
+        }
+      ],
+      "avgMs": 168.61,
+      "minMs": 164.84,
+      "maxMs": 172.38,
+      "validationPassed": 0,
+      "validationFailed": 2
+    }
+  },
+  "resources": {
+    "error": "Failed to parse response"
+  },
+  "prompts": {
+    "error": "Failed to parse response"
+  },
+  "validation": {
+    "passed": 13,
+    "failed": 24,
+    "errors": [
+      {
+        "testId": "trace-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "pattern-edge-004",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "pattern-edge-005",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "paradigm-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "paradigm-edge-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "paradigm-edge-002",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "paradigm-edge-003",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "paradigm-edge-004",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "debug-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "debug-edge-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "debug-edge-002",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "debug-edge-003",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "debug-edge-004",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "council-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "decide-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "decide-edge-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "reflect-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "hypothesis-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "hypothesis-edge-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "debate-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "debate-edge-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "debate-edge-002",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "map-basic-001",
+        "issues": [
+          "Missing result object"
+        ]
+      },
+      {
+        "testId": "map-edge-001",
+        "issues": [
+          "Missing result object"
+        ]
+      }
+    ]
+  },
+  "performance": {
+    "improved": 5,
+    "regressed": 5,
+    "neutral": 1
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "sourceType": "ideation",
+  "ideationType": "security_hardening",
+  "ideaId": "sec-003",
+  "rationale": "Security headers provide defense-in-depth against various attacks. CSP prevents XSS by controlling what scripts can execute. X-Frame-Options prevents clickjacking. The dangerouslySetInnerHTML usage in google-analytics.tsx (line 38) is a potential XSS vector if the measurement ID is ever tampered with.",
+  "category": "security",
+  "securitySeverity": "medium",
+  "impact": "medium",
+  "priority": "medium"
+}

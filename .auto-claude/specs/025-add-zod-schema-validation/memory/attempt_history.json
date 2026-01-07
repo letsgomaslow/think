@@ -1,0 +1,249 @@
+{
+  "subtasks": {
+    "1.1": {
+      "attempts": [
+        {
+          "session": 2,
+          "timestamp": "2026-01-06T14:50:14.850722",
+          "approach": "Implemented: Create src/schemas/common.ts with reusable base schemas for common types like contribution types, st",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "1.2": {
+      "attempts": [
+        {
+          "session": 3,
+          "timestamp": "2026-01-06T14:51:59.771577",
+          "approach": "Implemented: Create Zod schema matching ThoughtData interface with required/optional fields validation",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "1.3": {
+      "attempts": [
+        {
+          "session": 4,
+          "timestamp": "2026-01-06T14:53:33.756300",
+          "approach": "Implemented: Create Zod schema matching MentalModelData interface",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "1.4": {
+      "attempts": [
+        {
+          "session": 5,
+          "timestamp": "2026-01-06T14:55:15.309291",
+          "approach": "Implemented: Create Zod schema matching DebuggingApproachData interface",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "1.5": {
+      "attempts": [
+        {
+          "session": 6,
+          "timestamp": "2026-01-06T14:56:47.272343",
+          "approach": "Implemented: Create Zod schema matching DesignPatternData interface",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "1.6": {
+      "attempts": [
+        {
+          "session": 7,
+          "timestamp": "2026-01-06T14:58:08.548938",
+          "approach": "Implemented: Create Zod schema matching ProgrammingParadigmData interface",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.1": {
+      "attempts": [
+        {
+          "session": 8,
+          "timestamp": "2026-01-06T15:00:05.616780",
+          "approach": "Implemented: Create Zod schemas for PersonaData, ContributionData, DisagreementData, and CollaborativeReasoningDa",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.2": {
+      "attempts": [
+        {
+          "session": 9,
+          "timestamp": "2026-01-06T15:02:18.214861",
+          "approach": "Implemented: Create Zod schemas for all decision framework types: OptionData, CriterionData, EisenhowerClassifica",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.3": {
+      "attempts": [
+        {
+          "session": 10,
+          "timestamp": "2026-01-06T15:03:44.753147",
+          "approach": "Implemented: Create Zod schema for ArgumentData with argument types enum",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.4": {
+      "attempts": [
+        {
+          "session": 11,
+          "timestamp": "2026-01-06T15:06:41.115127",
+          "approach": "Implemented: Create Zod schemas for KnowledgeAssessment, ClaimAssessment, ReasoningAssessment, and MetacognitiveM",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.5": {
+      "attempts": [
+        {
+          "session": 12,
+          "timestamp": "2026-01-06T15:08:37.840740",
+          "approach": "Implemented: Create Zod schemas for Variable, HypothesisData, Prediction, ExperimentData, and ScientificInquiryDa",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.6": {
+      "attempts": [
+        {
+          "session": 13,
+          "timestamp": "2026-01-06T15:10:27.285834",
+          "approach": "Implemented: Create Zod schemas for VisualElement and VisualOperationData",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.7": {
+      "attempts": [
+        {
+          "session": 14,
+          "timestamp": "2026-01-06T15:12:20.166234",
+          "approach": "Implemented: Create src/schemas/index.ts that exports all schemas for easy import",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.1": {
+      "attempts": [
+        {
+          "session": 15,
+          "timestamp": "2026-01-06T15:13:54.636395",
+          "approach": "Implemented: Replace validateThoughtData method with Zod schema.parse(), update error handling",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.2": {
+      "attempts": [
+        {
+          "session": 16,
+          "timestamp": "2026-01-06T15:15:15.186986",
+          "approach": "Implemented: Replace validateModelData method with Zod schema.parse(), update error handling",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.3": {
+      "attempts": [
+        {
+          "session": 17,
+          "timestamp": "2026-01-06T15:16:47.644755",
+          "approach": "Implemented: Replace validateApproachData method with Zod schema.parse()",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.4": {
+      "attempts": [
+        {
+          "session": 18,
+          "timestamp": "2026-01-06T15:17:57.952386",
+          "approach": "Implemented: Replace validatePatternData method with Zod schema.parse()",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.5": {
+      "attempts": [
+        {
+          "session": 19,
+          "timestamp": "2026-01-06T15:19:24.247293",
+          "approach": "Implemented: Replace validateParadigmData method with Zod schema.parse()",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.6": {
+      "attempts": [
+        {
+          "session": 20,
+          "timestamp": "2026-01-06T15:21:23.597997",
+          "approach": "Implemented: Replace validateInputData method with Zod schema.parse(), preserve persona resolution logic",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "3.7": {
+      "attempts": [
+        {
+          "session": 21,
+          "timestamp": "2026-01-06T15:22:58.110565",
+          "approach": "Implemented: Replace validateInputData method with Zod schema.parse()",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    }
+  },
+  "stuck_subtasks": [],
+  "metadata": {
+    "created_at": "2026-01-06T14:44:48.793585",
+    "last_updated": "2026-01-06T15:22:58.110582"
+  }
+}

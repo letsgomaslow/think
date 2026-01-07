@@ -25,7 +25,7 @@ export class DecideServer {
     output += `${chalk.bold.magenta('Stage:')} ${stage} (Iteration: ${iteration})\n`;
     
     // Options
-    if (options.length > 0) {
+    if (options && options.length > 0) {
       output += `\n${chalk.bold.cyan('Options:')}\n`;
       options.forEach((option, i) => {
         output += `${chalk.bold(`Option ${i+1}: ${option.name}`)}\n`;

@@ -1,30 +1,19 @@
 import { MentalModelData } from "../models/interfaces.js";
+import { mentalModelDataSchema } from '../schemas/model.js';
+import { ZodError } from 'zod';
 import chalk from "chalk";
 
 export class ModelServer {
     private validateModelData(input: unknown): MentalModelData {
-        const data = input as Record<string, unknown>;
-
-        if (!data.modelName || typeof data.modelName !== "string") {
-            throw new Error("Invalid modelName: must be a string");
+        try {
+            return mentalModelDataSchema.parse(input);
+        } catch (error) {
+            if (error instanceof ZodError) {
+                const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+                throw new Error(`Invalid model data: ${errorMessages}`);
+            }
+            throw error;
         }
-        if (!data.problem || typeof data.problem !== "string") {
-            throw new Error("Invalid problem: must be a string");
-        }
-
-        return {
-            modelName: data.modelName as string,
-            problem: data.problem as string,
-            steps: Array.isArray(data.steps) ? data.steps.map(String) : [],
-            reasoning:
-                typeof data.reasoning === "string"
-                    ? (data.reasoning as string)
-                    : "",
-            conclusion:
-                typeof data.conclusion === "string"
-                    ? (data.conclusion as string)
-                    : "",
-        };
     }
 
     private formatModelOutput(data: MentalModelData): string {
@@ -35,9 +24,9 @@ export class ModelServer {
         )}\n`;
         output += `${chalk.bold.green("Problem:")} ${problem}\n`;
 
-        if (steps.length > 0) {
+        if (steps && steps.length > 0) {
             output += `\n${chalk.bold.yellow("Steps:")}\n`;
-            steps.forEach((step, index) => {
+            steps?.forEach((step, index) => {
                 output += `${chalk.bold(`${index + 1}.`)} ${step}\n`;
             });
         }
@@ -62,7 +51,7 @@ export class ModelServer {
             return {
                 modelName: validatedInput.modelName,
                 status: "success",
-                hasSteps: validatedInput.steps.length > 0,
+                hasSteps: validatedInput.steps || [].length > 0,
                 hasConclusion: !!validatedInput.conclusion,
             };
         } catch (error) {

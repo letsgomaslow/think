@@ -1,22 +1,19 @@
 import { MetacognitiveMonitoringData } from '../models/interfaces.js';
+import { metacognitiveMonitoringDataSchema } from '../schemas/reflect.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class ReflectServer {
   private validateInputData(input: unknown): MetacognitiveMonitoringData {
-    const data = input as MetacognitiveMonitoringData;
-    if (!data.task || !data.stage || !data.monitoringId) {
-      throw new Error("Invalid input for MetacognitiveMonitoring: Missing required fields.");
+    try {
+      return metacognitiveMonitoringDataSchema.parse(input) as MetacognitiveMonitoringData;
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid metacognitive monitoring data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (typeof data.overallConfidence !== 'number' || data.overallConfidence < 0 || data.overallConfidence > 1) {
-      throw new Error("Invalid overallConfidence value for MetacognitiveMonitoringData.");
-    }
-    if (typeof data.iteration !== 'number' || data.iteration < 0) {
-      throw new Error("Invalid iteration value for MetacognitiveMonitoringData.");
-    }
-    if (typeof data.nextAssessmentNeeded !== 'boolean') {
-      throw new Error("Invalid nextAssessmentNeeded value for MetacognitiveMonitoringData.");
-    }
-    return data;
   }
 
   private formatOutput(data: MetacognitiveMonitoringData): string {
@@ -35,7 +32,7 @@ export class ReflectServer {
       output += `${chalk.bold('Level:')} ${ka.knowledgeLevel} (${(ka.confidenceScore * 100).toFixed(1)}% confidence)\n`;
       output += `${chalk.bold('Evidence:')} ${ka.supportingEvidence}\n`;
       
-      if (ka.knownLimitations.length > 0) {
+      if (ka.knownLimitations && ka.knownLimitations.length > 0) {
         output += `${chalk.bold('Known Limitations:')}\n`;
         ka.knownLimitations.forEach((limitation, i) => {
           output += `  ${chalk.bold(`${i+1}.`)} ${limitation}\n`;
@@ -68,14 +65,14 @@ export class ReflectServer {
         output += `  ${chalk.bold('Logical Validity:')} ${(step.logicalValidity * 100).toFixed(1)}%\n`;
         output += `  ${chalk.bold('Inference Strength:')} ${(step.inferenceStrength * 100).toFixed(1)}%\n`;
         
-        if (step.assumptions.length > 0) {
+        if (step.assumptions && step.assumptions.length > 0) {
           output += `  ${chalk.bold('Assumptions:')}\n`;
           step.assumptions.forEach((assumption, j) => {
             output += `    ${chalk.bold(`${j+1}.`)} ${assumption}\n`;
           });
         }
         
-        if (step.potentialBiases.length > 0) {
+        if (step.potentialBiases && step.potentialBiases.length > 0) {
           output += `  ${chalk.bold('Potential Biases:')}\n`;
           step.potentialBiases.forEach((bias, j) => {
             output += `    ${chalk.bold(`${j+1}.`)} ${bias}\n`;
@@ -85,7 +82,7 @@ export class ReflectServer {
     }
     
     // Uncertainty Areas
-    if (uncertaintyAreas.length > 0) {
+    if (uncertaintyAreas && uncertaintyAreas.length > 0) {
       output += `\n${chalk.bold.red('Uncertainty Areas:')}\n`;
       uncertaintyAreas.forEach((area, i) => {
         output += `${chalk.bold(`${i+1}.`)} ${area}\n`;

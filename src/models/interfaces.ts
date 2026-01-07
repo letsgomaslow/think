@@ -17,18 +17,18 @@ export interface ThoughtData {
 export interface MentalModelData {
     modelName: string;
     problem: string;
-    steps: string[];
-    reasoning: string;
-    conclusion: string;
+    steps?: string[];
+    reasoning?: string;
+    conclusion?: string;
 }
 
 // pattern tool
 export interface DesignPatternData {
     patternName: string;
     context: string;
-    implementation: string[];
-    benefits: string[];
-    tradeoffs: string[];
+    implementation?: string[];
+    benefits?: string[];
+    tradeoffs?: string[];
     codeExample?: string;
     languages?: string[];
 }
@@ -37,9 +37,9 @@ export interface DesignPatternData {
 export interface ProgrammingParadigmData {
     paradigmName: string;
     problem: string;
-    approach: string[];
-    benefits: string[];
-    limitations: string[];
+    approach?: string[];
+    benefits?: string[];
+    limitations?: string[];
     codeExample?: string;
     languages?: string[];
 }
@@ -48,9 +48,9 @@ export interface ProgrammingParadigmData {
 export interface DebuggingApproachData {
     approachName: string;
     issue: string;
-    steps: string[];
-    findings: string;
-    resolution: string;
+    steps?: string[];
+    findings?: string;
+    resolution?: string;
 }
 
 // council tool

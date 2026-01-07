@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { ThemeProvider } from 'next-themes';
 import { Navbar } from '@/components/navigation/navbar';
 import { GoogleAnalytics } from '@/components/analytics/google-analytics';
+import { getNonce } from '@/lib/security/get-nonce';
 import './globals.css';
 
 const siteUrl = process.env.NEXT_PUBLIC_APP_URL || 'https://think.maslowai.com';
@@ -67,10 +68,13 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  // Get the CSP nonce from headers for inline scripts
+  const nonce = getNonce();
+
   return (
     <html lang="en" suppressHydrationWarning>
       <head>
-        <GoogleAnalytics />
+        <GoogleAnalytics nonce={nonce} />
       </head>
       <body className="antialiased">
         <ThemeProvider

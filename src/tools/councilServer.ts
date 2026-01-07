@@ -32,7 +32,7 @@ export class CouncilServer {
     }
     
     // Contributions
-    if (contributions.length > 0) {
+    if (contributions && contributions.length > 0) {
       output += `\n${chalk.bold.green('Contributions:')}\n`;
       
       for (const contribution of contributions) {
