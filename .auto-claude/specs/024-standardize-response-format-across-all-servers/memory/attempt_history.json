@@ -35,11 +35,23 @@
         }
       ],
       "status": "completed"
+    },
+    "2.3": {
+      "attempts": [
+        {
+          "session": 5,
+          "timestamp": "2026-01-06T19:21:11.760946",
+          "approach": "Implemented: Remove MCP content wrapping from processParadigm() and return a simple ServerResponse object.",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
     }
   },
   "stuck_subtasks": [],
   "metadata": {
     "created_at": "2026-01-06T19:12:15.876425",
-    "last_updated": "2026-01-06T19:19:39.079767"
+    "last_updated": "2026-01-06T19:21:11.760970"
   }
 }

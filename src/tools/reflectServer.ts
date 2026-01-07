@@ -1,5 +1,17 @@
-import { MetacognitiveMonitoringData } from '../models/interfaces.js';
+import { MetacognitiveMonitoringData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for metacognitive monitoring results
+ */
+interface MetacognitiveMonitoringResponse {
+  task: string;
+  stage: string;
+  monitoringId: string;
+  iteration: number;
+  overallConfidence: number;
+  nextAssessmentNeeded: boolean;
+}
 
 export class ReflectServer {
   private validateInputData(input: unknown): MetacognitiveMonitoringData {
@@ -108,36 +120,27 @@ export class ReflectServer {
     return output;
   }
 
-  public processMetacognitiveMonitoring(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
+  public processMetacognitiveMonitoring(input: unknown): ServerResponse<MetacognitiveMonitoringResponse> {
     try {
       const validatedData = this.validateInputData(input);
       const formattedOutput = this.formatOutput(validatedData);
       console.error(formattedOutput);
 
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            task: validatedData.task,
-            stage: validatedData.stage,
-            monitoringId: validatedData.monitoringId,
-            iteration: validatedData.iteration,
-            overallConfidence: validatedData.overallConfidence,
-            nextAssessmentNeeded: validatedData.nextAssessmentNeeded,
-            status: 'success'
-          }, null, 2)
-        }]
+        status: 'success',
+        data: {
+          task: validatedData.task,
+          stage: validatedData.stage,
+          monitoringId: validatedData.monitoringId,
+          iteration: validatedData.iteration,
+          overallConfidence: validatedData.overallConfidence,
+          nextAssessmentNeeded: validatedData.nextAssessmentNeeded
+        }
       };
     } catch (error) {
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            error: error instanceof Error ? error.message : String(error),
-            status: 'failed'
-          }, null, 2)
-        }],
-        isError: true
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
