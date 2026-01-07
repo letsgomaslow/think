@@ -23,6 +23,7 @@ import { ReflectServer } from "./tools/reflectServer.js";
 import { HypothesisServer } from "./tools/hypothesisServer.js";
 import { DebateServer } from "./tools/debateServer.js";
 import { MapServer } from "./tools/mapServer.js";
+import { FeedbackServer } from "./tools/feedbackServer.js";
 
 import { TOOL_NAMES } from "./toolNames.js";
 
@@ -1306,6 +1307,48 @@ It supports various visual elements and operations to facilitate insight generat
     },
 };
 
+const FEEDBACK_TOOL: Tool = {
+    name: TOOL_NAMES.FEEDBACK,
+    description: `A tool for collecting user feedback on tool outputs.
+This tool allows users to rate tool outputs, suggest improvements, and report issues directly from their workflow.
+Feedback is linked to specific tool invocations for context and helps improve tool quality.
+
+When to use this tool:
+- After receiving output from any tool, to provide a rating (thumbs up/down)
+- To report issues or bugs encountered with a tool
+- To suggest improvements or provide detailed feedback
+
+Feedback types:
+- thumbs-up: Positive rating for helpful or accurate output
+- thumbs-down: Negative rating for unhelpful or inaccurate output
+- issue-report: Report a specific problem or bug
+
+All feedback is stored locally and can be reviewed by maintainers to improve tool quality.`,
+    inputSchema: {
+        type: "object",
+        properties: {
+            rating: {
+                type: "string",
+                enum: ["thumbs-up", "thumbs-down", "issue-report"],
+                description: "Type of feedback: thumbs-up for positive, thumbs-down for negative, or issue-report for bugs",
+            },
+            toolName: {
+                type: "string",
+                description: "Name of the tool this feedback is for",
+            },
+            comment: {
+                type: "string",
+                description: "Optional detailed feedback, suggestions, or issue description",
+            },
+            invocationId: {
+                type: "string",
+                description: "Optional unique identifier for the specific tool invocation being rated",
+            },
+        },
+        required: ["rating", "toolName"],
+    },
+};
+
 // Server Instances
 const traceServer = new TraceServer();
 const modelServer = new ModelServer();
@@ -1318,6 +1361,7 @@ const reflectServer = new ReflectServer();
 const hypothesisServer = new HypothesisServer();
 const debateServer = new DebateServer();
 const mapServer = new MapServer();
+const feedbackServer = new FeedbackServer();
 
 const server = new Server(
     {
@@ -1345,6 +1389,7 @@ server.setRequestHandler(ListToolsRequestSchema, async () => ({
         HYPOTHESIS_TOOL,
         DEBATE_TOOL,
         MAP_TOOL,
+        FEEDBACK_TOOL,
     ],
 }));
 
@@ -1379,6 +1424,8 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
             return formatResponse(debateServer.processStructuredArgumentation(args));
         case TOOL_NAMES.MAP:
             return formatResponse(mapServer.processVisualReasoning(args));
+        case TOOL_NAMES.FEEDBACK:
+            return formatResponse(feedbackServer.processFeedback(args));
         default:
             throw new McpError(
                 ErrorCode.MethodNotFound,
