@@ -1,0 +1,10 @@
+{
+  "discovered_files": {
+    "web/app/api/waitlist/route.ts": {
+      "description": "Waitlist API has XSS vulnerability: name parameter stored directly to Redis (line 124) and rendered unsanitized in HTML emails (lines 156, 203). Zod is available in web/package.json for validation.",
+      "category": "security",
+      "discovered_at": "2026-01-07T03:03:52.814524+00:00"
+    }
+  },
+  "last_updated": "2026-01-07T03:03:52.814536+00:00"
+}

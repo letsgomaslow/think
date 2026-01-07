@@ -1,0 +1,10 @@
+{
+  "sourceType": "ideation",
+  "ideationType": "security_hardening",
+  "ideaId": "sec-005",
+  "rationale": "While the email field is validated via Arcjet, the name field has no validation or sanitization. Malicious input like '<script>alert(1)</script>' could be stored in Redis and rendered in admin notification emails, potentially leading to stored XSS in email clients that render HTML.",
+  "category": "security",
+  "securitySeverity": "medium",
+  "impact": "medium",
+  "priority": "medium"
+}

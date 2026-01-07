@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server';
 import { Redis } from '@upstash/redis';
 import arcjet, { validateEmail } from '@arcjet/next';
 import { Resend } from 'resend';
+import { sanitizeName, nameSchema } from '../../../lib/validation';
 
 // Lazy initialization to avoid build-time errors
 let redis: Redis | null = null;
@@ -89,6 +90,29 @@ export async function POST(req: NextRequest) {
   try {
     const { email, name } = await req.json();
 
+    // Validate and sanitize name if provided
+    let sanitizedName: string | null = null;
+    if (name !== undefined && name !== null && name !== '') {
+      // Validate using Zod schema
+      const nameValidation = nameSchema.safeParse(name);
+      if (!nameValidation.success) {
+        const errorMessage = nameValidation.error.errors[0]?.message || 'Invalid name';
+        return NextResponse.json(
+          { error: errorMessage },
+          { status: 400 }
+        );
+      }
+
+      // Sanitize the name (trim, validate length, escape HTML)
+      sanitizedName = sanitizeName(name);
+      if (sanitizedName === null) {
+        return NextResponse.json(
+          { error: 'Name must be between 1 and 100 characters' },
+          { status: 400 }
+        );
+      }
+    }
+
     const redisClient = getRedis();
     const resendClient = getResend();
     const arcjetClient = getArcjet();
@@ -120,8 +144,8 @@ export async function POST(req: NextRequest) {
 
     // Store in Redis
     await redisClient.sadd('waitlist:emails', email);
-    if (name) {
-      await redisClient.hset(`waitlist:user:${email}`, { name, timestamp: Date.now() });
+    if (sanitizedName) {
+      await redisClient.hset(`waitlist:user:${email}`, { name: sanitizedName, timestamp: Date.now() });
     }
 
     // Get total count
@@ -153,7 +177,7 @@ export async function POST(req: NextRequest) {
         html: `
           <div style="font-family: sans-serif; max-width: 600px; margin: 0 auto; background: #1a2845; color: #fff; padding: 40px; border-radius: 12px;">
             <h1 style="color: #6DC4AD;">Welcome to Think</h1>
-            <p>${name ? `Hi ${name},` : 'Hi there,'}</p>
+            <p>${sanitizedName ? `Hi ${sanitizedName},` : 'Hi there,'}</p>
             <p>You're on the waitlist for Think by Maslow AI. Get ready to see how AI really thinks.</p>
             <p style="color: #6DC4AD; font-weight: bold;">You're #${count} on the waitlist!</p>
             <p style="color: #cbd5e0; font-size: 14px;">We'll email you when we launch!</p>
@@ -200,7 +224,7 @@ export async function POST(req: NextRequest) {
             from: adminFrom,
             to: process.env.ADMIN_EMAIL,
             subject: `New waitlist signup #${count}: ${email}`,
-            html: `<p><strong>New signup:</strong> ${email} (${name || 'No name'})</p><p>Total: ${count}</p>`,
+            html: `<p><strong>New signup:</strong> ${email} (${sanitizedName || 'No name'})</p><p>Total: ${count}</p>`,
           });
         } catch (adminError: any) {
           console.error('Admin email send error:', adminError);
