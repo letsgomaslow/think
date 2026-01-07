@@ -1,0 +1,62 @@
+# Build Progress: Fix Overly Permissive CORS Configuration
+
+## Status: Planning Complete
+Created: 2026-01-07
+
+## Issue Summary
+The `web/vercel.json` configuration has a dangerous CORS misconfiguration:
+- `Access-Control-Allow-Origin: *` (wildcard, allows all origins)
+- `Access-Control-Allow-Credentials: true` (allows credentials)
+
+This combination violates CORS security best practices and could enable CSRF-like attacks.
+
+## Analysis Findings
+1. **MCP Transport API** (`/api/[transport]`):
+   - Stateless design with no session management
+   - Does NOT require credentials
+   - Should be publicly accessible to any MCP client
+
+2. **Waitlist API** (`/api/waitlist`):
+   - Simple form submission endpoint
+   - Does NOT require credentials
+   - Standard REST endpoint
+
+## Planned Fix
+Remove `Access-Control-Allow-Credentials: true` header since:
+- Neither API endpoint uses authentication cookies or credentials
+- The MCP API is designed to be publicly accessible
+- Wildcard origin is acceptable for a public API without credentials
+
+## Implementation Plan
+- [x] Phase 1: Analysis and Configuration
+  - [x] 1.1: Remove Access-Control-Allow-Credentials header
+  - [x] 1.2: Verify API functionality
+- [ ] Phase 2: Documentation
+  - [ ] 2.1: Document CORS configuration
+  - [ ] 2.2: Update build progress
+
+## Verification Results (Subtask 1.2)
+✅ API verification completed on 2026-01-07
+
+**MCP Transport API (`/api/[transport]`):**
+- Confirmed stateless design with no session management
+- No credential dependencies found in code
+- Supports GET, POST, DELETE methods
+- CORS changes have no impact on functionality
+
+**Waitlist API (`/api/waitlist`):**
+- Confirmed standard REST design with no credential usage
+- No authentication or session dependencies
+- Supports GET and POST methods
+- CORS changes have no impact on functionality
+
+**Security Analysis:**
+- Removed dangerous combination of wildcard origin + credentials
+- Both APIs remain fully functional without credentials header
+- Zero functional regression, pure security improvement
+
+See: api-verification.md for detailed verification report
+
+## Notes
+- If credentials ARE needed in the future, replace `*` with specific allowed origins
+- Current implementation is secure without credentials header
