@@ -1,5 +1,19 @@
 // Data Interfaces for think-mcp Server
 
+/**
+ * Standard response interface for all server responses.
+ * Provides a consistent contract for success and error handling.
+ * @template T The type of data returned on success
+ */
+export interface ServerResponse<T> {
+    /** The response data, present on success */
+    data?: T;
+    /** Status indicating success or failure */
+    status: 'success' | 'failed';
+    /** Error message, present on failure */
+    error?: string;
+}
+
 // trace tool
 export interface ThoughtData {
     thought: string;
