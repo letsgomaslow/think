@@ -1,25 +1,25 @@
 {
   "active": true,
-  "spec": "006-expanded-council-personas",
-  "state": "complete",
+  "spec": "019-add-input-validation-to-waitlist-api-name-paramete",
+  "state": "building",
   "subtasks": {
-    "completed": 0,
-    "total": 33,
+    "completed": 1,
+    "total": 5,
     "in_progress": 1,
     "failed": 0
   },
   "phase": {
-    "current": "Documentation",
+    "current": "Create Validation Utilities",
     "id": null,
-    "total": 3
+    "total": 2
   },
   "workers": {
     "active": 0,
     "max": 1
   },
   "session": {
-    "number": 29,
-    "started_at": "2026-01-06T02:01:06.566893"
+    "number": 3,
+    "started_at": "2026-01-06T22:02:11.232739"
   },
-  "last_update": "2026-01-06T03:36:38.266449"
+  "last_update": "2026-01-06T22:05:53.052994"
 }
