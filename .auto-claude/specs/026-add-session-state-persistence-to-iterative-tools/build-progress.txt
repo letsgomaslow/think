@@ -418,6 +418,100 @@ All subtasks for DebateServer state persistence have been completed successfully
 
 ---
 
+## Phase 6: Add State Persistence to MapServer
+
+### ✅ Subtask 6.1: Add diagram state storage to MapServer (COMPLETED)
+- Added private diagrams: Record<string, VisualOperationData[]> storage
+- Implemented storeOperation() method that stores data by diagramId
+- Integrated storeOperation() call in processVisualReasoning()
+- Followed the exact pattern from traceServer, councilServer, decideServer, reflectServer, hypothesisServer, and debateServer
+- Commit: 1d78cea
+
+**Pattern Applied:**
+- Private storage field initialized as empty object
+- Private store method checks if diagramId exists, creates array if not, then pushes data
+- Public process method calls store after validation, before output formatting
+
+**Files Modified:**
+- src/tools/mapServer.ts
+
+---
+
+### ✅ Subtask 6.2: Add history retrieval methods to MapServer (COMPLETED)
+- Added public getDiagramHistory(diagramId) method
+  - Returns all VisualOperationData entries for a diagram
+  - Returns empty array if diagram doesn't exist
+- Added public getCurrentDiagramState(diagramId) method
+  - Returns aggregated current element state by processing operations
+  - Handles non-existent diagrams gracefully with null/empty values
+- Commit: 3444848
+
+**Implementation Details:**
+- getDiagramHistory: Simple retrieval with fallback to empty array
+- getCurrentDiagramState: Aggregates element state from operation history with:
+  - diagramId: The diagram identifier
+  - diagramType: The type of diagram (from first operation)
+  - totalOperations: Count of all operations
+  - elements: Record<string, VisualElement> with current state
+  - lastOperation: Most recent operation type
+  - lastIteration: Most recent iteration number
+- Element state aggregation logic:
+  - create: Adds new element to state
+  - update: Merges element properties with existing (or creates if missing)
+  - delete: Removes element from state
+  - transform: Updates element properties (like update)
+  - observe: No state change (read-only operation)
+- Property merging ensures nested properties are properly combined
+
+**Files Modified:**
+- src/tools/mapServer.ts
+
+---
+
+### ✅ Subtask 6.3: Add tests for MapServer state persistence (COMPLETED)
+- Added comprehensive state persistence test suite to mapServer.test.ts
+- Tests verify multiple operations stored for same diagram across iterations
+- Tests verify different diagrams maintain separate state
+- Tests verify element state aggregation (create/update/delete/transform/observe)
+- Tests verify getDiagramHistory returns all operations for a diagram
+- Tests verify getCurrentDiagramState returns correct metadata and aggregated element state
+- Tests verify property merging for update and transform operations
+- Tests verify complex operation sequences
+- Tests verify data preservation across all fields
+- Commit: 0cea1d8
+
+**Test Coverage:**
+1. **Diagram Operation Storage**:
+   - Verifies multiple operations (create, update, delete, transform, observe) stored for same diagram
+   - Verifies different diagrams maintain independent state
+   - Verifies empty array returned for non-existent diagrams
+2. **Element State Aggregation**:
+   - Verifies create operations add elements to state
+   - Verifies update operations merge properties correctly
+   - Verifies delete operations remove elements from state
+   - Verifies transform operations update element properties
+   - Verifies observe operations don't change state
+   - Verifies complex operation sequences with create/update/delete/transform
+3. **getCurrentDiagramState functionality**:
+   - Verifies correct metadata (diagramId, diagramType, totalOperations, lastOperation, lastIteration)
+   - Verifies aggregated element state with all current elements
+   - Verifies empty state for non-existent diagrams
+4. **Data Preservation**: Verifies all fields are preserved including:
+   - operation, diagramId, diagramType, iteration, nextOperationNeeded
+   - elements (id, type, label, properties, source, target, contains)
+   - transformationType (for transform operations)
+   - observation, insight, hypothesis
+   - All element types: node, edge, container, annotation
+
+**Files Modified:**
+- src/tools/mapServer.test.ts
+
+---
+
+## Phase 6 Status: COMPLETED ✅
+All subtasks for MapServer state persistence have been completed successfully.
+
+---
+
 ## Next Steps
-- Phase 6: Add State Persistence to MapServer
 - Phase 7: Integration and Verification
