@@ -1,7 +1,8 @@
 # Build Progress: Fix Overly Permissive CORS Configuration
 
-## Status: Planning Complete
+## Status: COMPLETED ✅
 Created: 2026-01-07
+Completed: 2026-01-07
 
 ## Issue Summary
 The `web/vercel.json` configuration has a dangerous CORS misconfiguration:
@@ -31,9 +32,9 @@ Remove `Access-Control-Allow-Credentials: true` header since:
 - [x] Phase 1: Analysis and Configuration
   - [x] 1.1: Remove Access-Control-Allow-Credentials header
   - [x] 1.2: Verify API functionality
-- [ ] Phase 2: Documentation
-  - [ ] 2.1: Document CORS configuration
-  - [ ] 2.2: Update build progress
+- [x] Phase 2: Documentation and Security Review
+  - [x] 2.1: Document CORS configuration
+  - [x] 2.2: Update build progress
 
 ## Verification Results (Subtask 1.2)
 ✅ API verification completed on 2026-01-07
@@ -56,6 +57,58 @@ Remove `Access-Control-Allow-Credentials: true` header since:
 - Zero functional regression, pure security improvement
 
 See: api-verification.md for detailed verification report
+
+## Security Fix Complete ✅
+
+### What Was Fixed (Subtask 1.1)
+**Date:** 2026-01-07
+**File:** `web/vercel.json`
+
+Removed the dangerous `Access-Control-Allow-Credentials: true` header that was combined with wildcard origin (`Access-Control-Allow-Origin: *`). This combination violated CORS security best practices and could have enabled CSRF-like attacks.
+
+**Before:**
+```json
+{
+  "Access-Control-Allow-Origin": "*",
+  "Access-Control-Allow-Credentials": "true",  // ❌ DANGEROUS
+  ...
+}
+```
+
+**After:**
+```json
+{
+  "Access-Control-Allow-Origin": "*",
+  // Credentials header removed for security
+  ...
+}
+```
+
+### Why This Fix Is Safe
+Both API endpoints are stateless and public:
+- **MCP Transport API**: No session management, no credentials required
+- **Waitlist API**: Simple REST endpoint, uses server-side API keys only
+
+Removing the credentials header has **zero functional impact** while eliminating a significant security vulnerability.
+
+### Documentation Created (Subtask 2.1)
+**Date:** 2026-01-07
+**File:** `web/CORS.md`
+
+Created comprehensive CORS documentation explaining:
+- Current configuration and security rationale
+- Why credentials are intentionally excluded
+- API design principles (stateless/public)
+- Guidance for future maintainers if authentication is needed
+- Security best practices for CORS configuration
+
+This documentation ensures the security fix is not inadvertently reverted and provides clear guidance for future development.
+
+### Impact Summary
+- ✅ **Security**: Eliminated CSRF-like attack vulnerability
+- ✅ **Functionality**: Zero impact, all APIs work as before
+- ✅ **Documentation**: Comprehensive CORS.md prevents future regressions
+- ✅ **Maintainability**: Clear guidance for future authentication needs
 
 ## Notes
 - If credentials ARE needed in the future, replace `*` with specific allowed origins
