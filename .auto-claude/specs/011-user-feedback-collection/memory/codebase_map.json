@@ -4,7 +4,32 @@
       "description": "MCP server structure: Tools are defined as Tool objects with schemas, paired with Server classes in src/tools/ directory. Each tool has a name registered in toolNames.ts. Tools are listed via ListToolsRequestSchema and invoked via CallToolRequestSchema handlers.",
       "category": "architecture",
       "discovered_at": "2026-01-07T03:33:42.541871+00:00"
+    },
+    "src/tools/feedbackServer.ts": {
+      "description": "FeedbackServer follows standard server pattern: validate input, process data, format colored console output with chalk, return JSON response. Storage is file-based at ~/.think-mcp/feedback.json with graceful error handling. Constructor accepts optional feedbackDir for testing.",
+      "category": "pattern",
+      "discovered_at": "2026-01-07T03:39:08.949385+00:00"
+    },
+    "src/tools/feedbackServer.test.ts": {
+      "description": "FeedbackServer tests use temp directory via os.tmpdir() + fs.mkdtempSync for isolated storage testing. The FeedbackServer constructor accepts optional feedbackDir parameter for test injection. Tests follow vitest pattern with describe/it/expect and beforeEach/afterEach for setup/teardown.",
+      "category": "testing",
+      "discovered_at": "2026-01-07T03:41:44.500116+00:00"
+    },
+    "web/app/api/feedback/route.ts": {
+      "description": "Feedback API route follows Next.js App Router pattern with NextRequest/NextResponse. Reads feedback from ~/.think-mcp/feedback.json (same as FeedbackServer). Supports GET with query params for filtering (tool, rating, startDate, endDate), pagination (page, limit), and sorting (sort=asc|desc). Returns FeedbackListResponse with data array, pagination object, and active filters.",
+      "category": "api",
+      "discovered_at": "2026-01-07T03:46:19.803800+00:00"
+    },
+    "web/app/api/feedback/summary/route.ts": {
+      "description": "Feedback summary API endpoint provides aggregated statistics: totalFeedback, ratingCounts, ratingPercentages, toolBreakdown (array sorted by total descending), trends.daily (TrendDataPoint[]), trends.weekly (TrendDataPoint[]), timeRange (earliest/latest). Query params: days (1-90, default 30), weeks (1-52, default 12). Reads from ~/.think-mcp/feedback.json same as other feedback endpoints.",
+      "category": "api_endpoint",
+      "discovered_at": "2026-01-07T03:48:53.225712+00:00"
+    },
+    "web/app/feedback/page.tsx": {
+      "description": "Feedback dashboard page uses Next.js App Router pattern with server component (page.tsx) wrapping client component (feedback-dashboard-content.tsx) in Suspense for streaming. Layout follows tools layout pattern with Footer and pt-20 spacing for navbar. Loading state uses Skeleton component from ui library. Client component fetches from /api/feedback and /api/feedback/summary endpoints with filtering, pagination, and error handling.",
+      "category": "pattern",
+      "discovered_at": "2026-01-07T03:55:07.797865+00:00"
     }
   },
-  "last_updated": "2026-01-07T03:33:42.541883+00:00"
+  "last_updated": "2026-01-07T03:55:07.797879+00:00"
 }
