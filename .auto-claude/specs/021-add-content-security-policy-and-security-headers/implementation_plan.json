@@ -1,0 +1,302 @@
+{
+  "feature": "Add Content Security Policy and security headers",
+  "description": "The Next.js application lacks Content Security Policy (CSP) and other important security headers like X-Frame-Options, X-Content-Type-Options, and Referrer-Policy. The google-analytics component uses dangerouslySetInnerHTML which requires proper CSP protection.",
+  "created_at": "2026-01-06T16:01:48.435Z",
+  "updated_at": "2026-01-07T03:01:46.804Z",
+  "status": "in_progress",
+  "planStatus": "in_progress",
+  "workflow_type": "development",
+  "services_involved": [
+    "web"
+  ],
+  "spec_file": "spec.md",
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Security Headers Infrastructure",
+      "description": "Create the middleware and utility functions for security headers with CSP nonce generation",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Create CSP nonce generation utility",
+          "description": "Create a utility file in web/lib/security/ for generating cryptographically secure nonces that will be used for inline scripts in CSP",
+          "status": "completed",
+          "acceptance_criteria": [
+            "Create web/lib/security/csp.ts with nonce generation function",
+            "Use crypto.randomUUID or Web Crypto API for secure random generation",
+            "Export function to generate base64-encoded nonces",
+            "Include TypeScript types"
+          ],
+          "estimated_effort": "small",
+          "notes": "Created web/lib/security/csp.ts with generateNonce() function using crypto.randomBytes for secure random generation. Exports base64-encoded nonces with TypeScript types and comprehensive documentation.",
+          "updated_at": "2026-01-07T03:03:15.109130+00:00"
+        },
+        {
+          "id": "1.2",
+          "title": "Create security headers configuration",
+          "description": "Create a configuration file that defines all security headers including CSP directives, making it easy to maintain and modify",
+          "status": "completed",
+          "acceptance_criteria": [
+            "Create web/lib/security/headers.ts with security header configuration",
+            "Define CSP directives (script-src, style-src, img-src, font-src, connect-src, frame-ancestors)",
+            "Include Google Analytics domains in allowed sources",
+            "Include nonce placeholder for inline scripts",
+            "Define X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy headers"
+          ],
+          "estimated_effort": "medium",
+          "notes": "Created web/lib/security/headers.ts with comprehensive security header configuration. Includes CSP directives (script-src, style-src, img-src, font-src, connect-src, frame-ancestors, base-uri, form-action, object-src) with Google Analytics domains, nonce placeholder for inline scripts, and other security headers (X-Frame-Options, X-Content-Type-Options, Referrer-Policy, Permissions-Policy, Strict-Transport-Security). Provides buildCSPHeader(), buildSecurityHeaders(), and buildStaticSecurityHeaders() functions for flexible header generation.",
+          "updated_at": "2026-01-07T03:04:52.981708+00:00"
+        },
+        {
+          "id": "1.3",
+          "title": "Create Next.js middleware for security headers",
+          "description": "Create middleware.ts at the web/ root to inject security headers into all responses with dynamically generated CSP nonces",
+          "status": "completed",
+          "acceptance_criteria": [
+            "Create web/middleware.ts",
+            "Generate unique nonce per request",
+            "Inject nonce into CSP header",
+            "Store nonce in request headers for server component access",
+            "Apply middleware to appropriate routes using matcher config",
+            "Exclude static files, _next, and favicon from middleware"
+          ],
+          "estimated_effort": "medium",
+          "notes": "Created web/middleware.ts with Next.js middleware for security headers. Generates unique CSP nonce per request using generateNonce(), injects nonce into CSP header via buildSecurityHeaders(), stores nonce in x-nonce response header for server component access (headers().get('x-nonce')), and applies middleware to all routes except static assets (_next/static, _next/image, favicon, and image files) using matcher configuration.",
+          "updated_at": "2026-01-07T03:07:09.466128+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Update Google Analytics Integration",
+      "description": "Update the Google Analytics component to work with CSP nonces for inline scripts",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Create nonce utility for server components",
+          "description": "Create a utility function to retrieve the CSP nonce from headers in server components",
+          "status": "pending",
+          "acceptance_criteria": [
+            "Create web/lib/security/get-nonce.ts",
+            "Export function to get nonce from request headers",
+            "Use Next.js headers() function for server-side access",
+            "Handle cases where nonce is not available gracefully"
+          ],
+          "estimated_effort": "small"
+        },
+        {
+          "id": "2.2",
+          "title": "Update layout to pass nonce to scripts",
+          "description": "Update the root layout to read the nonce from headers and pass it to components that need it",
+          "status": "pending",
+          "acceptance_criteria": [
+            "Modify web/app/layout.tsx to read nonce from headers",
+            "Pass nonce to GoogleAnalytics component as prop",
+            "Ensure server-side rendering works correctly"
+          ],
+          "estimated_effort": "small"
+        },
+        {
+          "id": "2.3",
+          "title": "Update Google Analytics component to use nonce",
+          "description": "Modify the google-analytics.tsx component to accept and use the CSP nonce for its inline script",
+          "status": "pending",
+          "acceptance_criteria": [
+            "Update web/components/analytics/google-analytics.tsx",
+            "Accept nonce as prop",
+            "Add nonce attribute to Script component with dangerouslySetInnerHTML",
+            "Ensure GA script still functions correctly",
+            "Handle missing nonce gracefully (development mode fallback)"
+          ],
+          "estimated_effort": "medium"
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Configure Next.js and Vercel",
+      "description": "Add security headers configuration to next.config.js as fallback and ensure Vercel compatibility",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Update next.config.js with security headers",
+          "description": "Add headers configuration to next.config.js for static assets and pages where middleware CSP with nonce cannot be applied",
+          "status": "pending",
+          "acceptance_criteria": [
+            "Add headers() async function to next.config.js",
+            "Configure X-Frame-Options: DENY",
+            "Configure X-Content-Type-Options: nosniff",
+            "Configure Referrer-Policy: strict-origin-when-cross-origin",
+            "Configure Permissions-Policy with sensible defaults",
+            "Add Strict-Transport-Security header",
+            "Add fallback CSP without nonce for static routes"
+          ],
+          "estimated_effort": "small"
+        },
+        {
+          "id": "3.2",
+          "title": "Review and update vercel.json",
+          "description": "Check vercel.json for any conflicting configurations and ensure smooth deployment",
+          "status": "pending",
+          "acceptance_criteria": [
+            "Review existing vercel.json configuration",
+            "Ensure no conflicting security header configurations",
+            "Verify middleware will run on Vercel Edge Runtime"
+          ],
+          "estimated_effort": "small"
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Testing and Verification",
+      "description": "Test the security headers implementation thoroughly",
+      "subtasks": [
+        {
+          "id": "4.1",
+          "title": "Create security headers verification script",
+          "description": "Create a script to verify all security headers are present and correctly configured",
+          "status": "pending",
+          "acceptance_criteria": [
+            "Create web/scripts/verify-security-headers.mjs",
+            "Test for presence of CSP header with nonce",
+            "Test for X-Frame-Options header",
+            "Test for X-Content-Type-Options header",
+            "Test for Referrer-Policy header",
+            "Output clear pass/fail results with header values"
+          ],
+          "estimated_effort": "medium"
+        },
+        {
+          "id": "4.2",
+          "title": "Manual testing and CSP violation check",
+          "description": "Perform manual testing to ensure the application works correctly with no CSP violations",
+          "status": "pending",
+          "acceptance_criteria": [
+            "Start development server and test all pages load",
+            "Check browser console for CSP violation errors",
+            "Verify Google Analytics tracks page views (check Network tab)",
+            "Test theme switching, animations, and interactive components",
+            "Verify no broken functionality"
+          ],
+          "estimated_effort": "medium"
+        },
+        {
+          "id": "4.3",
+          "title": "Build and production verification",
+          "description": "Build the application and verify security headers work in production mode",
+          "status": "pending",
+          "acceptance_criteria": [
+            "Run npm run build successfully with no errors",
+            "Run npm start and verify headers in production mode",
+            "Run verification script against production server",
+            "Document configuration for deployment"
+          ],
+          "estimated_effort": "small"
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "1.2": [
+      "1.1"
+    ],
+    "1.3": [
+      "1.1",
+      "1.2"
+    ],
+    "2.1": [
+      "1.3"
+    ],
+    "2.2": [
+      "2.1"
+    ],
+    "2.3": [
+      "2.1",
+      "2.2"
+    ],
+    "3.1": [
+      "1.2"
+    ],
+    "3.2": [
+      "3.1"
+    ],
+    "4.1": [
+      "1.3",
+      "2.3",
+      "3.1"
+    ],
+    "4.2": [
+      "4.1"
+    ],
+    "4.3": [
+      "4.2"
+    ]
+  },
+  "technical_notes": {
+    "next_version": "14.2.x",
+    "key_files": {
+      "to_create": [
+        "web/middleware.ts",
+        "web/lib/security/csp.ts",
+        "web/lib/security/headers.ts",
+        "web/lib/security/get-nonce.ts",
+        "web/scripts/verify-security-headers.mjs"
+      ],
+      "to_modify": [
+        "web/next.config.js",
+        "web/components/analytics/google-analytics.tsx",
+        "web/app/layout.tsx"
+      ]
+    },
+    "csp_domains_needed": {
+      "script_src": [
+        "'self'",
+        "https://www.googletagmanager.com",
+        "https://www.google-analytics.com"
+      ],
+      "style_src": [
+        "'self'",
+        "'unsafe-inline'",
+        "https://fonts.googleapis.com"
+      ],
+      "img_src": [
+        "'self'",
+        "data:",
+        "https://www.google-analytics.com",
+        "https://www.googletagmanager.com"
+      ],
+      "font_src": [
+        "'self'",
+        "https://fonts.gstatic.com"
+      ],
+      "connect_src": [
+        "'self'",
+        "https://www.google-analytics.com",
+        "https://www.googletagmanager.com"
+      ]
+    },
+    "security_headers": {
+      "Content-Security-Policy": "Dynamic with nonce for scripts",
+      "X-Frame-Options": "DENY",
+      "X-Content-Type-Options": "nosniff",
+      "Referrer-Policy": "strict-origin-when-cross-origin",
+      "Permissions-Policy": "camera=(), microphone=(), geolocation=()",
+      "Strict-Transport-Security": "max-age=63072000; includeSubDomains; preload"
+    }
+  },
+  "final_acceptance": [
+    "All security headers present in HTTP responses",
+    "CSP nonce correctly applied to inline Google Analytics script",
+    "No CSP violations in browser console",
+    "Google Analytics tracking functional",
+    "Application loads and functions correctly",
+    "Production build succeeds without errors"
+  ],
+  "qa_status": {
+    "status": "pending",
+    "tests_passed": "",
+    "issues": ""
+  },
+  "last_updated": "2026-01-07T03:07:09.466137+00:00"
+}
