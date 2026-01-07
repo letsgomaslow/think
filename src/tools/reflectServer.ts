@@ -1,22 +1,19 @@
 import { MetacognitiveMonitoringData } from '../models/interfaces.js';
+import { metacognitiveMonitoringDataSchema } from '../schemas/reflect.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class ReflectServer {
   private validateInputData(input: unknown): MetacognitiveMonitoringData {
-    const data = input as MetacognitiveMonitoringData;
-    if (!data.task || !data.stage || !data.monitoringId) {
-      throw new Error("Invalid input for MetacognitiveMonitoring: Missing required fields.");
+    try {
+      return metacognitiveMonitoringDataSchema.parse(input);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid metacognitive monitoring data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (typeof data.overallConfidence !== 'number' || data.overallConfidence < 0 || data.overallConfidence > 1) {
-      throw new Error("Invalid overallConfidence value for MetacognitiveMonitoringData.");
-    }
-    if (typeof data.iteration !== 'number' || data.iteration < 0) {
-      throw new Error("Invalid iteration value for MetacognitiveMonitoringData.");
-    }
-    if (typeof data.nextAssessmentNeeded !== 'boolean') {
-      throw new Error("Invalid nextAssessmentNeeded value for MetacognitiveMonitoringData.");
-    }
-    return data;
   }
 
   private formatOutput(data: MetacognitiveMonitoringData): string {

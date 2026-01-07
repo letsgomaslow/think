@@ -1,0 +1,41 @@
+{
+  "sourceType": "ideation",
+  "ideationType": "code_improvements",
+  "ideaId": "ci-002",
+  "rationale": "Zod is already installed as a dependency in package.json but completely unused. The manual validation pattern in every server (e.g., `if (!data.modelName || typeof data.modelName !== 'string')`) is verbose and error-prone. The infrastructure is ready - just need to use it.",
+  "category": "performance",
+  "estimatedEffort": "medium",
+  "complexity": "medium",
+  "affectedFiles": [
+    "src/models/interfaces.ts",
+    "src/tools/modelServer.ts",
+    "src/tools/patternServer.ts",
+    "src/tools/paradigmServer.ts",
+    "src/tools/debugServer.ts",
+    "src/tools/traceServer.ts",
+    "src/tools/councilServer.ts",
+    "src/tools/decideServer.ts",
+    "src/tools/reflectServer.ts",
+    "src/tools/hypothesisServer.ts",
+    "src/tools/debateServer.ts",
+    "src/tools/mapServer.ts"
+  ],
+  "priority": "medium",
+  "impact": "medium",
+  "model": "opus",
+  "thinkingLevel": "high",
+  "isAutoProfile": true,
+  "phaseModels": {
+    "spec": "opus",
+    "planning": "opus",
+    "coding": "sonnet",
+    "qa": "haiku"
+  },
+  "phaseThinking": {
+    "spec": "ultrathink",
+    "planning": "high",
+    "coding": "medium",
+    "qa": "medium"
+  },
+  "requireReviewBeforeCoding": true
+}

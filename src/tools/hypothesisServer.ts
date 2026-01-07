@@ -1,19 +1,19 @@
 import { ScientificInquiryData, HypothesisData, ExperimentData } from '../models/interfaces.js';
+import { scientificInquiryDataSchema } from '../schemas/hypothesis.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class HypothesisServer {
   private validateInputData(input: unknown): ScientificInquiryData {
-    const data = input as ScientificInquiryData;
-    if (!data.stage || !data.inquiryId) {
-      throw new Error("Invalid input for ScientificMethod: Missing required fields.");
+    try {
+      return scientificInquiryDataSchema.parse(input);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid scientific inquiry data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (typeof data.iteration !== 'number' || data.iteration < 0) {
-      throw new Error("Invalid iteration value for ScientificInquiryData.");
-    }
-    if (typeof data.nextStageNeeded !== 'boolean') {
-      throw new Error("Invalid nextStageNeeded value for ScientificInquiryData.");
-    }
-    return data;
   }
 
   private formatOutput(data: ScientificInquiryData): string {

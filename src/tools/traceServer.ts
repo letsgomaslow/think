@@ -1,4 +1,6 @@
 import { ThoughtData } from '../models/interfaces.js';
+import { thoughtDataSchema } from '../schemas/trace.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class TraceServer {
@@ -6,45 +8,15 @@ export class TraceServer {
   private branches: Record<string, ThoughtData[]> = {};
 
   private validateThoughtData(input: unknown): ThoughtData {
-    const data = input as Record<string, unknown>;
-
-    if (!data.thought || typeof data.thought !== 'string') {
-      throw new Error('Invalid thought: must be a string');
+    try {
+      return thoughtDataSchema.parse(input);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid thought data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (!data.thoughtNumber || typeof data.thoughtNumber !== 'number') {
-      throw new Error('Invalid thoughtNumber: must be a number');
-    }
-    if (!data.totalThoughts || typeof data.totalThoughts !== 'number') {
-      throw new Error('Invalid totalThoughts: must be a number');
-    }
-    if (typeof data.nextThoughtNeeded !== 'boolean') {
-      throw new Error('Invalid nextThoughtNeeded: must be a boolean');
-    }
-
-    // Optional fields
-    const isRevision = data.isRevision !== undefined ? !!data.isRevision : undefined;
-    const revisesThought = data.revisesThought !== undefined && typeof data.revisesThought === 'number' 
-      ? data.revisesThought as number 
-      : undefined;
-    const branchFromThought = data.branchFromThought !== undefined && typeof data.branchFromThought === 'number' 
-      ? data.branchFromThought as number 
-      : undefined;
-    const branchId = data.branchId !== undefined && typeof data.branchId === 'string' 
-      ? data.branchId as string 
-      : undefined;
-    const needsMoreThoughts = data.needsMoreThoughts !== undefined ? !!data.needsMoreThoughts : undefined;
-
-    return {
-      thought: data.thought as string,
-      thoughtNumber: data.thoughtNumber as number,
-      totalThoughts: data.totalThoughts as number,
-      nextThoughtNeeded: data.nextThoughtNeeded as boolean,
-      isRevision,
-      revisesThought,
-      branchFromThought,
-      branchId,
-      needsMoreThoughts
-    };
   }
 
   private formatThoughtOutput(data: ThoughtData): string {

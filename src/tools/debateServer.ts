@@ -1,19 +1,19 @@
 import { ArgumentData } from '../models/interfaces.js';
+import { argumentDataSchema } from '../schemas/debate.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class DebateServer {
   private validateInputData(input: unknown): ArgumentData {
-    const data = input as ArgumentData;
-    if (!data.claim || !data.premises || !data.conclusion || !data.argumentType) {
-      throw new Error("Invalid input for StructuredArgumentation: Missing required fields.");
+    try {
+      return argumentDataSchema.parse(input);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid argument data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (typeof data.confidence !== 'number' || data.confidence < 0 || data.confidence > 1) {
-      throw new Error("Invalid confidence value for ArgumentData.");
-    }
-    if (typeof data.nextArgumentNeeded !== 'boolean') {
-      throw new Error("Invalid nextArgumentNeeded value for ArgumentData.");
-    }
-    return data;
   }
 
   private formatOutput(data: ArgumentData): string {

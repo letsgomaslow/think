@@ -1,26 +1,19 @@
 import { ProgrammingParadigmData } from '../models/interfaces.js';
+import { programmingParadigmDataSchema } from '../schemas/paradigm.js';
+import { ZodError } from 'zod';
 import chalk from 'chalk';
 
 export class ParadigmServer {
   private validateParadigmData(input: unknown): ProgrammingParadigmData {
-    const data = input as Record<string, unknown>;
-
-    if (!data.paradigmName || typeof data.paradigmName !== 'string') {
-      throw new Error('Invalid paradigmName: must be a string');
+    try {
+      return programmingParadigmDataSchema.parse(input);
+    } catch (error) {
+      if (error instanceof ZodError) {
+        const errorMessages = error.errors.map(err => `${err.path.join('.')}: ${err.message}`).join(', ');
+        throw new Error(`Invalid paradigm data: ${errorMessages}`);
+      }
+      throw error;
     }
-    if (!data.problem || typeof data.problem !== 'string') {
-      throw new Error('Invalid problem: must be a string');
-    }
-
-    return {
-      paradigmName: data.paradigmName as string,
-      problem: data.problem as string,
-      approach: Array.isArray(data.approach) ? data.approach.map(String) : [],
-      benefits: Array.isArray(data.benefits) ? data.benefits.map(String) : [],
-      limitations: Array.isArray(data.limitations) ? data.limitations.map(String) : [],
-      codeExample: typeof data.codeExample === 'string' ? data.codeExample as string : undefined,
-      languages: Array.isArray(data.languages) ? data.languages.map(String) : undefined
-    };
   }
 
   private formatParadigmOutput(data: ProgrammingParadigmData): string {
