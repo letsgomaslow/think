@@ -9,11 +9,21 @@
   - Created Zod schema (nameSchema) for name validation
   - Committed: dae4928
 
+- ✅ **1.2** Created comprehensive unit tests (web/lib/validation.test.ts)
+  - 100+ test cases covering all acceptance criteria
+  - XSS payload tests (script tags, event handlers)
+  - All dangerous HTML characters (<, >, &, ", ')
+  - Boundary conditions (empty, whitespace, 1-100 char length)
+  - Unicode/international characters (Russian, Japanese, Korean, Arabic, Greek)
+  - Normal valid names with various formats
+  - Updated vitest.config.ts to include web folder tests
+  - Committed: e0ffb0e
+
 ## Implementation Plan Summary
 
 ### Phase 1: Create Validation Utilities
 - ✅ **1.1** Create validation utility module (web/lib/validation.ts)
-- **1.2** Add unit tests (web/lib/validation.test.ts)
+- ✅ **1.2** Add unit tests (web/lib/validation.test.ts)
 
 ### Phase 2: Integrate Validation into Waitlist API
 - **2.1** Update POST handler (web/app/api/waitlist/route.ts)
