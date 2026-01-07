@@ -1,0 +1,331 @@
+{
+  "spec_id": "024-standardize-response-format-across-all-servers",
+  "title": "Standardize Response Format Across All Servers",
+  "description": "Standardize the response format across all tool servers to eliminate inconsistency between MCP content format and simple object returns. Create a unified response pattern where all servers return simple objects and the main index.ts handles MCP formatting consistently.",
+  "created_at": "2026-01-06T16:04:07.368Z",
+  "updated_at": "2026-01-07T00:12:14.132Z",
+  "status": "in_progress",
+  "planStatus": "ready_for_implementation",
+  "workflow_type": "development",
+  "services_involved": [
+    "src/tools/*Server.ts",
+    "src/index.ts",
+    "src/models/interfaces.ts"
+  ],
+  "spec_file": "spec.md",
+  "estimated_effort": "medium",
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Analysis and Type Definition",
+      "description": "Analyze current response patterns and define standard response types",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Create standard response interface in interfaces.ts",
+          "description": "Add a ServerResponse<T> interface that defines the standard response shape: { data?: T, status: 'success' | 'failed', error?: string }. This provides a consistent contract for all server responses.",
+          "status": "completed",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/models/interfaces.ts"
+          ],
+          "acceptance_criteria": [
+            "ServerResponse<T> generic interface defined",
+            "Includes data, status, and optional error fields",
+            "Exported from interfaces.ts"
+          ],
+          "notes": "Added ServerResponse<T> generic interface to src/models/interfaces.ts with data?: T, status: 'success' | 'failed', and error?: string fields. Interface is exported and includes JSDoc documentation.",
+          "updated_at": "2026-01-07T00:16:12.519994+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Update Servers to Simple Object Format",
+      "description": "Modify servers that return MCP content format to return simple objects instead",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Refactor debugServer.ts to return simple object",
+          "description": "Remove MCP content wrapping from processApproach() and return a simple ServerResponse object. Remove isError boolean and use status field instead.",
+          "status": "completed",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/debugServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processApproach returns simple object, not MCP format",
+            "Uses ServerResponse pattern with status field",
+            "Error handling uses status: 'failed' pattern"
+          ],
+          "notes": "Refactored debugServer.ts to return ServerResponse<DebuggingApproachResponse> instead of MCP content format. Added DebuggingApproachResponse interface, imported ServerResponse from interfaces.ts, and replaced isError boolean with status field. Committed as 8db5bde.",
+          "updated_at": "2026-01-07T00:17:52.181256+00:00"
+        },
+        {
+          "id": "2.2",
+          "title": "Refactor patternServer.ts to return simple object",
+          "description": "Remove MCP content wrapping from processPattern() and return a simple ServerResponse object.",
+          "status": "completed",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/patternServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processPattern returns simple object, not MCP format",
+            "Uses ServerResponse pattern with status field",
+            "Error handling uses status: 'failed' pattern"
+          ],
+          "notes": "Refactored patternServer.ts to return ServerResponse<DesignPatternResponse> instead of MCP content format. Added DesignPatternResponse interface, imported ServerResponse from interfaces.ts, and replaced isError boolean with status field. Committed as be1053a.",
+          "updated_at": "2026-01-07T00:19:27.446687+00:00"
+        },
+        {
+          "id": "2.3",
+          "title": "Refactor paradigmServer.ts to return simple object",
+          "description": "Remove MCP content wrapping from processParadigm() and return a simple ServerResponse object.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/paradigmServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processParadigm returns simple object, not MCP format",
+            "Uses ServerResponse pattern with status field",
+            "Error handling uses status: 'failed' pattern"
+          ]
+        },
+        {
+          "id": "2.4",
+          "title": "Refactor reflectServer.ts to return simple object",
+          "description": "Remove MCP content wrapping from processMetacognitiveMonitoring() and return a simple ServerResponse object.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/reflectServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processMetacognitiveMonitoring returns simple object, not MCP format",
+            "Uses ServerResponse pattern with status field",
+            "Error handling uses status: 'failed' pattern"
+          ]
+        },
+        {
+          "id": "2.5",
+          "title": "Refactor hypothesisServer.ts to return simple object",
+          "description": "Remove MCP content wrapping from processScientificMethod() and return a simple ServerResponse object.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/hypothesisServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processScientificMethod returns simple object, not MCP format",
+            "Uses ServerResponse pattern with status field",
+            "Error handling uses status: 'failed' pattern"
+          ]
+        },
+        {
+          "id": "2.6",
+          "title": "Refactor debateServer.ts to return simple object",
+          "description": "Remove MCP content wrapping from processStructuredArgumentation() and return a simple ServerResponse object.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/debateServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processStructuredArgumentation returns simple object, not MCP format",
+            "Uses ServerResponse pattern with status field",
+            "Error handling uses status: 'failed' pattern"
+          ]
+        },
+        {
+          "id": "2.7",
+          "title": "Refactor mapServer.ts to return simple object",
+          "description": "Remove MCP content wrapping from processVisualReasoning() and return a simple ServerResponse object.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/mapServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processVisualReasoning returns simple object, not MCP format",
+            "Uses ServerResponse pattern with status field",
+            "Error handling uses status: 'failed' pattern"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Standardize Remaining Servers",
+      "description": "Update servers that return raw data to use the standard response pattern",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Refactor modelServer.ts to use standard pattern",
+          "description": "Update processModel() to use try/catch with consistent error handling. Currently returns simple object but with different shape - standardize to ServerResponse pattern.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/modelServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processModel uses ServerResponse pattern",
+            "Error handling consistent with other servers",
+            "Returns meaningful data in response"
+          ]
+        },
+        {
+          "id": "3.2",
+          "title": "Refactor traceServer.ts to use standard pattern",
+          "description": "Update processThought() to use try/catch with consistent error handling and wrap result in ServerResponse pattern instead of returning raw ThoughtData.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/traceServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processThought uses ServerResponse pattern",
+            "Error handling consistent with other servers",
+            "Returns ThoughtData in data field"
+          ]
+        },
+        {
+          "id": "3.3",
+          "title": "Refactor councilServer.ts to use standard pattern",
+          "description": "Update processCollaborativeReasoning() to wrap result in ServerResponse pattern and add try/catch for consistent error handling.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/councilServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processCollaborativeReasoning uses ServerResponse pattern",
+            "Error handling consistent with other servers",
+            "Returns CollaborativeReasoningData in data field"
+          ]
+        },
+        {
+          "id": "3.4",
+          "title": "Refactor decideServer.ts to use standard pattern",
+          "description": "Update processDecisionFramework() to wrap result in ServerResponse pattern and add try/catch for consistent error handling.",
+          "status": "pending",
+          "estimated_time": "10 min",
+          "files_affected": [
+            "src/tools/decideServer.ts"
+          ],
+          "acceptance_criteria": [
+            "processDecisionFramework uses ServerResponse pattern",
+            "Error handling consistent with other servers",
+            "Returns DecisionFrameworkData in data field"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Update Main Index Handler",
+      "description": "Ensure index.ts properly handles the standardized responses",
+      "subtasks": [
+        {
+          "id": "4.1",
+          "title": "Verify formatResponse works correctly with all servers",
+          "description": "Ensure the formatResponse() function in index.ts properly converts all server responses to MCP format. Since all servers now return simple objects, no changes may be needed, but verify behavior.",
+          "status": "pending",
+          "estimated_time": "5 min",
+          "files_affected": [
+            "src/index.ts"
+          ],
+          "acceptance_criteria": [
+            "formatResponse correctly wraps all server responses",
+            "No double-wrapping occurs",
+            "Error responses are properly formatted"
+          ]
+        }
+      ]
+    },
+    {
+      "id": "phase-5",
+      "name": "Testing and Validation",
+      "description": "Run tests and verify all changes work correctly",
+      "subtasks": [
+        {
+          "id": "5.1",
+          "title": "Update existing unit tests",
+          "description": "Update test files to expect the new response format. Tests should verify the ServerResponse pattern is used correctly by all servers.",
+          "status": "pending",
+          "estimated_time": "30 min",
+          "files_affected": [
+            "src/tools/debugServer.test.ts",
+            "src/tools/patternServer.test.ts",
+            "src/tools/modelServer.test.ts",
+            "src/tools/traceServer.test.ts",
+            "src/tools/councilServer.test.ts",
+            "src/tools/decideServer.test.ts",
+            "src/tools/reflectServer.test.ts",
+            "src/tools/hypothesisServer.test.ts",
+            "src/tools/debateServer.test.ts",
+            "src/tools/mapServer.test.ts",
+            "src/tools/paradigmServer.test.ts"
+          ],
+          "acceptance_criteria": [
+            "All unit tests updated to expect ServerResponse format",
+            "Tests verify status, data, and error fields",
+            "All tests pass"
+          ]
+        },
+        {
+          "id": "5.2",
+          "title": "Run full test suite and fix any issues",
+          "description": "Execute npm test to run all tests and fix any failures discovered.",
+          "status": "pending",
+          "estimated_time": "15 min",
+          "files_affected": [],
+          "acceptance_criteria": [
+            "npm test passes with no failures",
+            "npm run build succeeds",
+            "No TypeScript errors"
+          ]
+        }
+      ]
+    }
+  ],
+  "dependencies": {
+    "external": [],
+    "internal": [
+      "Phase 1 must complete before Phase 2 and 3",
+      "Phase 2 and 3 can run in parallel",
+      "Phase 4 depends on Phase 2 and 3",
+      "Phase 5 depends on all previous phases"
+    ]
+  },
+  "risks": [
+    {
+      "description": "Breaking changes to server response types could affect downstream consumers",
+      "mitigation": "The MCP format in index.ts remains unchanged - only internal server implementations change"
+    },
+    {
+      "description": "Tests may need significant updates",
+      "mitigation": "Tests are updated as part of Phase 5 to validate new response format"
+    }
+  ],
+  "success_metrics": [
+    "All 11 servers use consistent ServerResponse<T> pattern",
+    "No double-wrapping of MCP content format",
+    "All tests pass",
+    "TypeScript compiles without errors"
+  ],
+  "final_acceptance": [
+    "All servers return simple objects following ServerResponse pattern",
+    "index.ts formatResponse() handles all responses uniformly",
+    "No MCP double-wrapping occurs",
+    "All unit tests pass",
+    "TypeScript compiles with no errors"
+  ],
+  "qa_status": {
+    "status": "pending",
+    "tests_passed": "",
+    "issues": ""
+  },
+  "last_updated": "2026-01-07T00:19:27.446700+00:00"
+}

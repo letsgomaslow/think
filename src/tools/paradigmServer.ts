@@ -1,5 +1,14 @@
-import { ProgrammingParadigmData } from '../models/interfaces.js';
+import { ProgrammingParadigmData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for programming paradigm results
+ */
+interface ProgrammingParadigmResponse {
+  paradigmName: string;
+  hasApproach: boolean;
+  hasCodeExample: boolean;
+}
 
 export class ParadigmServer {
   private validateParadigmData(input: unknown): ProgrammingParadigmData {
@@ -61,33 +70,24 @@ export class ParadigmServer {
     return output;
   }
 
-  public processParadigm(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
+  public processParadigm(input: unknown): ServerResponse<ProgrammingParadigmResponse> {
     try {
       const validatedInput = this.validateParadigmData(input);
       const formattedOutput = this.formatParadigmOutput(validatedInput);
       console.error(formattedOutput);
 
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            paradigmName: validatedInput.paradigmName,
-            status: 'success',
-            hasApproach: validatedInput.approach.length > 0,
-            hasCodeExample: !!validatedInput.codeExample
-          }, null, 2)
-        }]
+        status: 'success',
+        data: {
+          paradigmName: validatedInput.paradigmName,
+          hasApproach: validatedInput.approach.length > 0,
+          hasCodeExample: !!validatedInput.codeExample
+        }
       };
     } catch (error) {
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            error: error instanceof Error ? error.message : String(error),
-            status: 'failed'
-          }, null, 2)
-        }],
-        isError: true
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }

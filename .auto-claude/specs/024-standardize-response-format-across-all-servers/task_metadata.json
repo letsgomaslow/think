@@ -1,0 +1,36 @@
+{
+  "sourceType": "ideation",
+  "ideationType": "code_improvements",
+  "ideaId": "ci-001",
+  "rationale": "The code reveals inconsistency - debugServer and patternServer already use the MCP content format pattern with proper typing ({ content: Array<{ type: string; text: string }>; isError?: boolean }), but modelServer uses a different simple object format. This creates inconsistent handling in the main index.ts where formatResponse() wraps everything anyway.",
+  "category": "feature",
+  "estimatedEffort": "small",
+  "complexity": "small",
+  "affectedFiles": [
+    "src/tools/modelServer.ts",
+    "src/tools/traceServer.ts",
+    "src/tools/councilServer.ts",
+    "src/tools/decideServer.ts",
+    "src/tools/reflectServer.ts",
+    "src/tools/hypothesisServer.ts",
+    "src/tools/debateServer.ts",
+    "src/tools/mapServer.ts",
+    "src/tools/paradigmServer.ts"
+  ],
+  "model": "opus",
+  "thinkingLevel": "high",
+  "isAutoProfile": true,
+  "phaseModels": {
+    "spec": "opus",
+    "planning": "opus",
+    "coding": "opus",
+    "qa": "opus"
+  },
+  "phaseThinking": {
+    "spec": "ultrathink",
+    "planning": "high",
+    "coding": "low",
+    "qa": "low"
+  },
+  "requireReviewBeforeCoding": true
+}

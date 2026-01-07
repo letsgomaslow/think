@@ -1,0 +1,49 @@
+# Build Progress: Standardize Response Format Across All Servers
+
+## Status: Planning Complete
+
+## Analysis Summary (2026-01-06)
+
+### Current State Analysis
+
+**Servers returning MCP content format { content: [{ type, text }], isError? }:**
+- debugServer.ts (processApproach)
+- patternServer.ts (processPattern)
+- paradigmServer.ts (processParadigm)
+- reflectServer.ts (processMetacognitiveMonitoring)
+- hypothesisServer.ts (processScientificMethod)
+- debateServer.ts (processStructuredArgumentation)
+- mapServer.ts (processVisualReasoning)
+
+**Servers returning simple objects/raw data:**
+- modelServer.ts - Returns { modelName, status, hasSteps, hasConclusion } or { error, status }
+- traceServer.ts - Returns raw ThoughtData
+- councilServer.ts - Returns raw CollaborativeReasoningData
+- decideServer.ts - Returns raw DecisionFrameworkData
+
+### Problem Identified
+The formatResponse() function in index.ts wraps ALL responses with MCP format.
+This causes double-wrapping for servers already returning MCP format, leading to:
+1. Inconsistent response handling
+2. Unnecessarily nested JSON in responses
+3. Different error handling patterns across servers
+
+### Solution
+Standardize all servers to return simple objects with a consistent ServerResponse<T> pattern,
+and let formatResponse() in index.ts handle the MCP wrapping uniformly.
+
+## Implementation Plan Created
+
+5 phases with 14 subtasks total:
+- Phase 1: Define ServerResponse<T> interface (1 subtask)
+- Phase 2: Refactor MCP-returning servers (7 subtasks)
+- Phase 3: Standardize raw-data servers (4 subtasks)
+- Phase 4: Verify index.ts handler (1 subtask)
+- Phase 5: Testing and validation (2 subtasks)
+
+Estimated total effort: ~2-3 hours
+
+## Next Steps
+1. Begin Phase 1 - Create ServerResponse interface
+2. Implement Phase 2 and 3 in parallel
+3. Verify and test all changes

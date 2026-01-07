@@ -1,0 +1,15 @@
+{
+  "discovered_files": {
+    "src/index.ts": {
+      "description": "The formatResponse() function wraps ALL server results with MCP content format: { content: [{ type: 'text', text: JSON.stringify(result) }] }. This means servers should NOT return MCP format themselves - they should return simple objects.",
+      "category": "architecture",
+      "discovered_at": "2026-01-07T00:14:55.529107+00:00"
+    },
+    "src/models/interfaces.ts": {
+      "description": "ServerResponse<T> generic interface added at top of file. Shape: { data?: T, status: 'success' | 'failed', error?: string }. All servers should use this pattern for consistent response handling.",
+      "category": "interface",
+      "discovered_at": "2026-01-07T00:16:19.773352+00:00"
+    }
+  },
+  "last_updated": "2026-01-07T00:16:19.773362+00:00"
+}
