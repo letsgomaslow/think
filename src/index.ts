@@ -11,6 +11,10 @@ import {
 } from "@modelcontextprotocol/sdk/types.js";
 import chalk from "chalk";
 
+// Import analytics middleware
+import { withAnalyticsSync, shutdownCollector } from "./analytics/middleware.js";
+import { ToolName } from "./toolNames.js";
+
 // Import server classes
 import { TraceServer } from "./tools/traceServer.js";
 import { ModelServer } from "./tools/modelServer.js";
@@ -1356,35 +1360,33 @@ server.setRequestHandler(CallToolRequestSchema, async (request) => {
         content: [{ type: "text" as const, text: JSON.stringify(result, null, 2) }],
     });
 
-    switch (name) {
-        case TOOL_NAMES.TRACE:
-            return formatResponse(traceServer.processThought(args));
-        case TOOL_NAMES.MODEL:
-            return formatResponse(modelServer.processModel(args));
-        case TOOL_NAMES.PATTERN:
-            return formatResponse(patternServer.processPattern(args));
-        case TOOL_NAMES.PARADIGM:
-            return formatResponse(paradigmServer.processParadigm(args));
-        case TOOL_NAMES.DEBUG:
-            return formatResponse(debugServer.processApproach(args));
-        case TOOL_NAMES.COUNCIL:
-            return formatResponse(councilServer.processCollaborativeReasoning(args));
-        case TOOL_NAMES.DECIDE:
-            return formatResponse(decideServer.processDecisionFramework(args));
-        case TOOL_NAMES.REFLECT:
-            return formatResponse(reflectServer.processMetacognitiveMonitoring(args));
-        case TOOL_NAMES.HYPOTHESIS:
-            return formatResponse(hypothesisServer.processScientificMethod(args));
-        case TOOL_NAMES.DEBATE:
-            return formatResponse(debateServer.processStructuredArgumentation(args));
-        case TOOL_NAMES.MAP:
-            return formatResponse(mapServer.processVisualReasoning(args));
-        default:
-            throw new McpError(
-                ErrorCode.MethodNotFound,
-                `Tool '${name}' not found. Available: ${Object.values(TOOL_NAMES).join(', ')}`
-            );
+    // Tool handler map for cleaner routing
+    const toolHandlers: Record<string, () => unknown> = {
+        [TOOL_NAMES.TRACE]: () => traceServer.processThought(args),
+        [TOOL_NAMES.MODEL]: () => modelServer.processModel(args),
+        [TOOL_NAMES.PATTERN]: () => patternServer.processPattern(args),
+        [TOOL_NAMES.PARADIGM]: () => paradigmServer.processParadigm(args),
+        [TOOL_NAMES.DEBUG]: () => debugServer.processApproach(args),
+        [TOOL_NAMES.COUNCIL]: () => councilServer.processCollaborativeReasoning(args),
+        [TOOL_NAMES.DECIDE]: () => decideServer.processDecisionFramework(args),
+        [TOOL_NAMES.REFLECT]: () => reflectServer.processMetacognitiveMonitoring(args),
+        [TOOL_NAMES.HYPOTHESIS]: () => hypothesisServer.processScientificMethod(args),
+        [TOOL_NAMES.DEBATE]: () => debateServer.processStructuredArgumentation(args),
+        [TOOL_NAMES.MAP]: () => mapServer.processVisualReasoning(args),
+    };
+
+    const handler = toolHandlers[name];
+    if (!handler) {
+        throw new McpError(
+            ErrorCode.MethodNotFound,
+            `Tool '${name}' not found. Available: ${Object.values(TOOL_NAMES).join(', ')}`
+        );
     }
+
+    // Execute tool with analytics tracking
+    // Analytics is non-blocking and never affects tool execution
+    const result = withAnalyticsSync(name as ToolName, handler);
+    return formatResponse(result);
 });
 
 async function runServer() {
@@ -1392,6 +1394,26 @@ async function runServer() {
     await server.connect(transport);
     console.error(chalk.green("think-mcp v2.0.0 running on stdio"));
     console.error(chalk.blue(`Tools: ${Object.values(TOOL_NAMES).join(', ')}`));
+
+    // Graceful shutdown handler for analytics
+    const handleShutdown = async () => {
+        try {
+            await shutdownCollector();
+        } catch {
+            // Silently ignore shutdown errors - don't affect exit
+        }
+    };
+
+    // Register shutdown handlers
+    process.on('SIGINT', async () => {
+        await handleShutdown();
+        process.exit(0);
+    });
+    process.on('SIGTERM', async () => {
+        await handleShutdown();
+        process.exit(0);
+    });
+    process.on('beforeExit', handleShutdown);
 }
 
 runServer().catch((error) => {
