@@ -1,5 +1,17 @@
-import { VisualOperationData } from '../models/interfaces.js';
+import { VisualOperationData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for visual reasoning results
+ */
+interface VisualReasoningResponse {
+  operation: string;
+  diagramId: string;
+  diagramType: string;
+  iteration: number;
+  nextOperationNeeded: boolean;
+  elementCount: number;
+}
 
 export class MapServer {
   private validateInputData(input: unknown): VisualOperationData {
@@ -86,41 +98,32 @@ export class MapServer {
     return output;
   }
 
-  public processVisualReasoning(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
+  public processVisualReasoning(input: unknown): ServerResponse<VisualReasoningResponse> {
     try {
       const validatedData = this.validateInputData(input);
       const processedData: VisualOperationData = {
         ...validatedData,
         elements: validatedData.elements || []
       };
-      
+
       const formattedOutput = this.formatOutput(processedData);
       console.error(formattedOutput);
 
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            operation: processedData.operation,
-            diagramId: processedData.diagramId,
-            diagramType: processedData.diagramType,
-            iteration: processedData.iteration,
-            nextOperationNeeded: processedData.nextOperationNeeded,
-            elementCount: processedData.elements ? processedData.elements.length : 0,
-            status: 'success'
-          }, null, 2)
-        }]
+        status: 'success',
+        data: {
+          operation: processedData.operation,
+          diagramId: processedData.diagramId,
+          diagramType: processedData.diagramType,
+          iteration: processedData.iteration,
+          nextOperationNeeded: processedData.nextOperationNeeded,
+          elementCount: processedData.elements ? processedData.elements.length : 0
+        }
       };
     } catch (error) {
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            error: error instanceof Error ? error.message : String(error),
-            status: 'failed'
-          }, null, 2)
-        }],
-        isError: true
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }

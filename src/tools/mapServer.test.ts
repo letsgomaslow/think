@@ -37,30 +37,23 @@ describe('MapServer', () => {
     ],
   };
 
-  const parseResult = (result: any) => {
-    return JSON.parse(result.content[0].text);
-  };
-
   it('should process valid visual reasoning data', () => {
     const result = server.processVisualReasoning(validInput);
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.operation).toBe('create');
-    expect(parsed.diagramId).toBe('diagram-1');
-    expect(parsed.diagramType).toBe('flowchart');
-    expect(parsed.elementCount).toBe(3);
+    expect(result.status).toBe('success');
+    expect(result.data?.operation).toBe('create');
+    expect(result.data?.diagramId).toBe('diagram-1');
+    expect(result.data?.diagramType).toBe('flowchart');
+    expect(result.data?.elementCount).toBe(3);
   });
 
   it('should return failed status for missing required fields', () => {
     const result = server.processVisualReasoning({
       operation: 'create',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for invalid iteration', () => {
@@ -68,11 +61,9 @@ describe('MapServer', () => {
       ...validInput,
       iteration: -1,
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should return failed status for invalid nextOperationNeeded type', () => {
@@ -80,11 +71,9 @@ describe('MapServer', () => {
       ...validInput,
       nextOperationNeeded: 'yes',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('failed');
-    expect(parsed.error).toBeDefined();
-    expect(result.isError).toBe(true);
+    expect(result.status).toBe('failed');
+    expect(result.error).toBeDefined();
   });
 
   it('should handle all operation types', () => {
@@ -101,9 +90,8 @@ describe('MapServer', () => {
         ...validInput,
         operation,
       });
-      const parsed = parseResult(result);
-      expect(parsed.status).toBe('success');
-      expect(parsed.operation).toBe(operation);
+      expect(result.status).toBe('success');
+      expect(result.data?.operation).toBe(operation);
     });
   });
 
@@ -122,9 +110,8 @@ describe('MapServer', () => {
         ...validInput,
         diagramType,
       });
-      const parsed = parseResult(result);
-      expect(parsed.status).toBe('success');
-      expect(parsed.diagramType).toBe(diagramType);
+      expect(result.status).toBe('success');
+      expect(result.data?.diagramType).toBe(diagramType);
     });
   });
 
@@ -134,10 +121,9 @@ describe('MapServer', () => {
       operation: 'transform',
       transformationType: 'rotate',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
-    expect(parsed.operation).toBe('transform');
+    expect(result.status).toBe('success');
+    expect(result.data?.operation).toBe('transform');
   });
 
   it('should handle observations and insights', () => {
@@ -148,8 +134,7 @@ describe('MapServer', () => {
       insight: 'Add parallel processing',
       hypothesis: 'Parallelization will improve throughput',
     });
-    const parsed = parseResult(result);
 
-    expect(parsed.status).toBe('success');
+    expect(result.status).toBe('success');
   });
 });
