@@ -1,5 +1,14 @@
-import { DebuggingApproachData } from '../models/interfaces.js';
+import { DebuggingApproachData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for debugging approach results
+ */
+interface DebuggingApproachResponse {
+  approachName: string;
+  hasSteps: boolean;
+  hasResolution: boolean;
+}
 
 export class DebugServer {
   private validateApproachData(input: unknown): DebuggingApproachData {
@@ -45,33 +54,24 @@ export class DebugServer {
     return output;
   }
 
-  public processApproach(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
+  public processApproach(input: unknown): ServerResponse<DebuggingApproachResponse> {
     try {
       const validatedInput = this.validateApproachData(input);
       const formattedOutput = this.formatApproachOutput(validatedInput);
       console.error(formattedOutput);
 
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            approachName: validatedInput.approachName,
-            status: 'success',
-            hasSteps: validatedInput.steps.length > 0,
-            hasResolution: !!validatedInput.resolution
-          }, null, 2)
-        }]
+        status: 'success',
+        data: {
+          approachName: validatedInput.approachName,
+          hasSteps: validatedInput.steps.length > 0,
+          hasResolution: !!validatedInput.resolution
+        }
       };
     } catch (error) {
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            error: error instanceof Error ? error.message : String(error),
-            status: 'failed'
-          }, null, 2)
-        }],
-        isError: true
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
