@@ -468,7 +468,7 @@ export class DecideServer {
     return output;
   }
 
-  private formatOutput(data: DecisionFrameworkData): string {
+  public formatOutput(data: DecisionFrameworkData): string {
     const { decisionStatement, options, analysisType, stage, iteration } = data;
 
     let output = `\n${chalk.bold.blue('Decision Framework Analysis')}\n`;

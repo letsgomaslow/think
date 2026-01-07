@@ -111,23 +111,28 @@ describe('think-mcp Integration', () => {
   });
 
   describe('Error Handling', () => {
-    // Servers that throw on invalid input
-    it('should throw on invalid input for TraceServer', () => {
+    // All servers now return ServerResponse<T> with status: 'failed' on invalid input
+    it('should return error for invalid TraceServer input', () => {
       const server = new TraceServer();
-      expect(() => server.processThought({})).toThrow();
+      const result = server.processThought({});
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
-    it('should throw on invalid input for CouncilServer', () => {
+    it('should return error for invalid CouncilServer input', () => {
       const server = new CouncilServer();
-      expect(() => server.processCollaborativeReasoning({})).toThrow();
+      const result = server.processCollaborativeReasoning({});
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
-    it('should throw on invalid input for DecideServer', () => {
+    it('should return error for invalid DecideServer input', () => {
       const server = new DecideServer();
-      expect(() => server.processDecisionFramework({})).toThrow();
+      const result = server.processDecisionFramework({});
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
-    // Servers that return error objects instead of throwing
     it('should return error for invalid ModelServer input', () => {
       const server = new ModelServer();
       const result = server.processModel({});
@@ -138,57 +143,50 @@ describe('think-mcp Integration', () => {
     it('should return error for invalid PatternServer input', () => {
       const server = new PatternServer();
       const result = server.processPattern({});
-      const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.status).toBe('failed');
-      expect(result.isError).toBe(true);
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
     it('should return error for invalid ParadigmServer input', () => {
       const server = new ParadigmServer();
       const result = server.processParadigm({});
-      const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.status).toBe('failed');
-      expect(result.isError).toBe(true);
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
     it('should return error for invalid DebugServer input', () => {
       const server = new DebugServer();
       const result = server.processApproach({});
-      const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.status).toBe('failed');
-      expect(result.isError).toBe(true);
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
     it('should return error for invalid ReflectServer input', () => {
       const server = new ReflectServer();
       const result = server.processMetacognitiveMonitoring({});
-      const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.status).toBe('failed');
-      expect(result.isError).toBe(true);
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
     it('should return error for invalid HypothesisServer input', () => {
       const server = new HypothesisServer();
       const result = server.processScientificMethod({});
-      const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.status).toBe('failed');
-      expect(result.isError).toBe(true);
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
     it('should return error for invalid DebateServer input', () => {
       const server = new DebateServer();
       const result = server.processStructuredArgumentation({});
-      const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.status).toBe('failed');
-      expect(result.isError).toBe(true);
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
 
     it('should return error for invalid MapServer input', () => {
       const server = new MapServer();
       const result = server.processVisualReasoning({});
-      const parsed = JSON.parse(result.content[0].text);
-      expect(parsed.status).toBe('failed');
-      expect(result.isError).toBe(true);
+      expect(result.status).toBe('failed');
+      expect(result.error).toBeDefined();
     });
   });
 });
