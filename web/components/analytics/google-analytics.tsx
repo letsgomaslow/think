@@ -3,8 +3,13 @@
 import { useEffect, Suspense } from "react";
 import { usePathname, useSearchParams } from "next/navigation";
 import Script from "next/script";
+import type { CSPNonce } from "@/lib/security/csp";
 
-function GoogleAnalyticsContent() {
+interface GoogleAnalyticsProps {
+  nonce?: CSPNonce;
+}
+
+function GoogleAnalyticsContent({ nonce }: GoogleAnalyticsProps) {
   const pathname = usePathname();
   const searchParams = useSearchParams();
 
@@ -31,10 +36,12 @@ function GoogleAnalyticsContent() {
       <Script
         strategy="afterInteractive"
         src={`https://www.googletagmanager.com/gtag/js?id=${measurementId}`}
+        nonce={nonce}
       />
       <Script
         id="google-analytics"
         strategy="afterInteractive"
+        nonce={nonce}
         dangerouslySetInnerHTML={{
           __html: `
             window.dataLayer = window.dataLayer || [];
@@ -53,10 +60,10 @@ function GoogleAnalyticsContent() {
   );
 }
 
-export function GoogleAnalytics() {
+export function GoogleAnalytics({ nonce }: GoogleAnalyticsProps) {
   return (
     <Suspense fallback={null}>
-      <GoogleAnalyticsContent />
+      <GoogleAnalyticsContent nonce={nonce} />
     </Suspense>
   );
 }
