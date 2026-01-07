@@ -44,7 +44,12 @@
       "description": "FeedbackDetail component provides detailed view of single feedback entry. Main component (FeedbackDetail) accepts entry, isLoading, onBack, className props. Includes sub-components: FeedbackDetailHeader (navigation with back button), FeedbackDetailSkeleton (loading state), FeedbackDetailEmpty (no selection state), RatingIconLarge (12x12 rating icon), MetadataRow (key-value display with copy support), ToolContextSection (tool input/output context display). Exports all sub-components for composition.",
       "category": "component",
       "discovered_at": "2026-01-07T04:03:14.332905+00:00"
+    },
+    "web/app/privacy/page.tsx": {
+      "description": "Privacy policy page uses consistent styling: prose prose-invert prose-slate for content, sections with mb-12, h2 headings with text-2xl font-bold, h3 subheadings with text-xl font-semibold, slate-300 for body text, code elements styled with brand-primary color and bg-slate-800. Last updated date follows format \"Month Day, Year\".",
+      "category": "patterns",
+      "discovered_at": "2026-01-07T04:07:38.621458+00:00"
     }
   },
-  "last_updated": "2026-01-07T04:03:14.332918+00:00"
+  "last_updated": "2026-01-07T04:07:38.621470+00:00"
 }
