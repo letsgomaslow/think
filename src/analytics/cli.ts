@@ -28,6 +28,7 @@ import {
   CLI_QUICK_REFERENCE,
   PRIVACY_NOTICE_VERSION,
 } from './PRIVACY_NOTICE.js';
+import { runDashboardCommand } from './dashboard-cli.js';
 
 // =============================================================================
 // Types
@@ -523,7 +524,7 @@ export interface ParsedArgs {
   /**
    * The command to execute.
    */
-  command: 'enable' | 'disable' | 'status' | 'export' | 'clear' | 'privacy' | 'help' | 'unknown';
+  command: 'enable' | 'disable' | 'status' | 'export' | 'clear' | 'privacy' | 'dashboard' | 'help' | 'unknown';
 
   /**
    * Command options.
@@ -537,6 +538,11 @@ export interface ParsedArgs {
     outputPath?: string;
     brief?: boolean;
   };
+
+  /**
+   * Remaining arguments to pass to subcommands.
+   */
+  remainingArgs?: string[];
 
   /**
    * Unknown argument if command is 'unknown'.
@@ -621,6 +627,12 @@ export function parseArgs(args: string[]): ParsedArgs {
       }
       break;
 
+    case 'dashboard':
+      result.command = 'dashboard';
+      // Pass remaining args to dashboard command
+      result.remainingArgs = args.slice(1);
+      break;
+
     case 'help':
     case '--help':
     case '-h':
@@ -654,6 +666,11 @@ COMMANDS:
   status           View current analytics settings
     --verbose, -v        Show detailed information
 
+  dashboard        View analytics dashboard with insights
+    --days, -d <n>       Number of days to analyze (default: 30)
+    --detailed, -v       Show detailed insights
+    --no-color           Disable colored output
+
   export           Export collected analytics data
     --format, -f <fmt>   Export format: json (default) or csv
     --start, -s <date>   Start date (YYYY-MM-DD)
@@ -671,6 +688,8 @@ EXAMPLES:
   think-mcp analytics enable
   think-mcp analytics disable --delete-data
   think-mcp analytics status --verbose
+  think-mcp analytics dashboard
+  think-mcp analytics dashboard --days 7
   think-mcp analytics export --format csv --start 2024-01-01
   think-mcp analytics clear
   think-mcp analytics privacy
@@ -708,6 +727,9 @@ export async function runCli(args: string[]): Promise<CliResult> {
 
     case 'status':
       return showStatus({ verbose: parsed.options.verbose });
+
+    case 'dashboard':
+      return runDashboardCommand(parsed.remainingArgs ?? []);
 
     case 'export':
       return exportData({
