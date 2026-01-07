@@ -1,0 +1,398 @@
+{
+  "feature": "Add Session State Persistence to Iterative Tools",
+  "description": "Extend the state management pattern from traceServer (thoughtHistory, branches) to other iterative tools like council, decide, reflect, hypothesis, debate, and map that have sessionId/iteration fields but don't persist state between calls.",
+  "created_at": "2026-01-06T16:05:36.055Z",
+  "updated_at": "2026-01-06T18:30:00.000Z",
+  "status": "in_progress",
+  "planStatus": "approved",
+  "workflow_type": "development",
+  "services_involved": [
+    "councilServer",
+    "decideServer",
+    "reflectServer",
+    "hypothesisServer",
+    "debateServer",
+    "mapServer"
+  ],
+  "spec_file": "spec.md",
+  "phases": [
+    {
+      "id": "phase-1",
+      "name": "Add State Persistence to CouncilServer",
+      "description": "Implement session-based state storage for collaborative reasoning sessions",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "1.1",
+          "title": "Add session state storage to CouncilServer",
+          "description": "Add private sessions: Record<string, CollaborativeReasoningData[]> storage and storeContribution() method following traceServer pattern",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/councilServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "Private sessions storage added",
+            "storeContribution method stores data by sessionId",
+            "processCollaborativeReasoning calls storeContribution"
+          ],
+          "notes": "Successfully added private sessions storage, storeContribution() method, and integrated it into processCollaborativeReasoning() following the traceServer pattern. Changes committed in e7d444b.",
+          "updated_at": "2026-01-06T23:20:08.996729+00:00"
+        },
+        {
+          "id": "1.2",
+          "title": "Add history retrieval methods to CouncilServer",
+          "description": "Add getSessionHistory(sessionId) and getSessionSummary(sessionId) public methods",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/councilServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "getSessionHistory returns all contributions for a session",
+            "getSessionSummary returns iteration count and last contribution info"
+          ],
+          "notes": "Successfully added getSessionHistory() and getSessionSummary() public methods to CouncilServer. getSessionHistory() returns all contributions for a session, getSessionSummary() returns statistics including iteration count, last stage, active persona, and total contributions. Both methods handle non-existent sessions gracefully. Committed in f259b0b.",
+          "updated_at": "2026-01-06T23:22:08.407137+00:00"
+        },
+        {
+          "id": "1.3",
+          "title": "Add tests for CouncilServer state persistence",
+          "description": "Write tests verifying session state is persisted across multiple calls with same sessionId",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/councilServer.test.ts"
+          ],
+          "acceptanceCriteria": [
+            "Test verifies multiple contributions stored for same session",
+            "Test verifies different sessions maintain separate state",
+            "Test verifies getSessionHistory and getSessionSummary"
+          ],
+          "notes": "Successfully added comprehensive state persistence tests for CouncilServer. Tests verify: 1) Multiple contributions stored for same session across iterations, 2) Different sessions maintain separate state, 3) getSessionHistory returns all contributions for a session, 4) getSessionSummary returns correct statistics including iteration count and contribution counts, 5) All contribution data is preserved in history. Tests follow existing vitest patterns and are ready for manual verification. Committed in f820974.",
+          "updated_at": "2026-01-06T23:24:13.584696+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-2",
+      "name": "Add State Persistence to DecideServer",
+      "description": "Implement decision-based state storage for decision framework iterations",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "2.1",
+          "title": "Add decision state storage to DecideServer",
+          "description": "Add private decisions: Record<string, DecisionFrameworkData[]> storage and storeDecisionIteration() method",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/decideServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "Private decisions storage added",
+            "storeDecisionIteration method stores data by decisionId",
+            "processDecisionFramework calls storeDecisionIteration"
+          ],
+          "notes": "Successfully added private decisions storage, storeDecisionIteration() method, and integrated it into processDecisionFramework() following the traceServer and councilServer pattern. Changes committed in 09dd7ca.",
+          "updated_at": "2026-01-06T23:26:03.151079+00:00"
+        },
+        {
+          "id": "2.2",
+          "title": "Add history retrieval methods to DecideServer",
+          "description": "Add getDecisionHistory(decisionId) and getDecisionSummary(decisionId) public methods",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/decideServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "getDecisionHistory returns all iterations for a decision",
+            "getDecisionSummary returns stage progression and current state"
+          ],
+          "notes": "Successfully added getDecisionHistory() and getDecisionSummary() public methods to DecideServer. getDecisionHistory() returns all DecisionFrameworkData entries for a decision with empty array fallback. getDecisionSummary() returns comprehensive summary including: totalIterations, stages (unique stages completed), currentStage, currentAnalysisType, lastIteration, and nextStageNeeded. Both methods handle non-existent decisions gracefully. Follows the pattern from CouncilServer. Committed in 2deedbc.",
+          "updated_at": "2026-01-06T23:27:48.813974+00:00"
+        },
+        {
+          "id": "2.3",
+          "title": "Add tests for DecideServer state persistence",
+          "description": "Write tests verifying decision state is persisted across multiple iterations",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/decideServer.test.ts"
+          ],
+          "acceptanceCriteria": [
+            "Test verifies multiple iterations stored for same decision",
+            "Test verifies different decisions maintain separate state",
+            "Test verifies stage progression is tracked"
+          ],
+          "notes": "Successfully added comprehensive state persistence tests for DecideServer. Tests verify: 1) Multiple iterations stored for same decision across different stages, 2) Different decisions maintain separate state, 3) getDecisionHistory returns all iterations for a decision, 4) getDecisionSummary returns correct statistics including totalIterations, stages progression, currentStage, currentAnalysisType, lastIteration, and nextStageNeeded, 5) Stage progression is tracked across iterations with unique stage identification, 6) All decision data is preserved in history including criteria, stakeholders, constraints, recommendation, and rationale, 7) Complex analysis data like eisenhowerClassification is preserved. Tests follow existing vitest patterns and are ready for manual verification. Committed in 65e1dcb.",
+          "updated_at": "2026-01-06T23:30:44.470609+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-3",
+      "name": "Add State Persistence to ReflectServer",
+      "description": "Implement monitoring-based state storage for metacognitive sessions",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "3.1",
+          "title": "Add monitoring state storage to ReflectServer",
+          "description": "Add private monitoringSessions: Record<string, MetacognitiveMonitoringData[]> storage and storeAssessment() method",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/reflectServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "Private monitoringSessions storage added",
+            "storeAssessment method stores data by monitoringId",
+            "processMetacognitiveMonitoring calls storeAssessment"
+          ],
+          "notes": "Successfully added private monitoringSessions storage, storeAssessment() method, and integrated it into processMetacognitiveMonitoring() following the traceServer, councilServer, and decideServer pattern. Changes committed in 088444b.",
+          "updated_at": "2026-01-06T23:32:33.719060+00:00"
+        },
+        {
+          "id": "3.2",
+          "title": "Add history retrieval methods to ReflectServer",
+          "description": "Add getMonitoringHistory(monitoringId) and getConfidenceProgression(monitoringId) public methods",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/reflectServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "getMonitoringHistory returns all assessments for a monitoring session",
+            "getConfidenceProgression returns confidence changes over time"
+          ],
+          "notes": "Successfully added getMonitoringHistory() and getConfidenceProgression() public methods to ReflectServer. getMonitoringHistory() returns all MetacognitiveMonitoringData entries for a monitoring session with empty array fallback. getConfidenceProgression() returns comprehensive confidence tracking including: totalAssessments, confidenceChanges array (iteration, stage, overallConfidence), averageConfidence across all assessments, and confidenceTrend analysis (increasing/decreasing/stable based on 5% threshold). Both methods handle non-existent sessions gracefully. Follows the pattern from CouncilServer and DecideServer. Committed in 22df039.",
+          "updated_at": "2026-01-06T23:34:21.101920+00:00"
+        },
+        {
+          "id": "3.3",
+          "title": "Add tests for ReflectServer state persistence",
+          "description": "Write tests verifying monitoring state is persisted across assessments",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/reflectServer.test.ts"
+          ],
+          "acceptanceCriteria": [
+            "Test verifies multiple assessments stored for same monitoring session",
+            "Test verifies confidence progression tracking",
+            "Test verifies different sessions maintain separate state"
+          ],
+          "notes": "Successfully added comprehensive state persistence tests for ReflectServer. Tests verify: 1) Multiple assessments stored for same monitoring session across iterations with different stages and confidence levels, 2) Different monitoring sessions maintain separate state, 3) getMonitoringHistory returns all assessments for a session, 4) getConfidenceProgression returns correct statistics including totalAssessments, confidenceChanges array, averageConfidence, and confidenceTrend analysis, 5) Confidence trend analysis correctly identifies increasing/decreasing/stable trends using 5% threshold, 6) All assessment data is preserved in history including task, stage, monitoringId, iteration, overallConfidence, uncertaintyAreas, recommendedApproach, nextAssessmentNeeded, suggestedAssessments, knowledgeAssessment (with domain, knowledgeLevel, confidenceScore, supportingEvidence, knownLimitations), claims (with claim, status, confidenceScore, evidenceBasis, alternativeInterpretations), and reasoningSteps (with step, logicalValidity, inferenceStrength, assumptions, potentialBiases). Tests follow existing vitest patterns and are ready for manual verification. Committed in ce7edd6.",
+          "updated_at": "2026-01-06T23:38:21.792340+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-4",
+      "name": "Add State Persistence to HypothesisServer",
+      "description": "Implement inquiry-based state storage for scientific method iterations",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "4.1",
+          "title": "Add inquiry state storage to HypothesisServer",
+          "description": "Add private inquiries: Record<string, ScientificInquiryData[]> storage and storeInquiryStage() method",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/hypothesisServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "Private inquiries storage added",
+            "storeInquiryStage method stores data by inquiryId",
+            "processScientificMethod calls storeInquiryStage"
+          ],
+          "notes": "Successfully added private inquiries storage, storeInquiryStage() method, and integrated it into processScientificMethod() following the traceServer, councilServer, decideServer, and reflectServer pattern. Changes committed in 5fddb7b.",
+          "updated_at": "2026-01-06T23:40:12.100870+00:00"
+        },
+        {
+          "id": "4.2",
+          "title": "Add history retrieval methods to HypothesisServer",
+          "description": "Add getInquiryHistory(inquiryId) and getHypothesisEvolution(inquiryId) public methods",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/hypothesisServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "getInquiryHistory returns all stages for an inquiry",
+            "getHypothesisEvolution returns hypothesis status changes over time"
+          ],
+          "notes": "Successfully added getInquiryHistory() and getHypothesisEvolution() public methods to HypothesisServer. getInquiryHistory() returns all ScientificInquiryData entries for an inquiry with empty array fallback. getHypothesisEvolution() returns comprehensive hypothesis tracking including: totalStages, stages, hypothesesGenerated, hypothesisChanges array (iteration, stage, status, confidence, statement), currentHypothesis (statement, status, confidence), and statusProgression showing how hypothesis status evolved across iterations. Both methods handle non-existent inquiries gracefully. Follows the pattern from ReflectServer and DecideServer. Committed in c455d37.",
+          "updated_at": "2026-01-06T23:42:00.967996+00:00"
+        },
+        {
+          "id": "4.3",
+          "title": "Add tests for HypothesisServer state persistence",
+          "description": "Write tests verifying inquiry state is persisted across stages",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/hypothesisServer.test.ts"
+          ],
+          "acceptanceCriteria": [
+            "Test verifies multiple stages stored for same inquiry",
+            "Test verifies hypothesis evolution tracking",
+            "Test verifies stage progression (observation -> conclusion)"
+          ],
+          "notes": "Successfully added comprehensive state persistence tests for HypothesisServer. Tests verify: 1) Multiple stages stored for same inquiry across different stages (observation, question, hypothesis, experiment, analysis, conclusion), 2) Different inquiries maintain separate state, 3) getInquiryHistory returns all stages for an inquiry, 4) getHypothesisEvolution returns correct statistics including totalStages, hypothesesGenerated, hypothesisChanges, currentHypothesis, and statusProgression tracking, 5) Hypothesis evolution is tracked across iterations with status changes (proposed -> testing -> confirmed), 6) Stage progression is tracked from observation through conclusion, 7) All inquiry data is preserved in history including observation, question, hypothesis (with variables, assumptions, alternativeTo, refinementOf), experiment (with predictions, controlMeasures, results, outcomeMatched, unexpectedObservations, limitations, nextSteps), analysis, and conclusion. Tests follow existing vitest patterns from ReflectServer and are ready for manual verification. Committed in 9169d70.",
+          "updated_at": "2026-01-06T23:44:20.462798+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-5",
+      "name": "Add State Persistence to DebateServer",
+      "description": "Implement argument chain storage for structured debates",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "5.1",
+          "title": "Add argument chain storage to DebateServer",
+          "description": "Add private argumentChains: Record<string, ArgumentData[]> storage and storeArgument() method. Chain arguments using respondsTo references.",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/debateServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "Private argumentChains storage added",
+            "storeArgument method stores arguments by chain (using root argumentId)",
+            "processStructuredArgumentation calls storeArgument"
+          ],
+          "notes": "Successfully added private argumentChains storage and argumentToRoot mapping to DebateServer for efficient argument chain tracking. Implemented storeArgument() method that properly chains arguments using respondsTo references - root arguments (no respondsTo) are stored under their own argumentId, while response arguments are stored under the root of the chain they respond to. Integrated storeArgument() call into processStructuredArgumentation() following the pattern from HypothesisServer. The implementation enables tracking of thesis-antithesis-synthesis chains and argument relationships through the respondsTo field. Committed in ef1e28a.",
+          "updated_at": "2026-01-06T23:46:33.495858+00:00"
+        },
+        {
+          "id": "5.2",
+          "title": "Add history retrieval methods to DebateServer",
+          "description": "Add getDebateHistory(rootArgumentId) and getArgumentTree(rootArgumentId) public methods",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/debateServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "getDebateHistory returns all arguments in a debate chain",
+            "getArgumentTree returns tree structure of responses/rebuttals"
+          ],
+          "notes": "Successfully added getDebateHistory() and getArgumentTree() public methods to DebateServer. getDebateHistory() returns all ArgumentData entries for a debate chain with empty array fallback. getArgumentTree() returns comprehensive tree structure including: totalArguments, argumentTypes, and tree with each argument and its children (responses, supports, contradictions) with relationship types. Both methods handle non-existent debate chains gracefully. Follows the pattern from HypothesisServer and DecideServer. Committed in e2d1f8a.",
+          "updated_at": "2026-01-06T23:49:41.600415+00:00"
+        },
+        {
+          "id": "5.3",
+          "title": "Add tests for DebateServer state persistence",
+          "description": "Write tests verifying argument chains are persisted",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/debateServer.test.ts"
+          ],
+          "acceptanceCriteria": [
+            "Test verifies thesis-antithesis-synthesis chains",
+            "Test verifies argument references (respondsTo, supports, contradicts)",
+            "Test verifies getArgumentTree structure"
+          ],
+          "notes": "Successfully added comprehensive state persistence tests for DebateServer. Tests verify: 1) Multiple arguments stored in thesis-antithesis-synthesis chains, 2) Different debate chains maintain separate state, 3) Argument relationships (respondsTo, supports, contradicts) are tracked correctly, 4) getArgumentTree returns correct tree structure with relationship types (response, support, contradiction), 5) All argument data is preserved in history including claim, premises, conclusion, argumentType, confidence, supports, contradicts, strengths, weaknesses, nextArgumentNeeded, and suggestedNextTypes. Tests follow existing vitest patterns from HypothesisServer and are ready for manual verification. Committed in 55ecaed.",
+          "updated_at": "2026-01-06T23:52:17.518157+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-6",
+      "name": "Add State Persistence to MapServer",
+      "description": "Implement diagram-based state storage for visual reasoning",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "6.1",
+          "title": "Add diagram state storage to MapServer",
+          "description": "Add private diagrams: Record<string, VisualOperationData[]> storage and storeOperation() method",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/mapServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "Private diagrams storage added",
+            "storeOperation method stores data by diagramId",
+            "processVisualReasoning calls storeOperation"
+          ],
+          "notes": "Successfully added private diagrams: Record<string, VisualOperationData[]> storage and storeOperation() method to MapServer. Implemented storeOperation() method that stores data by diagramId following the pattern from debateServer and other completed servers. Integrated storeOperation() call in processVisualReasoning() after validation and before output formatting. Changes committed in 1d78cea.",
+          "updated_at": "2026-01-06T23:54:07.505520+00:00"
+        },
+        {
+          "id": "6.2",
+          "title": "Add history retrieval methods to MapServer",
+          "description": "Add getDiagramHistory(diagramId) and getCurrentDiagramState(diagramId) public methods",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/mapServer.ts"
+          ],
+          "acceptanceCriteria": [
+            "getDiagramHistory returns all operations for a diagram",
+            "getCurrentDiagramState returns aggregated current element state"
+          ],
+          "notes": "Successfully added getDiagramHistory() and getCurrentDiagramState() public methods to MapServer. getDiagramHistory() returns all VisualOperationData entries for a diagram with empty array fallback. getCurrentDiagramState() returns comprehensive diagram state including: diagramId, diagramType, totalOperations, elements (aggregated current state), lastOperation, and lastIteration. The getCurrentDiagramState() method intelligently aggregates element state by processing operations in order: create adds elements, update merges properties, delete removes elements, transform updates elements, and observe doesn't change state. Both methods handle non-existent diagrams gracefully. Follows the pattern from DecideServer and DebateServer. Committed in 3444848.",
+          "updated_at": "2026-01-06T23:56:34.873409+00:00"
+        },
+        {
+          "id": "6.3",
+          "title": "Add tests for MapServer state persistence",
+          "description": "Write tests verifying diagram operations are persisted",
+          "status": "completed",
+          "filesToModify": [
+            "src/tools/mapServer.test.ts"
+          ],
+          "acceptanceCriteria": [
+            "Test verifies multiple operations stored for same diagram",
+            "Test verifies element state aggregation (create/update/delete)",
+            "Test verifies different diagrams maintain separate state"
+          ],
+          "notes": "Successfully added comprehensive state persistence tests for MapServer. Tests verify: 1) Multiple operations stored for same diagram across different operation types (create, update, delete, transform, observe), 2) Different diagrams maintain separate state, 3) Element state aggregation across all operation types with correct behavior (create adds, update merges, delete removes, transform updates, observe doesn't change state), 4) getDiagramHistory returns all operations for a diagram, 5) getCurrentDiagramState returns correct metadata and aggregated element state, 6) Property merging works correctly for update and transform operations, 7) Complex operation sequences are handled correctly, 8) All operation data is preserved in history including operation, diagramId, diagramType, iteration, nextOperationNeeded, elements (with id, type, label, properties, source, target, contains), transformationType, observation, insight, and hypothesis. Tests follow existing vitest patterns from DebateServer and DecideServer and are ready for manual verification. Committed in 0cea1d8.",
+          "updated_at": "2026-01-06T23:59:47.651053+00:00"
+        }
+      ]
+    },
+    {
+      "id": "phase-7",
+      "name": "Integration and Verification",
+      "description": "Verify all state persistence works correctly and run full test suite",
+      "status": "pending",
+      "subtasks": [
+        {
+          "id": "7.1",
+          "title": "Run all tests and verify no regressions",
+          "description": "Run full test suite to ensure state persistence doesn't break existing functionality",
+          "status": "pending",
+          "filesToModify": [],
+          "acceptanceCriteria": [
+            "All existing tests pass",
+            "All new state persistence tests pass",
+            "No breaking changes to tool APIs"
+          ]
+        },
+        {
+          "id": "7.2",
+          "title": "Update build-progress.txt with completion status",
+          "description": "Document completion of the feature implementation",
+          "status": "pending",
+          "filesToModify": [
+            ".auto-claude/specs/026-add-session-state-persistence-to-iterative-tools/build-progress.txt"
+          ],
+          "acceptanceCriteria": [
+            "Progress file updated with completion notes",
+            "Any gotchas or notes documented"
+          ]
+        }
+      ]
+    }
+  ],
+  "final_acceptance": [
+    "All 6 iterative tools have session state persistence",
+    "Each tool stores history by its unique ID (sessionId, decisionId, monitoringId, inquiryId, argumentId, diagramId)",
+    "Each tool provides history retrieval methods",
+    "All tests pass with no regressions",
+    "Pattern is consistent with traceServer implementation"
+  ],
+  "totalSubtasks": 20,
+  "completedSubtasks": 0,
+  "qaSignOff": {
+    "status": "pending",
+    "issues": "",
+    "testsPassed": ""
+  },
+  "last_updated": "2026-01-06T23:59:47.651087+00:00"
+}
