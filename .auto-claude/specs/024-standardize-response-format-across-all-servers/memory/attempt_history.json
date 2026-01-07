@@ -59,11 +59,47 @@
         }
       ],
       "status": "completed"
+    },
+    "2.5": {
+      "attempts": [
+        {
+          "session": 7,
+          "timestamp": "2026-01-06T19:24:06.112817",
+          "approach": "Implemented: Remove MCP content wrapping from processScientificMethod() and return a simple ServerResponse object",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.6": {
+      "attempts": [
+        {
+          "session": 8,
+          "timestamp": "2026-01-06T19:26:35.092164",
+          "approach": "Implemented: Remove MCP content wrapping from processStructuredArgumentation() and return a simple ServerResponse",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
+    },
+    "2.7": {
+      "attempts": [
+        {
+          "session": 9,
+          "timestamp": "2026-01-06T19:28:15.922055",
+          "approach": "Implemented: Remove MCP content wrapping from processVisualReasoning() and return a simple ServerResponse object.",
+          "success": true,
+          "error": null
+        }
+      ],
+      "status": "completed"
     }
   },
   "stuck_subtasks": [],
   "metadata": {
     "created_at": "2026-01-06T19:12:15.876425",
-    "last_updated": "2026-01-06T19:22:40.091248"
+    "last_updated": "2026-01-06T19:28:15.922081"
   }
 }

@@ -1,5 +1,14 @@
-import { MentalModelData } from "../models/interfaces.js";
+import { MentalModelData, ServerResponse } from "../models/interfaces.js";
 import chalk from "chalk";
+
+/**
+ * Response data for mental model results
+ */
+interface MentalModelResponse {
+    modelName: string;
+    hasSteps: boolean;
+    hasConclusion: boolean;
+}
 
 export class ModelServer {
     private validateModelData(input: unknown): MentalModelData {
@@ -53,22 +62,24 @@ export class ModelServer {
         return output;
     }
 
-    public processModel(input: unknown): any {
+    public processModel(input: unknown): ServerResponse<MentalModelResponse> {
         try {
             const validatedInput = this.validateModelData(input);
             const formattedOutput = this.formatModelOutput(validatedInput);
             console.error(formattedOutput);
 
             return {
-                modelName: validatedInput.modelName,
                 status: "success",
-                hasSteps: validatedInput.steps.length > 0,
-                hasConclusion: !!validatedInput.conclusion,
+                data: {
+                    modelName: validatedInput.modelName,
+                    hasSteps: validatedInput.steps.length > 0,
+                    hasConclusion: !!validatedInput.conclusion,
+                }
             };
         } catch (error) {
             return {
-                error: error instanceof Error ? error.message : String(error),
                 status: "failed",
+                error: error instanceof Error ? error.message : String(error)
             };
         }
     }

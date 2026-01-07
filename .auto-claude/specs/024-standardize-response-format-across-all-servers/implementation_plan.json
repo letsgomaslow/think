@@ -116,7 +116,7 @@
           "id": "2.5",
           "title": "Refactor hypothesisServer.ts to return simple object",
           "description": "Remove MCP content wrapping from processScientificMethod() and return a simple ServerResponse object.",
-          "status": "pending",
+          "status": "completed",
           "estimated_time": "10 min",
           "files_affected": [
             "src/tools/hypothesisServer.ts"
@@ -125,13 +125,15 @@
             "processScientificMethod returns simple object, not MCP format",
             "Uses ServerResponse pattern with status field",
             "Error handling uses status: 'failed' pattern"
-          ]
+          ],
+          "notes": "Refactored hypothesisServer.ts to return ServerResponse<ScientificMethodResponse> instead of MCP content format. Added ScientificMethodResponse interface, imported ServerResponse from interfaces.ts, and replaced isError boolean with status field. Committed as 922c0bd.",
+          "updated_at": "2026-01-07T00:23:56.875979+00:00"
         },
         {
           "id": "2.6",
           "title": "Refactor debateServer.ts to return simple object",
           "description": "Remove MCP content wrapping from processStructuredArgumentation() and return a simple ServerResponse object.",
-          "status": "pending",
+          "status": "completed",
           "estimated_time": "10 min",
           "files_affected": [
             "src/tools/debateServer.ts"
@@ -140,13 +142,15 @@
             "processStructuredArgumentation returns simple object, not MCP format",
             "Uses ServerResponse pattern with status field",
             "Error handling uses status: 'failed' pattern"
-          ]
+          ],
+          "notes": "Removed MCP content wrapping from processStructuredArgumentation(). Now returns ServerResponse<ArgumentResponse> with proper status and data fields. Updated corresponding tests to use new response format.",
+          "updated_at": "2026-01-07T00:26:22.941832+00:00"
         },
         {
           "id": "2.7",
           "title": "Refactor mapServer.ts to return simple object",
           "description": "Remove MCP content wrapping from processVisualReasoning() and return a simple ServerResponse object.",
-          "status": "pending",
+          "status": "completed",
           "estimated_time": "10 min",
           "files_affected": [
             "src/tools/mapServer.ts"
@@ -155,7 +159,9 @@
             "processVisualReasoning returns simple object, not MCP format",
             "Uses ServerResponse pattern with status field",
             "Error handling uses status: 'failed' pattern"
-          ]
+          ],
+          "notes": "Refactored mapServer.ts to return ServerResponse<VisualReasoningResponse> instead of MCP content format. Added VisualReasoningResponse interface, imported ServerResponse from interfaces.ts, and replaced isError boolean with status field. Updated corresponding tests to use new response format. Committed as d4c0143.",
+          "updated_at": "2026-01-07T00:28:05.892014+00:00"
         }
       ]
     },
@@ -331,5 +337,5 @@
     "tests_passed": "",
     "issues": ""
   },
-  "last_updated": "2026-01-07T00:22:30.486490+00:00"
+  "last_updated": "2026-01-07T00:28:05.892027+00:00"
 }
