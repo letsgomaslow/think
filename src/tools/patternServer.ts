@@ -1,5 +1,14 @@
-import { DesignPatternData } from '../models/interfaces.js';
+import { DesignPatternData, ServerResponse } from '../models/interfaces.js';
 import chalk from 'chalk';
+
+/**
+ * Response data for design pattern results
+ */
+interface DesignPatternResponse {
+  patternName: string;
+  hasImplementation: boolean;
+  hasCodeExample: boolean;
+}
 
 export class PatternServer {
   private validatePatternData(input: unknown): DesignPatternData {
@@ -61,33 +70,24 @@ export class PatternServer {
     return output;
   }
 
-  public processPattern(input: unknown): { content: Array<{ type: string; text: string }>; isError?: boolean } {
+  public processPattern(input: unknown): ServerResponse<DesignPatternResponse> {
     try {
       const validatedInput = this.validatePatternData(input);
       const formattedOutput = this.formatPatternOutput(validatedInput);
       console.error(formattedOutput);
 
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            patternName: validatedInput.patternName,
-            status: 'success',
-            hasImplementation: validatedInput.implementation.length > 0,
-            hasCodeExample: !!validatedInput.codeExample
-          }, null, 2)
-        }]
+        status: 'success',
+        data: {
+          patternName: validatedInput.patternName,
+          hasImplementation: validatedInput.implementation.length > 0,
+          hasCodeExample: !!validatedInput.codeExample
+        }
       };
     } catch (error) {
       return {
-        content: [{
-          type: "text",
-          text: JSON.stringify({
-            error: error instanceof Error ? error.message : String(error),
-            status: 'failed'
-          }, null, 2)
-        }],
-        isError: true
+        status: 'failed',
+        error: error instanceof Error ? error.message : String(error)
       };
     }
   }
